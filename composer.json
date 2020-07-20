@@ -1,0 +1,44 @@
+{
+    "name": "sierratecnologia/fabrica",
+    "description": "Fabrica de Projetos",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ricardo Rebello Sierra",
+            "email": "contato@ricardosierra.com.br"
+        }
+    ],
+    "require": {
+        "php": "^7.3.0",
+        "sierratecnologia/crypto": "dev-master",
+        "sierratecnologia/integrations": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fabrica\\": "src/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [],
+        "post-update-cmd": [],
+        "post-create-project-cmd": []
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../**",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Fabrica\\FabricaProvider"
+            ]
+        }
+    }
+}
