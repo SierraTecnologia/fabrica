@@ -11,7 +11,27 @@
     "require": {
         "php": "^7.3.0",
         "sierratecnologia/crypto": "dev-master",
-        "sierratecnologia/integrations": "dev-master"
+        "sierratecnologia/integrations": "dev-master",
+        "deployer/deployer": ">=6.4",
+        "vanderlee/php-sentence": ">=1.0",
+        "fzaninotto/faker": "*",
+        "php-http/guzzle6-adapter": "*",
+        "devio/pipedrive": "*",
+        "league/flysystem-aws-s3-v3": "*",
+        "league/plates": "^3.1|^4.0",
+        "geerlingguy/ping": "*",
+        "phpbench/phpbench": "*",
+        "phploc/phploc": "*",
+        "phpmd/phpmd": "*",
+        "squizlabs/php_codesniffer": "*",
+        "phpro/grumphp": "*",
+        "phpseclib/phpseclib": "*",
+        "phpstan/phpstan": "*",
+        "phpunit/phpunit": "*",
+        "aws/aws-sdk-php": "*",
+        "predis/predis": "*",
+        "sebastian/diff": "*",
+        "sebastian/phpcpd": "*"
     },
     "autoload": {
         "psr-4": {
