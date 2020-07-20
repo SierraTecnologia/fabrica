@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of Gitonomy.
+ * This file is part of Fabrica.
  *
  * (c) Alexandre Salomé <alexandre.salome@gmail.com>
  * (c) Julien DIDIER <genzo.wm@gmail.com>
@@ -16,7 +16,7 @@ use Support\Models\Base;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * User in Gitonomy.
+ * User in Fabrica.
  *
  * @author Alexandre Salomé <alexandre.salome@gmail.com
  * @author Julien DIDIER <julien@jdidier.net>

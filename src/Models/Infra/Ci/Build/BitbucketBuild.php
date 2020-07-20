@@ -3,9 +3,9 @@
 namespace Fabrica\Models\Infra\Ci\Build;
 
 use GuzzleHttp\Client;
-use SiUtils\Tools\Builder;
+use Fabrica\Tools\Builder;
 use SiUtils\Helper\Bitbucket;
-use SiUtils\Tools\Config;
+use Fabrica\Tools\Config;
 use Fabrica\Models\Infra\Ci\Build;
 use Fabrica\Models\Infra\Ci\BuildError;
 use SiUtils\Helper\Diff;

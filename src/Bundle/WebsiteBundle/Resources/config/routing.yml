@@ -1,0 +1,17 @@
+_splash:
+    resource: "@FabricaWebsiteBundle/Resources/config/routing/splash.yml"
+
+_project:
+    resource: "@FabricaWebsiteBundle/Resources/config/routing/project.yml"
+
+_user:
+    resource: "@FabricaWebsiteBundle/Resources/config/routing/user.yml"
+
+_profile:
+    resource: "@FabricaWebsiteBundle/Resources/config/routing/profile.yml"
+
+_administration:
+    resource: "@FabricaWebsiteBundle/Resources/config/routing/administration.yml"
+
+_job:
+    resource: "@FabricaJobBundle/Resources/config/routing/job.yml"

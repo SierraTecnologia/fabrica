@@ -1,0 +1,17 @@
+fabricadistribution_configuration_welcome:
+    pattern: /install
+    defaults: { _controller: FabricaDistributionBundle:Configuration:welcome }
+
+fabricadistribution_configuration_step:
+    pattern: /install/step/{slug}
+    defaults: { _controller: FabricaDistributionBundle:Configuration:step }
+    requirements: { _method: GET }
+
+fabricadistribution_configuration_saveStep:
+    pattern: /install/step/{slug}
+    defaults: { _controller: FabricaDistributionBundle:Configuration:saveStep }
+    requirements: { _method: POST }
+
+fabricadistribution_configuration_finish:
+    pattern: /install/finish
+    defaults: { _controller: FabricaDistributionBundle:Configuration:finish }

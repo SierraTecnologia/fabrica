@@ -3,7 +3,7 @@
 namespace Fabrica\Models\Infra\Ci\Base;
 
 use Support\Models\Base;
-use SiUtils\Tools\Exception\InvalidArgumentException;
+use Fabrica\Tools\Exception\InvalidArgumentException;
 
 class ProjectGroup extends Base
 {

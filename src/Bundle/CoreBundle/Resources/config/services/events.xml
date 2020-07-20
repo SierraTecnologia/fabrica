@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="fabrica_core.event_dispatcher.class">Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher</parameter>
+        <parameter key="fabrica_core.listener.feed.class">Fabrica\Bundle\CoreBundle\Listener\FeedListener</parameter>
+        <parameter key="fabrica_core.listener.config.class">Fabrica\Bundle\CoreBundle\Listener\ConfigListener</parameter>
+        <parameter key="fabrica_core.listener.project_permissions.class">Fabrica\Bundle\CoreBundle\Listener\ProjectPermissionsListener</parameter>
+    </parameters>
+    <services>
+
+        <service id="fabrica_core.event_dispatcher" class="%fabrica_core.event_dispatcher.class%">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="fabrica_core.listener.feed" class="%fabrica_core.listener.feed.class%">
+            <argument type="service" id="doctrine" />
+            <argument type="service" id="fabrica_core.git.repository_pool" />
+            <tag name="fabrica.event_subscriber" />
+        </service>
+
+        <service id="fabrica_core.listener.config" class="%fabrica_core.listener.config.class%">
+            <argument type="service" id="service_container" />
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <service id="fabrica_core.listener.project_permissions" class="%fabrica_core.listener.project_permissions.class%">
+            <argument type="service" id="doctrine" />
+            <tag name="fabrica.event_subscriber" />
+        </service>
+    </services>
+</container>

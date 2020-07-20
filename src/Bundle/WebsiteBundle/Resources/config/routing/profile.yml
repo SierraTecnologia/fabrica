@@ -1,0 +1,46 @@
+profile_information:
+    pattern: /profile
+    defaults: { _controller: "FabricaWebsiteBundle:Profile:information" }
+    requirements: { _method: GET }
+
+profile_saveInformation:
+    pattern: /profile
+    defaults: { _controller: "FabricaWebsiteBundle:Profile:saveInformation" }
+    requirements: { _method: POST }
+
+profile_createEmail:
+    pattern: /profile/emails/create
+    defaults: { _controller: "FabricaWebsiteBundle:Profile:createEmail" }
+
+profile_defaultEmail:
+    pattern:  /profile/emails/{id}/default
+    defaults: { _controller: "FabricaWebsiteBundle:Profile:defaultEmail" }
+    requirements: { _method: POST }
+
+profile_activateEmail:
+    pattern:  /profile/emails/{id}/activate
+    defaults: { _controller: "FabricaWebsiteBundle:Profile:activateEmail" }
+    requirements: { _method: POST }
+
+profile_deleteEmail:
+    pattern:  /profile/emails/{id}/delete
+    defaults: { _controller: "FabricaWebsiteBundle:Profile:deleteEmail" }
+    requirements: { _method: POST }
+
+profile_sshKeys:
+    pattern: /profile/ssh-keys
+    defaults: { _controller: "FabricaWebsiteBundle:Profile:sshKeys" }
+
+profile_password:
+    pattern: /profile/password
+    defaults: { _controller: "FabricaWebsiteBundle:Profile:password" }
+
+profile_deleteSshKey:
+    pattern: /profile/delete-ssh-key/{id}
+    defaults: { _controller: "FabricaWebsiteBundle:Profile:deleteSshKey" }
+    requirements: { _method: POST }
+
+profile_createSshKey:
+    pattern: /profile/create-ssh-key
+    defaults: { _controller: "FabricaWebsiteBundle:Profile:createSshKey" }
+    requirements: { _method: POST }

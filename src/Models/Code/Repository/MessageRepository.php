@@ -5,9 +5,9 @@ namespace Fabrica\Models\Code\Repository;
 use Doctrine\ORM\EntityRepository;
 use Fabrica\Models\Code\Project;
 use Fabrica\Models\Code\User;
-use Gitonomy\Component\Pagination\Adapter\ArrayAdapter;
-use Gitonomy\Component\Pagination\Adapter\DoctrineOrmQueryAdapter;
-use Gitonomy\Component\Pagination\Pager;
+use Fabrica\Component\Pagination\Adapter\ArrayAdapter;
+use Fabrica\Component\Pagination\Adapter\DoctrineOrmQueryAdapter;
+use Fabrica\Component\Pagination\Pager;
 
 class MessageRepository extends EntityRepository
 {

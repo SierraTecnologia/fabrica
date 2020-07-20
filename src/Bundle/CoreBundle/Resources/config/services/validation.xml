@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+
+        <parameter key="fabrica_core.validation.new_email.class">Fabrica\Bundle\CoreBundle\Validation\Constraints\NewEmailValidator</parameter>
+        <parameter key="fabrica_core.validator.unique.class">Fabrica\Bundle\CoreBundle\Validator\Constraints\UniqueValidator</parameter>
+
+    </parameters>
+
+    <services>
+
+        <service id="fabrica_core.validation.new_email" class="%fabrica_core.validation.new_email.class%">
+            <argument type="service" id="doctrine" />
+            <tag name="validator.constraint_validator" alias="new_email" />
+        </service>
+
+        <service id="fabrica_core.validator.unique" class="%fabrica_core.validator.unique.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <tag name="validator.constraint_validator" alias="unique" />
+        </service>
+
+    </services>
+
+</container>

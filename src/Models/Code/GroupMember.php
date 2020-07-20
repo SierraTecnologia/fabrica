@@ -8,7 +8,7 @@ namespace Fabrica\Models\Code;
 use Support\Models\Base; //use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
-use Support\Traits\Models\EloquentGetTableNameTrait;
+use Muleta\Traits\Models\EloquentGetTableNameTrait;
 
 class GroupMember extends Base
 {

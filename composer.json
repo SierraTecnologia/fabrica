@@ -32,7 +32,29 @@
         "aws/aws-sdk-php": "*",
         "predis/predis": "*",
         "sebastian/diff": "*",
-        "sebastian/phpcpd": "*"
+        "sebastian/phpcpd": "*",
+
+        "symfony/symfony":                   "~2.4",
+        "doctrine/orm":                      "~2.4",
+        "swiftmailer/swiftmailer":           "~5.0",
+
+        "doctrine/doctrine-bundle":          "~1.2",
+        "twig/extensions":                   "~1.0",
+        "symfony/assetic-bundle":            "~2.3",
+        "symfony/monolog-bundle":            "~2.3",
+        "sensio/distribution-bundle":        "~2.3",
+        "doctrine/doctrine-fixtures-bundle": "~2.2",
+        "alexandresalome/mailcatcher":       "~0.2",
+        "juliendidier/buzz-bundle":          "dev-master",
+
+        "gitonomy/git-bundle":               "~0.1",
+
+        "leafo/lessphp":                    "~0.4"
+    },
+    "require-dev": {
+        "behat/behat":                   "~2.5",
+        "alexandresalome/php-webdriver": "~0.7",
+        "phpunit/phpunit":               "~4.0"
     },
     "autoload": {
         "psr-4": {
@@ -40,9 +62,16 @@
         }
     },
     "scripts": {
-        "post-install-cmd": [],
-        "post-update-cmd": [],
-        "post-create-project-cmd": []
+        "post-install-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
+        ],
+        "post-update-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
+        ]
     },
     "repositories": [
         {
@@ -53,9 +82,14 @@
             }
         }
     ],
+    "config": {
+        "bin-dir": "bin"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web",
         "laravel": {
             "providers": [
                 "Fabrica\\FabricaProvider"

@@ -3,8 +3,8 @@
 namespace Fabrica\Models\Infra\Ci\Model;
 
 use Fabrica\Models\Infra\Ci\Base\BuildError as BaseBuildError;
-use SiUtils\Tools\Store\BuildStore;
-use SiUtils\Tools\Store\Factory;
+use Fabrica\Tools\Store\BuildStore;
+use Fabrica\Tools\Store\Factory;
 
 class BuildError extends BaseBuildError
 {

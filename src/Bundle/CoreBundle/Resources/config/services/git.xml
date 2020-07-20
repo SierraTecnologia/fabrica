@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="fabrica_core.git.repository_pool.class">Fabrica\Bundle\CoreBundle\Git\RepositoryPool</parameter>
+        <parameter key="fabrica_core.git.shell_handler.class">Fabrica\Bundle\CoreBundle\Git\ShellHandler</parameter>
+        <parameter key="fabrica_core.git.hook_injector.class">Fabrica\Bundle\CoreBundle\Git\HookInjector</parameter>
+        <parameter key="fabrica_core.git.shell_command">php %kernel.root_dir%/console fabrica:git</parameter>
+    </parameters>
+
+    <services>
+        <service id="repository_pool" alias="fabrica_core.git.repository_pool" />
+
+        <service id="fabrica_core.git.repository_pool" class="%fabrica_core.git.repository_pool.class%">
+            <tag name="fabrica.event_subscriber" />
+            <argument>%fabrica_core.git.repository_path%</argument>
+        </service>
+
+        <service id="fabrica_core.git.shell_handler" class="%fabrica_core.git.shell_handler.class%" />
+
+        <service id="fabrica_core.git.hook_injector" class="%fabrica_core.git.hook_injector.class%">
+            <tag name="fabrica.event_listener" event="fabrica.project_create" method="onProjectCreate" />
+            <argument type="collection">
+                <argument key="pre-receive">%kernel.root_dir%/Resources/hooks/pre-receive</argument>
+                <argument key="post-receive">%kernel.root_dir%/Resources/hooks/post-receive</argument>
+            </argument>
+        </service>
+    </services>
+
+</container>

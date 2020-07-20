@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of Gitonomy.
+ * This file is part of Fabrica.
  *
  * (c) Alexandre Salomé <alexandre.salome@gmail.com>
  * (c) Julien DIDIER <genzo.wm@gmail.com>
@@ -12,7 +12,7 @@
 
 namespace Fabrica\Models\Code;
 
-use Gitonomy\Bundle\CoreBundle\EventDispatcher\Event\PushReferenceEvent;
+use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\PushReferenceEvent;
 
 use Fabrica\Models\Code\Message\CloseMessage;
 use Fabrica\Models\Code\Message\CommitMessage;

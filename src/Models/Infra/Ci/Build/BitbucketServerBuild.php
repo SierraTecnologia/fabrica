@@ -2,7 +2,7 @@
 
 namespace Fabrica\Models\Infra\Ci\Build;
 
-use SiUtils\Tools\Builder;
+use Fabrica\Tools\Builder;
 use Fabrica\Models\Infra\Ci\Build;
 
 class BitbucketServerBuild extends GitBuild

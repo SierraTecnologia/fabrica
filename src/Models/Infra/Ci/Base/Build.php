@@ -2,10 +2,10 @@
 
 namespace Fabrica\Models\Infra\Ci\Base;
 
-use SiUtils\Tools\Exception\InvalidArgumentException;
+use Fabrica\Tools\Exception\InvalidArgumentException;
 use Support\Models\Base;
-use SiUtils\Tools\Store\BuildStore;
-use SiUtils\Tools\Store\Factory;
+use Fabrica\Tools\Store\BuildStore;
+use Fabrica\Tools\Store\Factory;
 
 class Build extends Base
 {

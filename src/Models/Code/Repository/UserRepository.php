@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of Gitonomy.
+ * This file is part of Fabrica.
  *
  * (c) Alexandre Salomé <alexandre.salome@gmail.com>
  * (c) Julien DIDIER <genzo.wm@gmail.com>
@@ -40,7 +40,7 @@ class UserRepository extends EntityRepository
             ->createQuery(
                 <<<SQL
 SELECT U
-  FROM GitonomyCoreBundle:User U
+  FROM FabricaCoreBundle:User U
 INNER JOIN U.projectRoles UR
  WHERE UR.project = :projectId
 SQL

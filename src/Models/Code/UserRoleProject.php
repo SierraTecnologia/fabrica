@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of Gitonomy.
+ * This file is part of Fabrica.
  *
  * (c) Alexandre Salomé <alexandre.salome@gmail.com>
  * (c) Julien DIDIER <genzo.wm@gmail.com>
@@ -14,7 +14,7 @@ namespace Fabrica\Models\Code;
 
 use Support\Models\Base;
 
-use Gitonomy\Bundle\CoreBundle\Security\ProjectRole;
+use Fabrica\Bundle\CoreBundle\Security\ProjectRole;
 
 class UserRoleProject extends Base
 {

@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- Step collection -->
+        <service id="fabrica_distribution.steps" class="Fabrica\Bundle\DistributionBundle\Installation\StepList">
+            <argument type="collection" />
+        </service>
+
+        <!-- Tagged steps -->
+        <service id="fabrica_distribution.step.doctrine" class="Fabrica\Bundle\DistributionBundle\Installation\Step\DoctrineStep" public="false">
+            <tag name="install.step" />
+        </service>
+
+        <service id="fabrica_distribution.step.secret" class="Fabrica\Bundle\DistributionBundle\Installation\Step\SecretStep" public="false">
+            <tag name="install.step" />
+        </service>
+
+        <!-- Forms -->
+        <service id="fabrica_distribution.form.installation_step_doctrine" class="Fabrica\Bundle\DistributionBundle\Form\Type\InstallationDoctrineStepType">
+            <tag name="form.type" alias="installation_step_doctrine" />
+        </service>
+
+        <service id="fabrica_distribution.form.installation_step_secret" class="Fabrica\Bundle\DistributionBundle\Form\Type\InstallationSecretStepType">
+            <tag name="form.type" alias="installation_step_secret" />
+        </service>
+
+    </services>
+
+</container>

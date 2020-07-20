@@ -2,9 +2,9 @@
 
 namespace Fabrica\Models\Infra\Ci\Model;
 
-use SiUtils\Tools\Store\Factory;
+use Fabrica\Tools\Store\Factory;
 use Fabrica\Models\Infra\Ci\Base\ProjectGroup as BaseProjectGroup;
-use SiUtils\Tools\Store\ProjectStore;
+use Fabrica\Tools\Store\ProjectStore;
 
 class ProjectGroup extends BaseProjectGroup
 {

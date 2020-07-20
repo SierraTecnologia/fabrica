@@ -3,7 +3,7 @@
 namespace Fabrica\Models\Infra\Ci\Build;
 
 use Fabrica\Models\Infra\Ci\Build;
-use SiUtils\Tools\Builder;
+use Fabrica\Tools\Builder;
 
 /**
  * Mercurial Build Model

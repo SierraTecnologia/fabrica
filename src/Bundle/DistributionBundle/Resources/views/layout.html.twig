@@ -1,0 +1,23 @@
+{% extends "FabricaWebsiteBundle::base.html.twig" %}
+
+{% block before_head_end %}
+    <link rel="stylesheet" href="{{ asset('bundles/fabricadistribution/css/main.css') }}" />
+{% endblock %}
+
+{% block before_body_end %}
+    {% block content_javascript '' %}
+{% endblock %}
+
+{% block body %}
+    <div class="fabrica-install">
+        <header>
+            <h1>Fabrica <small>installation</small></h1>
+        </header>
+        <section>
+            {% block content '' %}
+        </section>
+        <footer>
+            <p>Fabrica is beautiful and you are beautiful, too.</p>
+        </footer>
+    </div>
+{% endblock %}

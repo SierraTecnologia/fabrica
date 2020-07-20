@@ -1,0 +1,7 @@
+job_wait:
+    path: /job/{id}/wait
+    defaults: { _controller: "FabricaJobBundle:Job:wait" }
+
+job_status:
+    path: /job/{id}/status
+    defaults: { _controller: "FabricaJobBundle:Job:status" }

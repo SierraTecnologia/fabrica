@@ -2,7 +2,7 @@
 
 namespace Fabrica\Models\Infra\Ci\Base;
 
-use SiUtils\Tools\Exception\InvalidArgumentException;
+use Fabrica\Tools\Exception\InvalidArgumentException;
 use Support\Models\Base;
 
 class Project extends Base

@@ -3,7 +3,7 @@
 namespace Fabrica\Models\Infra;
 
 use Support\Models\Base;
-use SiUtils\Tools\Ssh;
+use Fabrica\Tools\Ssh;
 
 class Logger extends Base
 {

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="fabrica_core.config.chain.class">Fabrica\Component\Config\ChainConfig</parameter>
+        <parameter key="fabrica_core.config.mysql.class">Fabrica\Component\Config\MysqlConfig</parameter>
+        <parameter key="fabrica_core.config.php_file.class">Fabrica\Component\Config\PhpFileConfig</parameter>
+        <parameter key="fabrica_core.config.array.class">Fabrica\Component\Config\ArrayConfig</parameter>
+    </parameters>
+
+    <services>
+        <service id="fabrica_core.config" class="%fabrica_core.config.chain.class%">
+            <argument type="collection">
+                <argument type="service" id="fabrica_core.config.php_file" />
+                <argument type="service" id="fabrica_core.config.mysql" />
+                <argument type="service" id="fabrica_core.config.array" />
+            </argument>
+        </service>
+
+        <service id="fabrica_core.config.mysql" class="%fabrica_core.config.mysql.class%" public="false">
+            <argument type="service" id="doctrine.dbal.default_connection" />
+        </service>
+
+        <service id="fabrica_core.config.php_file" class="%fabrica_core.config.php_file.class%" public="false">
+            <argument>%kernel.cache_dir%/fabrica_config.php</argument>
+        </service>
+
+        <service id="fabrica_core.config.array" class="%fabrica_core.config.array.class%" public="false">
+            <argument>%fabrica_core.config.default_config%</argument>
+        </service>
+    </services>
+</container>
