@@ -8,6 +8,10 @@ Route::group(
                 Route::group(
                     ['as' => 'fabrica.'], function () {
 
+
+
+
+                        Route::resource('projects', 'ProjectController');
                         // /**
                         //  * 
                         //  */

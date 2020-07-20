@@ -39,7 +39,34 @@ class FabricaProvider extends ServiceProvider
      * Rotas do Menu
      */
     public static $menuItens = [
-
+        [
+            'text' => 'Fabrica',
+            'icon' => 'fas fa-fw fa-search',
+            'icon_color' => "blue",
+            'label_color' => "success",
+            'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        ],
+        'Fabrica' => [
+            [
+                'text'        => 'Procurar',
+                'icon'        => 'fas fa-fw fa-search',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                // 'access' => \App\Models\Role::$ADMIN
+            ],
+            'Procurar' => [
+                [
+                    'text'        => 'Projetos',
+                    'route'       => 'rica.fabrica.projetos.index',
+                    'icon'        => 'fas fa-fw fa-ship',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    // 'access' => \App\Models\Role::$ADMIN
+                ],
+            ],
+        ],
     ];
 
     /**
