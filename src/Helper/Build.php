@@ -1,6 +1,6 @@
 <?php
 
-namespace SiUtils\Helper;
+namespace Fabrica\Helper;
 
 /**
  * User Helper - Provides access to logged in user information in views.

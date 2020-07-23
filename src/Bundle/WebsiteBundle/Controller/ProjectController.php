@@ -20,9 +20,9 @@ use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
 use Fabrica\Bundle\CoreBundle\Job\DeleteReferenceJob;
 use Fabrica\Component\Pagination\Adapter\GitLogAdapter;
 use Fabrica\Component\Pagination\Pager;
-use App\Logic\Tools\Programs\Git\Blob;
-use App\Logic\Tools\Programs\Git\Reference;
-use App\Logic\Tools\Programs\Git\Tree;
+use Fabrica\Tools\Programs\Git\Blob;
+use Fabrica\Tools\Programs\Git\Reference;
+use Fabrica\Tools\Programs\Git\Tree;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProjectController extends Controller

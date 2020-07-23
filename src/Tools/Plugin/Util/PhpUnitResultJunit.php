@@ -2,7 +2,7 @@
 
 namespace Fabrica\Tools\Plugin\Util;
 
-use SiUtils\Helper\Xml;
+use Fabrica\Helper\Xml;
 
 /**
  * Class PhpUnitResultJunit parses the results for the PhpUnitV2 plugin

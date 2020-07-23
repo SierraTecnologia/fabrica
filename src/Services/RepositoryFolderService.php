@@ -7,6 +7,15 @@ namespace Fabrica\Services;
 
 use Illuminate\Filesystem\Filesystem;
 
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Output\OutputInterface;
+
+use Siravel\Models\Components\Code\Project;
+use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
+use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\ProjectEvent;
+
 /**
  * 
  */
@@ -60,6 +69,18 @@ class RepositoryFolderService
             $composerLock = json_decode(
                 $filesystem->get($realPath . $item.'/composer.lock')
             );
+
+            $project = new Project();
+            $project->setName($composer->name);
+            $project->setSlug($composer->name);
+
+            $project->save();
+
+            $event = new ProjectEvent($project);
+            $this->getContainer()->get('fabrica_core.event_dispatcher')->dispatch(FabricaEvents::PROJECT_CREATE, $event);
+
+            $em->persist($project);
+            $em->flush();
 
             unset($composerLock->packages);
             dd(

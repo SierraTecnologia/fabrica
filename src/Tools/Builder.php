@@ -2,8 +2,8 @@
 
 namespace Fabrica\Tools;
 
-use SiUtils\Helper\BuildInterpolator;
-use SiUtils\Helper\MailerFactory;
+use Fabrica\Helper\BuildInterpolator;
+use Fabrica\Helper\MailerFactory;
 use Fabrica\Tools\Logging\BuildLogger;
 use Fabrica\Models\Infra\Ci\Build;
 use Fabrica\Tools\Plugin\Util\Factory as PluginFactory;

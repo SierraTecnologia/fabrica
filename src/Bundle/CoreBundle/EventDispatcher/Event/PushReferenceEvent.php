@@ -12,7 +12,7 @@
 
 namespace Fabrica\Bundle\CoreBundle\EventDispatcher\Event;
 
-use App\Logic\Tools\Programs\Git\PushReference;
+use Fabrica\Tools\Programs\Git\PushReference;
 
 use Symfony\Component\EventDispatcher\Event;
 

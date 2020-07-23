@@ -3,7 +3,7 @@
 namespace Fabrica\Tools\Plugin\Util\TestResultParsers;
 
 use Fabrica\Tools\Builder;
-use SiUtils\Helper\Xml;
+use Fabrica\Helper\Xml;
 
 /**
  * Class Codeception

@@ -1,6 +1,6 @@
 <?php
 
-namespace SiUtils\Helper;
+namespace Fabrica\Helper;
 
 /**
  * Class MailerFactory helps to set up and configure a SwiftMailer object.

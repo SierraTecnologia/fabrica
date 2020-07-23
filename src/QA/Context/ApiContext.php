@@ -14,7 +14,7 @@ use Siravel\Models\Components\Code\UserRoleProject;
 use Siravel\Models\Components\Code\UserSshKey;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\ProjectEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
-use App\Logic\Tools\Programs\Git\Admin;
+use Fabrica\Tools\Programs\Git\Admin;
 use Fabrica\QA\KernelFactory;
 use Symfony\Component\Process\Process;
 

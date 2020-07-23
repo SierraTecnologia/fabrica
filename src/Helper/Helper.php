@@ -1,6 +1,6 @@
 <?php
 
-namespace SiUtils\Helpers;
+namespace Fabrica\Helpers;
 
 class Helper
 {

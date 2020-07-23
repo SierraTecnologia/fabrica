@@ -3,7 +3,7 @@
 namespace Fabrica\Models\Infra\Ci;
 
 use Fabrica\Tools\Builder;
-use SiUtils\Helper\Lang;
+use Fabrica\Helper\Lang;
 use Fabrica\Tools\Plugin\PhpParallelLint;
 use Fabrica\Tools\Store\Factory;
 use Fabrica\Tools\Store\ProjectStore;

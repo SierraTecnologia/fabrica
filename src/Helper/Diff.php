@@ -1,6 +1,6 @@
 <?php
 
-namespace SiUtils\Helper;
+namespace Fabrica\Helper;
 
 /**
  * Provides some basic diff processing functionality.

@@ -4,8 +4,8 @@ namespace Fabrica\Models\Infra\Ci\Build;
 
 use GuzzleHttp\Client;
 use Fabrica\Tools\Builder;
-use SiUtils\Helper\Diff;
-use SiUtils\Helper\Github;
+use Fabrica\Helper\Diff;
+use Fabrica\Helper\Github;
 use Fabrica\Tools\Config;
 use Fabrica\Models\Infra\Ci\Build;
 use Fabrica\Models\Infra\Ci\BuildError;

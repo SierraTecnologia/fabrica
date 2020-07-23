@@ -1,6 +1,6 @@
 <?php
 
-namespace SiUtils\Helper;
+namespace Fabrica\Helper;
 
 class XmlUtf8CleanFilter extends \php_user_filter
 {

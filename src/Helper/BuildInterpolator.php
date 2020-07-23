@@ -1,6 +1,6 @@
 <?php
 
-namespace SiUtils\Helper;
+namespace Fabrica\Helper;
 
 use Fabrica\Models\Infra\Ci\Build as BaseBuild;
 

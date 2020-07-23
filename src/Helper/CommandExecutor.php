@@ -1,6 +1,6 @@
 <?php
 
-namespace SiUtils\Helper;
+namespace Fabrica\Helper;
 
 use Exception;
 use Fabrica\Tools\Logging\BuildLogger;

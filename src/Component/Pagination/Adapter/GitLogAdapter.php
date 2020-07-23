@@ -13,7 +13,7 @@
 namespace Fabrica\Component\Pagination\Adapter;
 
 use Fabrica\Component\Pagination\PagerAdapterInterface;
-use App\Logic\Tools\Programs\Git\Log;
+use Fabrica\Tools\Programs\Git\Log;
 
 class GitLogAdapter implements PagerAdapterInterface
 {

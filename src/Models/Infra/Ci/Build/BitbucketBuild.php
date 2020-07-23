@@ -4,11 +4,11 @@ namespace Fabrica\Models\Infra\Ci\Build;
 
 use GuzzleHttp\Client;
 use Fabrica\Tools\Builder;
-use SiUtils\Helper\Bitbucket;
+use Fabrica\Helper\Bitbucket;
 use Fabrica\Tools\Config;
 use Fabrica\Models\Infra\Ci\Build;
 use Fabrica\Models\Infra\Ci\BuildError;
-use SiUtils\Helper\Diff;
+use Fabrica\Helper\Diff;
 
 /**
  * BitBucket Build Model

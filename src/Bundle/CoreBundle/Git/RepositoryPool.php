@@ -18,8 +18,8 @@ use Siravel\Models\Components\Code\Project;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\ProjectEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\PushReferenceEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
-use App\Logic\Tools\Programs\Git\Repository;
-use App\Logic\Tools\Programs\Git\Admin;
+use Fabrica\Tools\Programs\Git\Repository;
+use Fabrica\Tools\Programs\Git\Admin;
 
 /**
  * Repository pool, containing all Git repositories.
@@ -106,7 +106,7 @@ class RepositoryPool implements EventSubscriberInterface
      * @param Siravel\Models\Components\Code\Project $project A
      * project model instance
      *
-     * @return App\Logic\Tools\Programs\Git\Repository A Git repository
+     * @return Fabrica\Tools\Programs\Git\Repository A Git repository
      */
     public function getGitRepository(Project $project)
     {

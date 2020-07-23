@@ -16,9 +16,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Siravel\Models\Components\Code\Project;
 use Siravel\Models\Components\Code\User;
-use App\Logic\Tools\Programs\Git\Blob;
-use App\Logic\Tools\Programs\Git\Reference;
-use App\Logic\Tools\Programs\Git\Tree;
+use Fabrica\Tools\Programs\Git\Blob;
+use Fabrica\Tools\Programs\Git\Reference;
+use Fabrica\Tools\Programs\Git\Tree;
 
 class FabricaExtension extends \Twig_Extension
 {

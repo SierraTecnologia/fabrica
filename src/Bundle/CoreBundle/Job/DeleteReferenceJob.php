@@ -7,8 +7,8 @@ use Siravel\Models\Components\Code\User;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\PushReferenceEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
 use Fabrica\Bundle\JobBundle\Job\Job;
-use App\Logic\Tools\Programs\Git\PushReference;
-use App\Logic\Tools\Programs\Git\Reference;
+use Fabrica\Tools\Programs\Git\PushReference;
+use Fabrica\Tools\Programs\Git\Reference;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DeleteReferenceJob extends Job

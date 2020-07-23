@@ -1,6 +1,6 @@
 <?php
 
-namespace SiUtils\Helper;
+namespace Fabrica\Helper;
 
 use Fabrica\Tools\Config;
 use Fabrica\Tools\Builder;
