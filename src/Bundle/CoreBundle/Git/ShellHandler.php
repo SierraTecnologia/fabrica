@@ -13,7 +13,7 @@
 namespace Fabrica\Bundle\CoreBundle\Git;
 
 use Fabrica\Bundle\CoreBundle\Git\RepositoryPool;
-use Siravel\Models\Components\Code\Project;
+use Fabrica\Models\Code\Project;
 
 /**
  * Handler of shell commands.

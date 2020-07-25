@@ -33,7 +33,7 @@ class EmailType extends AbstractType
         $resolver->setDefaults(array(
             'validation_groups'  => array('profile'),
             'translation_domain' => 'profile',
-            'data_class'         => 'Siravel\Models\Components\Code\Email',
+            'data_class'         => 'Fabrica\Models\Code\Email',
         ));
     }
 }

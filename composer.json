@@ -1,55 +1,54 @@
 {
     "name": "sierratecnologia/fabrica",
     "description": "Fabrica de Projetos",
+    "type": "library",
+    "keywords": [
+        "sierratecnologia",
+        "fabrica"
+    ],
     "license": "MIT",
+    "homepage": "https://sierratecnologia.com/packages/fabrica/",
+    "support": {
+        "email": "help@sierratecnologia.com",
+        "issues": "https://github.com/sierratecnologia/fabrica/issues",
+        "source": "https://github.com/sierratecnologia/fabrica",
+        "docs": "https://github.com/sierratecnologia/fabrica/blob/master/README.md"
+    },
     "authors": [
         {
-            "name": "Ricardo Rebello Sierra",
-            "email": "contato@ricardosierra.com.br"
+            "name": "SierraTecnologia",
+            "homepage": "https://sierratecnologia.com.br",
+            "email": "help@sierratecnologia.com.br"
         }
     ],
     "require": {
         "php": "^7.3.0",
-        "sierratecnologia/crypto": "dev-master",
-        "sierratecnologia/integrations": "dev-master",
-        "sierratecnologia/telefonica": "dev-master",
-        "deployer/deployer": ">=6.4",
-        "vanderlee/php-sentence": ">=1.0",
-        "fzaninotto/faker": "*",
-        "php-http/guzzle6-adapter": "*",
-        "devio/pipedrive": "*",
-        "league/flysystem-aws-s3-v3": "*",
-        "league/plates": "^3.1|^4.0",
-        "geerlingguy/ping": "*",
-        "phpbench/phpbench": "*",
-        "phploc/phploc": "*",
-        "phpmd/phpmd": "*",
-        "squizlabs/php_codesniffer": "*",
-        "phpro/grumphp": "*",
-        "phpseclib/phpseclib": "*",
-        "phpstan/phpstan": "*",
-        "phpunit/phpunit": "*",
-        "aws/aws-sdk-php": "*",
-        "predis/predis": "*",
-        "sebastian/diff": "*",
-        "sebastian/phpcpd": "*",
+        "sierratecnologia/crypto":          "dev-master",
+        "sierratecnologia/integrations":    "dev-master",
+        "sierratecnologia/telefonica":      "dev-master",
+        "deployer/deployer":            ">=6.4",
+        "vanderlee/php-sentence":       ">=1.0",
+        "fzaninotto/faker":             "*",
+        "php-http/guzzle6-adapter":     "*",
+        "devio/pipedrive":              "*",
+        "league/flysystem-aws-s3-v3":   "*",
+        "league/plates":                "^3.1|^4.0|^5.0",
+        "geerlingguy/ping":             "*",
+        "phpbench/phpbench":            "*",
+        "phploc/phploc":                "*",
+        "phpmd/phpmd":                  "*",
+        "squizlabs/php_codesniffer":    "*",
+        "phpro/grumphp":                "*",
+        "phpseclib/phpseclib":          "*",
+        "phpstan/phpstan":              "*",
+        "phpunit/phpunit":              "*",
+        "aws/aws-sdk-php":              "*",
+        "predis/predis":                "*",
+        "sebastian/diff":               "*",
+        "sebastian/phpcpd":             "*",
+        "gitonomy/git-bundle":          ">=0.1",
 
-        "symfony/symfony":                   "~2.4",
-        "doctrine/orm":                      "~2.4",
-        "swiftmailer/swiftmailer":           "~5.0",
-
-        "doctrine/doctrine-bundle":          "~1.2",
-        "twig/extensions":                   "~1.0",
-        "symfony/assetic-bundle":            "~2.3",
-        "symfony/monolog-bundle":            "~2.3",
-        "sensio/distribution-bundle":        "~2.3",
-        "doctrine/doctrine-fixtures-bundle": "~2.2",
-        "alexandresalome/mailcatcher":       "~0.2",
-        "juliendidier/buzz-bundle":          "dev-master",
-
-        "gitonomy/git-bundle":               "~0.1",
-
-        "leafo/lessphp":                    "~0.4"
+        "leafo/lessphp":                    ">=0.4"
     },
     "require-dev": {
         "behat/behat":                   "~2.5",

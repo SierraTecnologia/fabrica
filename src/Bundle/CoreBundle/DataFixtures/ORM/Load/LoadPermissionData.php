@@ -14,7 +14,7 @@ namespace Fabrica\Bundle\CoreBundle\DataFixtures\ORM\Load;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
-use Siravel\Models\Components\Code\Permission;
+use Fabrica\Models\Code\Permission;
 use Fabrica\Bundle\CoreBundle\DataFixtures\ORM\Fixture;
 
 /**

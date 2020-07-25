@@ -45,7 +45,7 @@ class UserRoleCreateCommandTest extends CommandTestCase
             'role' => $role,
         ));
 
-        $this->assertInstanceOf('Siravel\Models\Components\Code\UserRoleProject', $userRole);
+        $this->assertInstanceOf('Fabrica\Models\Code\UserRoleProject', $userRole);
     }
 
     public function testGlobalRole()

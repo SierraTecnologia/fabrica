@@ -14,8 +14,8 @@ namespace Fabrica\Bundle\WebsiteBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use Siravel\Models\Components\Code\UserSshKey;
-use Siravel\Models\Components\Code\Email;
+use Fabrica\Models\Code\UserSshKey;
+use Fabrica\Models\Code\Email;
 
 class UserController extends Controller
 {

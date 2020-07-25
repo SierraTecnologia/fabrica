@@ -17,9 +17,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Siravel\Models\Components\Code\Project;
-use Siravel\Models\Components\Code\ProjectGitAccess;
-use Siravel\Models\Components\Code\Role;
+use Fabrica\Models\Code\Project;
+use Fabrica\Models\Code\ProjectGitAccess;
+use Fabrica\Models\Code\Role;
 
 /**
  * Manage git accesses in projects.

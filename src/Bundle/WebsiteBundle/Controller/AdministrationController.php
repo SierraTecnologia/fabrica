@@ -14,9 +14,9 @@ namespace Fabrica\Bundle\WebsiteBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use Siravel\Models\Components\Code\Role;
-use Siravel\Models\Components\Code\User;
-use Siravel\Models\Components\Code\Email;
+use Fabrica\Models\Code\Role;
+use Fabrica\Models\Code\User;
+use Fabrica\Models\Code\Email;
 
 class AdministrationController extends Controller
 {

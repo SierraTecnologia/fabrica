@@ -5,7 +5,7 @@
 
     <namespace prefix="DoctrineAssert">Symfony\Bridge\Doctrine\Validator\Constraints\</namespace>
 
-    <class name="Siravel\Models\Components\Code\Role">
+    <class name="Fabrica\Models\Code\Role">
         <constraint name="DoctrineAssert:UniqueEntity">
             <option name="fields">
                 <value>name</value>

@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Siravel\Models\Components\Code\Project;
+use Fabrica\Models\Code\Project;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\ProjectEvent;
 
@@ -35,6 +35,7 @@ class RepositoryFolderService
     
     public static function findPackages()
     {
+        // Project::truncate();
         $realPath = '/sierra/Dev/Libs/';
         
         collect(scandir($realPath))
@@ -77,25 +78,23 @@ class RepositoryFolderService
             $project->save();
 
             $event = new ProjectEvent($project);
-            $this->getContainer()->get('fabrica_core.event_dispatcher')->dispatch(FabricaEvents::PROJECT_CREATE, $event);
+            event($event); // @todo FabricaEvents::PROJECT_CREATE   fabrica_core.event_dispatcher
 
-            $em->persist($project);
-            $em->flush();
+            // //@todo
+            // unset($composerLock->packages);
+            // dd(
+            //     // $composerLock,
+            //     $composer,
+            //     $realPath . $item
+            // );
 
-            unset($composerLock->packages);
-            dd(
-                // $composerLock,
-                $composer,
-                $realPath . $item
-            );
-
-            // // Loop through all the packages and get the version of transmissor
-            // foreach ($composerLock->packages as $package) {
-            //     if ($package->name == $this->packageName) {
-            //         $this->version = $package->version;
-            //         break;
-            //     }
-            // }
+            // // // Loop through all the packages and get the version of transmissor
+            // // foreach ($composerLock->packages as $package) {
+            // //     if ($package->name == $this->packageName) {
+            // //         $this->version = $package->version;
+            // //         break;
+            // //     }
+            // // }
         }
 
         return ;

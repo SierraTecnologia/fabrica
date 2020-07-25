@@ -12,10 +12,10 @@
 
 namespace Fabrica\Bundle\CoreBundle\EventDispatcher\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Fabrica\Contracts\EventAbstract as Event;
 
-use Siravel\Models\Components\Code\Project;
-use Siravel\Models\Components\Code\User;
+use Fabrica\Models\Code\Project;
+use Fabrica\Models\Code\User;
 
 class ProjectEvent extends Event
 {

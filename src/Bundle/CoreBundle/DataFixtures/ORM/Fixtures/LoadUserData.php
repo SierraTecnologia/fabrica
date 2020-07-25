@@ -15,7 +15,7 @@ namespace Fabrica\Bundle\CoreBundle\DataFixtures\ORM\Fixtures;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Fabrica\Bundle\CoreBundle\DataFixtures\ORM\UserFixture;
-use Siravel\Models\Components\Code\User;
+use Fabrica\Models\Code\User;
 
 /**
  * Loads the fixtures for user object.

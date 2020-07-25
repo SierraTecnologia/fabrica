@@ -28,7 +28,7 @@ class UserType extends AbstractType
             ->add('locale', 'fabrica_locale', array('label' => 'form.locale'))
             ->add('globalRoles', 'entity', array(
                 'label'   => 'form.global_roles',
-                'class'   => 'Siravel\Models\Components\Code\Role',
+                'class'   => 'Fabrica\Models\Code\Role',
                 'query_builder' => function(EntityRepository $er) {
                     $query = $er
                         ->createQueryBuilder('R')
@@ -47,7 +47,7 @@ class UserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => 'Siravel\Models\Components\Code\User',
+            'data_class'         => 'Fabrica\Models\Code\User',
             'translation_domain' => 'administration_user',
             'user'               => null,
         ));

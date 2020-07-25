@@ -5,7 +5,7 @@
 
     <namespace prefix="Assert">Symfony\Component\Validator\Constraints\</namespace>
 
-    <class name="Siravel\Models\Components\Code\UserSshKey">
+    <class name="Fabrica\Models\Code\UserSshKey">
         <property name="title">
             <constraint name="Assert:NotBlank" />
         </property>

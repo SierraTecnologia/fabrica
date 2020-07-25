@@ -12,8 +12,8 @@
 
 namespace Fabrica\Bundle\WebsiteBundle\Controller;
 
-use Siravel\Models\Components\Code\Email;
-use Siravel\Models\Components\Code\UserSshKey;
+use Fabrica\Models\Code\Email;
+use Fabrica\Models\Code\UserSshKey;
 use Fabrica\Bundle\CoreBundle\Job\UpdateSshKeysJob;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -12,7 +12,7 @@
 
 namespace Fabrica\Bundle\CoreBundle\Tests\Entity;
 
-use Siravel\Models\Components\Code\Permission;
+use Fabrica\Models\Code\Permission;
 
 class PermissionTest extends \PHPUnit\Framework\TestCase
 {

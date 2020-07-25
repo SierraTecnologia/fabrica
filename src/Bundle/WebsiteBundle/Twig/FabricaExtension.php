@@ -14,8 +14,8 @@ namespace Fabrica\Bundle\WebsiteBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use Siravel\Models\Components\Code\Project;
-use Siravel\Models\Components\Code\User;
+use Fabrica\Models\Code\Project;
+use Fabrica\Models\Code\User;
 use Fabrica\Tools\Programs\Git\Blob;
 use Fabrica\Tools\Programs\Git\Reference;
 use Fabrica\Tools\Programs\Git\Tree;

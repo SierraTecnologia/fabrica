@@ -56,3 +56,22 @@ SierraTecnologia is a software solutions startup, specialized in integrated ente
 This software is released under [The MIT License (MIT)](LICENSE).
 
 (c) 2008-2020 SierraTecnologia, Some rights reserved.
+
+
+
+
+## removi
+
+
+        "sensio/distribution-bundle":        ">=2.3",
+
+        "symfony/symfony":                   ">=2.4",
+        "doctrine/orm":                      ">=2.4",
+        "swiftmailer/swiftmailer":           ">=5.0",
+
+        "doctrine/doctrine-bundle":          ">=1.2",
+        "twig/extensions":                   ">=1.0",
+        "symfony/assetic-bundle":            ">=2.3",
+        "symfony/monolog-bundle":            ">=2.3",
+        "doctrine/doctrine-fixtures-bundle": ">=2.2",
+        "alexandresalome/mailcatcher":       ">=0.2",

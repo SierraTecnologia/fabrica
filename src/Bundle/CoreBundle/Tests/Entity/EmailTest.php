@@ -12,11 +12,11 @@
 
 namespace Fabrica\Bundle\CoreBundle\Tests\Entity;
 
-use Siravel\Models\Components\Code\Email;
+use Fabrica\Models\Code\Email;
 
 class EmailTest extends \PHPUnit\Framework\TestCase
 {
-    const USER_CLASS = 'Siravel\Models\Components\Code\User';
+    const USER_CLASS = 'Fabrica\Models\Code\User';
 
     public function testInstanciation()
     {

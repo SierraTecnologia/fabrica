@@ -14,8 +14,8 @@ namespace Fabrica\Bundle\CoreBundle\Mailer;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use Siravel\Models\Components\Code\Email;
-use Siravel\Models\Components\Code\User;
+use Fabrica\Models\Code\Email;
+use Fabrica\Models\Code\User;
 
 /**
  * Service to send emails

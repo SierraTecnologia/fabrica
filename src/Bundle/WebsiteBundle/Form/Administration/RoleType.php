@@ -28,7 +28,7 @@ class RoleType extends AbstractType
             ->add('slug', 'text', array('label' => 'form.slug'))
             ->add('description', 'text', array('label' => 'form.description'))
             ->add('permissions', 'entity', array(
-                'class'              => 'Siravel\Models\Components\Code\Permission',
+                'class'              => 'Fabrica\Models\Code\Permission',
                 'property'           => 'name',
                 'multiple'           => true,
                 'expanded'           => true,
@@ -52,7 +52,7 @@ class RoleType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => 'Siravel\Models\Components\Code\Role',
+            'data_class'         => 'Fabrica\Models\Code\Role',
             'translation_domain' => 'administration_role',
             'is_global'          => true
         ));

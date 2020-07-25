@@ -6,7 +6,7 @@
     <namespace prefix="DoctrineAssert">Symfony\Bridge\Doctrine\Validator\Constraints\</namespace>
     <namespace prefix="Assert">Symfony\Component\Validator\Constraints\</namespace>
 
-    <class name="Siravel\Models\Components\Code\Email">
+    <class name="Fabrica\Models\Code\Email">
         <!-- Make sure the email determines the user -->
         <constraint name="DoctrineAssert:UniqueEntity">
             <option name="fields">

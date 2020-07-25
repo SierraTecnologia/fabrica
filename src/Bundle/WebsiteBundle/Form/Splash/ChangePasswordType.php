@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-use Siravel\Models\Components\Code\User;
+use Fabrica\Models\Code\User;
 
 class ChangePasswordType extends AbstractType
 {
@@ -61,7 +61,7 @@ class ChangePasswordType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => 'Siravel\Models\Components\Code\User',
+            'data_class'         => 'Fabrica\Models\Code\User',
             'translation_domain' => 'forgot_password'
         ));
     }

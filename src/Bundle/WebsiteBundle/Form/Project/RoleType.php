@@ -28,7 +28,7 @@ class RoleType extends AbstractType
         }
 
         $builder->add('user', 'entity', array(
-            'class'   => 'Siravel\Models\Components\Code\User',
+            'class'   => 'Fabrica\Models\Code\User',
             'property' => 'fullname',
             'query_builder' => function(EntityRepository $er) use ($usedUsers) {
                 $query = $er
@@ -46,7 +46,7 @@ class RoleType extends AbstractType
 
         $builder
             ->add('role', 'entity', array(
-                'class'   => 'Siravel\Models\Components\Code\Role',
+                'class'   => 'Fabrica\Models\Code\Role',
                 'property' => 'name',
                 'query_builder' => function(EntityRepository $er) {
                     $query = $er
@@ -63,7 +63,7 @@ class RoleType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'   => 'Siravel\Models\Components\Code\UserRoleProject',
+            'data_class'   => 'Fabrica\Models\Code\UserRoleProject',
             'usedUsers'    => array(),
             'from'         => null,
         ));

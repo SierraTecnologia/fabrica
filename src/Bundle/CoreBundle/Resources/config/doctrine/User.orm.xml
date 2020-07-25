@@ -2,7 +2,7 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity table="user" name="Siravel\Models\Components\Code\User" repository-class="Siravel\Models\Components\Code\Repository\UserRepository">
+    <entity table="user" name="Fabrica\Models\Code\User" repository-class="Fabrica\Models\Code\Repository\UserRepository">
         <unique-constraints>
             <unique-constraint name="username" columns="username" />
         </unique-constraints>
@@ -19,28 +19,28 @@
         <field name="locale" column="locale" type="string" length="12" nullable="true" />
         <field name="activationToken" column="activation_token" type="string" length="32" nullable="true" />
 
-        <one-to-many field="sshKeys" target-entity="Siravel\Models\Components\Code\UserSshKey" mapped-by="user">
+        <one-to-many field="sshKeys" target-entity="Fabrica\Models\Code\UserSshKey" mapped-by="user">
             <cascade>
                 <cascade-persist />
                 <cascade-remove />
             </cascade>
         </one-to-many>
 
-        <one-to-many field="emails" target-entity="Siravel\Models\Components\Code\Email" mapped-by="user">
+        <one-to-many field="emails" target-entity="Fabrica\Models\Code\Email" mapped-by="user">
             <cascade>
                 <cascade-persist />
                 <cascade-remove />
             </cascade>
         </one-to-many>
 
-        <one-to-many field="projectRoles" target-entity="Siravel\Models\Components\Code\UserRoleProject" mapped-by="user">
+        <one-to-many field="projectRoles" target-entity="Fabrica\Models\Code\UserRoleProject" mapped-by="user">
             <cascade>
                 <cascade-persist />
                 <cascade-remove />
             </cascade>
         </one-to-many>
 
-        <many-to-many field="globalRoles" target-entity="Siravel\Models\Components\Code\Role">
+        <many-to-many field="globalRoles" target-entity="Fabrica\Models\Code\Role">
             <join-table name="user_role_global">
                 <join-columns>
                     <join-column name="user_id" referenced-column-name="id" />

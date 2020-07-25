@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 use Doctrine\ORM\NoResultException;
 
-use Siravel\Models\Components\Code\User;
+use Fabrica\Models\Code\User;
 
 class SplashController extends Controller
 {

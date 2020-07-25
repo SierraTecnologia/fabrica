@@ -5,7 +5,7 @@
 
     <namespace prefix="Assert">Symfony\Component\Validator\Constraints\</namespace>
 
-    <class name="Siravel\Models\Components\Code\ProjectGitAccess">
+    <class name="Fabrica\Models\Code\ProjectGitAccess">
         <property name="reference">
             <constraint name="Assert:NotBlank" />
         </property>

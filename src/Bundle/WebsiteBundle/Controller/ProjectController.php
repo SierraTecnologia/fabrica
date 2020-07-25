@@ -12,9 +12,9 @@
 
 namespace Fabrica\Bundle\WebsiteBundle\Controller;
 
-use Siravel\Models\Components\Code\Project;
-use Siravel\Models\Components\Code\ProjectGitAccess;
-use Siravel\Models\Components\Code\UserRoleProject;
+use Fabrica\Models\Code\Project;
+use Fabrica\Models\Code\ProjectGitAccess;
+use Fabrica\Models\Code\UserRoleProject;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\ProjectEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
 use Fabrica\Bundle\CoreBundle\Job\DeleteReferenceJob;

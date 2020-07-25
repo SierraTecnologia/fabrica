@@ -21,7 +21,7 @@ class GitAccessType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('role', 'entity', array(
-            'class' => 'Siravel\Models\Components\Code\Role',
+            'class' => 'Fabrica\Models\Code\Role',
             'property' => 'name'
         ));
         $builder->add('reference', 'text');
@@ -32,7 +32,7 @@ class GitAccessType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Siravel\Models\Components\Code\ProjectGitAccess',
+            'data_class' => 'Fabrica\Models\Code\ProjectGitAccess',
         ));
     }
 

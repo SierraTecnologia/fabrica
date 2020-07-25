@@ -13,7 +13,7 @@
 namespace Fabrica\Bundle\CoreBundle\Tests\Security;
 
 use Fabrica\Bundle\CoreBundle\Security\ProjectRole;
-use Siravel\Models\Components\Code\Project;
+use Fabrica\Models\Code\Project;
 
 class ProjectRoleTest extends \PHPUnit\Framework\TestCase
 {

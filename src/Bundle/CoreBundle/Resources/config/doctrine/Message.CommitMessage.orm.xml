@@ -3,7 +3,7 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity table="message_commit" name="Siravel\Models\Components\Code\Message\CommitMessage">
+    <entity table="message_commit" name="Fabrica\Models\Code\Message\CommitMessage">
         <field name="commitList" column="commit_list" type="blob" nullable="true" />
         <field name="isForce" type="boolean" column="is_force" />
         <field name="commitCount" type="integer" column="commit_count" />

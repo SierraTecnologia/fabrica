@@ -41,7 +41,7 @@ class UserCreateCommandTest extends CommandTestCase
             'username' => 'foo'
         ));
 
-        $this->assertInstanceOf('Siravel\Models\Components\Code\User', $user);
+        $this->assertInstanceOf('Fabrica\Models\Code\User', $user);
 
         $this->assertEquals('foo@example.org', $user->getDefaultEmail()->getEmail());
         $this->assertEquals('Foo', $user->getFullname());

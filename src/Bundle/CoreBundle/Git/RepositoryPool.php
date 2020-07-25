@@ -14,7 +14,7 @@ namespace Fabrica\Bundle\CoreBundle\Git;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-use Siravel\Models\Components\Code\Project;
+use Fabrica\Models\Code\Project;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\ProjectEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\PushReferenceEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
@@ -103,7 +103,7 @@ class RepositoryPool implements EventSubscriberInterface
     /**
      * Returns the Git repository associated the a model project.
      *
-     * @param Siravel\Models\Components\Code\Project $project A
+     * @param Fabrica\Models\Code\Project $project A
      * project model instance
      *
      * @return Fabrica\Tools\Programs\Git\Repository A Git repository

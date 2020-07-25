@@ -12,7 +12,7 @@
 
 namespace Fabrica\Bundle\CoreBundle\Validation;
 
-use Siravel\Models\Components\Code\Project;
+use Fabrica\Models\Code\Project;
 use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**

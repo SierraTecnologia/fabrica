@@ -14,7 +14,7 @@ namespace Fabrica\Bundle\CoreBundle\Security;
 
 use Symfony\Component\Security\Core\Role\RoleInterface;
 
-use Siravel\Models\Components\Code\Project;
+use Fabrica\Models\Code\Project;
 
 /**
  * @author Alexandre Salomé <alexandre.salome@gmail.com>

@@ -17,8 +17,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Siravel\Models\Components\Code\User;
-use Siravel\Models\Components\Code\Email;
+use Fabrica\Models\Code\User;
+use Fabrica\Models\Code\Email;
 
 /**
  * Shell command for creating a user.

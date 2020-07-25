@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Siravel\Models\Components\Code\Project;
+use Fabrica\Models\Code\Project;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\ProjectEvent;
 
@@ -68,7 +68,7 @@ EOF
         $em->flush();
 
         $event = new ProjectEvent($project);
-        $this->getContainer()->get('fabrica_core.event_dispatcher')->dispatch(FabricaEvents::PROJECT_CREATE, $event);
+        event($event); // @todo FabricaEvents::PROJECT_CREATE   fabrica_core.event_dispatcher
 
         $em->persist($project);
         $em->flush();

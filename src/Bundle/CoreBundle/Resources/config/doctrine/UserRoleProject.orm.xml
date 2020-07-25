@@ -3,7 +3,7 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="Siravel\Models\Components\Code\UserRoleProject" table="user_role_project">
+    <entity name="Fabrica\Models\Code\UserRoleProject" table="user_role_project">
         <unique-constraints>
             <unique-constraint name="user_project" columns="user_id,project_id" />
         </unique-constraints>
@@ -12,17 +12,17 @@
             <generator strategy="IDENTITY" />
         </id>
 
-        <many-to-one field="user" target-entity="Siravel\Models\Components\Code\User" inversed-by="userRolesProject">
+        <many-to-one field="user" target-entity="Fabrica\Models\Code\User" inversed-by="userRolesProject">
             <join-columns>
                 <join-column name="user_id" referenced-column-name="id" />
             </join-columns>
         </many-to-one>
-        <many-to-one field="role" target-entity="Siravel\Models\Components\Code\Role" inversed-by="userRolesProject">
+        <many-to-one field="role" target-entity="Fabrica\Models\Code\Role" inversed-by="userRolesProject">
             <join-columns>
                 <join-column name="role_id" referenced-column-name="id" />
             </join-columns>
         </many-to-one>
-        <many-to-one field="project" target-entity="Siravel\Models\Components\Code\Project" inversed-by="userRoles">
+        <many-to-one field="project" target-entity="Fabrica\Models\Code\Project" inversed-by="userRoles">
             <join-columns>
                 <join-column name="project_id" referenced-column-name="id" />
             </join-columns>

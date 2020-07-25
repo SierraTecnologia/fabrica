@@ -20,8 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 use Fabrica\Bundle\CoreBundle\Validation\Constraints\NewEmail;
-use Siravel\Models\Components\Code\User;
-use Siravel\Models\Components\Code\Email;
+use Fabrica\Models\Code\User;
+use Fabrica\Models\Code\Email;
 
 class RegisterType extends AbstractType
 {
@@ -77,7 +77,7 @@ class RegisterType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => 'Siravel\Models\Components\Code\User',
+            'data_class'         => 'Fabrica\Models\Code\User',
             'translation_domain' => 'register',
             'validation_groups'  => array('registration')
         ));

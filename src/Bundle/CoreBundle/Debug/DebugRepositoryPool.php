@@ -2,7 +2,7 @@
 
 namespace Fabrica\Bundle\CoreBundle\Debug;
 
-use Siravel\Models\Components\Code\Project;
+use Fabrica\Models\Code\Project;
 use Fabrica\Bundle\CoreBundle\Git\RepositoryPool;
 use Fabrica\Bundle\GitBundle\DataCollector\GitDataCollector;
 use Fabrica\Tools\Programs\Git\Repository;

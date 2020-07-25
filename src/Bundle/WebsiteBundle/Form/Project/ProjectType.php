@@ -30,7 +30,7 @@ class ProjectType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => 'Siravel\Models\Components\Code\Project',
+            'data_class'         => 'Fabrica\Models\Code\Project',
             'translation_domain' => 'project_admin',
             'action'             => 'create',
         ));

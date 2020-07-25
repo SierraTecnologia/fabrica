@@ -12,7 +12,7 @@
 
 namespace Fabrica\Bundle\CoreBundle\Git;
 
-use Siravel\Models\Components\Code\Project;
+use Fabrica\Models\Code\Project;
 
 class PushTarget
 {

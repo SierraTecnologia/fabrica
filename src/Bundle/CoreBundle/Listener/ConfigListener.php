@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Fabrica\Component\Config\ConfigInterface;
-use Siravel\Models\Components\Code\User;
+use Fabrica\Models\Code\User;
 
 /**
  * @author Alexandre Salomé <alexandre.salome@gmail.com>

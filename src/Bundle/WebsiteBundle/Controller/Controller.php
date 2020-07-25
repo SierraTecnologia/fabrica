@@ -12,10 +12,10 @@
 
 namespace Fabrica\Bundle\WebsiteBundle\Controller;
 
-use Siravel\Models\Components\Code\Project;
-use Siravel\Models\Components\Code\User;
+use Fabrica\Models\Code\Project;
+use Fabrica\Models\Code\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
-use Symfony\Component\EventDispatcher\Event;
+use Fabrica\Contracts\EventAbstract as Event;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 

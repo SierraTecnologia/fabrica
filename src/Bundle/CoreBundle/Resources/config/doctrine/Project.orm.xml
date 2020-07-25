@@ -3,7 +3,7 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity repository-class="Siravel\Models\Components\Code\Repository\ProjectRepository" name="Siravel\Models\Components\Code\Project" table="project">
+    <entity repository-class="Fabrica\Models\Code\Repository\ProjectRepository" name="Fabrica\Models\Code\Project" table="project">
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY" />
         </id>
@@ -13,19 +13,19 @@
         <field name="defaultBranch" type="string" column="default_branch" length="32" />
         <field name="repositorySize" type="integer" column="repository_size" nullable="true" />
 
-        <one-to-many field="userRoles" target-entity="Siravel\Models\Components\Code\UserRoleProject" mapped-by="project">
+        <one-to-many field="userRoles" target-entity="Fabrica\Models\Code\UserRoleProject" mapped-by="project">
             <cascade>
                 <cascade-remove />
                 <cascade-persist />
             </cascade>
         </one-to-many>
-        <one-to-many field="gitAccesses" target-entity="Siravel\Models\Components\Code\ProjectGitAccess" mapped-by="project">
+        <one-to-many field="gitAccesses" target-entity="Fabrica\Models\Code\ProjectGitAccess" mapped-by="project">
             <cascade>
                 <cascade-remove />
                 <cascade-persist />
             </cascade>
         </one-to-many>
-        <one-to-many field="feeds" target-entity="Siravel\Models\Components\Code\Feed" mapped-by="project">
+        <one-to-many field="feeds" target-entity="Fabrica\Models\Code\Feed" mapped-by="project">
             <cascade>
                 <cascade-remove />
                 <cascade-persist />

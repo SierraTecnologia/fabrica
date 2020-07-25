@@ -15,9 +15,9 @@ namespace Fabrica\Bundle\CoreBundle\Security;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-use Siravel\Models\Components\Code\User;
-use Siravel\Models\Components\Code\Project;
-use Siravel\Models\Components\Code\ProjectGitAccess;
+use Fabrica\Models\Code\User;
+use Fabrica\Models\Code\Project;
+use Fabrica\Models\Code\ProjectGitAccess;
 use Fabrica\Bundle\CoreBundle\Git\PushTarget;
 use Fabrica\Bundle\CoreBundle\Security\ProjectRole;
 

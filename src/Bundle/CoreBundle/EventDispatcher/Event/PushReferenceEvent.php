@@ -14,10 +14,10 @@ namespace Fabrica\Bundle\CoreBundle\EventDispatcher\Event;
 
 use Fabrica\Tools\Programs\Git\PushReference;
 
-use Symfony\Component\EventDispatcher\Event;
+use Fabrica\Contracts\EventAbstract as Event;
 
-use Siravel\Models\Components\Code\Project;
-use Siravel\Models\Components\Code\User;
+use Fabrica\Models\Code\Project;
+use Fabrica\Models\Code\User;
 
 /**
  * @author Julien DIDIER <genzo.wm@gmail.com>

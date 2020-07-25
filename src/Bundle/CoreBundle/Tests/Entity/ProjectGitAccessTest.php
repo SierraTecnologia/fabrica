@@ -12,8 +12,8 @@
 
 namespace Fabrica\Bundle\CoreBundle\Tests\Entity;
 
-use Siravel\Models\Components\Code\Project;
-use Siravel\Models\Components\Code\ProjectGitAccess;
+use Fabrica\Models\Code\Project;
+use Fabrica\Models\Code\ProjectGitAccess;
 
 class ProjectGitAccessTest extends \PHPUnit\Framework\TestCase
 {

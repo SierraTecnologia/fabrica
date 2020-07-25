@@ -41,7 +41,7 @@ class UserSshKeyCreateCommandTest extends CommandTestCase
             'title' => 'foo'
         ));
 
-        $this->assertInstanceOf('Siravel\Models\Components\Code\UserSshKey', $userSshKey);
+        $this->assertInstanceOf('Fabrica\Models\Code\UserSshKey', $userSshKey);
 
         $this->assertEquals('alice', $userSshKey->getUser()->getUsername());
         $this->assertEquals('foo', $userSshKey->getTitle());
