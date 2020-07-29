@@ -55,11 +55,39 @@ class FabricaProvider extends ServiceProvider
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \App\Models\Role::$ADMIN
             ],
+            [
+                'text'        => 'Administração',
+                'icon'        => 'fas fa-fw fa-search',
+                'icon_color'  => 'blue',
+                'label_color' => 'success',
+                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                // 'access' => \App\Models\Role::$ADMIN
+            ],
             'Procurar' => [
                 [
                     'text'        => 'Projetos',
-                    'route'       => 'rica.fabrica.projetos.index',
+                    'route'       => 'rica.fabrica.projects.index',
                     'icon'        => 'fas fa-fw fa-ship',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    // 'access' => \App\Models\Role::$ADMIN
+                ],
+            ],
+            'Administração' => [
+                [
+                    'text'        => 'Arquitetura',
+                    'route'       => 'rica.fabrica.manager.arquitetura.index',
+                    'icon'        => 'fas fa-fw fa-car',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    // 'access' => \App\Models\Role::$ADMIN
+                ],
+                [
+                    'text'        => 'Fields',
+                    'route'       => 'rica.fabrica.manager.fields.index',
+                    'icon'        => 'fas fa-fw fa-car',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)

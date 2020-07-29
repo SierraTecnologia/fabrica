@@ -19,6 +19,7 @@ class FieldValue extends Base
      */
     protected $fillable = [
         'name',
+        'value',
     ];
 
     /**
@@ -46,6 +47,7 @@ class FieldValue extends Base
      */
     public static function registerFieldForProject($field, $projectUrl = false)
     {
+        dd($field);
         $field =  self::firstOrCreate(
             [
             'name' => $field->name

@@ -49,9 +49,10 @@ class Issue extends Base
             }
 
             if (Str::start($fieldIdentify, 'customfield')) {
-                $field = Field::firstOrCreate([
-                    'code' => $fieldIdentify
-                ]);
+                // @todo
+                // dd($fieldIdentify, $result); $field = Field::firstOrCreate([
+                //     'code' => $fieldIdentify
+                // ]);
                 FieldValue::create([
                     'value' => $fieldIdentify,
                     'code_field_id' => $fieldIdentify,

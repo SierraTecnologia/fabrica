@@ -8,8 +8,11 @@ namespace Fabrica\Tasks;
 use Fabrica\Tools\Databases\Mysql\Mysql as MysqlTool;
 use Integrations\Models\Token;
 use Integrations\Connectors\Sentry\Sentry;
+use Integrations\Connectors\Sentry\Import as SentryImport;
 use Integrations\Connectors\Jira\Jira;
+use Integrations\Connectors\Jira\Import as JiraImport;
 use Integrations\Connectors\Gitlab\Gitlab;
+use Integrations\Connectors\Gitlab\Import as GitlabImport;
 use Log;
 use Operador\Contracts\ActionInterface;
 
@@ -31,17 +34,17 @@ class ImportFromToken extends ActionBase implements ActionInterface
     public function execute()
     {
         if (!$this->token->account || !$this->token->account->status) {
-            dd($this->token);
+            $this->notice('Token ignorado sem account .. '.print_r($this->token, true));
             return false;
         }
-        Log::channel('sitec-finder')->info('Tratando Token .. '.print_r($this->token, true));
+        $this->info('Tratando Token de Integração: '.$this->token->account->integration_id);
 
         if ($this->token->account->integration_id == Sentry::getCodeForPrimaryKey()) {
-            // (new \Integrations\Connectors\Sentry\Import($this->token))->bundle();
+            SentryImport::makeWithOutput($this->output, $this->token)->handle();
         } else if ($this->token->account->integration_id == Jira::getCodeForPrimaryKey()) {
-            // (new \Integrations\Connectors\Jira\Import($this->token))->bundle();
+            JiraImport::makeWithOutput($this->output, $this->token)->handle();
         } else if ($this->token->account->integration_id == Gitlab::getCodeForPrimaryKey()) {
-            (new \Integrations\Connectors\Gitlab\Import($this->token))->bundle();
+            GitlabImport::makeWithOutput($this->output, $this->token)->handle();
         }
 
         return true;

@@ -19,6 +19,7 @@ class Field extends Base
      */
     protected $fillable = [
         'name',
+        'code',
     ];
 
     /**
@@ -48,7 +49,8 @@ class Field extends Base
     {
         $field =  self::firstOrCreate(
             [
-            'name' => $field->name
+                'name' => $field->name,
+                'code' => $field->key
             ]
         );
 
