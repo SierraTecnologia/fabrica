@@ -39,16 +39,47 @@ class FabricaProvider extends ServiceProvider
      * Rotas do Menu
      */
     public static $menuItens = [
-        [
-            'text' => 'Fabrica',
-            'icon' => 'fas fa-fw fa-search',
-            'icon_color' => "blue",
-            'label_color' => "success",
-            'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        'Tecnologia|110' => [
+            [
+                'text' => 'Desenvolvimento',
+                'icon' => 'fas fa-fw fa-search',
+                'icon_color' => "blue",
+                'label_color' => "success",
+                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            ],
+            'Desenvolvimento' => [
+                // [
+                //     'text'        => 'Procurar',
+                //     'icon'        => 'fas fa-fw fa-search',
+                //     'icon_color'  => 'blue',
+                //     'label_color' => 'success',
+                //     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                //     // 'access' => \App\Models\Role::$ADMIN
+                // ],
+                // [
+                //     'text'        => 'Administração',
+                //     'icon'        => 'fas fa-fw fa-search',
+                //     'icon_color'  => 'blue',
+                //     'label_color' => 'success',
+                //     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                //     // 'access' => \App\Models\Role::$ADMIN
+                // ],
+                // 'Procurar' => [
+                    [
+                        'text'        => 'Projetos',
+                        'route'       => 'rica.fabrica.projects.index',
+                        'icon'        => 'fas fa-fw fa-ship',
+                        'icon_color'  => 'blue',
+                        'label_color' => 'success',
+                        'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                        // 'access' => \App\Models\Role::$ADMIN
+                    ],
+                // ],
+            ],
         ],
-        'Fabrica' => [
+        'Personalização|250' => [
             [
-                'text'        => 'Procurar',
+                'text'        => 'Tarefas',
                 'icon'        => 'fas fa-fw fa-search',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
@@ -56,25 +87,14 @@ class FabricaProvider extends ServiceProvider
                 // 'access' => \App\Models\Role::$ADMIN
             ],
             [
-                'text'        => 'Administração',
+                'text'        => 'Processos',
                 'icon'        => 'fas fa-fw fa-search',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \App\Models\Role::$ADMIN
             ],
-            'Procurar' => [
-                [
-                    'text'        => 'Projetos',
-                    'route'       => 'rica.fabrica.projects.index',
-                    'icon'        => 'fas fa-fw fa-ship',
-                    'icon_color'  => 'blue',
-                    'label_color' => 'success',
-                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                    // 'access' => \App\Models\Role::$ADMIN
-                ],
-            ],
-            'Administração' => [
+            'Processos' => [
                 [
                     'text'        => 'Arquitetura',
                     'route'       => 'rica.fabrica.manager.arquitetura.index',
@@ -84,6 +104,8 @@ class FabricaProvider extends ServiceProvider
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \App\Models\Role::$ADMIN
                 ],
+            ],
+            'Tarefas' => [
                 [
                     'text'        => 'Fields',
                     'route'       => 'rica.fabrica.manager.fields.index',

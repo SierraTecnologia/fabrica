@@ -26,7 +26,7 @@ class PhpMessDetector extends Plugin implements ZeroConfigPluginInterface
      *
      * @var array
      */
-    protected $rules;
+    public $rules;
     protected $allowedWarnings;
 
     /**
