@@ -1,3 +1,11 @@
+!= View::make('support::shared.form._header', $__data)->render()
+%fieldset
+	.legend=empty($item)?'New':'Edit'
+	!= Former::text('title')
+	!= Former::textarea('body')
+	
+!= View::make('support::shared.form._footer', $__data)->render()
+
 -#
 
 	- $sidebar->add(Former::listing('Stalker\Models\Video'))

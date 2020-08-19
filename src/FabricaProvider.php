@@ -39,7 +39,7 @@ class FabricaProvider extends ServiceProvider
      * Rotas do Menu
      */
     public static $menuItens = [
-        'Tecnologia|110' => [
+        'Tecnologia|10' => [
             [
                 'text' => 'Desenvolvimento',
                 'icon' => 'fas fa-fw fa-search',

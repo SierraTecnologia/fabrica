@@ -65,8 +65,8 @@ class CreateCodeTables extends Migration
 
         Schema::create(
             'code_fields', function (Blueprint $table) {
-                $table->increments('id');
-                $table->string('code');
+                $table->string('code')->unique();
+                $table->primary('code');
                 $table->string('name');
                 $table->timestamps();
             }

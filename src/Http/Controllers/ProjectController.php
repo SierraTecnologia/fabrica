@@ -15,6 +15,7 @@ class ProjectController extends Base
      */
     protected $title = 'Projects';
     protected $model = Project::class;
+    CONST VIEWS = "fabrica::projects";
 
     /**
      * @var string

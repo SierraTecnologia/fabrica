@@ -11,6 +11,13 @@ class Field extends Base
     protected $organizationPerspective = false;
 
     protected $table = 'code_fields';
+    
+    public $incrementing = false;
+    protected $casts = [
+        'code' => 'string',
+    ];
+    protected $primaryKey = 'code';
+    protected $keyType = 'string'; 
 
     /**
      * The attributes that are mass assignable.
