@@ -18,7 +18,7 @@ class PermissionCheckCommandTest extends CommandTestCase
 {
     protected $client;
 
-    public function setUp(): void
+    protected function setUp(): void: void
     {
         $this->client = self::createClient();
         $this->client->startIsolation();

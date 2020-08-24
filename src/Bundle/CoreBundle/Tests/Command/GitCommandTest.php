@@ -20,7 +20,7 @@ class GitCommandTest extends CommandTestCase
 
     protected $shellHandler;
 
-    public function setUp(): void
+    protected function setUp(): void: void
     {
         $this->client = self::createClient();
 
