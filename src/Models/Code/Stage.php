@@ -6,7 +6,6 @@ use Support\Models\Base;
 
 class Stage extends Base
 {
-
     protected $organizationPerspective = false;
 
     protected $table = 'code_stages';
@@ -19,5 +18,4 @@ class Stage extends Base
     protected $fillable = [
         'name',
     ];
-    
 }
