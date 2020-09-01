@@ -22,7 +22,7 @@
         }
     ],
     "require": {
-        "php": "^7.3.0",
+        "php": "^7.4",
         "sierratecnologia/integrations":    "dev-master",
         "deployer/deployer":            ">=6.4",
         "privatejustice/socrates": "dev-master",
@@ -40,13 +40,12 @@
         "sebastian/diff":               "*",
         "sebastian/phpcpd":             "*",
         "gitonomy/git-bundle":          ">=0.1",
-
         "leafo/lessphp":                    ">=0.4"
     },
     "require-dev": {
-        "behat/behat":                   "~2.5",
-        "alexandresalome/php-webdriver": "~0.7",
-        "phpunit/phpunit":               "~4.0"
+        "behat/behat":                   ">=2.5",
+        "alexandresalome/php-webdriver": ">=0.7",
+        "phpunit/phpunit": ">=8.3.0"
     },
     "autoload": {
         "psr-4": {
