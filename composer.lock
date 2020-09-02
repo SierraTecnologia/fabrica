@@ -9240,7 +9240,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Cerebro",
-                "reference": "686e91bbc81e5ec02372e8efe7e6f34b603a02f1"
+                "reference": "3180efd637d5ecccb30712c9839769cd308d2995"
             },
             "require": {
                 "botman/botman": "^2.0|^3.0",
@@ -9308,7 +9308,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Socrates",
-                "reference": "205d1e979f70e7dae84cf947ccc18ef71180ab1e"
+                "reference": "b43c693e6e7044fe0a75c358c97f2994fdbc2e4d"
             },
             "require": {
                 "botman/botman": "~2.6",
@@ -11077,7 +11077,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Translation",
-                "reference": "7d375acc38ec8d1387b5a20f211fd95e9c6e2c28"
+                "reference": "628bac8ff5488729a3497c987be5c2e3147b562b"
             },
             "archive": {
                 "exclude": [
@@ -12532,7 +12532,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Crypto",
-                "reference": "2bcfcd9be07b4d14186b419bf6a212fe4f76e6d9"
+                "reference": "52606956722f6ac59acbd392fc926adbc85a1d69"
             },
             "require": {
                 "illuminate/support": "^6.0|^7.0",
@@ -12693,7 +12693,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Locaravel",
-                "reference": "917f26c0e7117530f8c26eaae8a8e75d469cdc5a"
+                "reference": "ebdf45bb7f2047c6dae02900e4f0fb78930b2ac6"
             },
             "require": {
                 "bosnadev/database": "~0.16",
