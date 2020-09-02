@@ -25,8 +25,8 @@
         "php": "^7.4",
         "sierratecnologia/integrations":    "dev-master",
         "deployer/deployer":            ">=6.4",
-        "privatejustice/socrates": "dev-master",
-        "sierratecnologia/muleta": "dev-master",
+        "privatejustice/socrates":      "dev-master",
+        "sierratecnologia/muleta":      "dev-master",
         "phpbench/phpbench":            "*",
         "phploc/phploc":                "*",
         "phpmd/phpmd":                  "*",
@@ -39,13 +39,15 @@
         "predis/predis":                "*",
         "sebastian/diff":               "*",
         "sebastian/phpcpd":             "*",
-        "gitonomy/git-bundle":          ">=0.1",
-        "leafo/lessphp":                    ">=0.4"
+        "gitonomy/gitlib":              "^1.2",
+        "leafo/lessphp":                ">=0.4"
     },
     "require-dev": {
         "behat/behat":                   ">=2.5",
-        "alexandresalome/php-webdriver": ">=0.7",
         "phpunit/phpunit": ">=8.3.0"
+    },
+    "suggest": {
+        "alexandresalome/php-webdriver": "Php webdriver"
     },
     "autoload": {
         "psr-4": {
