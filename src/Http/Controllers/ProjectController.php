@@ -2,11 +2,11 @@
 
 namespace Fabrica\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Fabrica\Models\Code\Project;
-use Yajra\Datatables\Datatables;
 use Facilitador\Exceptions\Exception;
 use Facilitador\Http\Controllers\Admin\Base;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 
 class ProjectController extends Base
 {
@@ -15,7 +15,7 @@ class ProjectController extends Base
      */
     protected $title = 'Projects';
     protected $model = Project::class;
-    CONST VIEWS = "fabrica::projects";
+    const VIEWS = "fabrica::projects";
 
     /**
      * @var string
