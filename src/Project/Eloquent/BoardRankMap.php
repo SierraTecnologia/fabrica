@@ -1,0 +1,16 @@
+<?php
+
+namespace Fabrica\Project\Eloquent;
+
+use Jenssegers\Mongodb\Eloquent\Model;
+
+class BoardRankMap extends Model
+{
+    //
+    protected $table = 'board_rank_map';
+
+    protected $fillable = array(
+        'board_id',
+        'rank'
+    );
+}

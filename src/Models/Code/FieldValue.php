@@ -2,12 +2,11 @@
 
 namespace Fabrica\Models\Code;
 
-use Support\Models\Base;
 use Finder\Models\Reference;
+use Support\Models\Base;
 
 class FieldValue extends Base
 {
-
     protected $organizationPerspective = false;
 
     protected $table = 'code_issue_fields';
@@ -21,7 +20,36 @@ class FieldValue extends Base
         'name',
         'value',
     ];
+    
+    public $formFields = [
+        ['name' => 'title', 'label' => 'Title', 'type' => 'text'],
+        ['name' => 'slug', 'label' => 'Slug', 'type' => 'text'],
+        ['name' => 'body', 'label' => 'Enter your content here', 'type' => 'textarea'],
+        ['name' => 'publish_on', 'label' => 'Publish Date', 'type' => 'date'],
+        ['name' => 'published', 'label' => 'Published', 'type' => 'checkbox'],
+        ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'relationship' => 'category'],
+        ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
+    ];
 
+    public $indexFields = [
+        'value',
+        'code_field_code',
+        'code_issue_id'
+    ];
+
+    public $validationRules = [
+        'value'       => 'required',
+        'code_field_code'   => 'required',
+        'code_issue_id' => 'required|int',
+    ];
+
+    public $validationMessages = [
+        'body.required' => "You need to fill in the post content."
+    ];
+
+    public $validationAttributes = [
+        'title' => 'Post title'
+    ];
     /**
      * 63 => JiraRestApi\Field\Field^ {#472
      * +id: "customfield_10033"
@@ -91,5 +119,4 @@ class FieldValue extends Base
     {
         return $this->morphToMany(Reference::class, 'referenceable');
     }
-    
 }

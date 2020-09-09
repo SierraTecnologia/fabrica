@@ -2,27 +2,29 @@
 
 namespace Fabrica;
 
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\ServiceProvider;
-use Fabrica\Services\FabricaService;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\View;
-
-use Log;
 use App;
 use Config;
-use Route;
-use Illuminate\Routing\Router;
-
-use Muleta\Traits\Providers\ConsoleTools;
-
 use Fabrica\Facades\Fabrica as FabricaFacade;
+use Fabrica\Services\FabricaService;
 use Illuminate\Contracts\Events\Dispatcher;
 
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+
+use Log;
+
+use Muleta\Traits\Providers\ConsoleTools;
+use Route;
 
 class FabricaProvider extends ServiceProvider
 {
     use ConsoleTools;
+
+    public $packageName = 'fabrica';
+    const pathVendor = 'sierratecnologia/fabrica';
 
     public static $aliasProviders = [
         'Fabrica' => \Fabrica\Facades\Fabrica::class,
@@ -45,6 +47,7 @@ class FabricaProvider extends ServiceProvider
                 'icon' => 'fas fa-fw fa-search',
                 'icon_color' => "blue",
                 'label_color' => "success",
+                'section'     => 'painel',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
             ],
             'Desenvolvimento' => [
@@ -71,6 +74,7 @@ class FabricaProvider extends ServiceProvider
                         'icon'        => 'fas fa-fw fa-ship',
                         'icon_color'  => 'blue',
                         'label_color' => 'success',
+                        'section'     => 'painel',
                         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                         // 'access' => \App\Models\Role::$ADMIN
                     ],
@@ -83,6 +87,7 @@ class FabricaProvider extends ServiceProvider
                 'icon'        => 'fas fa-fw fa-search',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
+                'section'     => 'admin',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \App\Models\Role::$ADMIN
             ],
@@ -91,6 +96,7 @@ class FabricaProvider extends ServiceProvider
                 'icon'        => 'fas fa-fw fa-search',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
+                'section'     => 'admin',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \App\Models\Role::$ADMIN
             ],
@@ -101,6 +107,7 @@ class FabricaProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-car',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
+                    'section'     => 'admin',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \App\Models\Role::$ADMIN
                 ],
@@ -112,6 +119,7 @@ class FabricaProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-car',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
+                    'section'     => 'admin',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \App\Models\Role::$ADMIN
                 ],
@@ -148,18 +156,23 @@ class FabricaProvider extends ServiceProvider
         }
 
         /**
-         * Fabrica; Routes
+         * Transmissor; Routes
          */
-        Route::group(
-            [
-                'namespace' => '\Fabrica\Http\Controllers',
-                'prefix' => \Illuminate\Support\Facades\Config::get('application.routes.main', ''),
-                'as' => 'rica.',
-                // 'middleware' => 'rica',
-            ], function ($router) {
-                include __DIR__.'/../routes/web.php';
-            }
-        );
+        $this->loadRoutesForRiCa(__DIR__.'/../routes');
+
+        // /**
+        //  * Fabrica; Routes
+        //  */
+        // Route::group(
+        //     [
+        //         'namespace' => '\Fabrica\Http\Controllers',
+        //         'prefix' => \Illuminate\Support\Facades\Config::get('application.routes.main', ''),
+        //         'as' => 'rica.',
+        //         // 'middleware' => 'rica',
+        //     ], function ($router) {
+        //         include __DIR__.'/../routes/web.php';
+        //     }
+        // );
     }
 
     /**
@@ -252,7 +265,6 @@ class FabricaProvider extends ServiceProvider
 
         $this->loadViews();
         $this->loadTranslations();
-
     }
 
     private function loadViews()
@@ -265,7 +277,6 @@ class FabricaProvider extends ServiceProvider
             $viewsPath => base_path('resources/views/vendor/fabrica'),
             ], ['views',  'sitec', 'sitec-views']
         );
-
     }
     
     private function loadTranslations()
@@ -283,7 +294,7 @@ class FabricaProvider extends ServiceProvider
 
 
     /**
-     * 
+     *
      */
     private function loadLogger()
     {
@@ -295,5 +306,4 @@ class FabricaProvider extends ServiceProvider
             ]
         );
     }
-
 }

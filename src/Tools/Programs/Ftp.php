@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helps;
+namespace Fabrica\Helps;
 
 /**
  * Ftp Class

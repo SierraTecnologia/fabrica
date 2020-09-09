@@ -3,15 +3,14 @@
 namespace Fabrica\Models\Code;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Fabrica\Tools\Programs\Git\Repository;
-
-use Support\Models\Base;
-use Finder\Models\Reference;
 use Fabrica\Helper\General;
+
+use Fabrica\Tools\Programs\Git\Repository;
+use Finder\Models\Reference;
+use Support\Models\Base;
 
 class Project extends Base
 {
-
     public static $apresentationName = 'Projetos';
 
     const SLUG_PATTERN = '[a-zA-Z0-9-_]+';
@@ -45,7 +44,39 @@ class Project extends Base
         'projectDepth',
         'projectPathKey',
     ];
+    
+    public $formFields = [
+        ['name' => 'title', 'label' => 'Title', 'type' => 'text'],
+        ['name' => 'slug', 'label' => 'Slug', 'type' => 'text'],
+        ['name' => 'body', 'label' => 'Enter your content here', 'type' => 'textarea'],
+        ['name' => 'publish_on', 'label' => 'Publish Date', 'type' => 'date'],
+        ['name' => 'published', 'label' => 'Published', 'type' => 'checkbox'],
+        ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'relationship' => 'category'],
+        ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
+    ];
 
+    public $indexFields = [
+        'title',
+        'category_id',
+        'published'
+    ];
+
+    public $validationRules = [
+        'title'       => 'required|max:255',
+        'slug'        => 'required|max:100',
+        'body'        => 'required',
+        'publish_on'  => 'date',
+        'published'   => 'boolean',
+        'category_id' => 'required|int',
+    ];
+
+    public $validationMessages = [
+        'body.required' => "You need to fill in the post content."
+    ];
+
+    public $validationAttributes = [
+        'title' => 'Post title'
+    ];
     public function getApresentationName()
     {
         return $this->slug.' - '.$this->name;
@@ -87,7 +118,7 @@ class Project extends Base
 
         self::creating(
             function ($model) {
-                // todo Observer 
+                // todo Observer
                 $model->dateCreated = time();
                 $model->dateModified = time();
 
@@ -277,4 +308,3 @@ class Project extends Base
         return $this->morphToMany(Reference::class, 'referenceable');
     }
 }
-

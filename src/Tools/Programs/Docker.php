@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Task\External\Shell;
+namespace Fabrica\Task\External\Shell;
 
 /**
  * Ln Criar Link Simbolico

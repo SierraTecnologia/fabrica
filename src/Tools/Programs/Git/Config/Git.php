@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helps\Git;
+namespace Fabrica\Helps\Git;
 
 /**
  * Git Interface Class

@@ -2,7 +2,7 @@
 
 namespace Fabrica\Http\Policies;
 
-use App\Models\User;
+use Fabrica\Models\User;
 
 /**
  * Class FabricaPolicy.

@@ -2,29 +2,29 @@
 
 namespace Fabrica\Http\Controllers\Organization;
 
+use Fabrica\Models\Code\Field;
+use Fabrica\Models\Code\Project;
+
+use Fabrica\Models\Code\Wiki;
+use Fabrica\Models\Infra\Container;
+use Fabrica\Models\Infra\Domain;
+
+
 use Fabrica\Services\FabricaService;
 use Illuminate\Support\Facades\Schema;
 
-use Fabrica\Models\Code\Field;
-use Fabrica\Models\Infra\Domain;
-use Fabrica\Models\Infra\Container;
+
+use Informate\Models\Entytys\Fisicos\Weapon;
+use Integrations\Models\Token;
+use Population\Models\Features\Qa\Analyser;
 
 
 use Telefonica\Models\Actors\Business;
 use Telefonica\Models\Actors\Person;
 
 
-use Fabrica\Models\Code\Project;
-use Fabrica\Models\Code\Wiki;
-use Population\Models\Features\Qa\Analyser;
-
 
 use Telefonica\Models\Digital\Account;
-use Integrations\Models\Token;
-
-
-
-use Informate\Models\Entytys\Fisicos\Weapon;
 
 class ArquiteturaController extends Controller
 {

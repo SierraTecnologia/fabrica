@@ -1,5 +1,5 @@
 # SierraTecnologia Fabrica
-
+https://github.com/lxerxa/actionview-fe/tree/master/app/components
 **SierraTecnologia Fabrica** fabrica is all of freelancer developer need. Validator functionality, and basic controller included out-of-the-box.
 
 [![Packagist](https://img.shields.io/packagist/v/sierratecnologia/fabrica.svg?label=Packagist&style=flat-square)](https://packagist.org/packages/sierratecnologia/fabrica)
@@ -8,7 +8,39 @@
 [![StyleCI](https://styleci.io/repos/60968880/shield)](https://styleci.io/repos/60968880)
 [![License](https://img.shields.io/packagist/l/sierratecnologia/fabrica.svg?label=License&style=flat-square)](https://github.com/sierratecnologia/fabrica/blob/master/LICENSE)
 
+    
+    public $formFields = [
+        ['name' => 'title', 'label' => 'Title', 'type' => 'text'],
+        ['name' => 'slug', 'label' => 'Slug', 'type' => 'text'],
+        ['name' => 'body', 'label' => 'Enter your content here', 'type' => 'textarea'],
+        ['name' => 'publish_on', 'label' => 'Publish Date', 'type' => 'date'],
+        ['name' => 'published', 'label' => 'Published', 'type' => 'checkbox'],
+        ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'relationship' => 'category'],
+        ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
+    ];
 
+    public $indexFields = [
+        'title',
+        'category_id',
+        'published'
+    ];
+
+    public $validationRules = [
+        'title'       => 'required|max:255',
+        'slug'        => 'required|max:100',
+        'body'        => 'required',
+        'publish_on'  => 'date',
+        'published'   => 'boolean',
+        'category_id' => 'required|int',
+    ];
+
+    public $validationMessages = [
+        'body.required' => "You need to fill in the post content."
+    ];
+
+    public $validationAttributes = [
+        'title' => 'Post title'
+    ];
 ## Installation
 
 Install via `composer require sierratecnologia/fabrica`
