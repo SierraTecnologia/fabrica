@@ -26,35 +26,36 @@ class Release extends Base
     
     
     public $formFields = [
-        ['name' => 'title', 'label' => 'Title', 'type' => 'text'],
+        ['name' => 'name', 'label' => 'name', 'type' => 'text'],
         ['name' => 'slug', 'label' => 'Slug', 'type' => 'text'],
-        ['name' => 'body', 'label' => 'Enter your content here', 'type' => 'textarea'],
-        ['name' => 'publish_on', 'label' => 'Publish Date', 'type' => 'date'],
-        ['name' => 'published', 'label' => 'Published', 'type' => 'checkbox'],
-        ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'relationship' => 'category'],
-        ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
+        ['name' => 'release', 'label' => 'Publish Release', 'type' => 'date'],
+        ['name' => 'start', 'label' => 'Publish Date', 'type' => 'date'],
+        ['name' => 'status', 'label' => 'Published', 'type' => 'checkbox'],
+        ['name' => 'code_project_id', 'label' => 'Projeto', 'type' => 'select', 'relationship' => 'project'],
+        // ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
     ];
 
     public $indexFields = [
-        'title',
-        'category_id',
-        'published'
+        'name',
+        'start',
+        'code_project_id',
+        'status'
     ];
 
     public $validationRules = [
-        'title'       => 'required|max:255',
+        'name'       => 'required|max:255',
         'slug'        => 'required|max:100',
-        'body'        => 'required',
-        'publish_on'  => 'date',
-        'published'   => 'boolean',
-        'category_id' => 'required|int',
+        'release'        => 'required',
+        'start'  => 'date',
+        'status'   => 'boolean',
+        'code_project_id' => 'required|int',
     ];
 
     public $validationMessages = [
-        'body.required' => "You need to fill in the post content."
+        'name.required' => "Nome é obrigatório."
     ];
 
     public $validationAttributes = [
-        'title' => 'Post title'
+        'name' => 'name'
     ];
 }

@@ -46,36 +46,36 @@ class Project extends Base
     ];
     
     public $formFields = [
-        ['name' => 'title', 'label' => 'Title', 'type' => 'text'],
-        ['name' => 'slug', 'label' => 'Slug', 'type' => 'text'],
-        ['name' => 'body', 'label' => 'Enter your content here', 'type' => 'textarea'],
-        ['name' => 'publish_on', 'label' => 'Publish Date', 'type' => 'date'],
-        ['name' => 'published', 'label' => 'Published', 'type' => 'checkbox'],
-        ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'relationship' => 'category'],
-        ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
+        ['name' => 'name', 'label' => 'name', 'type' => 'text'],
+        ['name' => 'url', 'label' => 'url', 'type' => 'text'],
+        ['name' => 'status', 'label' => 'Enter your content here', 'type' => 'textarea'],
+        // ['name' => 'publish_on', 'label' => 'Publish Date', 'type' => 'date'],
+        // ['name' => 'published', 'label' => 'Published', 'type' => 'checkbox'],
+        // ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'relationship' => 'category'],
+        // ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
     ];
 
     public $indexFields = [
-        'title',
-        'category_id',
-        'published'
+        'name',
+        'url',
+        'status'
     ];
 
     public $validationRules = [
-        'title'       => 'required|max:255',
-        'slug'        => 'required|max:100',
-        'body'        => 'required',
-        'publish_on'  => 'date',
-        'published'   => 'boolean',
-        'category_id' => 'required|int',
+        'name'       => 'required|max:255',
+        'url'        => 'required|max:100',
+        'status'        => 'required',
+        // 'publish_on'  => 'date',
+        // 'published'   => 'boolean',
+        // 'category_id' => 'required|int',
     ];
 
     public $validationMessages = [
-        'body.required' => "You need to fill in the post content."
+        'name.required' => "Nome é obrigatório."
     ];
 
     public $validationAttributes = [
-        'title' => 'Post title'
+        'name' => 'Project Name'
     ];
     public function getApresentationName()
     {

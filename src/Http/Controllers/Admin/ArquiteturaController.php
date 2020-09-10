@@ -1,13 +1,32 @@
 <?php
 
-namespace Fabrica\Http\Controllers\Manager;
+namespace Fabrica\Http\Controllers\Admin;
+
+use Fabrica\Models\Code\Field;
+use Fabrica\Models\Code\Project;
+
+use Fabrica\Models\Code\Wiki;
+use Fabrica\Models\Infra\Container;
+use Fabrica\Models\Infra\Domain;
+
 
 use Fabrica\Services\FabricaService;
 use Illuminate\Support\Facades\Schema;
 
-use Fabrica\Models\Code\Field;
 
-class FieldsController extends Controller
+use Informate\Models\Entytys\Fisicos\Weapon;
+use Integrations\Models\Token;
+use Population\Models\Features\Qa\Analyser;
+
+
+use Telefonica\Models\Actors\Business;
+use Telefonica\Models\Actors\Person;
+
+
+
+use Telefonica\Models\Digital\Account;
+
+class ArquiteturaController extends Controller
 {
     protected $service;
 
@@ -26,6 +45,7 @@ class FieldsController extends Controller
         $registros = $service->getTableData();
         //     $teams = $this->repositoryService->paginated($request->user()->id);
 
+        //Domain
         
 
         return view(

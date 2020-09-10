@@ -1,6 +1,6 @@
 <?php
 
-namespace Fabrica\Http\Controllers\Manager;
+namespace Fabrica\Http\Controllers\Admin;
 
 use Fabrica\Http\Controllers\Controller as BaseController;
 

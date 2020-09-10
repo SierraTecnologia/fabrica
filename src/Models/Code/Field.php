@@ -29,36 +29,37 @@ class Field extends Base
     ];
     
     public $formFields = [
-        ['name' => 'title', 'label' => 'Title', 'type' => 'text'],
-        ['name' => 'slug', 'label' => 'Slug', 'type' => 'text'],
-        ['name' => 'body', 'label' => 'Enter your content here', 'type' => 'textarea'],
-        ['name' => 'publish_on', 'label' => 'Publish Date', 'type' => 'date'],
-        ['name' => 'published', 'label' => 'Published', 'type' => 'checkbox'],
-        ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'relationship' => 'category'],
-        ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
+        ['name' => 'name', 'label' => 'Nome', 'type' => 'text'],
+        ['name' => 'code', 'label' => 'Código', 'type' => 'text'],
+        // ['name' => 'body', 'label' => 'Enter your content here', 'type' => 'textarea'],
+        // ['name' => 'publish_on', 'label' => 'Publish Date', 'type' => 'date'],
+        // ['name' => 'published', 'label' => 'Published', 'type' => 'checkbox'],
+        // ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'relationship' => 'category'],
+        // ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
     ];
 
     public $indexFields = [
-        'title',
-        'category_id',
-        'published'
+        'code',
+        'name',
+        // 'category_id',
+        // 'published'
     ];
 
     public $validationRules = [
-        'title'       => 'required|max:255',
-        'slug'        => 'required|max:100',
-        'body'        => 'required',
-        'publish_on'  => 'date',
-        'published'   => 'boolean',
-        'category_id' => 'required|int',
+        'name'       => 'required|max:255',
+        'code'        => 'required|max:100',
+        // 'body'        => 'required',
+        // 'publish_on'  => 'date',
+        // 'published'   => 'boolean',
+        // 'category_id' => 'required|int',
     ];
 
     public $validationMessages = [
-        'body.required' => "You need to fill in the post content."
+        'name.required' => "O nome é obrigatório"
     ];
 
     public $validationAttributes = [
-        'title' => 'Post title'
+        'name' => 'Nome do Campo'
     ];
     /**
      * 63 => JiraRestApi\Field\Field^ {#472

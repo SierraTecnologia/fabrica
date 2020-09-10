@@ -70,7 +70,7 @@ class FabricaProvider extends ServiceProvider
                 // 'Procurar' => [
                     [
                         'text'        => 'Projetos',
-                        'route'       => 'rica.fabrica.projects.index',
+                        'route'       => 'admin.fabrica.projects.index',
                         'icon'        => 'fas fa-fw fa-ship',
                         'icon_color'  => 'blue',
                         'label_color' => 'success',
@@ -112,10 +112,46 @@ class FabricaProvider extends ServiceProvider
                     // 'access' => \App\Models\Role::$ADMIN
                 ],
             ],
-            'Tarefas' => [
+            'Campos de Itens' => [
                 [
                     'text'        => 'Fields',
-                    'route'       => 'rica.fabrica.manager.fields.index',
+                    'route'       => 'admin.fabrica.fields.index',
+                    'icon'        => 'fas fa-fw fa-car',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'section'     => 'admin',
+                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    // 'access' => \App\Models\Role::$ADMIN
+                ],
+            ],
+            'Resolutions' => [
+                [
+                    'text'        => 'Resolutions',
+                    'route'       => 'admin.fabrica.resolutions.index',
+                    'icon'        => 'fas fa-fw fa-car',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'section'     => 'admin',
+                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    // 'access' => \App\Models\Role::$ADMIN
+                ],
+            ],
+            'Stages' => [
+                [
+                    'text'        => 'Stages',
+                    'route'       => 'admin.fabrica.stages.index',
+                    'icon'        => 'fas fa-fw fa-car',
+                    'icon_color'  => 'blue',
+                    'label_color' => 'success',
+                    'section'     => 'admin',
+                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                    // 'access' => \App\Models\Role::$ADMIN
+                ],
+            ],
+            'Status' => [
+                [
+                    'text'        => 'Status',
+                    'route'       => 'admin.fabrica.status.index',
                     'icon'        => 'fas fa-fw fa-car',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',

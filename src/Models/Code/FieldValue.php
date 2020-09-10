@@ -17,18 +17,29 @@ class FieldValue extends Base
      * @var array
      */
     protected $fillable = [
-        'name',
         'value',
+        'code_field_code',
+        'code_issue_id'
     ];
     
     public $formFields = [
-        ['name' => 'title', 'label' => 'Title', 'type' => 'text'],
-        ['name' => 'slug', 'label' => 'Slug', 'type' => 'text'],
-        ['name' => 'body', 'label' => 'Enter your content here', 'type' => 'textarea'],
-        ['name' => 'publish_on', 'label' => 'Publish Date', 'type' => 'date'],
-        ['name' => 'published', 'label' => 'Published', 'type' => 'checkbox'],
-        ['name' => 'category_id', 'label' => 'Category', 'type' => 'select', 'relationship' => 'category'],
-        ['name' => 'tags', 'label' => 'Tags', 'type' => 'select_multiple', 'relationship' => 'tags'],
+        [
+            'name' => 'value',
+            'label' => 'value',
+            'type' => 'text'
+        ],
+        [
+            'name' => 'code_field_code',
+            'label' => 'Field',
+            'type' => 'select',
+            'relationship' => 'field'
+        ],
+        [
+            'name' => 'code_issue_id',
+            'label' => 'Issue',
+            'type' => 'select',
+            'relationship' => 'issue'
+        ],
     ];
 
     public $indexFields = [
@@ -44,11 +55,11 @@ class FieldValue extends Base
     ];
 
     public $validationMessages = [
-        'body.required' => "You need to fill in the post content."
+        'value.required' => "Valor é obrigatório."
     ];
 
     public $validationAttributes = [
-        'title' => 'Post title'
+        'value' => 'Value'
     ];
     /**
      * 63 => JiraRestApi\Field\Field^ {#472
