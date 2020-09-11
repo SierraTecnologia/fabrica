@@ -22,10 +22,13 @@
         "vue": "^2.5.17"
     },
     "dependencies": {
+        "@growthbunker/vuetimeline": "^0.1.17",
         "gojs": "^2.0.9",
         "laravel-echo": "^1.5.3",
         "socket.io-client": "^2.2.0",
+        "vg-editor": "^2.7.2",
         "vue-gallery": "^2.0.1",
+        "vue-kanban": "^1.8.0",
         "vue2-admin-lte": "^0.4.3",
         "vuefinder": "^0.2.0"
     }
