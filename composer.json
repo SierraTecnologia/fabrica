@@ -44,7 +44,7 @@
     },
     "require-dev": {
         "behat/behat":                   ">=2.5",
-        "phpunit/phpunit": ">=8.3.0"
+        "phpunit/phpunit": "^7.0|^8.0|^9.0|^10.0",
     },
     "suggest": {
         "alexandresalome/php-webdriver": "Php webdriver"
