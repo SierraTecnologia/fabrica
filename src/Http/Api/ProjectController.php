@@ -653,12 +653,12 @@ class ProjectController extends Controller
         }
 
         // delete the collections
-        Schema::drop('issue_' . $project_key);
-        Schema::drop('issue_his_' . $project_key);
-        Schema::drop('activity_' . $project_key);
-        Schema::drop('comments_' . $project_key);
-        Schema::drop('document_' . $project_key);
-        Schema::drop('wiki_' . $project_key);
+        Schema::dropIfExists('issue_' . $project_key);
+        Schema::dropIfExists('issue_his_' . $project_key);
+        Schema::dropIfExists('activity_' . $project_key);
+        Schema::dropIfExists('comments_' . $project_key);
+        Schema::dropIfExists('document_' . $project_key);
+        Schema::dropIfExists('wiki_' . $project_key);
         // delete from the project table
         Project::destroy($id);
 
