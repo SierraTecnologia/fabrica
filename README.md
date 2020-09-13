@@ -107,3 +107,7 @@ This software is released under [The MIT License (MIT)](LICENSE).
         "symfony/monolog-bundle":            ">=2.3",
         "doctrine/doctrine-fixtures-bundle": ">=2.2",
         "alexandresalome/mailcatcher":       ">=0.2",
+
+
+
+https://github.com/kanboard
