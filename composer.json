@@ -24,9 +24,9 @@
     "require": {
         "php": "^7.4",
         "sierratecnologia/integrations":    "dev-master",
+        "sierratecnologia/operador":    "dev-master",
         "deployer/deployer":            "^6.8",
         "guzzlehttp/guzzle": "^7.0",
-        "privatejustice/socrates":      "dev-master",
         "sierratecnologia/muleta":      "dev-master",
         "gitonomy/gitlib":              "^1.2"
     },
