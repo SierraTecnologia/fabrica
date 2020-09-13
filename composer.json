@@ -26,7 +26,7 @@
         "sierratecnologia/integrations":    "dev-master",
         "sierratecnologia/operador":    "dev-master",
         "deployer/deployer":            "^6.8",
-        "guzzlehttp/guzzle": "^7.0",
+        "guzzlehttp/guzzle": "^6.0 || ^7.0",
         "sierratecnologia/muleta":      "dev-master",
         "gitonomy/gitlib":              "^1.2"
     },
