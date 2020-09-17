@@ -28,7 +28,8 @@
         "deployer/deployer":            "^6.8",
         "guzzlehttp/guzzle": "^6.0 || ^7.0",
         "sierratecnologia/muleta":      "dev-master",
-        "gitonomy/gitlib":              "^1.2"
+        "gitonomy/gitlib":              "^1.2",
+        "lorisleiva/laravel-actions": "^1.1"
     },
     "require-dev": {
         "behat/behat":                   ">=2.5",
