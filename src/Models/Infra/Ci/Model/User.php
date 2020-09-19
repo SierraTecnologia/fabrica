@@ -2,7 +2,7 @@
 
 namespace Fabrica\Models\Infra\Ci\Model;
 
-use Support\Services\ConfigService as Config;
+use Pedreiro\Services\ConfigService as Config;
 use Fabrica\Models\Infra\Ci\Base\User as BaseUser;
 
 /**
