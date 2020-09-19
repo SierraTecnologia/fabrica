@@ -2,8 +2,8 @@
 namespace Fabrica\Events;
 
 use Fabrica\Events\Event;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Queue\SerializesModels;
 
 class VersionEvent extends Event
 {
@@ -19,7 +19,7 @@ class VersionEvent extends Event
      *
      * @return void
      */
-    public function __construct($project_key, $user, $param=[])
+    public function __construct($project_key, $user,array $param=[])
     {
         $this->project_key   = $project_key;
         $this->user          = $user;

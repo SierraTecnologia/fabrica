@@ -1,6 +1,6 @@
 <?php
 
-namespace Fabrica\Http\Controllers\Manager;
+namespace Fabrica\Http\Controllers\Painel;
 
 use Fabrica\Models\Code\Project;
 use Fabrica\Services\FabricaService;

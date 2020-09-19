@@ -21,7 +21,7 @@ class IssueEvent extends Event
      *
      * @return void
      */
-    public function __construct($project_key, $issue_id, $user, $param=[])
+    public function __construct($project_key, $issue_id, $user, array $param=[])
     {
         $this->project_key   = $project_key;
         $this->issue_id      = $issue_id;
