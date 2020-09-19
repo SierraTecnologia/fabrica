@@ -28,13 +28,15 @@ class ChainConfigTest extends \PHPUnit\Framework\TestCase
         try {
             $config = new ChainConfig(array());
             $this->fail("Constructed ChainConfig with no arguments");
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         // 1 config
         try {
             $config = new ChainConfig(array($mock));
             $this->fail("Constructed ChainConfig with one argument");
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         // 2 config = ok
         $config = new ChainConfig(array($mock, $mock));

@@ -37,9 +37,11 @@ class UserSshKeyCreateCommandTest extends CommandTestCase
 
         $em = $this->client->getKernel()->getContainer()->get('doctrine')->getManager();
 
-        $userSshKey = $em->getRepository('FabricaCoreBundle:UserSshKey')->findOneBy(array(
+        $userSshKey = $em->getRepository('FabricaCoreBundle:UserSshKey')->findOneBy(
+            array(
             'title' => 'foo'
-        ));
+            )
+        );
 
         $this->assertInstanceOf('Fabrica\Models\Code\UserSshKey', $userSshKey);
 

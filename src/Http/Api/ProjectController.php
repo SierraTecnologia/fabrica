@@ -61,13 +61,13 @@ class ProjectController extends Controller
         foreach ($new_accessed_pkeys as $pkey)
         {
             $project = Project::where('key', $pkey)->first();
-            if (!$project || $project->status === 'closed') 
-            {
+            if (!$project || $project->status === 'closed') {
                 continue;
             }
 
             $projects[] = [ 'key' => $project->key, 'name' => $project->name ];
-            if (count($projects) >= 5) { break; }
+            if (count($projects) >= 5) { break; 
+            }
         }
 
         return  Response()->json([ 'ecode' => 0, 'data' => $projects ]); 
@@ -92,11 +92,9 @@ class ProjectController extends Controller
         $pkeys = array_values(array_unique(array_column($user_projects, 'project_key')));
 
         $offset_key = $request->input('offset_key');
-        if (isset($offset_key))
-        {
+        if (isset($offset_key)) {
             $ind = array_search($offset_key, $pkeys);
-            if ($ind === false)
-            {
+            if ($ind === false) {
                 $pkeys = [];
             }
             else
@@ -106,15 +104,13 @@ class ProjectController extends Controller
         }
 
         $limit = $request->input('limit');
-        if (!isset($limit))
-        {
+        if (!isset($limit)) {
             $limit = 36;
         }
         $limit = intval($limit);
 
         $status = $request->input('status');
-        if (!isset($status))
-        {
+        if (!isset($status)) {
             $status = 'all';
         }
 
@@ -124,26 +120,24 @@ class ProjectController extends Controller
         foreach ($pkeys as $pkey)
         {
             $query = Project::where('key', $pkey);
-            if ($name)
-            {
-                $query->where(function ($query) use ($name) {
-                    $query->where('key', 'like', '%' . $name . '%')->orWhere('name', 'like', '%' . $name . '%');
-                });
+            if ($name) {
+                $query->where(
+                    function ($query) use ($name) {
+                        $query->where('key', 'like', '%' . $name . '%')->orWhere('name', 'like', '%' . $name . '%');
+                    }
+                );
             }
-            if ($status != 'all')
-            {
+            if ($status != 'all') {
                 $query = $query->where('status', $status);
             }
 
             $project = $query->first();
-            if (!$project) 
-            {
+            if (!$project) {
                 continue;
             }
 
             $projects[] = $project->toArray();
-            if (count($projects) >= $limit)
-            {
+            if (count($projects) >= $limit) {
                 break;
             }
         }
@@ -189,46 +183,56 @@ class ProjectController extends Controller
     public function createIndex(Request $request, $id)
     {
         $project = Project::find($id);
-        if (!$project)
-        {
+        if (!$project) {
             throw new \UnexpectedValueException('the project does not exist.', -14006);
         }
-        if ($project->principal['id'] !== $this->user->id && !$this->user->hasAccess('sys_admin'))
-        {
+        if ($project->principal['id'] !== $this->user->id && !$this->user->hasAccess('sys_admin')) {
             return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
-        Schema::collection('issue_' . $project->key, function($col) {
-            $col->index('type');
-            $col->index('state');
-            $col->index('resolution');
-            $col->index('priority');
-            $col->index('created_at');
-            $col->index('updated_at');
-            $col->index('epic');
-            $col->index('module');
-            $col->index('resolve_version');
-            $col->index('labels');
-            $col->index('no');
-            $col->index('parent_id');
-            $col->index('assignee.id');
-            $col->index('reporter.id');
-        });
-        Schema::collection('activity_' . $project->key, function($col) {
-            $col->index('event_key');
-        });
-        Schema::collection('comments_' . $project->key, function($col) {
-            $col->index('issue_id');
-        });
-        Schema::collection('issue_his_' . $project->key, function($col) {
-            $col->index('issue_id');
-        });
-        Schema::collection('document_' . $project->key, function($col) {
-            $col->index('parent');
-        });
-        Schema::collection('wiki_' . $project->key, function($col) {
-            $col->index('parent');
-        });
+        Schema::collection(
+            'issue_' . $project->key, function ($col) {
+                $col->index('type');
+                $col->index('state');
+                $col->index('resolution');
+                $col->index('priority');
+                $col->index('created_at');
+                $col->index('updated_at');
+                $col->index('epic');
+                $col->index('module');
+                $col->index('resolve_version');
+                $col->index('labels');
+                $col->index('no');
+                $col->index('parent_id');
+                $col->index('assignee.id');
+                $col->index('reporter.id');
+            }
+        );
+        Schema::collection(
+            'activity_' . $project->key, function ($col) {
+                $col->index('event_key');
+            }
+        );
+        Schema::collection(
+            'comments_' . $project->key, function ($col) {
+                $col->index('issue_id');
+            }
+        );
+        Schema::collection(
+            'issue_his_' . $project->key, function ($col) {
+                $col->index('issue_id');
+            }
+        );
+        Schema::collection(
+            'document_' . $project->key, function ($col) {
+                $col->index('parent');
+            }
+        );
+        Schema::collection(
+            'wiki_' . $project->key, function ($col) {
+                $col->index('parent');
+            }
+        );
 
         return response()->json([ 'ecode' => 0, 'data' => $project ]);
     }
@@ -241,49 +245,59 @@ class ProjectController extends Controller
     public function createMultiIndex(Request $request)
     {
         $ids = $request->input('ids');
-        if (!isset($ids) || !$ids)
-        {
+        if (!isset($ids) || !$ids) {
             throw new \InvalidArgumentException('the selected projects cannot been empty.', -14007);
         }
 
         foreach ($ids as $id)
         {
             $project = Project::find($id);
-            if (!$project)
-            {
+            if (!$project) {
                 continue;
             }
 
-            Schema::collection('issue_' . $project->key, function($col) {
-                $col->index('type');
-                $col->index('state');
-                $col->index('resolution');
-                $col->index('priority');
-                $col->index('created_at');
-                $col->index('updated_at');
-                $col->index('module');
-                $col->index('epic');
-                $col->index('resolve_version');
-                $col->index('labels');
-                $col->index('no');
-                $col->index('assignee.id');
-                $col->index('reporter.id');
-            });
-            Schema::collection('activity_' . $project->key, function($col) {
-                $col->index('event_key');
-            });
-            Schema::collection('comments_' . $project->key, function($col) {
-                $col->index('issue_id');
-            });
-            Schema::collection('issue_his_' . $project->key, function($col) {
-                $col->index('issue_id');
-            });
-            Schema::collection('document_' . $project->key, function($col) {
-                $col->index('parent');
-            });
-            Schema::collection('wiki_' . $project->key, function($col) {
-                $col->index('parent');
-            });
+            Schema::collection(
+                'issue_' . $project->key, function ($col) {
+                    $col->index('type');
+                    $col->index('state');
+                    $col->index('resolution');
+                    $col->index('priority');
+                    $col->index('created_at');
+                    $col->index('updated_at');
+                    $col->index('module');
+                    $col->index('epic');
+                    $col->index('resolve_version');
+                    $col->index('labels');
+                    $col->index('no');
+                    $col->index('assignee.id');
+                    $col->index('reporter.id');
+                }
+            );
+            Schema::collection(
+                'activity_' . $project->key, function ($col) {
+                    $col->index('event_key');
+                }
+            );
+            Schema::collection(
+                'comments_' . $project->key, function ($col) {
+                    $col->index('issue_id');
+                }
+            );
+            Schema::collection(
+                'issue_his_' . $project->key, function ($col) {
+                    $col->index('issue_id');
+                }
+            );
+            Schema::collection(
+                'document_' . $project->key, function ($col) {
+                    $col->index('parent');
+                }
+            );
+            Schema::collection(
+                'wiki_' . $project->key, function ($col) {
+                    $col->index('parent');
+                }
+            );
         }
         return response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $ids ] ]);
     }
@@ -296,14 +310,12 @@ class ProjectController extends Controller
     public function updMultiStatus(Request $request)
     {
         $ids = $request->input('ids');
-        if (!isset($ids) || !$ids)
-        {
+        if (!isset($ids) || !$ids) {
             throw new \InvalidArgumentException('the selected projects cannot been empty.', -14007);
         }
 
         $status = $request->input('status');
-        if (!isset($status) || !$status)
-        {
+        if (!isset($status) || !$status) {
             throw new \InvalidArgumentException('the status cannot be empty.', -14008);
         }
 
@@ -328,11 +340,12 @@ class ProjectController extends Controller
         $query = DB::collection('project');
 
         $s = $request->input('s');
-        if (isset($s) && $s)
-        {
-            $query->where(function ($query) use ($s) {
-                $query->where('key', 'like', '%' . $s . '%')->orWhere('name', 'like', '%' . $s . '%');
-            });
+        if (isset($s) && $s) {
+            $query->where(
+                function ($query) use ($s) {
+                    $query->where('key', 'like', '%' . $s . '%')->orWhere('name', 'like', '%' . $s . '%');
+                }
+            );
         }
 
         $projects = $query->take(10)->get([ 'name', 'key' ]);
@@ -350,23 +363,22 @@ class ProjectController extends Controller
         $query = DB::collection('project');
 
         $principal_id = $request->input('principal_id');
-        if (isset($principal_id) && $principal_id)
-        {
+        if (isset($principal_id) && $principal_id) {
             $query = $query->where('principal.id', $principal_id);
         }
 
         $status = $request->input('status');
-        if (isset($status) && $status !== 'all')
-        {
+        if (isset($status) && $status !== 'all') {
             $query = $query->where('status', $status);
         }
 
         $name = $request->input('name');
-        if (isset($name) && $name)
-        {
-            $query->where(function ($query) use ($name) {
-                $query->where('key', 'like', '%' . $name . '%')->orWhere('name', 'like', '%' . $name . '%');
-            });
+        if (isset($name) && $name) {
+            $query->where(
+                function ($query) use ($name) {
+                    $query->where('key', 'like', '%' . $name . '%')->orWhere('name', 'like', '%' . $name . '%');
+                }
+            );
         }
 
         // get total
@@ -389,56 +401,49 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $syssetting = SysSetting::first();
         $allow_create_project = isset($syssetting->properties['allow_create_project']) ? $syssetting->properties['allow_create_project'] : 0;        
-        if ($allow_create_project !== 1 && !$this->user->hasAccess('sys_admin'))
-        {
+        if ($allow_create_project !== 1 && !$this->user->hasAccess('sys_admin')) {
             return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         $insValues = [];
 
         $name = $request->input('name');
-        if (!$name)
-        {
+        if (!$name) {
             throw new \UnexpectedValueException('the name can not be empty.', -14000);
         }
         $insValues['name'] = $name;
 
         $key = $request->input('key');
-        if (!$key)
-        {
+        if (!$key) {
             throw new \InvalidArgumentException('project key cannot be empty.', -14001);
         }
-        if (Project::Where('key', $key)->exists())
-        {
+        if (Project::Where('key', $key)->exists()) {
             throw new \InvalidArgumentException('project key has been taken.', -14002);
         }
         $insValues['key'] = $key;
 
         $principal = $request->input('principal');
-        if (!isset($principal) || !$principal)
-        {
+        if (!isset($principal) || !$principal) {
             $insValues['principal'] = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
         }
         else
         {
             $principal_info = Sentinel::findById($principal);
-            if (!$principal_info)
-            {
+            if (!$principal_info) {
                 throw new \InvalidArgumentException('the user is not exists.', -14003);
             }
             $insValues['principal'] = [ 'id' => $principal_info->id, 'name' => $principal_info->first_name, 'email' => $principal_info->email ];
         }
 
         $description = $request->input('description');
-        if (isset($description) && $description)
-        {
+        if (isset($description) && $description) {
             $insValues['description'] = $description;
         }
 
@@ -453,8 +458,7 @@ class ProjectController extends Controller
         // trigger add user to usrproject
         Event::fire(new AddUserToRoleEvent([ $insValues['principal']['id'] ], $key));
 
-        if (isset($project->principal))
-        {
+        if (isset($project->principal)) {
             $project->principal = array_merge($insValues['principal'], [ 'nameAndEmail' => $insValues['principal']['name'] . '(' . $insValues['principal']['email'] . ')' ]);
         }
 
@@ -464,8 +468,8 @@ class ProjectController extends Controller
     /**
      * initialize project data.
      *
-     * @param  string  $key
-     * @param  int     $id
+     * @param  string $key
+     * @param  int    $id
      * @return 
      */
     public function initialize($key)
@@ -480,26 +484,23 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($key)
     {
         $project = Project::where('key', $key)->first();
-        if (!$project)
-        {
+        if (!$project) {
             return response()->json(['ecode' => -14004, 'emsg' => 'the project does not exist.']);
         }
 
-        if ($project->status !== 'active')
-        {
+        if ($project->status !== 'active') {
             return response()->json(['ecode' => -14009, 'emsg' => 'the project has been closed.']);
         }
 
         // get action allow of the project.
         $permissions = Acl::getPermissions($this->user->id, $project->key);
-        if ($this->user->id === $project->principal['id'] || $this->user->email === 'admin@action.view')
-        {
+        if ($this->user->id === $project->principal['id'] || $this->user->email === 'admin@action.view') {
             !in_array('view_project', $permissions) && $permissions[] = 'view_project';
             !in_array('manage_project', $permissions) && $permissions[] = 'manage_project';
         }
@@ -533,8 +534,7 @@ class ProjectController extends Controller
         //$types = Provider::getTypeListExt($project->key, [ 'assignee' => $users, 'state' => $states, 'resolution' => $resolutions, 'priority' => $priorities, 'version' => $versions, 'module' => $modules ]);
 
         // record the project access date
-        if (in_array('view_project', $permissions))
-        {
+        if (in_array('view_project', $permissions)) {
             AccessProjectLog::where('project_key', $key)
                 ->where('user_id', $this->user->id)
                 ->delete();
@@ -547,68 +547,57 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $updValues = [];
         $name = $request->input('name');
-        if (isset($name))
-        {
-            if (!$name)
-            {
+        if (isset($name)) {
+            if (!$name) {
                 throw new \UnexpectedValueException('the name can not be empty.', -14000);
             }
             $updValues['name'] = $name;
         }
         // check is user is available
         $principal = $request->input('principal');
-        if (isset($principal))
-        {
-            if (!$principal)
-            {
+        if (isset($principal)) {
+            if (!$principal) {
                 throw new \InvalidArgumentException('the principal must be appointed.', -14005);
             }
 
             $principal_info = Sentinel::findById($principal);
-            if (!$principal_info)
-            {
+            if (!$principal_info) {
                 throw new \InvalidArgumentException('the user is not exists.', -14003);
             }
             $updValues['principal'] = [ 'id' => $principal_info->id, 'name' => $principal_info->first_name, 'email' =>  $principal_info->email ]; 
         }
 
         $description = $request->input('description');
-        if (isset($description))
-        {
+        if (isset($description)) {
             $updValues['description'] = $description;
         }
 
         $status = $request->input('status');
-        if (isset($status) && in_array($status, [ 'active', 'closed' ]))
-        {
+        if (isset($status) && in_array($status, [ 'active', 'closed' ])) {
             $updValues['status'] = $status;
         }
 
         $project = Project::find($id);
-        if (!$project)
-        {
+        if (!$project) {
             throw new \UnexpectedValueException('the project does not exist.', -14004);
         }
-        if ($project->principal['id'] !== $this->user->id && !$this->user->hasAccess('sys_admin'))
-        {
+        if ($project->principal['id'] !== $this->user->id && !$this->user->hasAccess('sys_admin')) {
             return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         $old_principal = $project->principal;
         $project->fill($updValues)->save();
 
-        if (isset($principal))
-        {
-            if ($old_principal['id'] != $principal)
-            {
+        if (isset($principal)) {
+            if ($old_principal['id'] != $principal) {
                 Event::fire(new AddUserToRoleEvent([ $principal ], $project->key));
                 Event::fire(new DelUserFromRoleEvent([ $old_principal['id'] ], $project->key));
             }
@@ -620,14 +609,13 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-    	$project = Project::find($id);
-        if (!$project)
-        {
+        $project = Project::find($id);
+        if (!$project) {
             throw new \UnexpectedValueException('the project does not exist.', -14004);
         }
 
@@ -639,13 +627,13 @@ class ProjectController extends Controller
         foreach ($collections as $col)
         {
             $col_name = $col->getName();
-            if (strpos($col_name, 'issue_') === 0 ||
-                strpos($col_name, 'activity_') === 0 ||
-                strpos($col_name, 'comments_') === 0 ||
-                strpos($col_name, 'document_') === 0 ||
-                strpos($col_name, 'wiki_') === 0 ||
-                in_array($col_name, $unrelated_cols))
-            {
+            if (strpos($col_name, 'issue_') === 0 
+                || strpos($col_name, 'activity_') === 0 
+                || strpos($col_name, 'comments_') === 0 
+                || strpos($col_name, 'document_') === 0 
+                || strpos($col_name, 'wiki_') === 0 
+                || in_array($col_name, $unrelated_cols)
+            ) {
                 continue;
             }
     
@@ -668,7 +656,7 @@ class ProjectController extends Controller
     /**
      * check if project key has been taken 
      *
-     * @param  string  $key
+     * @param  string $key
      * @return \Illuminate\Http\Response
      */
     public function checkKey($key)

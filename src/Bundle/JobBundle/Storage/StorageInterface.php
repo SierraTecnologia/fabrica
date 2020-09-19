@@ -23,7 +23,7 @@ interface StorageInterface
      * Stores a job in the the storage.
      *
      * @param string $name
-     * @param mixed $parameters.
+     * @param mixed  $parameters.
      *
      * @return int the ID
      */

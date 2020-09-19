@@ -40,10 +40,12 @@ class MysqlJobStorage implements StorageInterface
 
     public function store($name, array $parameters)
     {
-        $this->runSql(sprintf('INSERT INTO %s (name, parameters, created_at) VALUES (:name, :parameters, NOW())', $this->tableName), array(
+        $this->runSql(
+            sprintf('INSERT INTO %s (name, parameters, created_at) VALUES (:name, :parameters, NOW())', $this->tableName), array(
             'name'       => $name,
             'parameters' => json_encode($parameters),
-        ));
+            )
+        );
 
         return $this->connection->lastInsertId();
     }
@@ -53,9 +55,11 @@ class MysqlJobStorage implements StorageInterface
      */
     public function getStatus($id)
     {
-        $stmt = $this->runSql(sprintf('SELECT fails, locked, message FROM %s WHERE id = :id', $this->tableName), array(
+        $stmt = $this->runSql(
+            sprintf('SELECT fails, locked, message FROM %s WHERE id = :id', $this->tableName), array(
             'id' => $id
-        ));
+            )
+        );
 
         $status = array(
             'finished'      => false,
@@ -96,10 +100,12 @@ class MysqlJobStorage implements StorageInterface
             $this->runSql(sprintf('DELETE FROM %s WHERE id = :id', $this->tableName), array('id' => $id));
         }
 
-        $this->runSql(sprintf('UPDATE %s SET locked = 0, message = :message, fails = fails + 1 WHERE id = :id', $this->tableName), array(
+        $this->runSql(
+            sprintf('UPDATE %s SET locked = 0, message = :message, fails = fails + 1 WHERE id = :id', $this->tableName), array(
             'message' => $message,
             'id'      => $id
-        ));
+            )
+        );
     }
 
     /**

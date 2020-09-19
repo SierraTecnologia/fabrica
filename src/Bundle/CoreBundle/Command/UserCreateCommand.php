@@ -40,7 +40,8 @@ class UserCreateCommand extends ContainerAwareCommand
             ->addArgument('fullname', InputArgument::REQUIRED, 'Fullname of the user')
             ->addArgument('timezone', InputArgument::OPTIONAL, 'Timezone of the user', date_default_timezone_get())
             ->setDescription('Creates a new user')
-            ->setHelp(<<<EOF
+            ->setHelp(
+                <<<EOF
 The <info>fabrica:user-create</info> task creates a new user in the application.
 
 The <info>timezone</info> option is optional. If not set, the default timezone of the
@@ -50,8 +51,7 @@ server will be used.
 
   > php app/console fabrica:user-create alex mypassword "alexandre.salome@gmail.com" "Alexandre Salomé"
 EOF
-            )
-        ;
+            );
     }
 
     /**

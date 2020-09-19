@@ -42,8 +42,7 @@ class SwiftMailerFactory
         if ($transport == 'smtp') {
             $transport = \Swift_SmtpTransport::newInstance($host, $port)
                 ->setUsername($username)
-                ->setPassword($password)
-            ;
+                ->setPassword($password);
         } elseif ($transport == 'mail') {
             $transport = \Swift_MailTransport::newInstance();
         } elseif ($transport == 'null') {

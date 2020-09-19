@@ -40,11 +40,13 @@ class GitAccessCommandTest extends CommandTestCase
 
         $project   = $doctrine->getRepository('FabricaCoreBundle:Project')->findOneBySlug('barbaz');
         $role      = $doctrine->getRepository('FabricaCoreBundle:Role')->findOneBySlug('admin');
-        $gitAccess = $doctrine->getRepository('FabricaCoreBundle:ProjectGitAccess')->findOneBy(array(
+        $gitAccess = $doctrine->getRepository('FabricaCoreBundle:ProjectGitAccess')->findOneBy(
+            array(
             'project'   => $project,
             'role'      => $role,
             'reference' => 'master',
-        ));
+            )
+        );
 
         $this->assertNotNull($gitAccess);
     }
@@ -60,11 +62,13 @@ class GitAccessCommandTest extends CommandTestCase
 
         $project   = $doctrine->getRepository('FabricaCoreBundle:Project')->findOneBySlug('foobar');
         $role      = $doctrine->getRepository('FabricaCoreBundle:Role')->findOneBySlug('visitor');
-        $gitAccess = $doctrine->getRepository('FabricaCoreBundle:ProjectGitAccess')->findOneBy(array(
+        $gitAccess = $doctrine->getRepository('FabricaCoreBundle:ProjectGitAccess')->findOneBy(
+            array(
             'project'   => $project,
             'role'      => $role,
             'reference' => 'master',
-        ));
+            )
+        );
 
         $this->assertNull($gitAccess);
     }

@@ -82,11 +82,13 @@ class Issue extends Base
                 // dd($fieldIdentify, $result); $field = Field::firstOrCreate([
                 //     'code' => $fieldIdentify
                 // ]);
-                FieldValue::create([
+                FieldValue::create(
+                    [
                     'value' => $fieldIdentify,
                     'code_field_code' => $fieldIdentify,
                     'code_issue_id' => $issueKey,
-                ]);
+                    ]
+                );
             } elseif ($fieldIdentify == 'lastViewed') {
             } elseif ($fieldIdentify == 'resolutiondate') {
             } else {

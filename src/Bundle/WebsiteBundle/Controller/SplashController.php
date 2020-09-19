@@ -35,9 +35,11 @@ class SplashController extends Controller
             $request->getSession()->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        return $this->render('FabricaWebsiteBundle:Splash:login.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Splash:login.html.twig', array(
             'form' => $form->createView()
-        ));
+            )
+        );
     }
 
     public function loginCheckAction()
@@ -57,9 +59,11 @@ class SplashController extends Controller
         }
         $form = $this->createForm('register', new User());
 
-        return $this->render('FabricaWebsiteBundle:Splash:register.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Splash:register.html.twig', array(
             'form' => $form->createView()
-        ));
+            )
+        );
     }
 
     public function postRegisterAction(Request $request)
@@ -80,18 +84,22 @@ class SplashController extends Controller
 
         $this->setFlash('error', $this->trans('error.form_invalid', array(), 'register'));
 
-        return $this->render('FabricaWebsiteBundle:Splash:register.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Splash:register.html.twig', array(
             'form' => $form->createView()
-        ));
+            )
+        );
     }
 
     public function forgotPasswordAction()
     {
         $form = $this->createForm('email');
 
-        return $this->render('FabricaWebsiteBundle:Splash:forgotPassword.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Splash:forgotPassword.html.twig', array(
             'form' => $form->createView()
-        ));
+            )
+        );
     }
 
     public function postForgotPasswordAction(Request $request)
@@ -107,7 +115,8 @@ class SplashController extends Controller
             $this->persistEntity($token);
 
             $this->mail($user, 'FabricaWebsiteBundle:Mail:forgotPassword.mail.twig', array('user' => $user, 'email' => $email, 'token' => $token));
-        } catch (NoResultException $e) {}
+        } catch (NoResultException $e) {
+        }
 
         $this->setFlash('success', $this->trans('notice.mail_sent', array(), 'forgot_password'));
 
@@ -119,12 +128,14 @@ class SplashController extends Controller
         list($user, $forgotPassword) = $this->validateForgotPasswordToken($username, $token);
         $form                        = $this->createForm('change_password', $user);
 
-        return $this->render('FabricaWebsiteBundle:Splash:changePassword.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Splash:changePassword.html.twig', array(
             'form'     => $form->createView(),
             'user'     => $user,
             'username' => $username,
             'token'    => $token
-        ));
+            )
+        );
     }
 
     public function postChangePasswordAction(Request $request, $username, $token)
@@ -141,12 +152,14 @@ class SplashController extends Controller
             return $this->redirect($this->generateUrl('splash_login'));
         }
 
-        return $this->render('FabricaWebsiteBundle:Splash:changePassword.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Splash:changePassword.html.twig', array(
             'form'     => $form->createView(),
             'user'     => $user,
             'username' => $username,
             'token'    => $token
-        ));
+            )
+        );
     }
 
     protected function validateForgotPasswordToken($username, $token)
@@ -177,8 +190,10 @@ class SplashController extends Controller
         $email->validateActivationToken($token);
         $this->flush();
 
-        return $this->render('FabricaWebsiteBundle:Splash:activateEmail.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Splash:activateEmail.html.twig', array(
             'email' => $email,
-        ));
+            )
+        );
     }
 }

@@ -15,11 +15,13 @@ class DeleteReferenceJob extends Job
 {
     public static function create(Project $project, Reference $reference, User $user)
     {
-        return new self(array(
+        return new self(
+            array(
             'project_id' => $project->getId(),
             'user_id'    => $user->getId(),
             'ref'        => $reference->getFullname(),
-        ));
+            )
+        );
     }
 
     /**
@@ -31,18 +33,22 @@ class DeleteReferenceJob extends Job
 
         $project = $em->find('FabricaCoreBundle:Project', $this->getParameter('project_id'));
         if (!$project) {
-            throw new \InvalidArgumentException(sprintf(
-                'Project#%s not found.',
-                $this->getParameter('project_id')
-            ));
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Project#%s not found.',
+                    $this->getParameter('project_id')
+                )
+            );
         }
 
         $user = $em->find('FabricaCoreBundle:User', $this->getParameter('user_id'));
         if (!$user) {
-            throw new \InvalidArgumentException(sprintf(
-                'User#%s not found.',
-                $this->getParameter('user_id')
-            ));
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'User#%s not found.',
+                    $this->getParameter('user_id')
+                )
+            );
         }
 
         $repository = $project->getRepository();

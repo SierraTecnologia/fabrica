@@ -24,56 +24,46 @@ class WebhookController extends Controller
     public function exec($type, $project_key)
     {
 
-        if (!in_array($type, ['gitlab', 'github']))
-        {
+        if (!in_array($type, ['gitlab', 'github'])) {
             return response()->json([ 'ecode' => -2, 'emsg' => 'the request url has error.' ]);
         }
 
         $external_user = ExternalUsers::where('project_key', $project_key)
             ->where('user', $type)
             ->first();
-        if (!$external_user)
-        {
+        if (!$external_user) {
             return response()->json([ 'ecode' => -3, 'emsg' => 'the user has not been used.' ]);
         } 
-        else if ($external_user->status !== 'enabled')
-        {
+        else if ($external_user->status !== 'enabled') {
             return response()->json([ 'ecode' => -4, 'emsg' => 'the user has been disabled.' ]);
         }
 
         $payload = file_get_contents('php://input');
-        if ($type === 'gitlab')
-        {
-            if ($_SERVER['HTTP_X_GITLAB_EVENT'] !== 'Push Hook')
-            { 
+        if ($type === 'gitlab') {
+            if ($_SERVER['HTTP_X_GITLAB_EVENT'] !== 'Push Hook') { 
                 return response()->json([ 'ecode' => -5, 'emsg' => 'the event has error.' ]);
             }
 
             $token = $external_user->pwd ?: '';
-            if (!$token || $token !== $_SERVER['HTTP_X_GITLAB_TOKEN']) 
-            {
+            if (!$token || $token !== $_SERVER['HTTP_X_GITLAB_TOKEN']) {
                 return response()->json([ 'ecode' => -1, 'emsg' => 'the token has error.' ]);
             }
 
             $push = new GitLabPush(json_decode($payload, true));
             $push->insCommits($project_key);
         }
-        else if ($type === 'github')
-        {
-            if ($_SERVER['HTTP_X_GITHUB_EVENT'] !== 'push')
-            {
+        else if ($type === 'github') {
+            if ($_SERVER['HTTP_X_GITHUB_EVENT'] !== 'push') {
                 return response()->json([ 'ecode' => -5, 'emsg' => 'the event has error.' ]);
             }
 
             $token = $external_user->pwd ?: '';
-            if (!$token)
-            {
+            if (!$token) {
                 return response()->json([ 'ecode' => -1, 'emsg' => 'the token can not be empty.' ]);
             }
 
             $signature = 'sha1=' . hash_hmac('sha1', $payload, $token);
-            if ($signature !== $_SERVER['HTTP_X_HUB_SIGNATURE'])
-            {
+            if ($signature !== $_SERVER['HTTP_X_HUB_SIGNATURE']) {
                 return response()->json([ 'ecode' => -1, 'emsg' => 'the token has error.' ]);
             }
 

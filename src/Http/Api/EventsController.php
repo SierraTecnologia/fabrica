@@ -25,7 +25,7 @@ class EventsController extends Controller
             $event->notifications = $this->getNotifications($project_key, $event['_id']);
         }
 
-	$roles = Provider::getRoleList($project_key, ['name']);
+        $roles = Provider::getRoleList($project_key, ['name']);
         $users = Provider::getUserList($project_key);
 
         $single_user_fields = [];
@@ -33,12 +33,10 @@ class EventsController extends Controller
         $fields = Provider::getFieldList($project_key);
         foreach ($fields as $field)
         {
-            if ($field->type === 'SingleUser')
-            {
+            if ($field->type === 'SingleUser') {
                 $single_user_fields[] = [ 'id' => $field->key, 'name' => $field->name ];
             } 
-            else if ($field->type === 'MultiUser')
-            {
+            else if ($field->type === 'MultiUser') {
                 $multi_user_fields[] = [ 'id' => $field->key, 'name' => $field->name ];
             } 
         }
@@ -49,19 +47,17 @@ class EventsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $project_key)
     {
         $name = $request->input('name');
-        if (!$name)
-        {
+        if (!$name) {
             throw new \UnexpectedValueException('the name can not be empty.', -12800);
         }
 
-        if (Provider::isEventExisted($project_key, $name))
-        {
+        if (Provider::isEventExisted($project_key, $name)) {
             throw new \UnexpectedValueException('event name cannot be repeated', -12801);
         }
 
@@ -72,7 +68,7 @@ class EventsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($project_key, $id)
@@ -84,27 +80,23 @@ class EventsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $project_key, $id)
     {
         $event = Events::find($id);
-        if (!$event || $project_key != $event->project_key)
-        {
+        if (!$event || $project_key != $event->project_key) {
             throw new \UnexpectedValueException('the event does not exist or is not in the project.', -12802);
         }
 
         $name = $request->input('name');
-        if (isset($name))
-        {
-            if (!$name)
-            {
+        if (isset($name)) {
+            if (!$name) {
                 throw new \UnexpectedValueException('the name can not be empty.', -12800);
             }
-            if ($event->name !== $name && Provider::isEventExisted($project_key, $name))
-            {
+            if ($event->name !== $name && Provider::isEventExisted($project_key, $name)) {
                 throw new \UnexpectedValueException('event name cannot be repeated', -12801);
             }
         }
@@ -119,14 +111,13 @@ class EventsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($project_key, $id)
     {
         $event = Events::find($id);
-        if (!$event || $project_key != $event->project_key)
-        {
+        if (!$event || $project_key != $event->project_key) {
             throw new \UnexpectedValueException('the event does not exist or is not in the project.', -12802);
         }
 
@@ -147,14 +138,12 @@ class EventsController extends Controller
     public function setNotify(Request $request, $project_key, $id)
     {
         $event = Events::find($id);
-        if (!$event || ($event->project_key != '$_sys_$' && $project_key != $event->project_key))
-        {
+        if (!$event || ($event->project_key != '$_sys_$' && $project_key != $event->project_key)) {
             throw new \UnexpectedValueException('the event does not exist or is not in the project.', -12802);
         }
 
         $notifications = $request->input('notifications');
-        if (isset($notifications))
-        {
+        if (isset($notifications)) {
             $en = EventNotifications::where([ 'project_key' => $project_key, 'event_id' => $id ])->first();
             $en && $en->delete();
 
@@ -175,8 +164,7 @@ class EventsController extends Controller
     public function getNotifications($project_key, $event_id)
     {
         $en = EventNotifications::where([ 'project_key' => $project_key, 'event_id' => $event_id ])->first();
-        if (!$en && $project_key !== '$_sys_$')
-        {
+        if (!$en && $project_key !== '$_sys_$') {
             $en = EventNotifications::where([ 'project_key' => '$_sys_$', 'event_id' => $event_id ])->first();
         }
         return $en && isset($en->notifications) ? $en->notifications : [];
@@ -185,8 +173,8 @@ class EventsController extends Controller
     /**
      * reset the notification.
      *
-     * @param  string  $project_key
-     * @param  string  $event_id
+     * @param  string $project_key
+     * @param  string $event_id
      * @return \Illuminate\Http\Response
      */
     public function reset($project_key, $event_id)

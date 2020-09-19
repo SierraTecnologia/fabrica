@@ -42,36 +42,35 @@ class ModuleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $project_key)
     {
         $name = $request->input('name');
-        if (!$name)
-        {
+        if (!$name) {
             throw new \UnexpectedValueException('the name can not be empty.', -11400);
         }
 
-        if (Module::whereRaw([ 'name' => $name ])->exists())
-        {
+        if (Module::whereRaw([ 'name' => $name ])->exists()) {
             throw new \UnexpectedValueException('module name cannot be repeated', -11401);
         }
 
         $principal = [];
         $principal_id = $request->input('principal');
-        if (isset($principal_id))
-        {
+        if (isset($principal_id)) {
             $user_info = Sentinel::findById($principal_id);
             $principal = [ 'id' => $principal_id, 'name' => $user_info->first_name ];
         }
 
         $creator = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
-        $module = Module::create([ 
+        $module = Module::create(
+            [ 
             'project_key' => $project_key, 
             'principal' => $principal, 
             'sn' => time(), 
-            'creator' => $creator ] + $request->all());
+            'creator' => $creator ] + $request->all()
+        );
 
         // trigger event of version added
         //Event::fire(new ModuleEvent($project_key, $creator, [ 'event_key' => 'create_module', 'data' => $module->name ]));
@@ -82,7 +81,7 @@ class ModuleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($project_key, $id)
@@ -96,36 +95,30 @@ class ModuleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $project_key, $id)
     {
         $module = Module::find($id);
-        if (!$module || $module->project_key != $project_key)
-        {
+        if (!$module || $module->project_key != $project_key) {
             throw new \UnexpectedValueException('the module does not exist or is not in the project.', -11402);
         }
 
         $name = $request->input('name');
-        if (isset($name))
-        {
-            if (!$name)
-            {
+        if (isset($name)) {
+            if (!$name) {
                 throw new \UnexpectedValueException('the name can not be empty.', -11400);
             }
-            if ($module->name !== $name && Module::whereRaw([ 'name' => $name ])->exists())
-            {
+            if ($module->name !== $name && Module::whereRaw([ 'name' => $name ])->exists()) {
                 throw new \UnexpectedValueException('module name cannot be repeated', -11401);
             }
         }
 
         $principal_id = $request->input('principal');
-        if (isset($principal_id))
-        {
-            if ($principal_id)
-            {
+        if (isset($principal_id)) {
+            if ($principal_id) {
                 $user_info = Sentinel::findById($principal_id);
                 $principal = [ 'id' => $principal_id, 'name' => $user_info->first_name ];
             }
@@ -151,45 +144,38 @@ class ModuleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function delete(Request $request, $project_key, $id)
     {
         $module = Module::find($id);
-        if (!$module || $project_key != $module->project_key)
-        {
+        if (!$module || $project_key != $module->project_key) {
             throw new \UnexpectedValueException('the module does not exist or is not in the project.', -11402);
         }
 
         $operate_flg = $request->input('operate_flg');
-        if (!isset($operate_flg) || $operate_flg === '0')
-        {
+        if (!isset($operate_flg) || $operate_flg === '0') {
             $is_used = $this->isFieldUsedByIssue($project_key, 'module', $module->toArray());
-            if ($is_used)
-            {
+            if ($is_used) {
                 throw new \UnexpectedValueException('the module has been used by some issues.', -11403);
             }
         }
-        else if ($operate_flg === '1')
-        {
+        else if ($operate_flg === '1') {
             $swap_module = $request->input('swap_module');
-            if (!isset($swap_module) || !$swap_module)
-            {
+            if (!isset($swap_module) || !$swap_module) {
                 throw new \UnexpectedValueException('the swap module cannot be empty.', -11405);
             }
 
             $smodule = Module::find($swap_module);
-            if (!$smodule || $project_key != $smodule->project_key)
-            {
+            if (!$smodule || $project_key != $smodule->project_key) {
                 throw new \UnexpectedValueException('the swap module does not exist or is not in the project.', -11406);
             }
 
             $this->updIssueModule($project_key, $id, $swap_module);
         }
-        else if ($operate_flg === '2')
-        {
+        else if ($operate_flg === '2') {
             $this->updIssueModule($project_key, $id, '');
         }
         else
@@ -203,8 +189,7 @@ class ModuleController extends Controller
         //$cur_user = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
         //Event::fire(new ModuleEvent($project_key, $cur_user, [ 'event_key' => 'del_module', 'data' => $module->name ]));
 
-        if ($operate_flg === '1')
-        {
+        if ($operate_flg === '1') {
             return $this->show($project_key, $request->input('swap_module'));
         }
         else
@@ -216,7 +201,7 @@ class ModuleController extends Controller
     /**
      * update the issues module
      *
-     * @param  array $issues
+     * @param  array  $issues
      * @param  string $source
      * @param  string $dest
      * @return \Illuminate\Http\Response
@@ -232,20 +217,16 @@ class ModuleController extends Controller
         {
             $updValues = [];
 
-            if (is_string($issue['module']))
-            {
-                if ($issue['module'] === $source)
-                {
+            if (is_string($issue['module'])) {
+                if ($issue['module'] === $source) {
                     $updValues['module'] = $dest;
                 }
             } 
-            else if (is_array($issue['module']))
-            {
+            else if (is_array($issue['module'])) {
                 $updValues['module'] = array_values(array_filter(array_unique(str_replace($source, $dest, $issue['module']))));
             }
 
-            if ($updValues)
-            {
+            if ($updValues) {
                 $updValues['modifier'] = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
                 $updValues['updated_at'] = time();
 
@@ -263,21 +244,19 @@ class ModuleController extends Controller
     /**
      * update sort etc..
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return void
      */
     public function handle(Request $request, $project_key)
     {
         // set module sort.
         $sequence_modules = $request->input('sequence') ?: [];
-        if ($sequence_modules)
-        {
+        if ($sequence_modules) {
             $i = 1;
             foreach ($sequence_modules as $module_id)
             {
                 $module = Module::find($module_id);
-                if (!$module || $module->project_key != $project_key)
-                {
+                if (!$module || $module->project_key != $project_key) {
                     continue;
                 }
                 $module->sn = $i++;

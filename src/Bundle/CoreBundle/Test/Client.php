@@ -62,10 +62,12 @@ class Client extends BaseClient
 
         $crawler = $this->request('GET', '/login');
 
-        $form = $crawler->filter('form button[type=submit]')->form(array(
+        $form = $crawler->filter('form button[type=submit]')->form(
+            array(
             '_username' => $username,
             '_password' => $password
-        ));
+            )
+        );
 
         $this->submit($form);
 
@@ -74,7 +76,6 @@ class Client extends BaseClient
 
     /**
      * Logout the user.
-     *
      */
     public function logout()
     {
@@ -103,7 +104,7 @@ class Client extends BaseClient
      * Defines the repository pool to use for the client.
      *
      * @param Fabrica\Bundle\CoreBundle\Git\RepositoryPool $repositoryPool The
-     * repository pool to set
+     *                                                                     repository pool to set
      */
     public function setRepositoryPool(RepositoryPool $repositoryPool)
     {

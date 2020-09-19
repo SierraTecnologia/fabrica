@@ -36,7 +36,8 @@ class UserRoleCreateCommand extends ContainerAwareCommand
             ->addArgument('role',         InputArgument::REQUIRED, 'Role name')
             ->addArgument('project',      InputArgument::OPTIONAL, 'Slug of the project')
             ->setDescription('Creates a new user')
-            ->setHelp(<<<EOF
+            ->setHelp(
+                <<<EOF
 This commands allow you to create new user roles in the project.
 
 <comment>Sample usages:</comment>
@@ -49,8 +50,7 @@ This commands allow you to create new user roles in the project.
 
     Adds alice as administrator
 EOF
-            )
-        ;
+            );
     }
 
     /**
@@ -103,12 +103,14 @@ EOF
             $em->flush();
         }
 
-        $output->writeln(sprintf(
-            'Added successfully <info>%s</info> as <info>%s</info>%s',
-            $user->getFullname(),
-            $role->getName(),
-            $project ? sprintf(' to <info>%s</info>', $project->getName()) : ''
-        ));
+        $output->writeln(
+            sprintf(
+                'Added successfully <info>%s</info> as <info>%s</info>%s',
+                $user->getFullname(),
+                $role->getName(),
+                $project ? sprintf(' to <info>%s</info>', $project->getName()) : ''
+            )
+        );
 
     }
 }

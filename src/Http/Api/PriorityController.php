@@ -34,19 +34,17 @@ class PriorityController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $project_key)
     {
         $name = $request->input('name');
-        if (!$name)
-        {
+        if (!$name) {
             throw new \UnexpectedValueException('the name can not be empty.', -12600);
         }
 
-        if (Provider::isPriorityExisted($project_key, $name))
-        {
+        if (Provider::isPriorityExisted($project_key, $name)) {
             throw new \UnexpectedValueException('priority name cannot be repeated', -12601);
         }
 
@@ -59,7 +57,7 @@ class PriorityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($project_key, $id)
@@ -75,32 +73,27 @@ class PriorityController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $project_key, $id)
     {
         $priority = Priority::find($id);
-        if (!$priority || $project_key != $priority->project_key)
-        {
+        if (!$priority || $project_key != $priority->project_key) {
             throw new \UnexpectedValueException('the priority does not exist or is not in the project.', -12602);
         }
 
-        if (isset($priority->key) && $priority->key)
-        {
+        if (isset($priority->key) && $priority->key) {
             throw new \UnexpectedValueException('the priority is built in the system.', -12604);
         }
 
         $name = $request->input('name');
-        if (isset($name))
-        {
-            if (!$name)
-            {
+        if (isset($name)) {
+            if (!$name) {
                 throw new \UnexpectedValueException('the name can not be empty.', -12600);
             }
-            if ($priority->name !== $name && Provider::isPriorityExisted($project_key, $name))
-            {
+            if ($priority->name !== $name && Provider::isPriorityExisted($project_key, $name)) {
                 throw new \UnexpectedValueException('priority name cannot be repeated', -12601);
             }
         }
@@ -114,14 +107,13 @@ class PriorityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($project_key, $id)
     {
         $priority = Priority::find($id);
-        if (!$priority || $project_key != $priority->project_key)
-        {
+        if (!$priority || $project_key != $priority->project_key) {
             throw new \UnexpectedValueException('the priority does not exist or is not in the project.', -12602);
         }
 
@@ -131,31 +123,28 @@ class PriorityController extends Controller
         //}
 
         $isUsed = $this->isFieldUsedByIssue($project_key, 'priority', $priority->toArray()); 
-        if ($isUsed)
-        {
+        if ($isUsed) {
             throw new \UnexpectedValueException('the priority has been used in issue.', -12603);
         }
 
         Priority::destroy($id);
 
         $priority_property = PriorityProperty::Where('project_key', $project_key)->first();
-        if ($priority_property)
-        {
+        if ($priority_property) {
              $properties = [];
-             if ($priority_property->defaultValue == $id)
-             {
-                 $properties['defaultValue'] = '';
-             }
-             if ($priority_property->sequence && in_array($id, $priority_property->sequence))
-             {
-                 $sequence = [];
-                 foreach ($priority_property->sequence as $val)
-                 {
-                     if ($val == $id) { continue; }
-                     $sequence[] = $val;
-                 }
-                 $properties['sequence'] = $sequence;
-             }
+            if ($priority_property->defaultValue == $id) {
+                $properties['defaultValue'] = '';
+            }
+            if ($priority_property->sequence && in_array($id, $priority_property->sequence)) {
+                $sequence = [];
+                foreach ($priority_property->sequence as $val)
+                {
+                    if ($val == $id) { continue; 
+                    }
+                    $sequence[] = $val;
+                }
+                $properties['sequence'] = $sequence;
+            }
 
              $priority_property->fill($properties);
              $priority_property->save();
@@ -169,13 +158,12 @@ class PriorityController extends Controller
     /**
      * update sort or defaultValue etc..
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return void
      */
     public function handle(Request $request, $project_key)
     {
-        if ($project_key === '$_sys_$')
-        {
+        if ($project_key === '$_sys_$') {
             return $this->handleSys($request, $project_key);
         }
         else
@@ -187,7 +175,7 @@ class PriorityController extends Controller
     /**
      * update sort or defaultValue etc..
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return void
      */
     public function handleProject(Request $request, $project_key)
@@ -195,21 +183,18 @@ class PriorityController extends Controller
         $properties = [];
         // set priority sort.
         $sequence = $request->input('sequence');
-        if (isset($sequence))
-        {
+        if (isset($sequence)) {
             $properties['sequence'] = $sequence;
         }
 
         // set default value
         $defaultValue = $request->input('defaultValue');
-        if (isset($defaultValue))
-        {
+        if (isset($defaultValue)) {
             $properties['defaultValue'] = $defaultValue;
         }
 
         $priority_property = PriorityProperty::Where('project_key', $project_key)->first();
-        if ($priority_property)
-        {
+        if ($priority_property) {
              $priority_property->fill($properties);
              $priority_property->save();
         }
@@ -224,21 +209,19 @@ class PriorityController extends Controller
     /**
      * update sort or defaultValue etc..
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return void
      */
     public function handleSys(Request $request, $project_key)
     {
         // set type sort.
         $sequence = $request->input('sequence');
-        if (isset($sequence))
-        {
+        if (isset($sequence)) {
             $i = 1;
             foreach ($sequence as $priority_id)
             {
                 $priority = Priority::find($priority_id);
-                if (!$priority || $priority->project_key != $project_key)
-                {
+                if (!$priority || $priority->project_key != $project_key) {
                     continue;
                 }
                 $priority->sn = $i++;
@@ -248,24 +231,20 @@ class PriorityController extends Controller
 
         // set default value
         $default_priority_id = $request->input('defaultValue');
-        if (isset($default_priority_id))
-        {
+        if (isset($default_priority_id)) {
             $priority = Priority::find($default_priority_id);
-            if (!$priority || $priority->project_key != $project_key)
-            {
+            if (!$priority || $priority->project_key != $project_key) {
                 throw new \UnexpectedValueException('the priority does not exist or is not in the project.', -12602);
             }
 
             $priorities = Priority::where('project_key', $project_key)->get();
             foreach ($priorities as $priority)
             {
-                if ($priority->id == $default_priority_id)
-                {
+                if ($priority->id == $default_priority_id) {
                     $priority->default = true;
                     $priority->save();
                 }
-                else if (isset($priority->default))
-                {
+                else if (isset($priority->default)) {
                     $priority->unset('default');
                 }
             }
@@ -281,8 +260,7 @@ class PriorityController extends Controller
      */
     public function viewUsedInProject($project_key, $id)
     {
-        if ($project_key !== '$_sys_$')
-        {
+        if ($project_key !== '$_sys_$') {
             return response()->json(['ecode' => 0, 'data' => [] ]);
         }
 
@@ -294,8 +272,7 @@ class PriorityController extends Controller
                 ->where('priority', $id)
                 ->where('del_flg', '<>', 1)
                 ->count();
-            if ($count > 0)
-            {
+            if ($count > 0) {
                 $res[] = [ 'key' => $project->key, 'name' => $project->name, 'status' => $project->status, 'issue_count' => $count ];
             }
         }

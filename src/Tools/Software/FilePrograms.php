@@ -23,53 +23,53 @@ Autoloader::register();
 
 class FilePrograms
 {
-public function __construct($file)
-{
+    public function __construct($file)
+    {
         
-}
+    }
 
-public function getRequirements()
-{
-    return array(
+    public function getRequirements()
+    {
+        return array(
         'php'   => array('PHP 5.3.0', version_compare(phpversion(), '5.3.0', '>=')),
         'xml'   => array('PHP extension XML', extension_loaded('xml')),
         'zip'   => array('PHP extension ZipArchive (optional)', extension_loaded('zip')),
         'xmlw'  => array('PHP extension XMLWriter (optional)', extension_loaded('xmlwriter')),
-    );
-}
+        );
+    }
 
-public function getExtension($extension)
-{
-    $returnWrites = [];
-    $types = $this->getTypes;
-    foreach($types as $type) {
-        $writes = (new $type)->getWrites($class, $type);
-        foreach ($writes as $writerNameClass=>$extensionWriterClass)
-        {
-            if ($extensionWriterClass==$extension) {
-                if (!isset($returnWrites[$type])) {
-                    $returnWrites[$type] = [];
+    public function getExtension($extension)
+    {
+        $returnWrites = [];
+        $types = $this->getTypes;
+        foreach($types as $type) {
+            $writes = (new $type)->getWrites($class, $type);
+            foreach ($writes as $writerNameClass=>$extensionWriterClass)
+            {
+                if ($extensionWriterClass==$extension) {
+                    if (!isset($returnWrites[$type])) {
+                        $returnWrites[$type] = [];
+                    }
+                    $returnWrites[$type][] = $writerNameClass;
                 }
-                $returnWrites[$type][] = $writerNameClass;
             }
         }
+        return $returnWrites;
     }
-    return $returnWrites;
-}
 
-public function getTypes()
-{
-    return [
+    public function getTypes()
+    {
+        return [
         Types\Project::class
-    ];
-}
+        ];
+    }
 
-public function run()
-{
-    $this->header();
-    $this->getRequirements();
-    if (!CLI) {
-        ?>
+    public function run()
+    {
+        $this->header();
+        $this->getRequirements();
+        if (!CLI) {
+            ?>
         <div class="jumbotron">
         <p>Welcome to PHPProject, a library written in pure PHP that provides a set of classes to write to and read from different document file formats, i.e. GanttProject (.gan) and MS Project (.mpx).</p>
         <p>&nbsp;</p>
@@ -78,26 +78,26 @@ public function run()
             <a class="btn btn-lg btn-primary" href="http://phpproject.readthedocs.org/en/develop/" role="button"><i class="fa fa-book fa-lg" title="Docs"></i>  Read the Docs</a>
         </p>
         </div>
-        <?php
-    }
-    if (!CLI) {
-        echo "<h3>Requirement check:</h3>";
-        echo "<ul>";
-        foreach ($requirements as $key => $value) {
-            list($label, $result) = $value;
-            $status = $result ? 'passed' : 'failed';
-            echo "<li>{$label} ... <span class='{$status}'>{$status}</span></li>";
+            <?php
         }
-        echo "</ul>";
-        include_once 'Sample_Footer.php';
-    } else {
-        echo 'Requirement check:' . PHP_EOL;
-        foreach ($requirements as $key => $value) {
-            list($label, $result) = $value;
-            $status = $result ? '32m passed' : '31m failed';
-            echo "{$label} ... \033[{$status}\033[0m" . PHP_EOL;
+        if (!CLI) {
+            echo "<h3>Requirement check:</h3>";
+            echo "<ul>";
+            foreach ($requirements as $key => $value) {
+                list($label, $result) = $value;
+                $status = $result ? 'passed' : 'failed';
+                echo "<li>{$label} ... <span class='{$status}'>{$status}</span></li>";
+            }
+            echo "</ul>";
+            include_once 'Sample_Footer.php';
+        } else {
+            echo 'Requirement check:' . PHP_EOL;
+            foreach ($requirements as $key => $value) {
+                list($label, $result) = $value;
+                $status = $result ? '32m passed' : '31m failed';
+                echo "{$label} ... \033[{$status}\033[0m" . PHP_EOL;
+            }
         }
-    }
 
 
     }
@@ -214,8 +214,8 @@ public function run()
      * Write documents
      *
      * @param \PhpOffice\PhpWord\PhpWord $phpWord
-     * @param string $filename
-     * @param array $writers
+     * @param string                     $filename
+     * @param array                      $writers
      */
     function write($phpPowerPoint, $filename, $writers)
     {
@@ -277,21 +277,22 @@ public function run()
         return $result;
     }
 
-    function echoTask($oPHPProject, $oTask, $level = 0) {
+    function echoTask($oPHPProject, $oTask, $level = 0)
+    {
         echo '<strong>'.str_repeat('>', 2 * $level).' Task : '.$oTask->getName().'</strong>'.EOL;
         echo ' '.str_repeat('>', 2 * ($level + 1)).' Duration : '.$oTask->getDuration().EOL;
         echo ' '.str_repeat('>', 2 * ($level + 1)).' StartDate : '.date('Y-m-d', $oTask->getStartDate()).EOL;
         echo ' '.str_repeat('>', 2 * ($level + 1)).' Progress : '.$oTask->getProgress().EOL;
         echo ' '.str_repeat('>', 2 * ($level + 1)).' Resources : '.EOL;
         $oTaskResources = $oTask->getResources();
-        if(!empty($oTaskResources)){
+        if(!empty($oTaskResources)) {
             foreach ($oTaskResources as $oResource){
                 echo ' '.str_repeat('>', 2 * ($level + 2)).' Resource : '.$oResource->getTitle().EOL;
             }
         }
         echo EOL;
         $level++;
-        if($oTask->getTaskCount() > 0){
+        if($oTask->getTaskCount() > 0) {
             foreach ($oTask->getTasks() as $oSubTask){
                 echoTask($oPHPProject, $oSubTask, $level);
             }

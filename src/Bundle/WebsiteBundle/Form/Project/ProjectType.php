@@ -29,11 +29,13 @@ class ProjectType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             'data_class'         => 'Fabrica\Models\Code\Project',
             'translation_domain' => 'project_admin',
             'action'             => 'create',
-        ));
+            )
+        );
     }
 
     public function getName()

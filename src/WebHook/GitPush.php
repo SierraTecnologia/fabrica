@@ -6,7 +6,7 @@ use Fabrica\Workflow\Workflow;
 use DB;
 use Exception;
 
-class GitPush 
+class GitPush
 {
     // the push git repository
     protected $repo = [];
@@ -81,18 +81,17 @@ class GitPush
     /**
      * exec the workflow.
      *
-     * @param  string  $project_key
-     * @param  number  $issue_no
-     * @param  number  $action_id
-     * @param  string  $caller
+     * @param  string $project_key
+     * @param  number $issue_no
+     * @param  number $action_id
+     * @param  string $caller
      * @return void
      */
     public function execWorkflow($project_key, $issue, $action_id, $caller)
     {
         $issue_id = $issue['_id']->__toString();
         $entry_id = isset($issue['entry_id']) ? $issue['entry_id'] : '';
-        if (!$entry_id)
-        {
+        if (!$entry_id) {
             return;
         }
 
@@ -123,24 +122,21 @@ class GitPush
             $new_commit = $this->arrangeCommit($commit);
 
             $issue_data = $this->relateIssue($project_key, $new_commit['message']);
-            if ($issue_data === false)
-            {
+            if ($issue_data === false) {
                 continue;
             }
             $issue_no = $issue_data['no'];
             $action   = $issue_data['action'];
 
             $issue = DB::collection($issue_table)->where('no', $issue_no)->where('del_flg', '<>', 1)->first();
-            if (!$issue)
-            {
+            if (!$issue) {
                 return;
             }
 
             // insert the commit to issue 
             DB::collection($table)->insert($new_commit + [ 'issue_id' => $issue['_id']->__toString() ]);
             // transimit the issue status
-            if ($action > 0 && isset($new_commit['author']['id']) && $new_commit['author']['id'])
-            {
+            if ($action > 0 && isset($new_commit['author']['id']) && $new_commit['author']['id']) {
                 $this->execWorkflow($project_key, $issue, $action, $new_commit['author']['id']);
             }
         }
@@ -150,39 +146,34 @@ class GitPush
     /**
      * check if the commit relate to issue.
      *
-     * @param  string  $project_key
+     * @param  string $project_key
      * @param  array  $commit
      * @return mixed
      */
     public function relateIssue($project_key, $message)
     {
-        if (!$message)
-        {
+        if (!$message) {
             return false;
         }
 
         $messages = explode(' ', trim($message));
         $prefix = array_shift($messages);
-        if (strpos($prefix, '-') === false)
-        {
+        if (strpos($prefix, '-') === false) {
             return false;
         }
 
         $marks = explode('-', $prefix);
-        if ($marks[0] != $project_key)
-        {
+        if ($marks[0] != $project_key) {
             return false;
         }
 
-        if (!$marks[1] || !is_numeric($marks[1]) || strpos($marks[1], '.') !== false)
-        {
+        if (!$marks[1] || !is_numeric($marks[1]) || strpos($marks[1], '.') !== false) {
             return false;
         }
         $issue_no = intval($marks[1]);
 
         $action = 0;
-        if (isset($marks[2]) && $marks[2])
-        {
+        if (isset($marks[2]) && $marks[2]) {
             $action = is_numeric($marks[2]) && strpos($marks[2], '.') === false ? intval($marks[2]) : 0;
         }
 

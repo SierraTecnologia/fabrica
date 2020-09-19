@@ -39,9 +39,11 @@ class ProjectController extends Controller
             $projects = $this->getRepository('FabricaCoreBundle:Project')->findByUser($this->getUser());
         }
 
-        return $this->render('FabricaWebsiteBundle:Project:list.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Project:list.html.twig', array(
             'projects' => $projects
-        ));
+            )
+        );
     }
 
     public function createAction(Request $request)
@@ -53,9 +55,11 @@ class ProjectController extends Controller
         $form    = $this->createForm('project', $project);
 
         if ('GET' === $request->getMethod()) {
-            return $this->render('FabricaWebsiteBundle:Project:create.html.twig', array(
+            return $this->render(
+                'FabricaWebsiteBundle:Project:create.html.twig', array(
                 'form' => $form->createView()
-            ));
+                )
+            );
         }
 
         $form->bind($request);
@@ -63,9 +67,11 @@ class ProjectController extends Controller
         if (!$form->isValid()) {
             $this->setFlash('error', $this->trans('error.form_invalid', array(), 'register'));
 
-            return $this->render('FabricaWebsiteBundle:Project:create.html.twig', array(
+            return $this->render(
+                'FabricaWebsiteBundle:Project:create.html.twig', array(
                 'form' => $form->createView()
-            ));
+                )
+            );
         }
 
         $role    = $this->getRepository('FabricaCoreBundle:Role')->findOneByName('Lead developer');
@@ -85,16 +91,20 @@ class ProjectController extends Controller
         $page    = $request->query->get('page', 1);
 
         if ($project->isEmpty()) {
-            return $this->render('FabricaWebsiteBundle:Project:empty.html.twig', array(
+            return $this->render(
+                'FabricaWebsiteBundle:Project:empty.html.twig', array(
                 'project'    => $project
-            ));
+                )
+            );
         }
 
-        return $this->render('FabricaWebsiteBundle:Project:newsfeed.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Project:newsfeed.html.twig', array(
             'project'  => $project,
             'messages' => $this->getRepository('FabricaCoreBundle:Message')->getPagerForProject($project, $branch)->setPage($page),
             'branch'   => $branch,
-        ));
+            )
+        );
     }
 
     public function historyAction(Request $request, $slug)
@@ -106,19 +116,20 @@ class ProjectController extends Controller
 
         $log
             ->setOffset($request->query->get('offset', 0))
-            ->setLimit($request->query->get('limit', 25))
-        ;
+            ->setLimit($request->query->get('limit', 25));
 
         $template = $request->isXmlHttpRequest() ?
             'FabricaWebsiteBundle:Project:history_ajax.html.twig' :
             'FabricaWebsiteBundle:Project:history.html.twig'
         ;
 
-        return $this->render($template, array(
+        return $this->render(
+            $template, array(
             'project'  => $project,
             'branch'   => $branch,
             'log'      => $log,
-        ));
+            )
+        );
     }
 
     /**
@@ -129,11 +140,13 @@ class ProjectController extends Controller
         $project    = $this->getProject($slug);
         $commit     = $project->getRepository()->getCommit($hash);
 
-        return $this->render('FabricaWebsiteBundle:Project:commit.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Project:commit.html.twig', array(
             'project'    => $project,
             'reference'  => $project->getDefaultBranch(),
             'commit'     => $commit
-        ));
+            )
+        );
     }
 
     /**
@@ -186,10 +199,12 @@ class ProjectController extends Controller
         $project   = $this->getProject($slug);
         $reference = $request->query->get('reference', $project->getDefaultBranch());
 
-        return $this->render('FabricaWebsiteBundle:Project:branches.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Project:branches.html.twig', array(
             'project'   => $project,
             'reference' => $reference,
-        ));
+            )
+        );
     }
 
     public function branchDeleteAction(Request $request, $slug, $branch)
@@ -203,14 +218,16 @@ class ProjectController extends Controller
         $job = DeleteReferenceJob::create($project, $branch, $user);
         $this->get('fabrica.job_manager')->delegate($job);
 
-        return $this->redirect($this->generateUrl(
-            'job_wait', array(
+        return $this->redirect(
+            $this->generateUrl(
+                'job_wait', array(
                 'id'       => $job->getId(),
                 'pending'  => $this->trans('notice.branch_deleting', array('%branch%' => $branch->getName()), 'project_branches'),
                 'finished' => $this->trans('notice.branch_deleted', array('%branch%' => $branch->getName()), 'project_branches'),
                 'redirect' => $this->generateUrl('project_branches', array('slug' => $slug))
+                )
             )
-        ));
+        );
     }
 
     public function tagsAction($slug)
@@ -218,14 +235,18 @@ class ProjectController extends Controller
         $project    = $this->getProject($slug);
         $tags       = $project->getRepository()->getReferences()->getTags();
 
-        usort($tags, function($left, $right) {
-            return $left->getCommit()->getAuthorDate() < $right->getCommit()->getAuthorDate();
-        });
+        usort(
+            $tags, function ($left, $right) {
+                return $left->getCommit()->getAuthorDate() < $right->getCommit()->getAuthorDate();
+            }
+        );
 
-        return $this->render('FabricaWebsiteBundle:Project:tags.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Project:tags.html.twig', array(
             'project' => $project,
             'tags'    => $tags,
-        ));
+            )
+        );
     }
 
     /**
@@ -247,20 +268,21 @@ class ProjectController extends Controller
 
         $log
             ->setOffset($request->query->get('offset', 0))
-            ->setLimit($request->query->get('limit', 25))
-        ;
+            ->setLimit($request->query->get('limit', 25));
 
         $template = $request->isXmlHttpRequest() ?
             'FabricaWebsiteBundle:Project:history_ajax.html.twig' :
             'FabricaWebsiteBundle:Project:treeHistory.html.twig'
         ;
 
-        return $this->render($template, array(
+        return $this->render(
+            $template, array(
             'path'     => $path,
             'project'  => $project,
             'revision' => $revision,
             'log'      => $log,
-        ));
+            )
+        );
     }
 
     public function blameAction(Request $request, $slug, $path, $revision)
@@ -277,13 +299,15 @@ class ProjectController extends Controller
 
         $blame = $repository->getBlame($revision, $path);
 
-        return $this->render('FabricaWebsiteBundle:Project:blame.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Project:blame.html.twig', array(
             'project'       => $project,
             'blame'         => $blame,
             'revision'     => $revision,
             'path'          => $path,
             'path_exploded' => explode('/', $path)
-        ));
+            )
+        );
     }
 
     public function compareAction($slug, $revision)
@@ -291,12 +315,14 @@ class ProjectController extends Controller
         $project = $this->getProject($slug);
         $log     = $project->getRepository()->getLog($revision);
 
-        return $this->render('FabricaWebsiteBundle:Project:compare.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Project:compare.html.twig', array(
             'project'   => $project,
             'revision' => $revision,
             'log'       => $log,
             'diff'      => $log->getDiff()
-        ));
+            )
+        );
     }
 
     public function permissionsAction($slug)
@@ -306,12 +332,14 @@ class ProjectController extends Controller
         $roleForm      = $this->createForm('project_role', null, array('usedUsers' => $project->getUsers()));
         $gitAccessForm = $this->createForm('project_git_access');
 
-        return $this->render('FabricaWebsiteBundle:Project:permissions.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Project:permissions.html.twig', array(
             'project'       => $project,
             'roleForm'      => $roleForm->createView(),
             'gitAccessForm' => $gitAccessForm->createView(),
             'token'         => $this->createToken('project_permissions')
-        ));
+            )
+        );
     }
 
     public function postPermissionsCreateRoleAction(Request $request, $slug)
@@ -329,12 +357,14 @@ class ProjectController extends Controller
             return $this->redirect($this->generateUrl('project_permissions', array('slug' => $slug)));
         }
 
-        return $this->render('FabricaWebsiteBundle:Project:permissions.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Project:permissions.html.twig', array(
             'project'       => $project,
             'roleForm'      => $roleForm->createView(),
             'gitAccessForm' => $gitAccessForm->createView(),
             'token'         => $this->createToken('project_permissions')
-        ));
+            )
+        );
     }
 
     public function postPermissionsDeleteRoleAction(Request $request, $slug, $id)
@@ -376,11 +406,13 @@ class ProjectController extends Controller
             return $this->redirect($this->generateUrl('project_permissions', array('slug' => $slug)));
         }
 
-        return $this->render('FabricaWebsiteBundle:Project:permissions.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Project:permissions.html.twig', array(
             'project'       => $project,
             'roleForm'      => $roleForm->createView(),
             'gitAccessForm' => $gitAccessForm->createView()
-        ));
+            )
+        );
     }
 
     public function postPermissionsDeleteGitAccessAction(Request $request, $slug, $id)
@@ -422,10 +454,12 @@ class ProjectController extends Controller
             return $this->redirect($this->generateUrl('project_admin', array('slug' => $slug)));
         }
 
-        return $this->render('FabricaWebsiteBundle:Project:admin.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Project:admin.html.twig', array(
             'form'       => $form->createView(),
             'project'    => $viewProject
-        ));
+            )
+        );
     }
 
     public function deleteAction(Request $request, $slug)

@@ -26,8 +26,7 @@ class GitCommandTest extends CommandTestCase
 
         $this->shellHandler = $this->getMockBuilder('Fabrica\Bundle\CoreBundle\Git\ShellHandler')
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
         $this->client->setShellHandler($this->shellHandler);
 
         $this->client->startIsolation();
@@ -43,8 +42,7 @@ class GitCommandTest extends CommandTestCase
         $this->shellHandler
             ->expects($this->once())
             ->method('getOriginalCommand')
-            ->will($this->returnValue(null))
-        ;
+            ->will($this->returnValue(null));
 
         list($statusCode ,$output) = $this->runCommand($this->client, 'fabrica:git --stderr=no alice');
 
@@ -58,8 +56,7 @@ class GitCommandTest extends CommandTestCase
         $this->shellHandler
             ->expects($this->once())
             ->method('getOriginalCommand')
-            ->will($this->returnValue('git-bla-pack \'foobar.git\''))
-        ;
+            ->will($this->returnValue('git-bla-pack \'foobar.git\''));
 
         list($statusCode ,$output) = $this->runCommand($this->client, 'fabrica:git --stderr=no alice');
 
@@ -71,13 +68,11 @@ class GitCommandTest extends CommandTestCase
         $this->shellHandler
             ->expects($this->once())
             ->method('getOriginalCommand')
-            ->will($this->returnValue('git-upload-pack \'barbaz.git\''))
-        ;
+            ->will($this->returnValue('git-upload-pack \'barbaz.git\''));
 
         $this->shellHandler
             ->expects($this->never())
-            ->method('handle')
-        ;
+            ->method('handle');
 
         list($statusCode ,$output) = $this->runCommand($this->client, 'fabrica:git --stderr=no bob');
 
@@ -89,13 +84,11 @@ class GitCommandTest extends CommandTestCase
         $this->shellHandler
             ->expects($this->once())
             ->method('getOriginalCommand')
-            ->will($this->returnValue('git-upload-pack \'foobar.git\''))
-        ;
+            ->will($this->returnValue('git-upload-pack \'foobar.git\''));
 
         $this->shellHandler
             ->expects($this->once())
-            ->method('handle')
-        ;
+            ->method('handle');
 
         list($statusCode ,$output) = $this->runCommand($this->client, 'fabrica:git --stderr=no bob');
     }
@@ -105,13 +98,11 @@ class GitCommandTest extends CommandTestCase
         $this->shellHandler
             ->expects($this->once())
             ->method('getOriginalCommand')
-            ->will($this->returnValue('git-receive-pack \'barbaz.git\''))
-        ;
+            ->will($this->returnValue('git-receive-pack \'barbaz.git\''));
 
         $this->shellHandler
             ->expects($this->never())
-            ->method('handle')
-        ;
+            ->method('handle');
 
         list($statusCode ,$output) = $this->runCommand($this->client, 'fabrica:git --stderr=no bob');
 
@@ -123,13 +114,11 @@ class GitCommandTest extends CommandTestCase
         $this->shellHandler
             ->expects($this->once())
             ->method('getOriginalCommand')
-            ->will($this->returnValue('git-receive-pack \'foobar.git\''))
-        ;
+            ->will($this->returnValue('git-receive-pack \'foobar.git\''));
 
         $this->shellHandler
             ->expects($this->once())
-            ->method('handle')
-        ;
+            ->method('handle');
 
         list($statusCode ,$output) = $this->runCommand($this->client, 'fabrica:git --stderr=no bob');
     }

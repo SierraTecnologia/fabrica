@@ -64,9 +64,11 @@ class FabricaExtension extends \Twig_Extension
             );
         }
 
-        usort($rows, function ($left, $right) {
-            return $left['lastModification']->getAuthorDate() < $right['lastModification']->getAuthorDate();
-        });
+        usort(
+            $rows, function ($left, $right) {
+                return $left['lastModification']->getAuthorDate() < $right['lastModification']->getAuthorDate();
+            }
+        );
 
         return $rows;
     }

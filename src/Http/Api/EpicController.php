@@ -55,12 +55,10 @@ class EpicController extends Controller
                 ->get(['state']);
             foreach ($issues as $issue)
             {
-                if (in_array($issue['state'], $completed_states))
-                {
+                if (in_array($issue['state'], $completed_states)) {
                     $completed_issue_cnt++;
                 }
-                else if (in_array($issue['state'], $all_states))
-                {
+                else if (in_array($issue['state'], $all_states)) {
                     $incompleted_issue_cnt++;
                 }
                 else
@@ -79,25 +77,22 @@ class EpicController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $project_key)
     {
         $name = $request->input('name');
-        if (!$name)
-        {
+        if (!$name) {
             throw new \UnexpectedValueException('the name can not be empty.', -11800);
         }
 
         $bgColor = $request->input('bgColor');
-        if (!$bgColor)
-        {
+        if (!$bgColor) {
             throw new \UnexpectedValueException('the bgColor can not be empty.', -11801);
         }
 
-        if (Provider::isEpicExisted($project_key, $name))
-        {
+        if (Provider::isEpicExisted($project_key, $name)) {
             throw new \UnexpectedValueException('epic name cannot be repeated', -11802);
         }
 
@@ -108,7 +103,7 @@ class EpicController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($project_key, $id)
@@ -122,38 +117,32 @@ class EpicController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $project_key, $id)
     {
         $name = $request->input('name');
-        if (isset($name))
-        {
-            if (!$name)
-            {
+        if (isset($name)) {
+            if (!$name) {
                 throw new \UnexpectedValueException('the name can not be empty.', -11800);
             }
         }
 
         $bgColor = $request->input('bgColor');
-        if (isset($bgColor))
-        {
-            if (!$bgColor)
-            {
+        if (isset($bgColor)) {
+            if (!$bgColor) {
                 throw new \UnexpectedValueException('the bgColor can not be empty.', -11801);
             }
         }
 
         $epic = Epic::find($id);
-        if (!$epic || $project_key != $epic->project_key)
-        {
+        if (!$epic || $project_key != $epic->project_key) {
             throw new \UnexpectedValueException('the epic does not exist or is not in the project.', -11803);
         }
 
-        if ($epic->name !== $name && Provider::isEpicExisted($project_key, $name))
-        {
+        if ($epic->name !== $name && Provider::isEpicExisted($project_key, $name)) {
             throw new \UnexpectedValueException('epic name cannot be repeated', -11802);
         }
 
@@ -165,21 +154,19 @@ class EpicController extends Controller
     /**
      * update sort or defaultValue etc..
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return void
      */
     public function handle(Request $request, $project_key)
     {
         // set epic sort.
         $sequence_epics = $request->input('sequence');
-        if (isset($sequence_epics))
-        {
+        if (isset($sequence_epics)) {
             $i = 1;
             foreach ($sequence_epics as $epic_id)
             {
                 $epic = Epic::find($epic_id);
-                if (!$epic || $epic->project_key != $project_key)
-                {
+                if (!$epic || $epic->project_key != $project_key) {
                     continue;
                 }
                 $epic->sn = $i++;
@@ -193,45 +180,38 @@ class EpicController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function delete(Request $request, $project_key, $id)
     {
         $epic = Epic::find($id);
-        if (!$epic || $project_key != $epic->project_key)
-        {
+        if (!$epic || $project_key != $epic->project_key) {
             throw new \UnexpectedValueException('the epic does not exist or is not in the project.', -11803);
         }
 
         $operate_flg = $request->input('operate_flg');
-        if (!isset($operate_flg) || $operate_flg === '0')
-        {
+        if (!isset($operate_flg) || $operate_flg === '0') {
             $is_used = $this->isFieldUsedByIssue($project_key, 'epic', $epic->toArray());
-            if ($is_used)
-            {
+            if ($is_used) {
                 throw new \UnexpectedValueException('the epic has been used by some issues.', -11804);
             }
         }
-        else if ($operate_flg === '1')
-        {
+        else if ($operate_flg === '1') {
             $swap_epic = $request->input('swap_epic');
-            if (!isset($swap_epic) || !$swap_epic)
-            {
+            if (!isset($swap_epic) || !$swap_epic) {
                 throw new \UnexpectedValueException('the swap epic cannot be empty.', -11806);
             }
 
             $sepic = Epic::find($swap_epic);
-            if (!$sepic || $project_key != $sepic->project_key)
-            {
+            if (!$sepic || $project_key != $sepic->project_key) {
                 throw new \UnexpectedValueException('the swap epic does not exist or is not in the project.', -11807);
             }
 
             $this->updIssueEpic($project_key, $id, $swap_epic);
         }
-        else if ($operate_flg === '2')
-        {
+        else if ($operate_flg === '2') {
             $this->updIssueEpic($project_key, $id, '');
         }
         else
@@ -256,7 +236,7 @@ class EpicController extends Controller
     /**
      * update the issues epic
      *
-     * @param  array $issues
+     * @param  array  $issues
      * @param  string $source
      * @param  string $dest
      * @return \Illuminate\Http\Response

@@ -51,7 +51,7 @@ class PhpFileConfig extends AbstractConfig
             throw new \RuntimeException(sprintf('Unable to read "%s"', $this->path));
         }
 
-        $raw = require $this->path;
+        $raw = include $this->path;
         if (!is_array($raw)) {
             throw new \RuntimeException(sprintf('Content of file "%s" is invalid', $this->path));
         }

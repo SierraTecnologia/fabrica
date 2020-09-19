@@ -32,12 +32,13 @@ use Sentinel;
 use MongoDB\BSON\ObjectID;
 use DB;
 
-class Provider {
+class Provider
+{
 
     /**
      * get project principal.
      *
-     * @param string $project_key
+     * @param  string $project_key
      * @return array 
      */
     public static function getProjectPrincipal($project_key)
@@ -81,8 +82,7 @@ class Provider {
         $res = UserIssueFilters::where('project_key', $project_key)
             ->where('user', $user_id)
             ->first(); 
-        if ($res)
-        {
+        if ($res) {
             $filters = isset($res->filters) ? $res->filters : [];
         }
         return $filters;
@@ -96,8 +96,7 @@ class Provider {
     public static function getDefaultDisplayColumns($project_key)
     {
         $res = ProjectIssueListColumns::where('project_key', $project_key)->first(); 
-        if ($res)
-        {
+        if ($res) {
             $columns = isset($res->columns) ? $res->columns : [];
             return $columns;
         }
@@ -124,8 +123,7 @@ class Provider {
         $res = UserIssueListColumns::where('project_key', $project_key)
             ->where('user', $user_id)
             ->first(); 
-        if ($res)
-        {
+        if ($res) {
             $columns = isset($res->columns) ? $res->columns : [];
         }
         return $columns;
@@ -134,8 +132,8 @@ class Provider {
     /**
      * get state list.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection 
      */
     public static function getStateList($project_key, $fields=[])
@@ -148,11 +146,9 @@ class Provider {
             ->toArray();
 
         $stateProperty = StateProperty::Where('project_key', $project_key)->first();
-        if ($stateProperty)
-        {
-            if ($sequence = $stateProperty->sequence)
-            {
-                $func = function($v1, $v2) use ($sequence) {
+        if ($stateProperty) {
+            if ($sequence = $stateProperty->sequence) {
+                $func = function ($v1, $v2) use ($sequence) {
                     $i1 = array_search($v1['_id'], $sequence);
                     $i1 = $i1 !== false ? $i1 : 998;
                     $i2 = array_search($v2['_id'], $sequence);
@@ -169,8 +165,8 @@ class Provider {
     /**
      * get state options.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection
      */
     public static function getStateOptions($project_key)
@@ -192,8 +188,8 @@ class Provider {
     /**
      * get state options.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection
      */
     public static function getLabelOptions($project_key)
@@ -214,8 +210,8 @@ class Provider {
     /**
      * get event list.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection 
      */
     public static function getEventList($project_key, $fields=[])
@@ -232,7 +228,7 @@ class Provider {
     /**
      * get event options.
      *
-     * @param string $project_key
+     * @param  string $project_key
      * @return collection
      */
     public static function getEventOptions($project_key)
@@ -242,8 +238,7 @@ class Provider {
         $options = [];
         foreach ($events as $event)
         {
-            if (!isset($event->apply) || $event->apply !== 'workflow')
-            {
+            if (!isset($event->apply) || $event->apply !== 'workflow') {
                 continue;
             }
 
@@ -259,16 +254,14 @@ class Provider {
     /**
      * get default priority.
      *
-     * @param string $project_key
+     * @param  string $project_key
      * @return string 
      */
     public static function getDefaultPriority($project_key)
     {
         $priorityProperty = PriorityProperty::Where('project_key', $project_key)->first();
-        if ($priorityProperty)
-        {
-            if ($defaultValue = $priorityProperty->defaultValue)
-            {
+        if ($priorityProperty) {
+            if ($defaultValue = $priorityProperty->defaultValue) {
                 return $defaultValue;
             }
         }
@@ -284,8 +277,8 @@ class Provider {
     /**
      * get priority list.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection
      */
     public static function getPriorityList($project_key, $fields=[])
@@ -298,11 +291,9 @@ class Provider {
             ->toArray();
 
         $priorityProperty = PriorityProperty::Where('project_key', $project_key)->first();
-        if ($priorityProperty)
-        {
-            if ($sequence = $priorityProperty->sequence)
-            {
-                $func = function($v1, $v2) use ($sequence) {
+        if ($priorityProperty) {
+            if ($sequence = $priorityProperty->sequence) {
+                $func = function ($v1, $v2) use ($sequence) {
                     $i1 = array_search($v1['_id'], $sequence);
                     $i1 = $i1 !== false ? $i1 : 998;
                     $i2 = array_search($v2['_id'], $sequence);
@@ -312,16 +303,13 @@ class Provider {
                 usort($priorities, $func);
             }
 
-            if ($defaultValue = $priorityProperty->defaultValue)
-            {
+            if ($defaultValue = $priorityProperty->defaultValue) {
                 foreach($priorities as $key => $val)
                 {
-                    if ($val['_id'] == $defaultValue)
-                    {
+                    if ($val['_id'] == $defaultValue) {
                         $priorities[$key]['default'] = true;
                     }
-                    else if (isset($val['default']))
-                    {
+                    else if (isset($val['default'])) {
                         unset($priorities[$key]['default']);
                     }
                 }
@@ -334,7 +322,7 @@ class Provider {
     /**
      * get priority options.
      *
-     * @param string $project_key
+     * @param  string $project_key
      * @return array
      */
     public static function getPriorityOptions($project_key)
@@ -347,12 +335,10 @@ class Provider {
             $tmp = [];
             $tmp['_id'] = isset($priority['key']) && $priority['key'] ? $priority['key'] : $priority['_id'];
             $tmp['name'] = isset($priority['name']) ? trim($priority['name']) : '';
-            if (isset($priority['default']))
-            {
+            if (isset($priority['default'])) {
                 $tmp['default'] = $priority['default'];
             }
-            if (isset($priority['color']))
-            {
+            if (isset($priority['color'])) {
                 $tmp['color'] = $priority['color'];
             }
             $options[] = $tmp;
@@ -363,16 +349,14 @@ class Provider {
     /**
      * get default resolution.
      *
-     * @param string $project_key
+     * @param  string $project_key
      * @return string 
      */
     public static function getDefaultResolution($project_key)
     {
         $resolutionProperty = ResolutionProperty::Where('project_key', $project_key)->first();
-        if ($resolutionProperty)
-        {
-            if ($defaultValue = $resolutionProperty->defaultValue)
-            {
+        if ($resolutionProperty) {
+            if ($defaultValue = $resolutionProperty->defaultValue) {
                 return $defaultValue;
             }
         }
@@ -388,8 +372,8 @@ class Provider {
     /**
      * get resolution list.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection
      */
     public static function getResolutionList($project_key, $fields=[])
@@ -402,11 +386,9 @@ class Provider {
             ->toArray();
 
         $resolutionProperty = ResolutionProperty::Where('project_key', $project_key)->first();
-        if ($resolutionProperty)
-        {
-            if ($sequence = $resolutionProperty->sequence)
-            {
-                $func = function($v1, $v2) use ($sequence) {
+        if ($resolutionProperty) {
+            if ($sequence = $resolutionProperty->sequence) {
+                $func = function ($v1, $v2) use ($sequence) {
                     $i1 = array_search($v1['_id'], $sequence);
                     $i1 = $i1 !== false ? $i1 : 998;
                     $i2 = array_search($v2['_id'], $sequence);
@@ -416,16 +398,13 @@ class Provider {
                 usort($resolutions, $func);
             }
 
-            if ($defaultValue = $resolutionProperty->defaultValue)
-            {
+            if ($defaultValue = $resolutionProperty->defaultValue) {
                 foreach($resolutions as $key => $val)
                 {
-                    if ($val['_id'] == $defaultValue)
-                    {
+                    if ($val['_id'] == $defaultValue) {
                         $resolutions[$key]['default'] = true;
                     }
-                    else if (isset($val['default']))
-                    {
+                    else if (isset($val['default'])) {
                         unset($resolutions[$key]['default']);
                     }
                 }
@@ -438,7 +417,7 @@ class Provider {
     /**
      * get resolution options.
      *
-     * @param string $project_key
+     * @param  string $project_key
      * @return array 
      */
     public static function getResolutionOptions($project_key)
@@ -451,8 +430,7 @@ class Provider {
             $tmp = [];
             $tmp['_id'] = isset($resolution['key']) && $resolution['key'] ? $resolution['key'] : $resolution['_id'];
             $tmp['name'] = isset($resolution['name']) ? trim($resolution['name']) : '';
-            if (isset($resolution['default']))
-            {
+            if (isset($resolution['default'])) {
                 $tmp['default'] = $resolution['default'];
             }
             $options[] = $tmp;
@@ -463,8 +441,8 @@ class Provider {
     /**
      * get screen list.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection
      */
     public static function getScreenList($project_key, $fields=[])
@@ -481,8 +459,8 @@ class Provider {
     /**
      * get field list.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection
      */
     public static function getFieldList($project_key, $fields=[])
@@ -499,8 +477,8 @@ class Provider {
     /**
      * get workflow list.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection
      */
     public static function getWorkflowList($project_key, $fields=[])
@@ -518,8 +496,8 @@ class Provider {
     /**
      * get type list.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection
      */
     public static function getTypeList($project_key, $fields=[])
@@ -534,8 +512,8 @@ class Provider {
     /**
      * get role list.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection
      */
     public static function getRoleList($project_key, $fields=[])
@@ -552,7 +530,7 @@ class Provider {
     /**
      * get user list.
      *
-     * @param string $project_key
+     * @param  string $project_key
      * @return array
      */
     public static function getUserList($project_key)
@@ -565,8 +543,7 @@ class Provider {
         $group_ids = [];
         foreach ($user_group_ids as $value)
         {
-            if (isset($value->type) && $value->type === 'group')
-            {
+            if (isset($value->type) && $value->type === 'group') {
                 $group_ids[] = $value->ug_id;
             }
             else
@@ -575,8 +552,7 @@ class Provider {
             }
         }
 
-        if ($group_ids)
-        {
+        if ($group_ids) {
             $groups = Group::find($group_ids);
             foreach($groups as $group)
             {
@@ -589,8 +565,7 @@ class Provider {
         $users = EloquentUser::find($user_ids);
         foreach ($users as $user)
         {
-            if (isset($user->invalid_flag) && $user->invalid_flag === 1)
-            {
+            if (isset($user->invalid_flag) && $user->invalid_flag === 1) {
                 continue;
             }
             $user_list[] = ['id' => $user->id, 'name' => $user->first_name, 'email' => $user->email ];
@@ -602,7 +577,7 @@ class Provider {
     /**
      * get assigned user list.
      *
-     * @param string $project_key
+     * @param  string $project_key
      * @return array
      */
     public static function getAssignedUsers($project_key)
@@ -613,8 +588,7 @@ class Provider {
         $users = EloquentUser::find($user_ids); 
         foreach ($users as $user)
         {
-            if (isset($user->invalid_flag) && $user->invalid_flag === 1)
-            {
+            if (isset($user->invalid_flag) && $user->invalid_flag === 1) {
                 continue;
             }
             $user_list[] = [ 'id' => $user->id, 'name' => $user->first_name, 'email' => $user->email ];
@@ -625,8 +599,8 @@ class Provider {
     /**
      * get version list.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection
      */
     public static function getVersionList($project_key, $fields=[])
@@ -644,8 +618,8 @@ class Provider {
     /**
      * get module list.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection
      */
     public static function getModuleList($project_key, $fields=[])
@@ -660,8 +634,8 @@ class Provider {
     /**
      * check if type has existed.
      *
-     * @param string $project_key
-     * @param string $name 
+     * @param  string $project_key
+     * @param  string $name 
      * @return bool
      */
     public static function isTypeExisted($project_key, $name)
@@ -676,8 +650,8 @@ class Provider {
     /**
      * check if type abb has existed.
      *
-     * @param string $project_key
-     * @param string $abb 
+     * @param  string $project_key
+     * @param  string $abb 
      * @return bool
      */
     public static function isTypeAbbExisted($project_key, $abb)
@@ -692,8 +666,8 @@ class Provider {
     /**
      * check if state has existed.
      *
-     * @param string $project_key
-     * @param string $name 
+     * @param  string $project_key
+     * @param  string $name 
      * @return bool
      */
     public static function isStateExisted($project_key, $name)
@@ -709,8 +683,8 @@ class Provider {
     /**
      * check if priority has existed.
      *
-     * @param string $project_key
-     * @param string $name
+     * @param  string $project_key
+     * @param  string $name
      * @return bool
      */
     public static function isPriorityExisted($project_key, $name)
@@ -726,8 +700,8 @@ class Provider {
     /**
      * check if resolution has existed.
      *
-     * @param string $project_key
-     * @param string $name
+     * @param  string $project_key
+     * @param  string $name
      * @return bool
      */
     public static function isResolutionExisted($project_key, $name)
@@ -743,8 +717,8 @@ class Provider {
     /**
      * check if field has existed.
      *
-     * @param string $project_key
-     * @param string $key
+     * @param  string $project_key
+     * @param  string $key
      * @return bool
      */
     public static function isFieldKeyExisted($project_key, $key)
@@ -754,8 +728,7 @@ class Provider {
             ->get();
         foreach ($fields as $field)
         {
-            if ($field->key === $key || ($field->type === 'MutiUser' && $field->key . '_ids' === $key) || ($field->type === 'TimeTracking' && $field->key . '_m' === $key))
-            {
+            if ($field->key === $key || ($field->type === 'MutiUser' && $field->key . '_ids' === $key) || ($field->type === 'TimeTracking' && $field->key . '_m' === $key)) {
                 return true;
             }
         }
@@ -766,8 +739,8 @@ class Provider {
     /**
      * check if Event has existed.
      *
-     * @param string $project_key
-     * @param string $name
+     * @param  string $project_key
+     * @param  string $name
      * @return bool
      */
     public static function isEventExisted($project_key, $name)
@@ -783,7 +756,7 @@ class Provider {
     /**
      * get issue type schema 
      *
-     * @param string $project_key
+     * @param  string $project_key
      * @return array 
      */
     public static function getTypeListExt($project_key, $options)
@@ -792,11 +765,10 @@ class Provider {
         $types = self::getTypeList($project_key);
         foreach ($types as $key => $type)
         {
-            $schema = self::_repairSchema($project_key, $type->id, $type->screen && $type->screen->schema ? $type->screen->schema : [] , $options);
+            $schema = self::_repairSchema($project_key, $type->id, $type->screen && $type->screen->schema ? $type->screen->schema : [], $options);
 
             $tmp = [ 'id' => $type->id, 'name' => $type->name, 'abb' => $type->abb, 'disabled' => $type->disabled && true, 'type' => $type->type == 'subtask' ? 'subtask' : 'standard', 'schema' => $schema ];
-            if ($type->default) 
-            {
+            if ($type->default) {
                 $tmp['default'] = true;
             }
             $typeOptions[] = $tmp;
@@ -807,7 +779,7 @@ class Provider {
     /**
      * get issue type schema
      *
-     * @param string $project_key
+     * @param  string $project_key
      * @return array
      */
     private static function _repairSchema($project_key, $issue_type, $schema, $options)
@@ -815,25 +787,20 @@ class Provider {
         $new_schema = [];
         foreach ($schema as $key => $val)
         {
-            if (isset($val['applyToTypes']))
-            {
-                if ($val['applyToTypes'] && !in_array($issue_type, explode(',', $val['applyToTypes'] ?: '')))
-                {
+            if (isset($val['applyToTypes'])) {
+                if ($val['applyToTypes'] && !in_array($issue_type, explode(',', $val['applyToTypes'] ?: ''))) {
                     continue;
                 }
                 unset($val['applyToTypes']);
             }
 
-            if ($val['type'] == 'SingleVersion' || $val['type'] == 'MultiVersion')
-            {
-                if (!isset($options['version']))
-                {
+            if ($val['type'] == 'SingleVersion' || $val['type'] == 'MultiVersion') {
+                if (!isset($options['version'])) {
                     $options['version'] = self::getVersionList($project_key);
                 }
                 $val['optionValues'] = self::pluckFields($options['version'], ['_id', 'name']);
             }
-            else if ($val['type'] == 'SingleUser' || $val['type'] == 'MultiUser')
-            {
+            else if ($val['type'] == 'SingleUser' || $val['type'] == 'MultiUser') {
                 $val['optionValues'] = self::pluckFields($options['user'], ['id', 'name', 'email']);
                 foreach ($val['optionValues'] as $k => $v)
                 {
@@ -841,8 +808,7 @@ class Provider {
                     unset($val['optionValues'][$k]['email']);
                 }
             }
-            else if ($val['key'] == 'assignee')
-            {
+            else if ($val['key'] == 'assignee') {
                 $val['optionValues'] = self::pluckFields($options['assignee'], ['id', 'name', 'email']);
                 foreach ($val['optionValues'] as $k => $v)
                 {
@@ -850,8 +816,7 @@ class Provider {
                     unset($val['optionValues'][$k]['email']);
                 }
             }
-            else if ($val['key'] == 'labels')
-            {
+            else if ($val['key'] == 'labels') {
                 $couple_labels = [];
                 foreach ($options['labels'] as $label)
                 {
@@ -859,20 +824,17 @@ class Provider {
                 }
                 $val['optionValues'] = $couple_labels;
             }
-            else if (array_key_exists($val['key'], $options))
-            {
+            else if (array_key_exists($val['key'], $options)) {
                 $val['optionValues'] = self::pluckFields($options[$val['key']], ['_id', 'name']);
                 foreach ($options[$val['key']] as $key2 => $val2) 
                 {
-                    if (isset($val2['default']) && $val2['default'])
-                    {
+                    if (isset($val2['default']) && $val2['default']) {
                         $val['defaultValue'] = $val2['_id'];
                         break;
                     }
                 }
             }
-            if (isset($val['_id']))
-            {
+            if (isset($val['_id'])) {
                 unset($val['_id']);
             }
             $new_schema[] = $val;
@@ -883,8 +845,8 @@ class Provider {
     /**
      * filter the fields.
      *
-     * @param array $srcData
-     * @param array $fields
+     * @param  array $srcData
+     * @param  array $fields
      * @return array 
      */
     public static function pluckFields($srcData, $fields)
@@ -913,8 +875,8 @@ class Provider {
     /**
      * get module principal.
      *
-     * @param string $project_key
-     * @param string $mid
+     * @param  string $project_key
+     * @param  string $mid
      * @return array 
      */
     public static function getModuleById($mid)
@@ -926,7 +888,7 @@ class Provider {
     /**
      * get workflow by type_id
      *
-     * @param string $type_id
+     * @param  string $type_id
      * @return array
      */
     public static function getWorkflowByType($type_id)
@@ -938,14 +900,13 @@ class Provider {
     /**
      * get schema by type_id
      *
-     * @param string $type_id
+     * @param  string $type_id
      * @return array
      */
     public static function getSchemaByType($type_id)
     {
         $type = Type::find($type_id);
-        if (!$type)
-        {
+        if (!$type) {
             return [];
         }
 
@@ -958,16 +919,15 @@ class Provider {
     /**
      * get schema by screen_id
      *
-     * @param string $project_key
-     * @param string $type
-     * @param string $screen_id
+     * @param  string $project_key
+     * @param  string $type
+     * @param  string $screen_id
      * @return array
      */
     public static function getSchemaByScreenId($project_key, $type, $screen_id)
     {
         $screen = Screen::find($screen_id);
-        if (!$screen)
-        {
+        if (!$screen) {
             return [];
         }
         return self::getScreenSchema($project_key, $type, $screen);
@@ -976,7 +936,7 @@ class Provider {
     /**
      * get screen schema
      *
-     * @param string $type_id
+     * @param  string $type_id
      * @return array
      */
     public static function getScreenSchema($project_key, $type_id, $screen)
@@ -986,17 +946,14 @@ class Provider {
         $users = null;
         foreach ($screen->schema ?: [] as $key => $val)
         {
-            if (isset($val['applyToTypes']))
-            {
-                if ($val['applyToTypes'] && !in_array($type_id, explode(',', $val['applyToTypes'] ?: '')))
-                {
+            if (isset($val['applyToTypes'])) {
+                if ($val['applyToTypes'] && !in_array($type_id, explode(',', $val['applyToTypes'] ?: ''))) {
                     continue;
                 }
                 unset($val['applyToTypes']);
             }
 
-            if ($val['key'] == 'assignee')
-            {
+            if ($val['key'] == 'assignee') {
                 $users = self::getAssignedUsers($project_key);
                 foreach ($users as $key => $user)
                 {
@@ -1004,44 +961,37 @@ class Provider {
                 } 
                 $val['optionValues'] = self::pluckFields($users, ['id', 'name']);
             }
-            else if ($val['key'] == 'resolution')
-            {
+            else if ($val['key'] == 'resolution') {
                 $resolutions = self::getResolutionOptions($project_key);
                 $val['optionValues'] = self::pluckFields($resolutions, ['_id', 'name']);
                 foreach ($resolutions as $key2 => $val2)
                 {
-                    if (isset($val2['default']) && $val2['default'])
-                    {
+                    if (isset($val2['default']) && $val2['default']) {
                         $val['defaultValue'] = $val2['_id'];
                         break;
                     }
                 }
             }
-            else if ($val['key'] == 'priority')
-            {
+            else if ($val['key'] == 'priority') {
                 $priorities = self::getPriorityOptions($project_key);
                 $val['optionValues'] = self::pluckFields($priorities, ['_id', 'name']);
                 foreach ($priorities as $key2 => $val2)
                 {
-                    if (isset($val2['default']) && $val2['default'])
-                    {
+                    if (isset($val2['default']) && $val2['default']) {
                         $val['defaultValue'] = $val2['_id'];
                         break;
                     }
                 }
             }
-            else if ($val['key'] == 'module')
-            {
+            else if ($val['key'] == 'module') {
                 $modules = self::getModuleList($project_key);
                 $val['optionValues'] = self::pluckFields($modules, ['_id', 'name']);
             }
-            else if ($val['key'] == 'epic')
-            {
+            else if ($val['key'] == 'epic') {
                 $epics = self::getEpicList($project_key);
                 $val['optionValues'] = self::pluckFields($epics, ['_id', 'name', 'bgColor']);
             }
-            else if ($val['key'] == 'labels')
-            {
+            else if ($val['key'] == 'labels') {
                 $labels = self::getLabelOptions($project_key);
                 $couple_labels = [];
                 foreach ($labels as $label)
@@ -1050,13 +1000,11 @@ class Provider {
                 }
                 $val['optionValues'] = $couple_labels;
             }
-            else if ($val['type'] == 'SingleVersion' || $val['type'] == 'MultiVersion')
-            {
+            else if ($val['type'] == 'SingleVersion' || $val['type'] == 'MultiVersion') {
                 $versions === null && $versions = self::getVersionList($project_key);
                 $val['optionValues'] = self::pluckFields($versions, ['_id', 'name']);
             }
-            else if ($val['type'] == 'SingleUser' || $val['type'] == 'MultiUser')
-            {
+            else if ($val['type'] == 'SingleUser' || $val['type'] == 'MultiUser') {
                 $users === null && $users = self::getUserList($project_key);
                 foreach ($users as $key => $user)
                 {
@@ -1065,8 +1013,7 @@ class Provider {
                 $val['optionValues'] = self::pluckFields($users, ['id', 'name']);
             }
 
-            if (isset($val['_id']))
-            {
+            if (isset($val['_id'])) {
                 unset($val['_id']);
             }
 
@@ -1079,10 +1026,10 @@ class Provider {
     /**
      * snap issue data to history
      *
-     * @param  string  $project_key
-     * @param  string  $issue_id
+     * @param  string $project_key
+     * @param  string $issue_id
      * @param  array  $schema
-     * @param  array $change_fields
+     * @param  array  $change_fields
      * @return \Illuminate\Http\Response
      */
     public static function snap2His($project_key, $issue_id, $schema = [], $change_fields=[])
@@ -1091,8 +1038,7 @@ class Provider {
         $issue = DB::collection('issue_' . $project_key)->where('_id', $issue_id)->first();
 
         $latest_ver_issue = DB::collection('issue_his_' . $project_key)->where('issue_id', $issue_id)->orderBy('_id', 'desc')->first();
-        if ($latest_ver_issue)
-        {
+        if ($latest_ver_issue) {
             $snap_data = $latest_ver_issue['data'];
         }
         else
@@ -1101,14 +1047,11 @@ class Provider {
         }
 
         // fetch the schema data
-        if (!$schema)
-        {
+        if (!$schema) {
             $schema = [];
-            if ($change_fields)
-            {
+            if ($change_fields) {
                 $out_schema_fields = [ 'type', 'state', 'resolution', 'priority', 'assignee', 'labels', 'parent_id', 'progress', 'expect_start_time', 'expect_complete_time' ];
-                if (array_diff($change_fields, $out_schema_fields))
-                {
+                if (array_diff($change_fields, $out_schema_fields)) {
                     $schema = self::getSchemaByType($issue['type']);
                 }
             }
@@ -1120,27 +1063,22 @@ class Provider {
 
         foreach ($schema as $field)
         {
-            if (in_array($field['key'], [ 'assignee', 'progress' ]) || ($change_fields && !in_array($field['key'], $change_fields)))
-            {
+            if (in_array($field['key'], [ 'assignee', 'progress' ]) || ($change_fields && !in_array($field['key'], $change_fields))) {
                 continue;
             }
 
-            if (isset($issue[$field['key']]))
-            {
+            if (isset($issue[$field['key']])) {
                 $val = [];
                 $val['name'] = $field['name'];
                 
-                if ($field['type'] === 'SingleUser' || $field['type'] === 'MultiUser')
-                {
-                    if ($field['type'] === 'SingleUser')
-                    {
+                if ($field['type'] === 'SingleUser' || $field['type'] === 'MultiUser') {
+                    if ($field['type'] === 'SingleUser') {
                         $val['value'] = $issue[$field['key']] ? $issue[$field['key']]['name'] : $issue[$field['key']];
                     }
                     else
                     {
                         $tmp_users = [];
-                        if ($issue[$field['key']])
-                        {
+                        if ($issue[$field['key']]) {
                             foreach ($issue[$field['key']] as $tmp_user)
                             {
                                 $tmp_users[] = $tmp_user['name'];
@@ -1149,12 +1087,10 @@ class Provider {
                         $val['value'] = implode(',', $tmp_users);
                     }
                 }
-                else if (isset($field['optionValues']) && $field['optionValues'])
-                {
+                else if (isset($field['optionValues']) && $field['optionValues']) {
                     $opv = [];
                     
-                    if (!is_array($issue[$field['key']]))
-                    {
+                    if (!is_array($issue[$field['key']])) {
                         $fieldValues = explode(',', $issue[$field['key']]);
                     }
                     else
@@ -1163,15 +1099,13 @@ class Provider {
                     }
                     foreach ($field['optionValues'] as $ov)
                     {
-                        if (in_array($ov['id'], $fieldValues))
-                        {
+                        if (in_array($ov['id'], $fieldValues)) {
                             $opv[] = $ov['name'];
                         }
                     }
                     $val['value'] = implode(',', $opv);
                 }
-                else if ($field['type'] == 'File')
-                {
+                else if ($field['type'] == 'File') {
                     $val['value'] = [];
                     foreach ($issue[$field['key']] as $fid)
                     {
@@ -1179,8 +1113,7 @@ class Provider {
                         array_push($val['value'], $file->name);
                     }
                 }
-                else if ($field['type'] == 'DatePicker' || $field['type'] == 'DateTimePicker')
-                {
+                else if ($field['type'] == 'DatePicker' || $field['type'] == 'DateTimePicker') {
                     $val['value'] = $issue[$field['key']] ? date($field['type'] == 'DatePicker' ? 'Y/m/d' : 'Y/m/d H:i:s', $issue[$field['key']]) : $issue[$field['key']];
                 }
                 else
@@ -1194,18 +1127,14 @@ class Provider {
         }
 
         // special fields handle
-        if (in_array('type', $change_fields) || !isset($snap_data['type']))
-        {
+        if (in_array('type', $change_fields) || !isset($snap_data['type'])) {
             $type = Type::find($issue['type']);
             $snap_data['type'] = [ 'value' => isset($type->name) ? $type->name : '', 'name' => '类型' ];
         }
 
-        if (isset($issue['priority']))
-        {
-            if ($issue['priority'])
-            { 
-                if (in_array('priority', $change_fields) || !isset($snap_data['priority']))
-                {
+        if (isset($issue['priority'])) {
+            if ($issue['priority']) { 
+                if (in_array('priority', $change_fields) || !isset($snap_data['priority'])) {
                     $priority = Priority::Where('key', $issue['priority'])->orWhere('_id', $issue['priority'])->first();
                     $snap_data['priority'] = [ 'value' => isset($priority->name) ? $priority->name : '', 'name' => '优先级' ];
                 }
@@ -1216,12 +1145,9 @@ class Provider {
             }
         }
 
-        if (isset($issue['state']))
-        {
-            if ($issue['state'])
-            {
-                if (in_array('state', $change_fields) || !isset($snap_data['state']))
-                {
+        if (isset($issue['state'])) {
+            if ($issue['state']) {
+                if (in_array('state', $change_fields) || !isset($snap_data['state'])) {
                     $state = State::Where('key', $issue['state'])->orWhere('_id', $issue['state'])->first();
                     $snap_data['state'] = [ 'value' => isset($state->name) ? $state->name : '', 'name' => '状态' ];
                 }
@@ -1232,12 +1158,9 @@ class Provider {
             }
         }
 
-        if (isset($issue['resolution']))
-        {
-            if ($issue['resolution'])
-            {
-                if (in_array('resolution', $change_fields) || !isset($snap_data['resolution']))
-                {
+        if (isset($issue['resolution'])) {
+            if ($issue['resolution']) {
+                if (in_array('resolution', $change_fields) || !isset($snap_data['resolution'])) {
                     $resolution = Resolution::Where('key', $issue['resolution'])->orWhere('_id', $issue['resolution'])->first();
                     $snap_data['resolution'] = [ 'value' => isset($resolution->name) ? $resolution->name : '', 'name' => '解决结果' ];
                 }
@@ -1248,12 +1171,9 @@ class Provider {
             }
         }
 
-        if (isset($issue['assignee']))
-        {
-            if ($issue['assignee'])
-            {
-                if (in_array('assignee', $change_fields) || !isset($snap_data['assignee']))
-                {
+        if (isset($issue['assignee'])) {
+            if ($issue['assignee']) {
+                if (in_array('assignee', $change_fields) || !isset($snap_data['assignee'])) {
                     $snap_data['assignee'] = [ 'value' => $issue['assignee']['name'], 'name' => '经办人' ];
                 }
             }
@@ -1263,12 +1183,9 @@ class Provider {
             }
         }
         // labels
-        if (isset($issue['labels']))
-        {
-            if ($issue['labels'])
-            {
-                if (in_array('labels', $change_fields) || !isset($snap_data['labels']))
-                {
+        if (isset($issue['labels'])) {
+            if ($issue['labels']) {
+                if (in_array('labels', $change_fields) || !isset($snap_data['labels'])) {
                     $snap_data['labels'] = [ 'value' => implode(',', $issue['labels']), 'name' => '标签' ];
                 }
             }
@@ -1279,12 +1196,9 @@ class Provider {
         }
 
         // special fields handle
-        if (isset($issue['parent_id']))
-        {
-            if ($issue['parent_id'])
-            {
-                if (in_array('parent_id', $change_fields) || !isset($snap_data['parent_id']))
-                {
+        if (isset($issue['parent_id'])) {
+            if ($issue['parent_id']) {
+                if (in_array('parent_id', $change_fields) || !isset($snap_data['parent_id'])) {
                     $parent = DB::collection('issue_' . $project_key)->where('_id', $issue['parent_id'])->first(['no', 'title']);
                     $snap_data['parent'] = [ 'value' => $parent['no'] . ' - ' . $parent['title'], 'name' => '父任务' ];
                 }
@@ -1295,12 +1209,9 @@ class Provider {
             }
         }
 
-        if (isset($issue['progress']))
-        {
-            if ($issue['progress'] || $issue['progress'] === 0)
-            {
-                if (in_array('progress', $change_fields) || !isset($snap_data['progress']))
-                {
+        if (isset($issue['progress'])) {
+            if ($issue['progress'] || $issue['progress'] === 0) {
+                if (in_array('progress', $change_fields) || !isset($snap_data['progress'])) {
                     $snap_data['progress'] = [ 'value' => $issue['progress'] . '%', 'name' => '进度' ];
                 }
             }
@@ -1310,12 +1221,9 @@ class Provider {
             }
         }
 
-        if (isset($issue['expect_start_time']))
-        {
-            if ($issue['expect_start_time'])
-            {
-                if (in_array('expect_start_time', $change_fields) || !isset($snap_data['expect_start_time']))
-                {
+        if (isset($issue['expect_start_time'])) {
+            if ($issue['expect_start_time']) {
+                if (in_array('expect_start_time', $change_fields) || !isset($snap_data['expect_start_time'])) {
                     $snap_data['expect_start_time'] = [ 'value' => date('Y/m/d', $issue['expect_start_time']), 'name' => '期望开始时间' ];
                 }
             }
@@ -1325,12 +1233,9 @@ class Provider {
             }
         }
 
-        if (isset($issue['expect_complete_time']))
-        {
-            if ($issue['expect_complete_time'])
-            {
-                if (in_array('expect_complete_time', $change_fields) || !isset($snap_data['expect_complete_time']))
-                {
+        if (isset($issue['expect_complete_time'])) {
+            if ($issue['expect_complete_time']) {
+                if (in_array('expect_complete_time', $change_fields) || !isset($snap_data['expect_complete_time'])) {
                     $snap_data['expect_complete_time'] = [ 'value' => date('Y/m/d', $issue['expect_complete_time']), 'name' => '期望完成时间' ];
                 }
             }
@@ -1340,13 +1245,11 @@ class Provider {
             }
         }
 
-        if (!isset($snap_data['created_at']))
-        {
+        if (!isset($snap_data['created_at'])) {
             $snap_data['created_at'] = $issue['created_at'];
         }
 
-        if (!isset($snap_data['reporter']))
-        {
+        if (!isset($snap_data['reporter'])) {
             $snap_data['reporter'] = $issue['reporter'];
         }
 
@@ -1361,8 +1264,8 @@ class Provider {
     /**
      * check if issue exist.
      *
-     * @param string $project_key
-     * @param string $issue_id
+     * @param  string $project_key
+     * @param  string $issue_id
      * @return bool
      */
     public static function isIssueExisted($project_key, $issue_id)
@@ -1374,14 +1277,15 @@ class Provider {
     /**
      * get all subtasks of the parent  
      *
-     * @param string $project_key
-     * @param string $parent_no
+     * @param  string $project_key
+     * @param  string $parent_no
      * @return bool
      */
     public static function getChildrenByParentNo($project_key, $parent_no)
     {
         $parent = DB::collection('issue_' . $project_key)->where('no', $parent_no)->first();
-        if (!$parent) { return []; }
+        if (!$parent) { return []; 
+        }
 
         $children = [];
         $subtasks = DB::collection('issue_' . $project_key)->where('parent_id', $parent['_id']->__toString())->get(['no']);
@@ -1395,8 +1299,8 @@ class Provider {
     /**
      * get epic list.
      *
-     * @param string $project_key
-     * @param array $fields
+     * @param  string $project_key
+     * @param  array  $fields
      * @return collection
      */
     public static function getEpicList($project_key, $fields=[])
@@ -1412,8 +1316,8 @@ class Provider {
     /**
      * check if Epic has existed.
      *
-     * @param string $project_key
-     * @param string $name
+     * @param  string $project_key
+     * @param  string $name
      * @return bool
      */
     public static function isEpicExisted($project_key, $name)
@@ -1428,7 +1332,7 @@ class Provider {
     /**
      * get sprint list.
      *
-     * @param string $project_key
+     * @param  string $project_key
      * @return collection
      */
     public static function getSprintList($project_key, $fields=[])
@@ -1441,8 +1345,7 @@ class Provider {
 
         foreach($sprints as $key => $sprint)
         {
-            if (!isset($sprint['name']))
-            {
+            if (!isset($sprint['name'])) {
                 $sprints[$key]['name'] = 'Sprint ' . $sprint['no'];
             }
         }
@@ -1453,8 +1356,8 @@ class Provider {
     /**
      * check if Label has existed.
      *
-     * @param string $project_key
-     * @param string $name
+     * @param  string $project_key
+     * @param  string $name
      * @return bool
      */
     public static function isLabelExisted($project_key, $name)

@@ -40,21 +40,24 @@ class ProfilePasswordType extends AbstractType
         $encoderFactory = $this->encoderFactory;
 
         $builder
-            ->add('old_password', 'password', array(
+            ->add(
+                'old_password', 'password', array(
                 'label'  => 'form.current_password',
                 'mapped' => false,
                 'constraints' => array(
                     new UserPassword()
                 ),
-            ))
-        ;
+                )
+            );
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             'translation_domain' => 'profile_password'
-        ));
+            )
+        );
     }
 
     public function getParent()

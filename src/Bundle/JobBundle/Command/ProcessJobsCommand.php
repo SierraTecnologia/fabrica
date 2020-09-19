@@ -25,8 +25,7 @@ class ProcessJobsCommand extends AbstractCommand
     {
         $this
             ->setName('fabrica:process-jobs')
-            ->setDescription('Process background jobs')
-        ;
+            ->setDescription('Process background jobs');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

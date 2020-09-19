@@ -10,25 +10,22 @@ trait TimeTrackTrait
      * check the timetracking.
      *
      * @return bool
-    */
+     */
     public function ttCheck($ttString)
     {
         $ttString = strtolower(trim($ttString));
         $ttValues = explode(' ', $ttString);
         foreach ($ttValues as $ttValue)
         {
-            if (!$ttValue)
-            {
+            if (!$ttValue) {
                 continue;
             }
             $lastChr = substr($ttValue, -1);
-            if ($lastChr !== 'w' && $lastChr !== 'd' && $lastChr !== 'h' && $lastChr !== 'm')
-            {
+            if ($lastChr !== 'w' && $lastChr !== 'd' && $lastChr !== 'h' && $lastChr !== 'm') {
                 return false;
             }
             $ttNum = substr($ttValue, 0, -1);
-            if ($ttNum && !is_numeric($ttNum))
-            {
+            if ($ttNum && !is_numeric($ttNum)) {
                 return false;
             }
         }
@@ -42,21 +39,17 @@ trait TimeTrackTrait
      */
     public function ttHandleInM($ttString)
     {
-        if (!$ttString)
-        {
+        if (!$ttString) {
             return '';
         }
         $W2D = 5;
         $D2H = 8;
         $setting = SysSetting::first();
-        if ($setting && isset($setting->properties))
-        {
-            if (isset($setting->properties['week2day']))
-            {
+        if ($setting && isset($setting->properties)) {
+            if (isset($setting->properties['week2day'])) {
                 $W2D = $setting->properties['week2day'];
             }
-            if (isset($setting->properties['day2hour']))
-            {
+            if (isset($setting->properties['day2hour'])) {
                 $D2H = $setting->properties['day2hour'];
             }
         }
@@ -68,26 +61,21 @@ trait TimeTrackTrait
         $ttValues = explode(' ', $ttString);
         foreach ($ttValues as $ttValue)
         {
-            if (!$ttValue)
-            {
+            if (!$ttValue) {
                 continue;
             }
             $lastChr = substr($ttValue, -1);
             $ttNum   = substr($ttValue, 0, -1) === '' ? 1 : substr($ttValue, 0, -1);
-            if ($lastChr == 'w')
-            {
+            if ($lastChr == 'w') {
                 $tt_in_min += $ttNum * $W2M;
             }
-            else if ($lastChr == 'd')
-            {
+            else if ($lastChr == 'd') {
                 $tt_in_min += $ttNum * $D2M;
             }
-            else if ($lastChr == 'h')
-            {
+            else if ($lastChr == 'h') {
                 $tt_in_min += $ttNum * $H2M;
             }
-            else if ($lastChr == 'm')
-            {
+            else if ($lastChr == 'm') {
                 $tt_in_min += $ttNum;
             }
         }
@@ -101,22 +89,18 @@ trait TimeTrackTrait
      */
     public function ttHandle($ttString)
     {
-        if (!$ttString)
-        {
+        if (!$ttString) {
             return '';
         }
         
         $W2D = 5;
         $D2H = 8;
         $setting = SysSetting::first();
-        if ($setting && isset($setting->properties))
-        {
-            if (isset($setting->properties['week2day']))
-            {
+        if ($setting && isset($setting->properties)) {
+            if (isset($setting->properties['week2day'])) {
                 $W2D = $setting->properties['week2day'];
             }
-            if (isset($setting->properties['day2hour']))
-            {
+            if (isset($setting->properties['day2hour'])) {
                 $D2H = $setting->properties['day2hour'];
             }
         }
@@ -128,64 +112,51 @@ trait TimeTrackTrait
         $ttValues = explode(' ', $ttString);
         foreach ($ttValues as $ttValue)
         {
-            if (!$ttValue)
-            {
+            if (!$ttValue) {
                 continue;
             }
             $lastChr = substr($ttValue, -1);
             $ttNum   = substr($ttValue, 0, -1) === '' ? 1 : abs(substr($ttValue, 0, -1));
-            if ($lastChr == 'w')
-            {
+            if ($lastChr == 'w') {
                 $tt_in_min += $ttNum * $W2M;
             }
-            else if ($lastChr == 'd')
-            {
+            else if ($lastChr == 'd') {
                 $tt_in_min += $ttNum * $D2M;
             }
-            else if ($lastChr == 'h')
-            {
+            else if ($lastChr == 'h') {
                 $tt_in_min += $ttNum * $H2M;
             }
-            else if ($lastChr == 'm')
-            {
+            else if ($lastChr == 'm') {
                 $tt_in_min += $ttNum;
             }
         }
         $newTT = [];
         $new_remain_min = ceil($tt_in_min);
-        if ($new_remain_min >= 0)
-        {
+        if ($new_remain_min >= 0) {
             $new_weeknum = floor($tt_in_min / $W2M);
-            if ($new_weeknum > 0)
-            {
+            if ($new_weeknum > 0) {
                 $newTT[] = $new_weeknum . 'w';
             }
         }
         $new_remain_min = $tt_in_min % $W2M;
-        if ($new_remain_min >= 0)
-        {
+        if ($new_remain_min >= 0) {
             $new_daynum = floor($new_remain_min / $D2M);
-            if ($new_daynum > 0)
-            {
+            if ($new_daynum > 0) {
                 $newTT[] = $new_daynum . 'd';
             }
         }
         $new_remain_min = $new_remain_min % $D2M;
-        if ($new_remain_min >= 0)
-        {
+        if ($new_remain_min >= 0) {
             $new_hournum = floor($new_remain_min / $H2M);
-            if ($new_hournum > 0)
-            {
+            if ($new_hournum > 0) {
                 $newTT[] = $new_hournum . 'h';
             }
         }
         $new_remain_min = $new_remain_min % $H2M;
-        if ($new_remain_min > 0)
-        {
+        if ($new_remain_min > 0) {
             $newTT[] = $new_remain_min . 'm';
         }
-        if (!$newTT)
-        {
+        if (!$newTT) {
             $newTT[] = '0m';
         }
         return (substr($ttString, 0, 1) == '-' ? '-' : '') . implode(' ', $newTT);

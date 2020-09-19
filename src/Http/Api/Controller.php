@@ -28,13 +28,11 @@ class Controller extends BaseController
 
     public function arrange($data)
     {
-        if (!is_array($data))
-        {
+        if (!is_array($data)) {
             return $data;
         }
 
-        if (array_key_exists('_id', $data))
-        {
+        if (array_key_exists('_id', $data)) {
             $data['_id'] = $data['_id'] instanceof ObjectID ? $data['_id']->__toString() : $data['_id'];
         }
 
@@ -51,6 +49,7 @@ class Controller extends BaseController
      *
      * string $project_key
      * string $permission
+     *
      * @return bool
      */
     public function isPermissionAllowed($project_key, $permission, $user_id='')
@@ -58,16 +57,13 @@ class Controller extends BaseController
         $uid = isset($user_id) && $user_id ? $user_id : $this->user->id;
 
         $isAllowed = Acl::isAllowed($uid, $permission, $project_key);
-        if (!$isAllowed && in_array($permission, [ 'view_project', 'manage_project' ]))
-        {
-            if ($this->user->email === 'admin@action.view')
-            {
+        if (!$isAllowed && in_array($permission, [ 'view_project', 'manage_project' ])) {
+            if ($this->user->email === 'admin@action.view') {
                 return true;
             }
 
             $project = Project::where([ 'key' => $project_key ])->first();
-            if ($project && isset($project->principal) && isset($project->principal['id']) && $uid === $project->principal['id'])
-            {
+            if ($project && isset($project->principal) && isset($project->principal['id']) && $uid === $project->principal['id']) {
                 return true;
             }
         }
@@ -81,78 +77,76 @@ class Controller extends BaseController
      */
     public function isFieldUsedByIssue($project_key, $field_key, $field, $ext_info='')
     {
-        if ($field['project_key'] !== $project_key)
-        {
+        if ($field['project_key'] !== $project_key) {
              return true;
         }
 
-        if ($project_key === '$_sys_$')
-        {
+        if ($project_key === '$_sys_$') {
             switch($field_key)
             {
-                case 'type':
-                    return false;
-                case 'state':
-                case 'priority':
-                case 'resolution':
-                    $projects = Project::all();
-                    foreach($projects as $project)
-                    {
-                        $isUsed = DB::collection('issue_' . $project->key)
-                                      ->where($field_key, isset($field['key']) ? $field['key'] : $field['_id'])
-                                      ->where('del_flg', '<>', 1)
-                                      ->exists();
-                        if ($isUsed)
-                        {
-                            return true;
-                        }
+            case 'type':
+                return false;
+            case 'state':
+            case 'priority':
+            case 'resolution':
+                $projects = Project::all();
+                foreach($projects as $project)
+                {
+                    $isUsed = DB::collection('issue_' . $project->key)
+                                  ->where($field_key, isset($field['key']) ? $field['key'] : $field['_id'])
+                                  ->where('del_flg', '<>', 1)
+                                  ->exists();
+                    if ($isUsed) {
+                        return true;
                     }
-                    return false;
-                default:
-                    return true;
+                }
+                return false;
+            default:
+                return true;
             }
         }
         else
         {
             switch($field_key)
             {
-                case 'type':
-                case 'state':
-                case 'priority':
-                case 'resolution':
-                case 'epic':
-                    return DB::collection('issue_' . $project_key)
-                        ->where($field_key, $field['_id'])
-                        ->where('del_flg', '<>', 1)
-                        ->exists();
-                case 'module':
-                    return DB::collection('issue_' . $project_key)
-                        ->where($field_key, $field['_id'])
-                        ->where('del_flg', '<>', 1)
-                        ->exists();
-                case 'version':
-                    if (!$ext_info)
-                    {
-                        return false;
-                    }
+            case 'type':
+            case 'state':
+            case 'priority':
+            case 'resolution':
+            case 'epic':
+                return DB::collection('issue_' . $project_key)
+                    ->where($field_key, $field['_id'])
+                    ->where('del_flg', '<>', 1)
+                    ->exists();
+            case 'module':
+                return DB::collection('issue_' . $project_key)
+                    ->where($field_key, $field['_id'])
+                    ->where('del_flg', '<>', 1)
+                    ->exists();
+            case 'version':
+                if (!$ext_info) {
+                    return false;
+                }
 
-                    $vid = $field['_id'];
-                    return DB::collection('issue_' . $project_key)
-                        ->where(function ($query) use ($vid, $ext_info) {
+                $vid = $field['_id'];
+                return DB::collection('issue_' . $project_key)
+                    ->where(
+                        function ($query) use ($vid, $ext_info) {
                             foreach ($ext_info as $key => $vf) 
                             {
                                 $query->orWhere($vf['key'], $vid);
                             }
-                        })
+                        }
+                    )
                         ->where('del_flg', '<>', 1)
                         ->exists();
-                case 'labels':
-                    return DB::collection('issue_' . $project_key)
-                        ->where($field_key, $field['name'])
-                        ->where('del_flg', '<>', 1)
-                        ->exists();
-                default:
-                    return true;
+            case 'labels':
+                return DB::collection('issue_' . $project_key)
+                    ->where($field_key, $field['name'])
+                    ->where('del_flg', '<>', 1)
+                    ->exists();
+            default:
+                return true;
             }
         }
     }
@@ -191,24 +185,19 @@ class Controller extends BaseController
         $and = [];
         foreach ($where as $key => $val)
         {
-            if ($key === 'no')
-            {
+            if ($key === 'no') {
                 $and[] = [ 'no' => intval($val) ];
             }
-            else if ($key === 'title')
-            {
-                if (is_numeric($val) && strpos($val, '.') === false)
-                {
+            else if ($key === 'title') {
+                if (is_numeric($val) && strpos($val, '.') === false) {
                     $and[] = [ '$or' => [ [ 'no' => $val + 0 ], [ 'title'  => [ '$regex' => $val ] ] ] ];
                 }
-                else if (strpos($val, ',') !== false)
-                {
+                else if (strpos($val, ',') !== false) {
                     $nos = explode(',', $val);
                     $new_nos = [];
                     foreach ($nos as $no)
                     {
-                        if ($no && is_numeric($no))
-                        {
+                        if ($no && is_numeric($no)) {
                             $new_nos[] = $no + 0;
                         }
                     }
@@ -219,21 +208,17 @@ class Controller extends BaseController
                     $and[] = [ 'title' => [ '$regex' => $val ] ];
                 }
             }
-            else if ($key === 'sprints')
-            {
+            else if ($key === 'sprints') {
                 $and[] = [ 'sprints' => $val + 0 ];
             }
-            else if ($key_type_fields[$key] === 'SingleUser')
-            {
+            else if ($key_type_fields[$key] === 'SingleUser') {
                 $users = explode(',', $val);
-                if (in_array('me', $users))
-                {
+                if (in_array('me', $users)) {
                     array_push($users, $this->user->id);
                 }
                 $and[] = [ $key . '.' . 'id' => [ '$in' => $users ] ];
             }
-            else if ($key_type_fields[$key] === 'MultiUser')
-            {
+            else if ($key_type_fields[$key] === 'MultiUser') {
                 $or = [];
                 $vals = explode(',', $val);
                 foreach ($vals as $v)
@@ -242,12 +227,10 @@ class Controller extends BaseController
                 }
                 $and[] = [ '$or' => $or ];
             }
-            else if (in_array($key_type_fields[$key], [ 'Select', 'SingleVersion', 'RadioGroup' ]))
-            {
+            else if (in_array($key_type_fields[$key], [ 'Select', 'SingleVersion', 'RadioGroup' ])) {
                 $and[] = [ $key => [ '$in' => explode(',', $val) ] ];
             }
-            else if (in_array($key_type_fields[$key], [ 'MultiSelect', 'MultiVersion', 'CheckboxGroup' ]))
-            {
+            else if (in_array($key_type_fields[$key], [ 'MultiSelect', 'MultiVersion', 'CheckboxGroup' ])) {
                 $or = [];
                 $vals = explode(',', $val);
                 foreach ($vals as $v)
@@ -256,32 +239,24 @@ class Controller extends BaseController
                 }
                 $and[] = [ '$or' => $or ];
             }
-            else if (in_array($key_type_fields[$key], [ 'Duration', 'DatePicker', 'DateTimePicker' ]))
-            {
-                if (strpos($val, '~') !== false)
-                {
+            else if (in_array($key_type_fields[$key], [ 'Duration', 'DatePicker', 'DateTimePicker' ])) {
+                if (strpos($val, '~') !== false) {
                     $sections = explode('~', $val);
-                    if ($sections[0])
-                    {
+                    if ($sections[0]) {
                         $and[] = [ $key => [ '$gte' => strtotime($sections[0]) ] ];
                     }
-                    if ($sections[1])
-                    {
+                    if ($sections[1]) {
                         $and[] = [ $key => [ '$lte' => strtotime($sections[1] . ' 23:59:59') ] ];
                     }
                 }
-                else if (in_array($val, [ '0d', '0w', '0m', '0y' ]))
-                {
-                    if ($val == '0d')
-                    {
+                else if (in_array($val, [ '0d', '0w', '0m', '0y' ])) {
+                    if ($val == '0d') {
                         $and[] = [ $key => [ '$gte' => strtotime(date('Y-m-d')), '$lte' => strtotime(date('Y-m-d') . ' 23:59:59') ] ];
                     }
-                    else if ($val == '0w')
-                    {
+                    else if ($val == '0w') {
                         $and[] = [ $key => [ '$gte' => mktime(0, 0, 0, date('m'), date('d') - date('w') + 1, date('Y')), '$lte' => mktime(23, 59, 59, date('m'), date('d') - date('w') + 7, date('Y')) ] ];
                     } 
-                    else if ($val == '0m')
-                    {
+                    else if ($val == '0m') {
                         $and[] = [ $key => [ '$gte' => mktime(0, 0, 0, date('m'), 1, date('Y')), '$lte' => mktime(23, 59, 59, date('m'), date('t'), date('Y')) ] ];
                     }
                     else
@@ -293,12 +268,10 @@ class Controller extends BaseController
                 {
                     $unitMap = [ 'w' => 'week', 'm' => 'month', 'y' => 'year' ];
                     $unit = substr($val, -1);
-                    if (in_array($unit, [ 'w', 'm', 'y' ]))
-                    {
+                    if (in_array($unit, [ 'w', 'm', 'y' ])) {
                         $direct = substr($val, 0, 1);
                         $val = abs(substr($val, 0, -1));
-                        if ($direct === '-')
-                        {
+                        if ($direct === '-') {
                             $and[] = [ $key => [ '$lt' => strtotime(date('Ymd', strtotime('-' . $val . ' ' . $unitMap[$unit]))) ] ];
                         }
                         else
@@ -308,44 +281,34 @@ class Controller extends BaseController
                     }
                 }
             }
-            else if (in_array($key_type_fields[$key], [ 'Text', 'TextArea', 'Url' ]))
-            {
+            else if (in_array($key_type_fields[$key], [ 'Text', 'TextArea', 'Url' ])) {
                 $and[] = [ $key => [ '$regex' => $val ] ];
             }
-            else if (in_array($key_type_fields[$key],  [ 'Number', 'Integer' ]))
-            {
-                if (strpos($val, '~') !== false)
-                {
+            else if (in_array($key_type_fields[$key],  [ 'Number', 'Integer' ])) {
+                if (strpos($val, '~') !== false) {
                     $sections = explode('~', $val);
-                    if ($sections[0])
-                    {
+                    if ($sections[0]) {
                         $and[] = [ $key => [ '$gte' => $sections[0] + 0 ] ];
                     }
-                    if ($sections[1])
-                    {
+                    if ($sections[1]) {
                         $and[] = [ $key => [ '$lte' => $sections[1] + 0 ] ];
                     }
                 }
             }
-            else if ($key_type_fields[$key] === 'TimeTracking')
-            {
-                if (strpos($val, '~') !== false)
-                {
+            else if ($key_type_fields[$key] === 'TimeTracking') {
+                if (strpos($val, '~') !== false) {
                     $sections = explode('~', $val);
-                    if ($sections[0])
-                    {
+                    if ($sections[0]) {
                         $and[] = [ $key . '_m' => [ '$gte' => $this->ttHandleInM($sections[0]) ] ];
                     }
-                    if ($sections[1])
-                    {
+                    if ($sections[1]) {
                         $and[] = [ $key . '_m' => [ '$lte' => $this->ttHandleInM($sections[1]) ] ];
                     }
                 }
             }
         }
 
-        if (isset($query['watcher']) && $query['watcher'])
-        {
+        if (isset($query['watcher']) && $query['watcher']) {
             $watcher = $query['watcher'] === 'me' ? $this->user->id : $query['watcher'];
 
             $watched_issues = Watch::where('project_key', $project_key)

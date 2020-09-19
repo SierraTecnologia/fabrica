@@ -10,7 +10,7 @@ use Fabrica\Project\Eloquent\UserGroupProject;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class GroupRoleSetListener 
+class GroupRoleSetListener
 {
     /**
      * Create the event listener.
@@ -25,17 +25,15 @@ class GroupRoleSetListener
     /**
      * Handle the event.
      *
-     * @param  FieldChangeEvent  $event
+     * @param  FieldChangeEvent $event
      * @return void
      */
     public function handle(Event $event)
     {
-        if ($event instanceof AddGroupToRoleEvent)
-        {
+        if ($event instanceof AddGroupToRoleEvent) {
             $this->linkGroupWithProject($event->group_ids, $event->project_key);
         }
-        else if ($event instanceof DelGroupFromRoleEvent)
-        {
+        else if ($event instanceof DelGroupFromRoleEvent) {
             $this->unlinkGroupWithProject($event->group_ids, $event->project_key);
         }
     }
@@ -52,8 +50,7 @@ class GroupRoleSetListener
         foreach ($group_ids as $group_id)
         {
             $link = UserGroupProject::where('ug_id', $group_id)->where('project_key', $project_key)->first();
-            if ($link)
-            {
+            if ($link) {
                 $link->increment('link_count');
             }
             else
@@ -75,8 +72,7 @@ class GroupRoleSetListener
         foreach ($group_ids as $group_id)
         {
             $link = UserGroupProject::where('ug_id', $group_id)->where('project_key', $project_key)->first();
-            if ($link)
-            {
+            if ($link) {
                 $link->decrement('link_count');
             }
         }

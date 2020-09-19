@@ -1,3 +1,5 @@
-$(document).ready(function () {
-    $('*[rel="tooltip"]').tooltip();
-});
+$(document).ready(
+    function () {
+        $('*[rel="tooltip"]').tooltip();
+    }
+);

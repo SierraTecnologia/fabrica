@@ -40,10 +40,12 @@ class UserRoleCreateCommandTest extends CommandTestCase
         $user    = $em->getRepository('FabricaCoreBundle:User')->findOneByUsername('bob');
         $role    = $em->getRepository('FabricaCoreBundle:Role')->findOneByName('Developer');
         $project = $em->getRepository('FabricaCoreBundle:Project')->findOneBySlug('barbaz');
-        $userRole = $em->getRepository('FabricaCoreBundle:UserRoleProject')->findOneBy(array(
+        $userRole = $em->getRepository('FabricaCoreBundle:UserRoleProject')->findOneBy(
+            array(
             'user' => $user,
             'role' => $role,
-        ));
+            )
+        );
 
         $this->assertInstanceOf('Fabrica\Models\Code\UserRoleProject', $userRole);
     }

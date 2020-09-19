@@ -40,11 +40,13 @@ class JobHydrator
     public function hydrateJob($name, array $parameters = array())
     {
         if (!isset($this->jobClasses[$name])) {
-            throw new \InvalidArgumentException(sprintf(
-                'No job of type "%s". Available are: %s',
-                $name,
-                implode(', ', array_keys($this->jobClasses))
-            ));
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'No job of type "%s". Available are: %s',
+                    $name,
+                    implode(', ', array_keys($this->jobClasses))
+                )
+            );
         }
 
         $class = $this->jobClasses[$name];

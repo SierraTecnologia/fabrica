@@ -40,7 +40,8 @@ class ProjectNotifyPushCommand extends AbstractCommand
             ->addArgument('before', InputArgument::REQUIRED, 'Before')
             ->addArgument('after', InputArgument::REQUIRED, 'After')
             ->setDescription('Notification after a push in a project')
-            ->setHelp(<<<EOF
+            ->setHelp(
+                <<<EOF
 The <info>fabrica:project-notify-push</info> is used to notify the application after a push.
 
 <comment>Sample usages</comment>
@@ -50,8 +51,7 @@ The <info>fabrica:project-notify-push</info> is used to notify the application a
     Notify that alice pushed to the repository
 
 EOF
-            )
-        ;
+            );
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

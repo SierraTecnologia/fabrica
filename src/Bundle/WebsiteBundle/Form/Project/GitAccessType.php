@@ -20,10 +20,12 @@ class GitAccessType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('role', 'entity', array(
+        $builder->add(
+            'role', 'entity', array(
             'class' => 'Fabrica\Models\Code\Role',
             'property' => 'name'
-        ));
+            )
+        );
         $builder->add('reference', 'text');
         $builder->add('write', 'checkbox', array('required' => false));
         $builder->add('admin', 'checkbox', array('required' => false));
@@ -31,9 +33,11 @@ class GitAccessType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             'data_class' => 'Fabrica\Models\Code\ProjectGitAccess',
-        ));
+            )
+        );
     }
 
     public function getName()

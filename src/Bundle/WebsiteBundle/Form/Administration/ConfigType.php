@@ -46,8 +46,7 @@ class ConfigType extends AbstractType
             ->add('ssh_access', 'text', array('label' => 'form.project.ssh_access'))
             ->add('name', 'text', array('label' => 'form.project.name'))
             ->add('baseline', 'text', array('label' => 'form.project.baseline'))
-            ->add('open_registration', 'checkbox', array('required' => false, 'label' => 'form.project.open_registration'))
-        ;
+            ->add('open_registration', 'checkbox', array('required' => false, 'label' => 'form.project.open_registration'));
 
         $mailer = $builder->create('mailer', 'form', array('virtual' => true))
             ->add('mailer_transport', 'choice', array('required' => true, 'choices' => $mailerTransports, 'label' => 'form.mailer.transport'))
@@ -58,20 +57,20 @@ class ConfigType extends AbstractType
             ->add('mailer_auth_mode', 'choice', array('required' => false, 'choices' => $authModes, 'label' => 'form.mailer.auth_mode'))
             ->add('mailer_encryption', 'choice', array('required' => false, 'choices' => $encryptions, 'label' => 'form.mailer.encryption'))
             ->add('mailer_from_name', 'text', array('required' => false, 'label' => 'form.mailer.from_name'))
-            ->add('mailer_from_email', 'email', array('required' => false, 'label' => 'form.mailer.from_email'))
-        ;
+            ->add('mailer_from_email', 'email', array('required' => false, 'label' => 'form.mailer.from_email'));
 
         $builder
             ->add($project)
-            ->add($mailer)
-        ;
+            ->add($mailer);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             'translation_domain' => 'administration_config'
-        ));
+            )
+        );
     }
 
     public function getName()

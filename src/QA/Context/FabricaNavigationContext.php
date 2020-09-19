@@ -117,8 +117,12 @@ class FabricaNavigationContext extends AbstractWebDriverContext
 
     protected function elementsToText($elements)
     {
-        return implode(', ', array_map(function (Element $element) {
-            return $element->text();
-        }, $elements));
+        return implode(
+            ', ', array_map(
+                function (Element $element) {
+                    return $element->text();
+                }, $elements
+            )
+        );
     }
 }

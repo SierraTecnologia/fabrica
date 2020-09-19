@@ -1,17 +1,20 @@
 
-$(document).on('ready', function () {
-    $("table[data-history-graph]").each(function (i, e) {
-        fabricaHistory.inject(e);
-    });
-});
+$(document).on(
+    'ready', function () {
+        $("table[data-history-graph]").each(
+            function (i, e) {
+                fabricaHistory.inject(e);
+            }
+        );
+    }
+);
 
 fabricaHistory = {
 
     /**
      * Loads the history graph on a table element.
      */
-    inject: function(table)
-    {
+    inject: function (table) {
         var $table = $(table);
         var data   = $.parseJSON($table.attr('data-history-graph'));
 
@@ -29,7 +32,7 @@ fabricaHistory = {
         var tablePosition = null;
         var tds           = $table.find("td.message");
         var yAxis         = function (i) {
-        var pos, $td;
+            var pos, $td;
             if (yComputed[i] !== undefined) {
                 return yComputed[i];
             }
@@ -53,75 +56,82 @@ fabricaHistory = {
             $($table.find("td.message").eq(i)).css('padding-left', graph.heights[i] * cell_size);
         }
 
-        $table.find("th").each(function (i, e) {
-            var $cell = $(e);
-            var b = $cell.parent().prev().find("td.message").css('paddingLeft');
-            var a = $cell.parent().next().find("td.message").css('paddingLeft');
-            var res;
-            if (undefined === a) {
-                res = parseInt(b);
-            } else if (undefined === b) {
-                res = parseInt(a);
-            } else {
-                res = Math.max(parseInt(a), parseInt(b));
-            }
+        $table.find("th").each(
+            function (i, e) {
+                var $cell = $(e);
+                var b = $cell.parent().prev().find("td.message").css('paddingLeft');
+                var a = $cell.parent().next().find("td.message").css('paddingLeft');
+                var res;
+                if (undefined === a) {
+                    res = parseInt(b);
+                } else if (undefined === b) {
+                    res = parseInt(a);
+                } else {
+                    res = Math.max(parseInt(a), parseInt(b));
+                }
 
-            $cell.css('padding-left', res);
-        });
+                $cell.css('padding-left', res);
+            }
+        );
 
         var commits = history
             .selectAll('circle')
-            .data(graph.nodes)
-        ;
+            .data(graph.nodes);
 
         var links = history
             .selectAll('path')
-            .data(graph.links)
-        ;
+            .data(graph.links);
 
         var commit_line = d3.svg.line()
-            .x(function (d) {
-                return xAxis(d.x);
-            })
-            .y(function (d) {
-                return yAxis(d.y);
-            })
-        ;
+            .x(
+                function (d) {
+                    return xAxis(d.x);
+                }
+            )
+            .y(
+                function (d) {
+                    return yAxis(d.y);
+                }
+            );
 
 
         links.enter()
             .append('path')
             .attr('d', commit_line)
             .style('stroke-linecap', 'round')
-            .style('stroke', function (path) {
-                return familyColor(path[0].family);
-            })
+            .style(
+                'stroke', function (path) {
+                    return familyColor(path[0].family);
+                }
+            )
             .style('stroke-width', '6')
             .attr('radius', 0.1)
-            .style('fill', 'none')
-        ;
+            .style('fill', 'none');
 
         var g = commits.enter().append('g');
 
         g.append('circle')
-            .attr('cx', function (node) {
-                return xAxis(node.x);
-            })
-            .attr('cy', function (node) {
-                return yAxis(node.y);
-            })
+            .attr(
+                'cx', function (node) {
+                    return xAxis(node.x);
+                }
+            )
+            .attr(
+                'cy', function (node) {
+                    return yAxis(node.y);
+                }
+            )
             .attr('r', 4)
             .attr('fill', 'white')
             .style('stroke', 'black')
-            .style('stroke-width', '2')
-        ;
+            .style('stroke-width', '2');
     },
 
 
     /**
      * Converts to a schema containing nodes and links.
      */
-    convertToSchema: function(commits) {
+    convertToSchema: function (commits) {
         var positions = {},
             matrix    = [],
             position,
@@ -132,57 +142,71 @@ fabricaHistory = {
         ;
 
         // Preparation
-        commits.forEach(function (commit, i) {
-            commits[i].position = i;
-            commits[i].x = -1;
-            commits[i].y = i;
-            commits[i].children = [];
+        commits.forEach(
+            function (commit, i) {
+                commits[i].position = i;
+                commits[i].x = -1;
+                commits[i].y = i;
+                commits[i].children = [];
 
-            positions[commit.hash] = i;
-            matrix[i] = [];
+                positions[commit.hash] = i;
+                matrix[i] = [];
 
-            commits[i].family = null;
-        });
+                commits[i].family = null;
+            }
+        );
 
         // Children computing
-        commits.forEach(function (commit, i) {
-            compute_children(i);
-        });
+        commits.forEach(
+            function (commit, i) {
+                compute_children(i);
+            }
+        );
 
         // Compute family
-        commits.forEach(function (commit, i) {
-            compute_family(commit, i);
-        });
+        commits.forEach(
+            function (commit, i) {
+                compute_family(commit, i);
+            }
+        );
 
         // Draw
-        commits.forEach(function (commit, i) {
-            matrix_draw(i);
-        });
+        commits.forEach(
+            function (commit, i) {
+                matrix_draw(i);
+            }
+        );
 
         // Heights
-        commits.forEach(function (commit, i) {
-            heights[i] = matrix_hashHeight(i, "text");
-        })
+        commits.forEach(
+            function (commit, i) {
+                heights[i] = matrix_hashHeight(i, "text");
+            }
+        )
 
-        function compute_children(i) {
+        function compute_children(i)
+        {
             if (commits[i].children_spread !== undefined) {
                 return;
             }
-            commits[i].parents.forEach(function (parent) {
-                if (positions[parent] === undefined) {
-                    return;
+            commits[i].parents.forEach(
+                function (parent) {
+                    if (positions[parent] === undefined) {
+                        return;
+                    }
+
+                    position = positions[parent];
+                    commits[position].children.push(commits[i].hash);
+
+                    compute_children(position);
                 }
-
-                position = positions[parent];
-                commits[position].children.push(commits[i].hash);
-
-                compute_children(position);
-            });
+            );
 
             commits[i].children_spread = true;
         }
 
-        function compute_family(commit, i) {
+        function compute_family(commit, i)
+        {
             // No parent (initial commit)
             if (commit.parents.length === 0) {
                 commits[i].family = commit.hash;
@@ -208,7 +232,8 @@ fabricaHistory = {
         }
 
 
-        function matrix_hashHeight(position, hash) {
+        function matrix_hashHeight(position, hash)
+        {
             var i = 0;
             while (matrix[position][i] != hash && matrix[position][i] !== undefined) {
                 i++;
@@ -219,7 +244,8 @@ fabricaHistory = {
             return i;
         }
 
-        function matrix_draw(position) {
+        function matrix_draw(position)
+        {
             drawn[position] = true;
             var commit = commits[position];
             var x = matrix_hashHeight(position, commit.hash);
@@ -228,27 +254,30 @@ fabricaHistory = {
 
             var parents = commit.parents;
 
-            parents.forEach(function (parent) {
-                if (positions[parent] !== undefined) {
+            parents.forEach(
+                function (parent) {
+                    if (positions[parent] !== undefined) {
 
-                    if (drawn[positions[parent]] === undefined) {
-                        matrix_draw(positions[parent]);
-                    }
+                        if (drawn[positions[parent]] === undefined) {
+                            matrix_draw(positions[parent]);
+                        }
 
-                    if (commits[positions[parent]].children.length > 1) {
-                        family = commits[position].family;
+                        if (commits[positions[parent]].children.length > 1) {
+                            family = commits[position].family;
+                        } else {
+                            family = commits[positions[parent]].family;
+                        }
                     } else {
-                        family = commits[positions[parent]].family;
+                        family = commits[position].family;
                     }
-                } else {
-                    family = commits[position].family;
-                }
 
-                matrix_line(commit.hash, parent, family);
-            });
+                    matrix_line(commit.hash, parent, family);
+                }
+            );
         }
 
-        function matrix_line(from, to, family) {
+        function matrix_line(from, to, family)
+        {
 
             var fromX = commits[positions[from]].x;
             var fromY = commits[positions[from]].y;
@@ -265,10 +294,12 @@ fabricaHistory = {
 
             for (y = fromY; y < toY - 1; y++) {
                 x = matrix_hashHeight(y + 1, to);
-                links.push([
+                links.push(
+                    [
                     {x: fromX, y: y, family: family},
                     {x: x, y: y + 1}
-                ]);
+                    ]
+                );
                 fromX = x;
             }
 
@@ -276,10 +307,12 @@ fabricaHistory = {
                 toX = fromX;
             }
 
-            links.push([
+            links.push(
+                [
                 {x: fromX, y: y, family: family},
                 {x: toX,   y: y + 1}
-            ]);
+                ]
+            );
         }
 
         return {

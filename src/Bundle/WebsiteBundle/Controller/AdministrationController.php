@@ -26,9 +26,11 @@ class AdministrationController extends Controller
 
         $users = $this->getRepository('FabricaCoreBundle:User')->findAll();
 
-        return $this->render('FabricaWebsiteBundle:Administration:users.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Administration:users.html.twig', array(
             'users' => $users,
-        ));
+            )
+        );
     }
 
     public function createUserAction(Request $request)
@@ -46,9 +48,11 @@ class AdministrationController extends Controller
             return $this->redirect($this->generateUrl('administration_editUser', array('username' => $user->getUsername())));
         }
 
-        return $this->render('FabricaWebsiteBundle:Administration:createUser.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Administration:createUser.html.twig', array(
             'form' => $form->createView(),
-        ));
+            )
+        );
     }
 
     public function editUserAction(Request $request, $username)
@@ -66,11 +70,13 @@ class AdministrationController extends Controller
             return $this->redirect($this->generateUrl('administration_editUser', array('username' => $user->getUsername())));
         }
 
-        return $this->render('FabricaWebsiteBundle:Administration:editUser.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Administration:editUser.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
             'mail_form' => $this->createForm('profile_email')->createView()
-        ));
+            )
+        );
     }
 
     public function deleteUserAction($username)
@@ -107,11 +113,13 @@ class AdministrationController extends Controller
             return $this->redirect($this->generateUrl('administration_editUser', array('username' => $user->getUsername())));
         }
 
-        return $this->render('FabricaWebsiteBundle:Administration:editUser.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Administration:editUser.html.twig', array(
             'user'      => $user,
             'form'      => $this->createForm('administration_user', $user, array('validation_groups' => 'admin'))->createView(),
             'mail_form' => $form->createView()
-        ));
+            )
+        );
     }
 
     public function emailActionAction(Request $request, $id, $action)
@@ -149,9 +157,11 @@ class AdministrationController extends Controller
 
         $roles = $this->getRepository('FabricaCoreBundle:Role')->findAll();
 
-        return $this->render('FabricaWebsiteBundle:Administration:roles.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Administration:roles.html.twig', array(
             'roles' => $roles,
-        ));
+            )
+        );
     }
 
     public function createRoleAction(Request $request)
@@ -169,9 +179,11 @@ class AdministrationController extends Controller
             return $this->redirect($this->generateUrl('administration_roles'));
         }
 
-        return $this->render('FabricaWebsiteBundle:Administration:createRole.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Administration:createRole.html.twig', array(
             'form' => $form->createView(),
-        ));
+            )
+        );
     }
 
     public function editRoleAction(Request $request, $id)
@@ -179,10 +191,12 @@ class AdministrationController extends Controller
         $this->assertGranted('ROLE_ADMIN');
 
         $role = $this->getRepository('FabricaCoreBundle:Role')->find($id);
-        $form = $this->createForm('administration_role', $role, array(
+        $form = $this->createForm(
+            'administration_role', $role, array(
             'is_global' => $role->isGlobal(),
             'validation_groups' => 'admin'
-        ));
+            )
+        );
 
         if ('POST' === $request->getMethod() && $form->bind($request)->isValid()) {
             $this->flush();
@@ -192,10 +206,12 @@ class AdministrationController extends Controller
             return $this->redirect($this->generateUrl('administration_roles'));
         }
 
-        return $this->render('FabricaWebsiteBundle:Administration:editRole.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Administration:editRole.html.twig', array(
             'role' => $role,
             'form' => $form->createView(),
-        ));
+            )
+        );
     }
 
     public function deleteRoleAction($id)
@@ -225,9 +241,11 @@ class AdministrationController extends Controller
             return $this->redirect($this->generateUrl('administration_config'));
         }
 
-        return $this->render('FabricaWebsiteBundle:Administration:config.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Administration:config.html.twig', array(
             'form' => $form->createView()
-        ));
+            )
+        );
     }
 
     public function versionAction()
@@ -238,9 +256,11 @@ class AdministrationController extends Controller
         $changeLog = $browser->getChangeLog();
         $version   = $this->container->getParameter('fabrica.version');
 
-        return $this->render('FabricaWebsiteBundle:Administration:version.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Administration:version.html.twig', array(
             'changeLog' => $changeLog,
             'version'   => $version,
-        ));
+            )
+        );
     }
 }

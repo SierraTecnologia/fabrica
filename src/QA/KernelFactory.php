@@ -15,7 +15,7 @@ class KernelFactory
 
     public function run(\Closure $callback)
     {
-        require_once $this->appDir.'/AppKernel.php';
+        include_once $this->appDir.'/AppKernel.php';
 
         $exception = null;
         $app = new \AppKernel('prod', false);

@@ -24,8 +24,7 @@ class InformationType extends AbstractType
             ->add('username', 'text', array('label' => 'form.information.username'))
             ->add('fullname', 'text', array('label' => 'form.information.fullname'))
             ->add('timezone', 'timezone', array('label' => 'form.information.timezone'))
-            ->add('locale', 'fabrica_locale', array('label' => 'form.information.locale'))
-        ;
+            ->add('locale', 'fabrica_locale', array('label' => 'form.information.locale'));
     }
 
     public function getName()
@@ -35,8 +34,10 @@ class InformationType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             'translation_domain' => 'profile_information'
-        ));
+            )
+        );
     }
 }

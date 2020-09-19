@@ -13,55 +13,48 @@ class MysettingController extends Controller
     /**
      * Set user avatar.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function setAvatar(Request $request)
     {
         $basename = md5(microtime() . $this->user->id);
         $avatar_save_path = config('filesystems.disks.local.root', '/tmp') . '/avatar/';
-        if (!is_dir($avatar_save_path))
-        {
+        if (!is_dir($avatar_save_path)) {
             @mkdir($avatar_save_path);
         }
         $filename = '/tmp/' . $basename;
 
         $data = $request->input('data');
-        if (!$data)
-        {
+        if (!$data) {
             throw new \UnexpectedValueException('the uploaded avatar file can not be empty.', -15006);
         }
         file_put_contents($filename, base64_decode($data));
 
         $fileinfo = getimagesize($filename);
-        if ($fileinfo['mime'] == 'image/jpeg' || $fileinfo['mime'] == 'image/jpg' || $fileinfo['mime'] == 'image/png' || $fileinfo['mime'] == 'image/gif')
-        {
+        if ($fileinfo['mime'] == 'image/jpeg' || $fileinfo['mime'] == 'image/jpg' || $fileinfo['mime'] == 'image/png' || $fileinfo['mime'] == 'image/gif') {
             $size = getimagesize($filename);
             $width = $size[0]; $height = $size[1];
             $scale = $width < $height ? $height : $width;
             $thumbnails_width = floor(150 * $width / $scale);
             $thumbnails_height = floor(150 * $height / $scale);
             $thumbnails_filename = $filename . '_thumbnails';
-            if ($scale <= 150)
-            {
+            if ($scale <= 150) {
                 @copy($filename, $thumbnails_filename);
             }
-            else if ($fileinfo['mime'] == 'image/jpeg' || $fileinfo['mime'] == 'image/jpg')
-            {
+            else if ($fileinfo['mime'] == 'image/jpeg' || $fileinfo['mime'] == 'image/jpg') {
                 $src_image = imagecreatefromjpeg($filename);
                 $dst_image = imagecreatetruecolor($thumbnails_width, $thumbnails_height);
                 imagecopyresized($dst_image, $src_image, 0, 0, 0, 0, $thumbnails_width, $thumbnails_height, $width, $height);
                 imagejpeg($dst_image, $thumbnails_filename);
             }
-            else if ($fileinfo['mime'] == 'image/png')
-            {
+            else if ($fileinfo['mime'] == 'image/png') {
                 $src_image = imagecreatefrompng($filename);
                 $dst_image = imagecreatetruecolor($thumbnails_width, $thumbnails_height);
                 imagecopyresized($dst_image, $src_image, 0, 0, 0, 0, $thumbnails_width, $thumbnails_height, $width, $height);
                 imagepng($dst_image, $thumbnails_filename);
             }
-            else if ($fileinfo['mime'] == 'image/gif')
-            {
+            else if ($fileinfo['mime'] == 'image/gif') {
                 $src_image = imagecreatefromgif($filename);
                 $dst_image = imagecreatetruecolor($thumbnails_width, $thumbnails_height);
                 imagecopyresized($dst_image, $src_image, 0, 0, 0, 0, $thumbnails_width, $thumbnails_height, $width, $height);
@@ -80,8 +73,7 @@ class MysettingController extends Controller
         }
 
         $user = Sentinel::findById($this->user->id);
-        if (!$user)
-        {
+        if (!$user) {
             throw new \UnexpectedValueException('the user is not existed.', -15000);
         }
         $user->fill([ 'avatar' => $basename ])->save();
@@ -99,15 +91,13 @@ class MysettingController extends Controller
         $data = [];
 
         $user = Sentinel::findById($this->user->id);
-        if (!$user)
-        {
+        if (!$user) {
             throw new \UnexpectedValueException('the user is not existed.', -15000);
         }
         $data['accounts'] = $user;
 
         $user_setting = UserSetting::where('user_id', $this->user->id)->first();
-        if ($user_setting && isset($user_setting->notifications))
-        {
+        if ($user_setting && isset($user_setting->notifications)) {
             $data['notifications'] = $user_setting->notifications;
         }
         else
@@ -115,8 +105,7 @@ class MysettingController extends Controller
             $data['notifications'] = [ 'mail_notify' => true ];
         }
 
-        if ($user_setting && isset($user_setting->favorites))
-        {
+        if ($user_setting && isset($user_setting->favorites)) {
             $data['favorites'] = $user_setting->favorites;
         }
 
@@ -126,39 +115,34 @@ class MysettingController extends Controller
     /**
      * reset the user password.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function resetPwd(Request $request)
     {
         $password = $request->input('password');
-        if (!$password)
-        {
+        if (!$password) {
             throw new \UnexpectedValueException('the old password can not be empty.', -15001);
         }
 
         $user = Sentinel::findById($this->user->id);
-        if (!$user)
-        {
+        if (!$user) {
             throw new \UnexpectedValueException('the user is not existed.', -15000);
         }
 
         $credentials = [ 'email' => $this->user->email, 'password' => $password ];
         $valid = Sentinel::validateCredentials($user, $credentials);
-        if (!$valid)
-        {
+        if (!$valid) {
             throw new \UnexpectedValueException('the old password is not correct.', -15002);
         }
 
         $new_password = $request->input('new_password');
-        if (!$new_password)
-        {
+        if (!$new_password) {
             throw new \UnexpectedValueException('the password can not be empty.', -15003);
         }
 
         $valid = Sentinel::validForUpdate($user, [ 'password' => $new_password ]);
-        if (!$valid) 
-        {
+        if (!$valid) {
             throw new \UnexpectedValueException('resetting the password fails.', -15004);
         }
         //$user->password = password_hash($new_password, PASSWORD_DEFAULT);
@@ -170,42 +154,36 @@ class MysettingController extends Controller
     /**
      * update the user accounts
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function updAccounts(Request $request)
     {
         $user = Sentinel::findById($this->user->id);
-        if (!$user)
-        {
+        if (!$user) {
             throw new \UnexpectedValueException('the user is not existed.', -15000);
         }
 
         $first_name = $request->input('first_name');
-        if (isset($first_name))
-        {
-            if (!$first_name)
-            {
+        if (isset($first_name)) {
+            if (!$first_name) {
                 throw new \UnexpectedValueException('the name can not be empty.', -15005);
             }
             $user->first_name = $first_name;
         }
 
         $department = $request->input('department');
-        if (isset($department))
-        {
+        if (isset($department)) {
             $user->department = $department;
         }
 
         $position = $request->input('position');
-        if (isset($position))
-        {
+        if (isset($position)) {
             $user->position = $position;
         }
 
         $bind_email = $request->input('bind_email');
-        if (isset($bind_email))
-        {
+        if (isset($bind_email)) {
             $user->bind_email = $bind_email;
         }
 
@@ -217,7 +195,7 @@ class MysettingController extends Controller
     /**
      * set the user notification.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function setNotifications(Request $request)
@@ -225,8 +203,7 @@ class MysettingController extends Controller
         $notifications = $request->all();
 
         $user_setting = UserSetting::where('user_id', $this->user->id)->first();
-        if ($user_setting)
-        {
+        if ($user_setting) {
             $new_notifications = $user_setting->notifications;
             foreach ($notifications as $key => $value) 
             {
@@ -248,7 +225,7 @@ class MysettingController extends Controller
     /**
      * set the user favorite.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function setFavorites(Request $request)
@@ -256,8 +233,7 @@ class MysettingController extends Controller
         $favorites = $request->all();
 
         $user_setting = UserSetting::where(user_id, $this->user->id)->first();
-        if ($user_setting)
-        {
+        if ($user_setting) {
             $new_favorites = $user_setting->favorites;
             foreach ($favorites as $key => $value) 
             {

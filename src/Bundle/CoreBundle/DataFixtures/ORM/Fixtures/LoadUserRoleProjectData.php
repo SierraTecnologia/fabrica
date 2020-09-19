@@ -62,7 +62,7 @@ class LoadUserRoleProjectData extends Fixture
         $manager->flush();
 
         $this->manager = null;
-   }
+    }
 
     /**
      * @inheritdoc

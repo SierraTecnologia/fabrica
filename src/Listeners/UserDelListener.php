@@ -10,7 +10,7 @@ use Fabrica\Project\Eloquent\UserGroupProject;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class UserDelListener 
+class UserDelListener
 {
     /**
      * Create the event listener.
@@ -25,7 +25,7 @@ class UserDelListener
     /**
      * Handle the event.
      *
-     * @param  FieldChangeEvent  $event
+     * @param  FieldChangeEvent $event
      * @return void
      */
     public function handle(Event $event)
@@ -38,7 +38,7 @@ class UserDelListener
     /**
      * del user from project role
      *
-     * @param  string  $user_id
+     * @param  string $user_id
      * @return void
      */
     public function delUserFromRole($user_id)
@@ -50,8 +50,7 @@ class UserDelListener
             $old_user_ids = isset($roleactor->user_ids) ? $roleactor->user_ids : [];
             foreach ($old_user_ids as $uid)
             {
-                if ($uid != $user_id)
-                {
+                if ($uid != $user_id) {
                     $new_user_ids[] = $uid;
                 }
             }
@@ -64,7 +63,7 @@ class UserDelListener
     /**
      * del user from group 
      *
-     * @param  string  $user_id
+     * @param  string $user_id
      * @return void
      */
     public function delUserFromGroup($user_id)
@@ -72,24 +71,23 @@ class UserDelListener
         $groups = Group::whereRaw([ 'user_ids' => $user_id ])->get([ 'user_ids' ]);
         foreach ($groups as $group)
         {
-           $new_user_ids = [];
-           $old_user_ids = isset($group->user_ids) ? $group->user_ids : [];
-           foreach ($old_user_ids as $uid)
-           {
-               if ($uid != $user_id)
-               {
-                   $new_user_ids[] = $uid;
-               }
-           }
-           $group->user_ids = $new_user_ids;
-           $group->save();
+            $new_user_ids = [];
+            $old_user_ids = isset($group->user_ids) ? $group->user_ids : [];
+            foreach ($old_user_ids as $uid)
+            {
+                if ($uid != $user_id) {
+                    $new_user_ids[] = $uid;
+                }
+            }
+            $group->user_ids = $new_user_ids;
+            $group->save();
         }
     }
 
     /**
      * delete users from project
      *
-     * @param  array  $user_id
+     * @param  array $user_id
      * @return void
      */
     public function delUserProject($user_id)

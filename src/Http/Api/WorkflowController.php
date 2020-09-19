@@ -33,20 +33,18 @@ class WorkflowController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $project_key)
     {
         $name = $request->input('name');
-        if (!$name)
-        {
+        if (!$name) {
             throw new \UnexpectedValueException('the name can not be empty.', -12100);
         }
 
         $contents = $request->input('contents');
-        if (isset($contents) && $contents)
-        {
+        if (isset($contents) && $contents) {
             $latest_modifier = [ 'id' => $this->user->id, 'name' => $this->user->first_name ];
             $latest_modified_time = date('Y-m-d H:i:s');
             $state_ids = Workflow::getStates($contents);
@@ -59,8 +57,7 @@ class WorkflowController extends Controller
         }
 
         $source_id = $request->input('source_id');
-        if (isset($source_id) && $source_id)
-        {
+        if (isset($source_id) && $source_id) {
             $source_definition = Definition::find($source_id);
             $latest_modifier = [ 'id' => $this->user->id, 'name' => $this->user->first_name ];
             $latest_modified_time = date('Y-m-d H:i:s'); 
@@ -77,14 +74,13 @@ class WorkflowController extends Controller
     /**
      * preview the workflow chart.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function preview(Request $request, $project_key, $id)
     {
         $workflow = Definition::find($id);
-        if ($workflow)
-        {
+        if ($workflow) {
             return response()->json([ 'ecode' => 0, 'data' => $workflow ]);
         }
         else
@@ -96,14 +92,13 @@ class WorkflowController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request, $project_key, $id)
     {
         $workflow = Definition::find($id);
-        if (!$workflow || $project_key != $workflow->project_key)
-        {
+        if (!$workflow || $project_key != $workflow->project_key) {
             throw new \UnexpectedValueException('the workflow does not exist or is not in the project.', -12101);
         }
 
@@ -120,29 +115,25 @@ class WorkflowController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $project_key, $id)
     {
         $name = $request->input('name');
-        if (isset($name))
-        {
-            if (!$name)
-            {
+        if (isset($name)) {
+            if (!$name) {
                 throw new \UnexpectedValueException('the name can not be empty.', -12100);
             }
         }
         $workflow = Definition::find($id);
-        if (!$workflow || $project_key != $workflow->project_key)
-        {
+        if (!$workflow || $project_key != $workflow->project_key) {
             throw new \UnexpectedValueException('the workflow does not exist or is not in the project.', -12101);
         }
 
         $contents = $request->input('contents');
-        if (isset($contents))
-        {
+        if (isset($contents)) {
             $latest_modifier = [ 'id' => $this->user->id, 'name' => $this->user->first_name ];
             $latest_modified_time = date('Y-m-d H:i:s');
 
@@ -160,20 +151,18 @@ class WorkflowController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($project_key, $id)
     {
         $workflow = Definition::find($id);
-        if (!$workflow || $project_key != $workflow->project_key)
-        {
+        if (!$workflow || $project_key != $workflow->project_key) {
             throw new \UnexpectedValueException('the workflow does not exist or is not in the project.', -12101);
         }
 
         $isUsed = Type::where('workflow_id', $id)->exists();
-        if ($isUsed)
-        {
+        if ($isUsed) {
             throw new \UnexpectedValueException('the workflow has been bound to type.', -12102);
         }
 
@@ -188,8 +177,7 @@ class WorkflowController extends Controller
      */
     public function viewUsedInProject($project_key, $id)
     {
-        if ($project_key !== '$_sys_$')
-        {
+        if ($project_key !== '$_sys_$') {
             return response()->json(['ecode' => 0, 'data' => [] ]);
         }
 
@@ -203,8 +191,7 @@ class WorkflowController extends Controller
                 ->get([ 'id', 'name' ])
                 ->toArray();
 
-            if ($types)
-            {
+            if ($types) {
                 $res[] = [ 'key' => $project->key, 'name' => $project->name, 'status' => $project->status, 'types' => $types ];
             }
         }

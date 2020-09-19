@@ -2,14 +2,15 @@
 
 namespace Fabrica\Utils;
 
-class CurlRequest {
+class CurlRequest
+{
 
     /**
      * The curl get request.
      *
-     * @param string $url
-     * @param array $header
-     * @param int $await
+     * @param  string $url
+     * @param  array  $header
+     * @param  int    $await
      * @return array
      */
     public static function get($url, $header=[], $await=5)
@@ -18,8 +19,7 @@ class CurlRequest {
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         
-        if (!$header)
-        {
+        if (!$header) {
             $header = [ 'Content-Type: application/json', 'Expect:' ];
         }
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
@@ -38,10 +38,10 @@ class CurlRequest {
     /**
      * The curl post request.
      *
-     * @param string $url
-     * @param array $header
-     * @param array $data
-     * @param int $await
+     * @param  string $url
+     * @param  array  $header
+     * @param  array  $data
+     * @param  int    $await
      * @return array
      */
     public static function post($url, $header=[], $data=[], $await=5)
@@ -50,8 +50,7 @@ class CurlRequest {
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HEADER, 0);
 
-        if (!$header)
-        {
+        if (!$header) {
             $header = [ 'Content-Type: application/json', 'Expect:' ];
         }
         curl_setopt($ch, CURLOPT_HTTPHEADER, $header);

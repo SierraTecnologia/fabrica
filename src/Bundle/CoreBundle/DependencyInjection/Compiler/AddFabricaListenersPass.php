@@ -28,10 +28,12 @@ class AddFabricaListenersPass implements CompilerPassInterface
                 }
 
                 if (!isset($event['method'])) {
-                    $event['method'] = 'on'.preg_replace(array(
+                    $event['method'] = 'on'.preg_replace(
+                        array(
                         '/(?<=\b)[a-z]/ie',
                         '/[^a-z0-9]/i'
-                    ), array('strtoupper("\\0")', ''), $event['event']);
+                        ), array('strtoupper("\\0")', ''), $event['event']
+                    );
                 }
 
                 $definition->addMethodCall('addListenerService', array($event['event'], array($id, $event['method']), $priority));

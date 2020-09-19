@@ -87,8 +87,8 @@ class ChainConfig extends AbstractConfig
     public function doSetAll(array $values)
     {
         foreach ($this->configs as $config) {
-             try {
-               $config->setAll($values);
+            try {
+                $config->setAll($values);
             } catch (\Exception $e) {
                 continue;
             }

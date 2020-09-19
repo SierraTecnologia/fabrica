@@ -31,8 +31,7 @@ class ScreenController extends Controller
                 ->toArray();
             $screen->workflows = $workflows;
 
-            if ($workflows)
-            {
+            if ($workflows) {
                 $screen->is_used = true;
             }
             else
@@ -40,9 +39,11 @@ class ScreenController extends Controller
                 $screen->is_used = Type::where('screen_id', $screen->id)->exists(); 
             }
 
-            $screen->workflows = array_filter($workflows, function($item) use($project_key) { 
-                return $item['project_key'] === $project_key || $item['project_key'] === '$_sys_$';
-            });
+            $screen->workflows = array_filter(
+                $workflows, function ($item) use ($project_key) { 
+                    return $item['project_key'] === $project_key || $item['project_key'] === '$_sys_$';
+                }
+            );
         }
 
         $fields = Field::Where([ 'project_key' => [ '$in' => [ $project_key, '$_sys_$' ] ] ])->orderBy('created_at', 'asc')->get(['name', 'key']);
@@ -52,20 +53,18 @@ class ScreenController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $project_key)
     {
         $name = $request->input('name');
-        if (!$name)
-        {
+        if (!$name) {
             throw new \UnexpectedValueException('the name can not be empty.', -12300);
         }
 
         $source_id = $request->input('source_id');
-        if (isset($source_id) && $source_id)
-        {
+        if (isset($source_id) && $source_id) {
             $source_screen = Screen::find($source_id);
             $schema = $source_screen->schema;
             $field_ids = $source_screen->field_ids; 
@@ -85,7 +84,7 @@ class ScreenController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($project_key, $id)
@@ -103,30 +102,26 @@ class ScreenController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $project_key, $id)
     {
         $name = $request->input('name');
-        if (isset($name))
-        {
-            if (!$name)
-            {
+        if (isset($name)) {
+            if (!$name) {
                 throw new \UnexpectedValueException('the name can not be empty.', -12300);
             }
         }
         $screen = Screen::find($id);
-        if (!$screen || $project_key != $screen->project_key)
-        {
+        if (!$screen || $project_key != $screen->project_key) {
             throw new \UnexpectedValueException('the screen does not exist or is not in the project.', -12301);
         }
 
         // when screen fields change, re-generate schema
         $field_ids = $request->input('fields');
-        if (isset($field_ids))
-        {
+        if (isset($field_ids)) {
             $mapFields = [];
             foreach ($screen->schema as $field)
             {
@@ -136,8 +131,7 @@ class ScreenController extends Controller
             $new_schema = [];
             foreach ($field_ids as $field_id)
             {
-                if (array_key_exists($field_id, $mapFields))
-                {
+                if (array_key_exists($field_id, $mapFields)) {
                     $new_schema[] = $mapFields[$field_id];
                 }
                 else
@@ -151,13 +145,11 @@ class ScreenController extends Controller
 
         // when required fields change, re-generate schema
         $required_field_ids = $request->input('required_fields');
-        if (isset($required_field_ids))
-        {
+        if (isset($required_field_ids)) {
             $new_schema = [];
             foreach ($screen->schema as $field)
             {
-                if (in_array($field['_id'], $required_field_ids ?: []))
-                {
+                if (in_array($field['_id'], $required_field_ids ?: [])) {
                     $field['required'] = true;
                 }
                 else
@@ -176,26 +168,23 @@ class ScreenController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($project_key, $id)
     {
         $screen = Screen::find($id);
-        if (!$screen || $project_key != $screen->project_key)
-        {
+        if (!$screen || $project_key != $screen->project_key) {
             throw new \UnexpectedValueException('the screen does not exist or is not in the project.', -12301);
         }
 
         $isUsed = Type::where('screen_id', $id)->exists();
-        if ($isUsed)
-        {
+        if ($isUsed) {
             throw new \UnexpectedValueException('the screen has been bound to type.', -12302);
         }
 
         $isUsed = Definition::whereRaw([ 'screen_ids' => $id ])->exists();
-        if ($isUsed)
-        {
+        if ($isUsed) {
             throw new \UnexpectedValueException('the screen has been used in workflow.', -12303);
         }
 
@@ -206,8 +195,8 @@ class ScreenController extends Controller
     /**
      * generate screen schema
      *
-     * @param  array  $fields
-     * @param  array  $required_fields
+     * @param  array $fields
+     * @param  array $required_fields
      * @return array
      */
     public function createSchema(array $field_ids, array $required_field_ids)
@@ -216,12 +205,10 @@ class ScreenController extends Controller
         foreach ($field_ids as $field_id)
         {
             $new_field = Field::Find($field_id, ['name', 'key', 'type', 'applyToTypes', 'defaultValue', 'optionValues'])->toArray();
-            if (!$new_field)
-            {
+            if (!$new_field) {
                 continue;
             }
-            if (in_array($field_id, $required_field_ids))
-            {
+            if (in_array($field_id, $required_field_ids)) {
                 $new_field['required'] = true;
             }
             $schema[] = $new_field;
@@ -236,8 +223,7 @@ class ScreenController extends Controller
      */
     public function viewUsedInProject($project_key, $id)
     {
-        if ($project_key !== '$_sys_$')
-        {
+        if ($project_key !== '$_sys_$') {
             return response()->json(['ecode' => 0, 'data' => [] ]);
         }
 
@@ -257,8 +243,7 @@ class ScreenController extends Controller
                 ->get([ 'id', 'name' ])
                 ->toArray();
 
-            if ($types || $workflows)
-            {
+            if ($types || $workflows) {
                 $tmp = [ 'key' => $project->key, 'name' => $project->name, 'status' => $project->status ];
                 $tmp['types'] = $types ?: [];
                 $tmp['workflows'] = $workflows ?: [];

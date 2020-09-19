@@ -20,12 +20,14 @@ class LocaleType extends AbstractType
 {
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             'choices'         => array(
                 'en_US' => 'English',
                 'fr_FR' => 'French'
             )
-        ));
+            )
+        );
     }
 
     public function getParent()

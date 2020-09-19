@@ -33,12 +33,12 @@ class ConfigShowCommand extends ContainerAwareCommand
             ->setName('fabrica:config:show')
             ->addArgument('parameter', InputArgument::OPTIONAL, 'Display a single parameter value')
             ->setDescription('Shows configuration of the application')
-            ->setHelp(<<<EOF
+            ->setHelp(
+                <<<EOF
 The <info>fabrica:config:show</info> displays informations about the configuration of
 the application.
 EOF
-            )
-        ;
+            );
     }
 
     /**
@@ -59,9 +59,11 @@ EOF
         $parameter = $input->getArgument('parameter');
 
         if (null === $parameter) {
-            $max = array_reduce(array_keys($config), function ($result, $item) {
-                return max($result, strlen($item));
-            });
+            $max = array_reduce(
+                array_keys($config), function ($result, $item) {
+                    return max($result, strlen($item));
+                }
+            );
 
             foreach ($config as $name => $value) {
                 $output->writeln(sprintf("%-${max}s  %s", $name, $value));

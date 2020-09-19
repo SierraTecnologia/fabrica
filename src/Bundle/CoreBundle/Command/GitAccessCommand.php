@@ -42,13 +42,13 @@ class GitAccessCommand extends AbstractCommand
             ->addArgument('isWrite', null, InputArgument::OPTIONAL, 'Is writable?')
             ->addArgument('isAdmin', null, InputArgument::OPTIONAL, 'Is admin?')
             ->addOption('stderr', null, InputOption::VALUE_OPTIONAL, 'Use stderr for errors ?', true)
-            ->setHelp(<<<EOF
+            ->setHelp(
+                <<<EOF
 The <info>fabrica:git-access</info> command manages the git accesses.
 
 <info>php app/console fabrica:git-access create foobar lead-dev * 1 1 1</info>
 EOF
-            )
-        ;
+            );
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -103,11 +103,13 @@ EOF
     {
         $doctrine   = $this->getContainer()->get('doctrine');
         $repository = $doctrine->getRepository('FabricaCoreBundle:ProjectGitAccess');
-        $gitAccess  = $repository->findOneBy(array(
+        $gitAccess  = $repository->findOneBy(
+            array(
             'project'   => $project,
             'role'      => $role,
             'reference' => $reference,
-        ));
+            )
+        );
 
         if (null === $gitAccess) {
             throw new \RuntimeException('GitAccess not found');

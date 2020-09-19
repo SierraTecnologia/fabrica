@@ -22,8 +22,8 @@ class FabricaRequirements extends RequirementCollection
         // PHP Version
         $this->addRequirement(
             version_compare(PHP_VERSION, '5.3.7', '>='),
-            'Your PHP must be greater than 5.3.7 ('.PHP_VERSION.' installed)')
-        ;
+            'Your PHP must be greater than 5.3.7 ('.PHP_VERSION.' installed)'
+        );
 
         // Git command
         list($gitInstalled, $gitVersion) = $this->findGit();
@@ -35,12 +35,14 @@ class FabricaRequirements extends RequirementCollection
 
     protected function findGit()
     {
-        $proc = proc_open('git --version',
+        $proc = proc_open(
+            'git --version',
             array(
                 0 => array('pipe', 'r'),
                 1 => array('pipe', 'w'),
                 2 => array('pipe', 'w')
-            ), $pipes);
+            ), $pipes
+        );
 
         $res = preg_match('/^git version ([0-9\.]+)(.+)?\n$/', stream_get_contents($pipes[1]), $vars);
         $rtn = proc_close($proc);

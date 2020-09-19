@@ -26,15 +26,14 @@ class WebhooksController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $project_key)
     {
         $insValues = [];
 
-        if (!($request_url = $request->input('request_url')))
-        {
+        if (!($request_url = $request->input('request_url'))) {
             throw new \UnexpectedValueException('the request url can not be empty.', -16010);
         }
         $insValues['request_url'] = $request_url;
@@ -45,13 +44,11 @@ class WebhooksController extends Controller
         //}
         $insValues['events'] = $request->input('events') ?: [];
 
-        if ($token = $request->input('token'))
-        {
+        if ($token = $request->input('token')) {
             $insValues['token'] = $token;
         }
 
-        if ($ssl = $request->input('ssl'))
-        {
+        if ($ssl = $request->input('ssl')) {
             $insValues['ssl'] = $ssl;
         }
 
@@ -62,26 +59,23 @@ class WebhooksController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $project_key, $id)
     {
         $webhook = Webhooks::find($id);
-        if (!$webhook || $project_key != $webhook->project_key)
-        {
+        if (!$webhook || $project_key != $webhook->project_key) {
             throw new \UnexpectedValueException('the webhook does not exist or is not in the project.', -16011);
         }
 
         $updValues = [];
-        if ($status = $request->input('status'))
-        {
+        if ($status = $request->input('status')) {
             $updValues['status'] = $status;
         }
 
-        if ($updValues)
-        {
+        if ($updValues) {
             $webhook->fill($updValues)->save();
         }
 
@@ -91,14 +85,13 @@ class WebhooksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($project_key, $id)
     {
         $webhook = Webhooks::find($id);
-        if (!$webhook || $project_key != $webhook->project_key)
-        {
+        if (!$webhook || $project_key != $webhook->project_key) {
             throw new \UnexpectedValueException('the webhook does not exist or is not in the project.', -16011);
         }
 

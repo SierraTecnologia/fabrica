@@ -19,20 +19,19 @@ class DocumentController extends Controller
 {
     /**
      * search path.
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $project_key
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  string                   $project_key
      * @return \Illuminate\Http\Response
      */
     public function searchPath(Request $request, $project_key)
     {
         $s =  $request->input('s');
-        if (!$s)
-        {
+        if (!$s) {
             return response()->json(['ecode' => 0, 'data' => []]);
         }
 
-        if ($s === '/')
-        {
+        if ($s === '/') {
             return response()->json(['ecode' => 0, 'data' => [ [ 'id' => '0', 'name' => '/' ] ] ]);
         }
 
@@ -42,8 +41,7 @@ class DocumentController extends Controller
             ->where('name', 'like', '%' . $s . '%');
 
         $moved_path = $request->input('moved_path');
-        if (isset($moved_path) && $moved_path)
-        {
+        if (isset($moved_path) && $moved_path) {
             $query->where('pt', '<>', $moved_path);
             $query->where('_id', '<>', $moved_path);
         }
@@ -65,8 +63,7 @@ class DocumentController extends Controller
 
             foreach ($d['pt'] as $pid)
             {
-                if (isset($parents[$pid]))
-                {
+                if (isset($parents[$pid])) {
                     $path .= '/' . $parents[$pid];
                 }
             }
@@ -78,30 +75,32 @@ class DocumentController extends Controller
 
     /**
      * get the directory children.
-     * @param  string  $project_key
-     * @param  string  $directory
+     *
+     * @param  string $project_key
+     * @param  string $directory
      * @return \Illuminate\Http\Response
      */
     public function getDirChildren(Request $request, $project_key, $directory)
     {
         $sub_dirs = DB::collection('document_' . $project_key)
-    	    ->where('parent', $directory)
+            ->where('parent', $directory)
             ->where('d', 1)
             ->where('del_flag', '<>', 1)
             ->get();
 
-    	$res = [];
-    	foreach ($sub_dirs as $val) 
+        $res = [];
+        foreach ($sub_dirs as $val) 
         {
-    	    $res[] = [ 'id' => $val['_id']->__toString(), 'name' => $val['name'] ];
+            $res[] = [ 'id' => $val['_id']->__toString(), 'name' => $val['name'] ];
         }
 
-    	return response()->json([ 'ecode' => 0, 'data' => $res ]);
+        return response()->json([ 'ecode' => 0, 'data' => $res ]);
     }
 
     /**
      * get the directory tree.
-     * @param  string  $project_key
+     *
+     * @param  string $project_key
      * @return \Illuminate\Http\Response
      */
     public function getDirTree(Request $request, $project_key)
@@ -109,37 +108,34 @@ class DocumentController extends Controller
         $dt = [ 'id' => '0', 'name' => '根目录' ];
 
         $curdir = $request->input('currentdir');
-        if (!$curdir)
-        {
+        if (!$curdir) {
             $curdir = '0';
         }
 
         $pt = [ '0' ];
-        if ($curdir !== '0')
-        {
+        if ($curdir !== '0') {
             $node = DB::collection('document_' . $project_key)
                 ->where('_id', $curdir)
-    	        ->first();
+                ->first();
 
-    	    if ($node)
-    	    {
-    	        $pt = $node['pt'];
-    	        array_push($pt, $curdir);
+            if ($node) {
+                $pt = $node['pt'];
+                array_push($pt, $curdir);
             }
         }
 
-    	foreach($pt as $val)
-    	{
+        foreach($pt as $val)
+        {
             $sub_dirs = DB::collection('document_' . $project_key)
                 ->where('parent', $val)
-    	        ->where('d', 1)
-    	        ->where('del_flag', '<>', 1)
-    	        ->get();
+                ->where('d', 1)
+                ->where('del_flag', '<>', 1)
+                ->get();
 
-    	    $this->addChildren2Tree($dt, $val, $sub_dirs);
+            $this->addChildren2Tree($dt, $val, $sub_dirs);
         }
 
-    	return response()->json([ 'ecode' => 0, 'data' => $dt ]);
+        return response()->json([ 'ecode' => 0, 'data' => $dt ]);
     }
 
     /**
@@ -158,21 +154,18 @@ class DocumentController extends Controller
             $new_dirs[] = [ 'id' => $val['_id']->__toString(), 'name' => $val['name'] ];
         }
 
-        if ($dt['id'] == $parent_id)
-        {
+        if ($dt['id'] == $parent_id) {
             $dt['children'] = $new_dirs;
             return true;
         }
         else
         {
-            if (isset($dt['children']) && $dt['children'])
-            {
+            if (isset($dt['children']) && $dt['children']) {
                 $children_num = count($dt['children']);
                 for ($i = 0; $i < $children_num; $i++)
                 {
                     $res = $this->addChildren2Tree($dt['children'][$i], $parent_id, $sub_dirs);
-                    if ($res === true)
-                    {
+                    if ($res === true) {
                         return true;
                     }
                 }
@@ -189,7 +182,7 @@ class DocumentController extends Controller
     public function getOptions(Request $request, $project_key)
     {
         $uploaders = DB::collection('document_' . $project_key)
-            ->where('del_flag', '<>' , 1)
+            ->where('del_flag', '<>', 1)
             ->distinct('uploader')
             ->get([ 'uploader' ]);
 
@@ -208,22 +201,19 @@ class DocumentController extends Controller
         $query = DB::collection('document_' . $project_key);
 
         $uploader_id = $request->input('uploader_id');
-        if (isset($uploader_id) && $uploader_id)
-        {
+        if (isset($uploader_id) && $uploader_id) {
             $mode = 'search';
             $query->where('uploader.id', $uploader_id == 'me' ? $this->user->id : $uploader_id);
         }
 
         $name = $request->input('name');
-        if (isset($name) && $name)
-        {
+        if (isset($name) && $name) {
             $mode = 'search';
             $query = $query->where('name', 'like', '%' . $name . '%');
         }
 
         $uploaded_at = $request->input('uploaded_at');
-        if (isset($uploaded_at) && $uploaded_at)
-        {
+        if (isset($uploaded_at) && $uploaded_at) {
             $mode = 'search';
             $unitMap = [ 'w' => 'week', 'm' => 'month', 'y' => 'year' ];
             $unit = substr($uploaded_at, -1);
@@ -238,8 +228,7 @@ class DocumentController extends Controller
         $favorite_dids = array_column($favorite_documents, 'did');
 
         $myfavorite = $request->input('myfavorite');
-        if (isset($myfavorite) && $myfavorite == '1') 
-        {
+        if (isset($myfavorite) && $myfavorite == '1') {
             $mode = 'search';
             $favoritedIds = [];
             foreach ($favorite_dids as $did)
@@ -250,14 +239,12 @@ class DocumentController extends Controller
             $query->whereIn('_id', $favoritedIds);
         }
 
-        if ($directory !== '0')
-        {
+        if ($directory !== '0') {
             $query = $query->where($mode === 'search' ? 'pt' : 'parent', $directory);
         }
         else
         {
-            if ($mode === 'list')
-            {
+            if ($mode === 'list') {
                 $query = $query->where('parent', $directory);
             }
         }
@@ -271,15 +258,13 @@ class DocumentController extends Controller
 
         foreach ($documents as $k => $d)
         {
-            if (in_array($d['_id']->__toString(), $favorite_dids))
-            {
+            if (in_array($d['_id']->__toString(), $favorite_dids)) {
                 $documents[$k]['favorited'] = true;
             }
         }
 
         $path = [];
-        if ($directory === '0')
-        {
+        if ($directory === '0') {
             $path[] = [ 'id' => '0', 'name' => 'root' ];
         }
         else
@@ -288,8 +273,7 @@ class DocumentController extends Controller
             $d = DB::collection('document_' . $project_key)
                 ->where('_id', $directory)
                 ->first();
-            if ($d && isset($d['pt']))
-            {
+            if ($d && isset($d['pt'])) {
                 $parents = [];
                 $ps = DB::collection('document_' . $project_key)
                     ->whereIn('_id', $d['pt'])
@@ -301,8 +285,7 @@ class DocumentController extends Controller
 
                 foreach ($d['pt'] as $pid)
                 {
-                    if (isset($parents[$pid]))
-                    {
+                    if (isset($parents[$pid])) {
                         $path[] = [ 'id' => $pid, 'name' => $parents[$pid] ];
                     }
                 }
@@ -316,8 +299,8 @@ class DocumentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $project_key
+     * @param  \Illuminate\Http\Request $request
+     * @param  string                   $project_key
      * @return \Illuminate\Http\Response
      */
     public function createFolder(Request $request, $project_key)
@@ -325,28 +308,24 @@ class DocumentController extends Controller
         $insValues = [];
 
         $parent = $request->input('parent');
-        if (!isset($parent))
-        {
+        if (!isset($parent)) {
             throw new \UnexpectedValueException('the parent directory can not be empty.', -11905);
         }
         $insValues['parent'] = $parent;
 
-        if ($parent !== '0')
-        {
+        if ($parent !== '0') {
             $isExists = DB::collection('document_' . $project_key)
                 ->where('_id', $parent)
                 ->where('d', 1)
                 ->where('del_flag', '<>', 1)
                 ->exists();
-            if (!$isExists)
-            {
+            if (!$isExists) {
                 throw new \UnexpectedValueException('the parent directory does not exist.', -11906);
             }
         }
 
         $name =  $request->input('name');
-        if (!isset($name) || !$name)
-        {
+        if (!isset($name) || !$name) {
             throw new \UnexpectedValueException('the name can not be empty.', -11900);
         }
         $insValues['name'] = $name;
@@ -357,8 +336,7 @@ class DocumentController extends Controller
             ->where('d', 1)
             ->where('del_flag', '<>', 1)
             ->exists();
-        if ($isExists)
-        {
+        if ($isExists) {
             throw new \UnexpectedValueException('the name cannot be repeated.', -11901);
         }
 
@@ -375,15 +353,15 @@ class DocumentController extends Controller
 
     /**
      * get parent treee.
-     * @param  string  $project_key
-     * @param  string  $directory
+     *
+     * @param  string $project_key
+     * @param  string $directory
      * @return array
      */
     public function getParentTree($project_key, $directory)
     {
         $pt = [];
-        if ($directory === '0')
-        {
+        if ($directory === '0') {
             $pt = [ '0' ];
         }
         else
@@ -399,16 +377,15 @@ class DocumentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $project_key
-     * @param  string  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  string                   $project_key
+     * @param  string                   $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $project_key, $id)
     {
         $name = $request->input('name');
-        if (!isset($name) || !$name)
-        {
+        if (!isset($name) || !$name) {
             throw new \UnexpectedValueException('the name can not be empty.', -11900);
         }
 
@@ -416,35 +393,29 @@ class DocumentController extends Controller
             ->where('_id', $id)
             ->where('del_flag', '<>', 1)
             ->first();
-        if (!$old_document)
-        {
+        if (!$old_document) {
             throw new \UnexpectedValueException('the object does not exist.', -11902);
         }
 
-        if (isset($old_document['d']) && $old_document['d'] === 1)
-        {
-            if (!$this->isPermissionAllowed($project_key, 'manage_project')) 
-            {
+        if (isset($old_document['d']) && $old_document['d'] === 1) {
+            if (!$this->isPermissionAllowed($project_key, 'manage_project')) {
                 return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
         else
         {
-            if (!$this->isPermissionAllowed($project_key, 'manage_project') && $old_document['uploader']['id'] !== $this->user->id) 
-            {
+            if (!$this->isPermissionAllowed($project_key, 'manage_project') && $old_document['uploader']['id'] !== $this->user->id) {
                 return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
 
-        if ($old_document['name'] !== $name)
-        {
+        if ($old_document['name'] !== $name) {
             $query = DB::collection('document_' . $project_key)
                 ->where('parent', $old_document['parent'])
                 ->where('name', $name)
                 ->where('del_flag', '<>', 1);
 
-            if (isset($old_document['d']) && $old_document['d'] === 1)
-            {
+            if (isset($old_document['d']) && $old_document['d'] === 1) {
                 $query->where('d', 1);
             }
             else
@@ -454,8 +425,7 @@ class DocumentController extends Controller
 
             $isExists = $query->exists();
 
-            if ($isExists)
-            {
+            if ($isExists) {
                 throw new \UnexpectedValueException('the name cannot be repeated.', -11901);
             }
         }
@@ -469,21 +439,19 @@ class DocumentController extends Controller
     /**
      * move the document.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $project_key
+     * @param  \Illuminate\Http\Request $request
+     * @param  string                   $project_key
      * @return \Illuminate\Http\Response
      */
     public function move(Request $request, $project_key)
     {
         $id =  $request->input('id');
-        if (!isset($id) || !$id)
-        {
+        if (!isset($id) || !$id) {
             throw new \UnexpectedValueException('the move object can not be empty.', -11911);
         }
 
         $dest_path =  $request->input('dest_path');
-        if (!isset($dest_path))
-        {
+        if (!isset($dest_path)) {
             throw new \UnexpectedValueException('the dest directory can not be empty.', -11912);
         }
 
@@ -491,36 +459,30 @@ class DocumentController extends Controller
             ->where('_id', $id)
             ->where('del_flag', '<>', 1)
             ->first();
-        if (!$document)
-        {
+        if (!$document) {
             throw new \UnexpectedValueException('the move object does not exist.', -11913);
         }
 
-        if (isset($document['d']) && $document['d'] === 1)
-        {
-            if (!$this->isPermissionAllowed($project_key, 'manage_project'))
-            {
+        if (isset($document['d']) && $document['d'] === 1) {
+            if (!$this->isPermissionAllowed($project_key, 'manage_project')) {
                 return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
         else
         {
-            if (!$this->isPermissionAllowed($project_key, 'manage_project') && $document['uploader']['id'] !== $this->user->id)
-            {
+            if (!$this->isPermissionAllowed($project_key, 'manage_project') && $document['uploader']['id'] !== $this->user->id) {
                 return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
 
         $dest_directory = [];
-        if ($dest_path !== '0')
-        {
+        if ($dest_path !== '0') {
             $dest_directory = DB::collection('document_' . $project_key)
                 ->where('_id', $dest_path)
                 ->where('d', 1)
                 ->where('del_flag', '<>', 1)
                 ->first();
-            if (!$dest_directory)
-            {
+            if (!$dest_directory) {
                 throw new \UnexpectedValueException('the dest directory does not exist.', -11914);
             }
         }
@@ -531,8 +493,7 @@ class DocumentController extends Controller
             ->where('d', isset($document['d']) && $document['d'] === 1 ? '=' : '<>', 1)
             ->where('del_flag', '<>', 1)
             ->exists();
-        if ($isExists)
-        {
+        if ($isExists) {
             throw new \UnexpectedValueException('the name cannot be repeated.', -11901);
         }
 
@@ -541,23 +502,21 @@ class DocumentController extends Controller
         $updValues['pt'] = array_merge(isset($dest_directory['pt']) ? $dest_directory['pt'] : [], [$dest_path]);
         DB::collection('document_' . $project_key)->where('_id', $id)->update($updValues);
 
-        if (isset($document['d']) && $document['d'] === 1) 
-        {
+        if (isset($document['d']) && $document['d'] === 1) {
             $subs = DB::collection('document_' . $project_key)
                 ->where('pt', $id)
                 ->where('del_flag', '<>', 1)
                 ->get();
-             foreach ($subs as $sub)
+            foreach ($subs as $sub)
              {
-                 $pt = isset($sub['pt']) ? $sub['pt'] : [];
-                 $pind = array_search($id, $pt);
-                 if ($pind !== false)
-                 {
-                     $tail = array_slice($pt, $pind);
-                     $pt = array_merge($updValues['pt'], $tail);
-                     DB::collection('document_' . $project_key)->where('_id', $sub['_id']->__toString())->update(['pt' => $pt]);
-                 }
-             }
+                $pt = isset($sub['pt']) ? $sub['pt'] : [];
+                $pind = array_search($id, $pt);
+                if ($pind !== false) {
+                    $tail = array_slice($pt, $pind);
+                    $pt = array_merge($updValues['pt'], $tail);
+                    DB::collection('document_' . $project_key)->where('_id', $sub['_id']->__toString())->update(['pt' => $pt]);
+                }
+            }
         }
 
         $document = DB::collection('document_' . $project_key)->where('_id', $id)->first();
@@ -567,8 +526,8 @@ class DocumentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string  $project_key
-     * @param  string  $id
+     * @param  string $project_key
+     * @param  string $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($project_key, $id)
@@ -577,30 +536,25 @@ class DocumentController extends Controller
             ->where('_id', $id)
             ->where('del_flag', '<>', 1)
             ->first();
-        if (!$document)
-        {
+        if (!$document) {
             throw new \UnexpectedValueException('the object does not exist.', -11902);
         }
 
-        if (isset($document['d']) && $document['d'] === 1)
-        {
-            if (!$this->isPermissionAllowed($project_key, 'manage_project'))
-            {
+        if (isset($document['d']) && $document['d'] === 1) {
+            if (!$this->isPermissionAllowed($project_key, 'manage_project')) {
                 return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
         else
         {
-            if (!$this->isPermissionAllowed($project_key, 'manage_project') && $document['uploader']['id'] !== $this->user->id)
-            {
+            if (!$this->isPermissionAllowed($project_key, 'manage_project') && $document['uploader']['id'] !== $this->user->id) {
                 return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
 
         DB::collection('document_' . $project_key)->where('_id', $id)->update([ 'del_flag' => 1 ]);
 
-        if (isset($document['d']) && $document['d'] === 1)
-        {
+        if (isset($document['d']) && $document['d'] === 1) {
             DB::collection('document_' . $project_key)->whereRaw([ 'pt' => $id ])->update([ 'del_flag' => 1 ]);
         }
 
@@ -610,44 +564,39 @@ class DocumentController extends Controller
     /**
      * Upload file.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  String  $project_key
-     * @param  String  $directory
+     * @param  \Illuminate\Http\Request $request
+     * @param  String                   $project_key
+     * @param  String                   $directory
      * @return \Illuminate\Http\Response
      */
     public function upload(Request $request, $project_key, $directory)
     {
         set_time_limit(0);
 
-        if (!is_writable(config('filesystems.disks.local.root', '/tmp')))
-        {
+        if (!is_writable(config('filesystems.disks.local.root', '/tmp'))) {
             throw new \UnexpectedValueException('the user has not the writable permission to the directory.', -15103);
         }
 
-        if ($directory !== '0')
-        {
+        if ($directory !== '0') {
             $isExists = DB::collection('document_' . $project_key)
                 ->where('_id', $directory)
                 ->where('d', 1)
                 ->where('del_flag', '<>', 1)
                 ->exists();
-            if (!$isExists)
-            {
+            if (!$isExists) {
                 throw new \UnexpectedValueException('the parent directory does not exist.', -11905);
             }
         }
 
         $fields = array_keys($_FILES);
         $field = array_pop($fields);
-        if (empty($_FILES) || $_FILES[$field]['error'] > 0)
-        {
+        if (empty($_FILES) || $_FILES[$field]['error'] > 0) {
             throw new \UnexpectedValueException('upload file errors.', -11903);
         }
 
         $basename = md5(microtime() . $_FILES[$field]['name']);
         $sub_save_path = config('filesystems.disks.local.root', '/tmp') . '/' . substr($basename, 0, 2) . '/';
-        if (!is_dir($sub_save_path))
-        {
+        if (!is_dir($sub_save_path)) {
             @mkdir($sub_save_path);
         }
 
@@ -657,34 +606,29 @@ class DocumentController extends Controller
         $data = [];
 
         $thumbnail_size = 190;
-        if (in_array($_FILES[$field]['type'], [ 'image/jpeg', 'image/jpg', 'image/png', 'image/gif' ]))
-        {
+        if (in_array($_FILES[$field]['type'], [ 'image/jpeg', 'image/jpg', 'image/png', 'image/gif' ])) {
             $size = getimagesize($filename);
             $width = $size[0]; $height = $size[1];
             $scale = $width < $height ? $height : $width;
             $thumbnails_width = floor($thumbnail_size * $width / $scale);
             $thumbnails_height = floor($thumbnail_size * $height / $scale);
             $thumbnails_filename = $filename . '_thumbnails';
-            if ($scale <= $thumbnail_size)
-            {
+            if ($scale <= $thumbnail_size) {
                 @copy($filename, $thumbnails_filename);
             }
-            else if ($_FILES[$field]['type'] == 'image/jpeg' || $_FILES[$field]['type'] == 'image/jpg')
-            {
+            else if ($_FILES[$field]['type'] == 'image/jpeg' || $_FILES[$field]['type'] == 'image/jpg') {
                 $src_image = imagecreatefromjpeg($filename);
                 $dst_image = imagecreatetruecolor($thumbnails_width, $thumbnails_height);
                 imagecopyresized($dst_image, $src_image, 0, 0, 0, 0, $thumbnails_width, $thumbnails_height, $width, $height);
                 imagejpeg($dst_image, $thumbnails_filename);
             }
-            else if ($_FILES[$field]['type'] == 'image/png')
-            {
+            else if ($_FILES[$field]['type'] == 'image/png') {
                 $src_image = imagecreatefrompng($filename);
                 $dst_image = imagecreatetruecolor($thumbnails_width, $thumbnails_height);
                 imagecopyresized($dst_image, $src_image, 0, 0, 0, 0, $thumbnails_width, $thumbnails_height, $width, $height);
                 imagepng($dst_image, $thumbnails_filename);
             }
-            else if ($_FILES[$field]['type'] == 'image/gif')
-            {
+            else if ($_FILES[$field]['type'] == 'image/gif') {
                 $src_image = imagecreatefromgif($filename);
                 $dst_image = imagecreatetruecolor($thumbnails_width, $thumbnails_height);
                 imagecopyresized($dst_image, $src_image, 0, 0, 0, 0, $thumbnails_width, $thumbnails_height, $width, $height);
@@ -702,8 +646,7 @@ class DocumentController extends Controller
         $fname = $_FILES[$field]['name'];
         $extname = '';
         $segments = explode('.', $fname);
-        if (count($segments) > 1)
-        {
+        if (count($segments) > 1) {
             $extname = '.' . array_pop($segments);
             $fname = implode('.', $segments);
         }
@@ -716,8 +659,7 @@ class DocumentController extends Controller
                 ->where('d', '<>', 1)
                 ->where('del_flag', '<>', 1)
                 ->exists();
-            if (!$isExists)
-            {
+            if (!$isExists) {
                 break;
             }
             $i++;
@@ -742,9 +684,9 @@ class DocumentController extends Controller
     /**
      * Download Thumbnails file.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  String  $project_key
-     * @param  String  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  String                   $project_key
+     * @param  String                   $id
      * @return \Illuminate\Http\Response
      */
     public function downloadThumbnails(Request $request, $project_key, $id)
@@ -754,15 +696,13 @@ class DocumentController extends Controller
         $document = DB::collection('document_' . $project_key)
             ->where('_id', $id)
             ->first();
-        if (!$document)
-        {
+        if (!$document) {
             throw new \UnexpectedValueException('the object does not exist.', -11902);
         }
 
         $filepath = config('filesystems.disks.local.root', '/tmp') . '/' . substr($document['index'], 0, 2);
         $filename = $filepath . '/' . $document['thumbnails_index'];
-        if (!file_exists($filename))
-        {
+        if (!file_exists($filename)) {
             throw new \UnexpectedValueException('file does not exist.', -11904);
         }
 
@@ -772,9 +712,9 @@ class DocumentController extends Controller
     /**
      * Download file or directory.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  String  $project_key
-     * @param  String  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  String                   $project_key
+     * @param  String                   $id
      * @return \Illuminate\Http\Response
      */
     public function download(Request $request, $project_key, $id)
@@ -784,13 +724,11 @@ class DocumentController extends Controller
         $document = DB::collection('document_' . $project_key)
             ->where('_id', $id)
             ->first();
-        if (!$document)
-        {
+        if (!$document) {
             throw new \UnexpectedValueException('the object does not exist.', -11902);
         }
 
-        if (isset($document['d']) && $document['d'] === 1)
-        {
+        if (isset($document['d']) && $document['d'] === 1) {
             $this->downloadFolder($project_key, $document['name'], $id);
         }
         else
@@ -802,8 +740,8 @@ class DocumentController extends Controller
     /**
      * Download file.
      *
-     * @param  String  $name
-     * @param  String  $directory
+     * @param  String $name
+     * @param  String $directory
      * @return \Illuminate\Http\Response
      */
     public function downloadFolder($project_key, $name, $directory)
@@ -828,8 +766,8 @@ class DocumentController extends Controller
     /**
      * contruct file folder.
      *
-     * @param  String  $fullpath
-     * @param  String  $id
+     * @param  String $fullpath
+     * @param  String $id
      * @return void
      */
     public function contructFolder($project_key, $fullpath, $id)
@@ -842,16 +780,14 @@ class DocumentController extends Controller
             ->get();
         foreach ($documents as $doc)
         {
-            if (isset($doc['d']) && $doc['d'] === 1)
-            {
+            if (isset($doc['d']) && $doc['d'] === 1) {
                 $this->contructFolder($project_key, $fullpath . '/' . $doc['name'], $doc['_id']->__toString());
             }
             else
             {
                 $filepath = config('filesystems.disks.local.root', '/tmp') . '/' . substr($doc['index'], 0, 2);
                 $filename = $filepath . '/' . $doc['index'];
-                if (file_exists($filename))
-                {
+                if (file_exists($filename)) {
                     @copy($filename, $fullpath . '/' . $doc['name']);
                 }
             }
@@ -861,16 +797,15 @@ class DocumentController extends Controller
     /**
      * Download file.
      *
-     * @param  String  $name
-     * @param  String  $index
+     * @param  String $name
+     * @param  String $index
      * @return \Illuminate\Http\Response
      */
     public function downloadFile($name, $index)
     {
         $filepath = config('filesystems.disks.local.root', '/tmp') . '/' . substr($index, 0, 2);
         $filename = $filepath . '/' . $index;
-        if (!file_exists($filename))
-        {
+        if (!file_exists($filename)) {
             throw new \UnexpectedValueException('file does not exist.', -11904);
         }
 
@@ -880,8 +815,8 @@ class DocumentController extends Controller
     /**
      * favorite action.
      *
-     * @param  string  $project_key
-     * @param  string  $id
+     * @param  string $project_key
+     * @param  string $id
      * @return \Illuminate\Http\Response
      */
     public function favorite(Request $request, $project_key, $id)
@@ -890,8 +825,7 @@ class DocumentController extends Controller
             ->where('_id', $id)
             ->where('del_flag', '<>', 1)
             ->first();
-        if (!$document)
-        {
+        if (!$document) {
             throw new \UnexpectedValueException('the object does not exist.', -11902);
         }
 
@@ -900,8 +834,7 @@ class DocumentController extends Controller
         $cur_user = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
 
         $flag = $request->input('flag');
-        if (isset($flag) && $flag)
-        {
+        if (isset($flag) && $flag) {
             DocumentFavorites::create([ 'project_key' => $project_key, 'did' => $id, 'user' => $cur_user ]);
         }
 

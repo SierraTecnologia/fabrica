@@ -25,12 +25,14 @@ class ProfileController extends Controller
 
         $user = $this->getUser();
 
-        return $this->render('FabricaWebsiteBundle:Profile:information.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Profile:information.html.twig', array(
             'user'       => $user,
             'form'       => $this->createForm('profile_information', $user)->createView(),
             'form_email' => $this->createForm('profile_email', new Email($user))->createView(),
             'token'      => $this->createToken('profile')
-        ));
+            )
+        );
     }
 
     public function saveInformationAction(Request $request)
@@ -43,12 +45,14 @@ class ProfileController extends Controller
             return $this->redirect($this->generateUrl('profile_information'));
         }
 
-        return $this->render('FabricaWebsiteBundle:Profile:information.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Profile:information.html.twig', array(
             'user'       => $this->getUser(),
             'form'       => $form->createView(),
             'form_email' => $this->createForm('profile_email', new Email($this->getUser()))->createView(),
             'token'      => $this->createToken('profile')
-        ));
+            )
+        );
     }
 
     public function createEmailAction(Request $request)
@@ -71,12 +75,14 @@ class ProfileController extends Controller
             return $this->redirect($this->generateUrl('profile_information'));
         }
 
-        return $this->render('FabricaWebsiteBundle:Profile:information.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Profile:information.html.twig', array(
             'user'       => $user,
             'form'       => $this->createForm('profile_information', $user)->createView(),
             'form_email' => $form->createView(),
             'token'      => $this->createToken('profile')
-        ));
+            )
+        );
     }
 
     public function deleteEmailAction(Request $request, $id)
@@ -135,10 +141,12 @@ class ProfileController extends Controller
         $token = $email->createActivationToken();
         $this->flush();
 
-        $this->mail($email, 'FabricaWebsiteBundle:Mail:activateEmail.mail.twig', array(
+        $this->mail(
+            $email, 'FabricaWebsiteBundle:Mail:activateEmail.mail.twig', array(
             'email' => $email,
             'token' => $token
-        ));
+            )
+        );
 
         $this->setFlash('success', $this->trans('notice.activation_sent', array(), 'profile_information'));
 
@@ -160,9 +168,11 @@ class ProfileController extends Controller
             return $this->redirect($this->generateUrl('profile_password'));
         }
 
-        return $this->render('FabricaWebsiteBundle:Profile:password.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Profile:password.html.twig', array(
             'form' => $form->createView()
-        ));
+            )
+        );
     }
 
     public function sshKeysAction()
@@ -171,10 +181,12 @@ class ProfileController extends Controller
 
         $form = $this->createForm('profile_ssh_key');
 
-        return $this->render('FabricaWebsiteBundle:Profile:sshKeys.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Profile:sshKeys.html.twig', array(
             'sshKeys' => $this->getUser()->getSshKeys(),
             'form'    => $form->createView()
-        ));
+            )
+        );
     }
 
     /**
@@ -232,10 +244,12 @@ class ProfileController extends Controller
             return $this->redirect($this->generateUrl('profile_sshKeys'));
         }
 
-        return $this->render('FabricaWebsiteBundle:Profile:sshKeys.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:Profile:sshKeys.html.twig', array(
             'sshKeys' => $user->getSshKeys(),
             'form'    => $form->createView()
-        ));
+            )
+        );
     }
 
     protected function findEmail($id)

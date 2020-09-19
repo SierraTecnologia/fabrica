@@ -27,10 +27,11 @@ class RoleType extends AbstractType
             $usedUsers[] = $user->getId();
         }
 
-        $builder->add('user', 'entity', array(
+        $builder->add(
+            'user', 'entity', array(
             'class'   => 'Fabrica\Models\Code\User',
             'property' => 'fullname',
-            'query_builder' => function(EntityRepository $er) use ($usedUsers) {
+            'query_builder' => function (EntityRepository $er) use ($usedUsers) {
                 $query = $er
                     ->createQueryBuilder('U')
                     ->orderBy('U.fullname', 'ASC');
@@ -42,13 +43,15 @@ class RoleType extends AbstractType
 
                 return $query;
             },
-        ));
+            )
+        );
 
         $builder
-            ->add('role', 'entity', array(
+            ->add(
+                'role', 'entity', array(
                 'class'   => 'Fabrica\Models\Code\Role',
                 'property' => 'name',
-                'query_builder' => function(EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) {
                     $query = $er
                         ->createQueryBuilder('R')
                         ->where('R.isGlobal = false')
@@ -56,17 +59,19 @@ class RoleType extends AbstractType
 
                     return $query;
                 },
-            ))
-        ;
+                )
+            );
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             'data_class'   => 'Fabrica\Models\Code\UserRoleProject',
             'usedUsers'    => array(),
             'from'         => null,
-        ));
+            )
+        );
     }
 
     public function getName()

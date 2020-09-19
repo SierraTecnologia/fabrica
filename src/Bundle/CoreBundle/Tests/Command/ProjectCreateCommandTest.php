@@ -25,12 +25,10 @@ class ProjectCreateCommandTest extends CommandTestCase
         $this->client = self::createClient();
         $this->repositoryPool = $this->getMockBuilder('Fabrica\Bundle\CoreBundle\Git\RepositoryPool')
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
         $this->hookInjector = $this->getMockBuilder('Fabrica\Bundle\CoreBundle\Git\HookInjector')
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
         $this->client->setRepositoryPool($this->repositoryPool);
         $this->client->setHookInjector($this->hookInjector);
 
@@ -46,12 +44,10 @@ class ProjectCreateCommandTest extends CommandTestCase
     {
         $this->repositoryPool
             ->expects($this->once())
-            ->method('onProjectCreate')
-        ;
+            ->method('onProjectCreate');
         $this->hookInjector
             ->expects($this->once())
-            ->method('onProjectCreate')
-        ;
+            ->method('onProjectCreate');
 
         list($statusCode ,$output) = $this->runCommand($this->client, 'fabrica:project-create "Sample name" sample-name');
 
@@ -59,10 +55,12 @@ class ProjectCreateCommandTest extends CommandTestCase
 
         $em = $this->client->getKernel()->getContainer()->get('doctrine')->getManager();
 
-        $project = $em->getRepository('FabricaCoreBundle:Project')->findOneBy(array(
+        $project = $em->getRepository('FabricaCoreBundle:Project')->findOneBy(
+            array(
             'name' => 'Sample name',
             'slug' => 'sample-name'
-        ));
+            )
+        );
 
         $this->assertNotEmpty($project);
     }

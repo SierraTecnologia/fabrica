@@ -14,19 +14,23 @@ class ConfigurationController extends Controller
 {
     public function welcomeAction()
     {
-        return $this->render('FabricaDistributionBundle:Configuration:welcome.html.twig', array(
+        return $this->render(
+            'FabricaDistributionBundle:Configuration:welcome.html.twig', array(
             'steps'      => $this->getSteps(),
             'firstStep'  => $this->getSteps()->getFirst(),
             'parameters' => $this->getParameters()
-        ));
+            )
+        );
     }
 
     public function finishAction()
     {
-        return $this->render('FabricaDistributionBundle:Configuration:finish.html.twig', array(
+        return $this->render(
+            'FabricaDistributionBundle:Configuration:finish.html.twig', array(
             'steps'      => $this->getSteps(),
             'parameters' => $this->getParameters()
-        ));
+            )
+        );
     }
 
     public function stepAction($slug)
@@ -70,12 +74,14 @@ class ConfigurationController extends Controller
 
     protected function renderStep(StepList $steps, StepInterface $step, Form $form)
     {
-        return $this->render($step->getTemplate(), array(
+        return $this->render(
+            $step->getTemplate(), array(
             'steps'      => $steps,
             'parameters' => $this->getParameters(),
             'step'       => $step,
             'form'       => $form->createView()
-        ));
+            )
+        );
     }
 
     protected function getForm(StepInterface $step)

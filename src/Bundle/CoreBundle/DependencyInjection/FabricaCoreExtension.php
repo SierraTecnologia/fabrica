@@ -44,10 +44,11 @@ class FabricaCoreExtension extends Extension
 
             $container
                 ->getDefinition('fabrica_core.git.repository_pool')
-                ->addMethodCall('setDataCollector', array(
+                ->addMethodCall(
+                    'setDataCollector', array(
                     new Reference('fabrica_twig.git.data_collector')
-                ))
-            ;
+                    )
+                );
 
             /*
                 <service....>

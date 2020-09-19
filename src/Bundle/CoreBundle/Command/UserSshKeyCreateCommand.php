@@ -35,15 +35,15 @@ class UserSshKeyCreateCommand extends ContainerAwareCommand
             ->addArgument('title',    InputArgument::REQUIRED, 'Title of the key')
             ->addArgument('content',  InputArgument::REQUIRED, 'The SSH-key content')
             ->setDescription('Adds a SSH key to a user')
-            ->setHelp(<<<EOF
+            ->setHelp(
+                <<<EOF
 The <info>fabrica:user-ssh-key-create</info> adds a key to an existing user.
 
 <comment>Sample usage:</comment>
 
   > php app/console fabrica:user-ssh-key-create alice "Desktop" "ssh-rsa ..."
 EOF
-            )
-        ;
+            );
     }
 
     /**

@@ -42,8 +42,10 @@ class RequirementCollection
 
     public function getErrors()
     {
-        return array_filter($this->requirements, function ($requirement) {
-            return !$requirement->isValid();
-        });
+        return array_filter(
+            $this->requirements, function ($requirement) {
+                return !$requirement->isValid();
+            }
+        );
     }
 }

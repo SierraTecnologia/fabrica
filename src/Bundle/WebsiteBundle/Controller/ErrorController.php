@@ -23,10 +23,12 @@ class ErrorController extends BaseController
         $statusCode = $exception->getStatusCode();
         $statusText = $exception->getMessage();
 
-        $response = $this->render('FabricaWebsiteBundle:Error:error.html.twig', array(
+        $response = $this->render(
+            'FabricaWebsiteBundle:Error:error.html.twig', array(
             'status_code' => $statusCode,
             'status_text' => $statusText,
-        ));
+            )
+        );
         $response->setStatusCode($statusCode);
         $response->headers->replace($exception->getHeaders());
 

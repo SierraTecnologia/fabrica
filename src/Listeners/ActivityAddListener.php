@@ -33,7 +33,7 @@ class ActivityAddListener
     /**
      * Handle the event.
      *
-     * @param  FileChangeEvent  $event
+     * @param  FileChangeEvent $event
      * @return void
      */
     public function handle(Event $event)
@@ -84,7 +84,7 @@ class ActivityAddListener
      *
      * @param  string $project_key
      * @param  object $user
-     * @param  array $param
+     * @param  array  $param
      * @return void
      */
     public function addProjectActivity($project_key, $user, array $param)
@@ -100,7 +100,7 @@ class ActivityAddListener
      * @param  string $issue_id
      * @param  string $event_key
      * @param  object $user
-     * @param  array $param
+     * @param  array  $param
      * @return void
      */
     public function addIssueActivity(string $project_key, string $issue_id, $user, array $param)

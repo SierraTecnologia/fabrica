@@ -23,9 +23,8 @@ class FabricaExtension implements ExtensionInterface
     {
         $builder
             ->children()
-                ->scalarNode('app_dir')->isRequired()->end()
-            ->end()
-        ;
+            ->scalarNode('app_dir')->isRequired()->end()
+            ->end();
     }
 
     function getCompilerPasses()

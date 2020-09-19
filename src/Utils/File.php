@@ -2,7 +2,8 @@
 
 namespace Fabrica\Utils;
 
-class File {
+class File
+{
 
     static function download($filename, $displayname)
     {

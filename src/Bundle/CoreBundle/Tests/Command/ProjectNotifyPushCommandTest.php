@@ -53,8 +53,11 @@ class ProjectNotifyPushCommandTest extends CommandTestCase
 
     public function execCommand($project, $user, $reference, $before, $after)
     {
-        return $this->runCommand($this->client, sprintf('fabrica:project-notify-push %s %s %s %s %s',
-            $project, $user, $reference, $before, $after
-        ));
+        return $this->runCommand(
+            $this->client, sprintf(
+                'fabrica:project-notify-push %s %s %s %s %s',
+                $project, $user, $reference, $before, $after
+            )
+        );
     }
 }

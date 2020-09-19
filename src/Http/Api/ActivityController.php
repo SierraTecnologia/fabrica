@@ -25,14 +25,12 @@ class ActivityController extends Controller
         $query = DB::collection('activity_' . $project_key);
 
         $category = $request->input('category');
-        if (isset($category) && $category != 'all')
-        {
+        if (isset($category) && $category != 'all') {
             $query->where('event_key', 'like', '%' . $category);
         }
 
         $offset_id = $request->input('offset_id');
-        if (isset($offset_id))
-        {
+        if (isset($offset_id)) {
             $query = $query->where('_id', '<', $offset_id);
         }
 
@@ -41,8 +39,7 @@ class ActivityController extends Controller
         $query->orderBy('_id', 'desc');
 
         $limit = $request->input('limit');
-        if (!isset($limit))
-        {
+        if (!isset($limit)) {
             $limit = 30;
         }
         $query->take(intval($limit));
@@ -51,18 +48,15 @@ class ActivityController extends Controller
         $activities = $query->get();
         foreach ($activities as $key => $activity)
         {
-            if (!array_key_exists($activity['user']['id'], $avatars))
-            {
+            if (!array_key_exists($activity['user']['id'], $avatars)) {
                 $user = Sentinel::findById($activity['user']['id']);
                 $avatars[$activity['user']['id']] = isset($user->avatar) ? $user->avatar : '';
             }
             $activities[$key]['user']['avatar'] = $avatars[$activity['user']['id']];
 
-            if ($activity['event_key'] == 'create_link' || $activity['event_key'] == 'del_link')
-            {
+            if ($activity['event_key'] == 'create_link' || $activity['event_key'] == 'del_link') {
                 $activities[$key]['issue_link'] = [];
-                if (isset($cache_issues[$activity['issue_id']]))
-                {
+                if (isset($cache_issues[$activity['issue_id']])) {
                     $issue = $cache_issues[$activity['issue_id']]; 
                 }
                 else
@@ -78,8 +72,7 @@ class ActivityController extends Controller
 
                 $activities[$key]['issue_link']['relation'] = $activity['data']['relation'];
 
-                if (isset($cache_issues[$activity['data']['dest']]))
-                {
+                if (isset($cache_issues[$activity['data']['dest']])) {
                     $issue = $cache_issues[$activity['data']['dest']]; 
                 }
                 else
@@ -93,10 +86,8 @@ class ActivityController extends Controller
                     'state' => isset($issue['state']) ? $issue['state'] : '', 
                     'del_flg' => isset($issue['del_flg']) ? $issue['del_flg'] : 0 ];
             }
-            else if (isset($activity['issue_id']))
-            {
-                if (isset($cache_issues[$activity['issue_id']]))
-                {
+            else if (isset($activity['issue_id'])) {
+                if (isset($cache_issues[$activity['issue_id']])) {
                     $issue = $cache_issues[$activity['issue_id']]; 
                 }
                 else

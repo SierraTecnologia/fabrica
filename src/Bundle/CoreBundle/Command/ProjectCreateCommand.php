@@ -38,7 +38,8 @@ class ProjectCreateCommand extends ContainerAwareCommand
             ->addArgument('name', InputArgument::REQUIRED, 'Name of the project')
             ->addArgument('slug', InputArgument::REQUIRED, 'Slug of the project')
             ->setDescription('Creates a new project and initializes its repository')
-            ->setHelp(<<<EOF
+            ->setHelp(
+                <<<EOF
 The <info>fabrica:project-create</info> command creates a project and initializes
 it repository.
 
@@ -49,8 +50,7 @@ it repository.
     Creates a new project with name "<comment>My project</comment>" and slugged "<comment>my-project</comment>"
 
 EOF
-            )
-        ;
+            );
     }
 
     /**

@@ -30,10 +30,12 @@ class EmailType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             'validation_groups'  => array('profile'),
             'translation_domain' => 'profile',
             'data_class'         => 'Fabrica\Models\Code\Email',
-        ));
+            )
+        );
     }
 }

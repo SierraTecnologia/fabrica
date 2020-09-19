@@ -39,33 +39,39 @@ class RegisterType extends AbstractType
         $builder
             ->add('username', 'text',     array('label' => 'form.username'))
             ->add('fullname', 'text',     array('label' => 'form.fullname'))
-            ->add('email',    'email',    array(
+            ->add(
+                'email',    'email',    array(
                 'mapped'      => false,
                 'constraints' => array(new NewEmail(array('groups' => array('registration'))))
-            ))
+                )
+            )
             ->add('timezone', 'timezone', array('label' => 'form.timezone'))
-            ->add('password', 'repeated', array(
+            ->add(
+                'password', 'repeated', array(
                 'type'           => 'password',
                 'mapped'         => false,
                 'first_options'  => array('label' => 'form.password'),
                 'second_options' => array('label' => 'form.password_confirm')
-            ))
-            ->addEventListener(FormEvents::BIND, function (FormEvent $event) use ($encoderFactory) {
-                $user = $event->getData();
-                $form = $event->getForm();
+                )
+            )
+            ->addEventListener(
+                FormEvents::BIND, function (FormEvent $event) use ($encoderFactory) {
+                    $user = $event->getData();
+                    $form = $event->getForm();
 
-                if (!$user instanceof User) {
-                    throw new \RuntimeException('Data for registration form should be a user');
+                    if (!$user instanceof User) {
+                        throw new \RuntimeException('Data for registration form should be a user');
+                    }
+
+                    $password = $form->get('password')->getData();
+                    if (null === $password) {
+                        return;
+                    }
+
+                    $user->createEmail($form->get('email')->getData(), true);
+                    $user->setPassword($password, $encoderFactory->getEncoder($user));
                 }
-
-                $password = $form->get('password')->getData();
-                if (null === $password) {
-                    return;
-                }
-
-                $user->createEmail($form->get('email')->getData(), true);
-                $user->setPassword($password, $encoderFactory->getEncoder($user));
-            });
+            );
         ;
     }
 
@@ -76,10 +82,12 @@ class RegisterType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             'data_class'         => 'Fabrica\Models\Code\User',
             'translation_domain' => 'register',
             'validation_groups'  => array('registration')
-        ));
+            )
+        );
     }
 }

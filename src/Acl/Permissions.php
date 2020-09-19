@@ -2,7 +2,8 @@
 
 namespace Fabrica\Acl;
 
-class Permissions {
+class Permissions
+{
 
     const VIEW_PROJECT       = 'view_project';
     const MANAGE_PROJECT      = 'manage_project';

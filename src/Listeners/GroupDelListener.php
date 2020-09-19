@@ -11,7 +11,7 @@ use Fabrica\Project\Eloquent\UserGroupProject;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class GroupDelListener 
+class GroupDelListener
 {
     /**
      * Create the event listener.
@@ -26,7 +26,7 @@ class GroupDelListener
     /**
      * Handle the event.
      *
-     * @param  FieldChangeEvent  $event
+     * @param  FieldChangeEvent $event
      * @return void
      */
     public function handle(Event $event)
@@ -38,7 +38,7 @@ class GroupDelListener
     /**
      * del user from project role
      *
-     * @param  string  $group_id
+     * @param  string $group_id
      * @return void
      */
     public function delGroupFromRole($group_id)
@@ -50,8 +50,7 @@ class GroupDelListener
             $old_group_ids = isset($roleactor->group_ids) ? $roleactor->group_ids : [];
             foreach ($old_group_ids as $gid)
             {
-                if ($gid != $group_id)
-                {
+                if ($gid != $group_id) {
                     $new_group_ids[] = $gid;
                 }
             }
@@ -64,7 +63,7 @@ class GroupDelListener
     /**
      * delete users from project
      *
-     * @param  array  $group_id
+     * @param  array $group_id
      * @return void
      */
     public function delGroupProject($group_id)

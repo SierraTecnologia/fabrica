@@ -23,7 +23,7 @@ class Definition extends Model
     /**
      * Saves the workflow.
      *
-     * @param  array  $options
+     * @param  array $options
      * @return bool
      */
     public function save(array $options = array())

@@ -62,8 +62,7 @@ class Mailer
             ->setBody($bodyText, 'text/plain')
             ->addPart($bodyHtml, 'text/html')
             ->setFrom(array($fromEmail => $fromName))
-            ->setTo($to)
-        ;
+            ->setTo($to);
 
         $swiftmailer = SwiftmailerFactory::createFromConfig($config);
 

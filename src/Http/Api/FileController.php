@@ -16,16 +16,15 @@ class FileController extends Controller
     /**
      * Upload file.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  String  $project_key
+     * @param  \Illuminate\Http\Request $request
+     * @param  String                   $project_key
      * @return \Illuminate\Http\Response
      */
     public function upload(Request $request, $project_key)
     {
         set_time_limit(0);
 
-        if (!is_writable(config('filesystems.disks.local.root', '/tmp')))
-        {
+        if (!is_writable(config('filesystems.disks.local.root', '/tmp'))) {
             throw new \UnexpectedValueException('the user has not the writable permission to the directory.', -15103);
         }
 
@@ -33,15 +32,13 @@ class FileController extends Controller
 
         $fields = array_keys($_FILES); 
         $field = array_pop($fields);
-        if (empty($_FILES) || $_FILES[$field]['error'] > 0)
-        {
+        if (empty($_FILES) || $_FILES[$field]['error'] > 0) {
             throw new \UnexpectedValueException('upload file errors.', -15101);
         }
 
         $basename = md5(microtime() . $_FILES[$field]['name']);
         $sub_save_path = config('filesystems.disks.local.root', '/tmp') . '/' . substr($basename, 0, 2) . '/';
-        if (!is_dir($sub_save_path))
-        {
+        if (!is_dir($sub_save_path)) {
             @mkdir($sub_save_path);
         }
         $filename = '/tmp/' . $basename;
@@ -51,34 +48,29 @@ class FileController extends Controller
         $data['size']    = $_FILES[$field]['size'];
         $data['type']    = $_FILES[$field]['type'];
         $data['index']   = $basename; 
-        if (in_array($_FILES[$field]['type'], [ 'image/jpeg', 'image/jpg', 'image/png', 'image/gif' ]))
-        {
+        if (in_array($_FILES[$field]['type'], [ 'image/jpeg', 'image/jpg', 'image/png', 'image/gif' ])) {
             $size = getimagesize($filename);
             $width = $size[0]; $height = $size[1];
             $scale = $width < $height ? $height : $width;
             $thumbnails_width = floor($thumbnail_size * $width / $scale);
             $thumbnails_height = floor($thumbnail_size * $height / $scale);
             $thumbnails_filename = $filename . '_thumbnails';
-            if ($scale <= $thumbnail_size)
-            {
+            if ($scale <= $thumbnail_size) {
                 @copy($filename, $thumbnails_filename);
             }
-            else if ($_FILES[$field]['type'] == 'image/jpeg' || $_FILES[$field]['type'] == 'image/jpg')
-            {
+            else if ($_FILES[$field]['type'] == 'image/jpeg' || $_FILES[$field]['type'] == 'image/jpg') {
                 $src_image = imagecreatefromjpeg($filename);
                 $dst_image = imagecreatetruecolor($thumbnails_width, $thumbnails_height);
                 imagecopyresized($dst_image, $src_image, 0, 0, 0, 0, $thumbnails_width, $thumbnails_height, $width, $height);
                 imagejpeg($dst_image, $thumbnails_filename);
             }
-            else if ($_FILES[$field]['type'] == 'image/png')
-            {
+            else if ($_FILES[$field]['type'] == 'image/png') {
                 $src_image = imagecreatefrompng($filename);
                 $dst_image = imagecreatetruecolor($thumbnails_width, $thumbnails_height);
                 imagecopyresized($dst_image, $src_image, 0, 0, 0, 0, $thumbnails_width, $thumbnails_height, $width, $height);
                 imagepng($dst_image, $thumbnails_filename);
             }
-            else if ($_FILES[$field]['type'] == 'image/gif')
-            {
+            else if ($_FILES[$field]['type'] == 'image/gif') {
                 $src_image = imagecreatefromgif($filename);
                 $dst_image = imagecreatetruecolor($thumbnails_width, $thumbnails_height);
                 imagecopyresized($dst_image, $src_image, 0, 0, 0, 0, $thumbnails_width, $thumbnails_height, $width, $height);
@@ -98,8 +90,7 @@ class FileController extends Controller
         $file = File::create($data);
 
         $issue_id = $request->input('issue_id');
-        if (isset($issue_id) && $issue_id)
-        {
+        if (isset($issue_id) && $issue_id) {
             Event::fire(new FileUploadEvent($project_key, $issue_id, $field, $file->id, $data['uploader']));
         }
 
@@ -109,8 +100,8 @@ class FileController extends Controller
     /**
      * Download small image file.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  String $id
+     * @param \Illuminate\Http\Request $request
+     * @param String                   $id
      */
     public function downloadThumbnail(Request $request, $project_key, $id)
     {
@@ -118,8 +109,7 @@ class FileController extends Controller
         $filepath = config('filesystems.disks.local.root', '/tmp') . '/' . substr($file->index, 0, 2);
         $filename = $filepath . '/' . $file->thumbnails_index;
 
-        if (!file_exists($filename))
-        {
+        if (!file_exists($filename)) {
             throw new \UnexpectedValueException('file does not exist.', -15100);
         }
 
@@ -129,23 +119,21 @@ class FileController extends Controller
     /**
      * Download file.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  String $id
+     * @param \Illuminate\Http\Request $request
+     * @param String                   $id
      */
     public function download(Request $request, $project_key, $id)
     {
         set_time_limit(0);
 
         $file = File::find($id); 
-        if (!$file || $file->del_flg == 1)
-        {
+        if (!$file || $file->del_flg == 1) {
             throw new \UnexpectedValueException('file does not exist.', -15100);
         }
 
         $filepath = config('filesystems.disks.local.root', '/tmp') . '/' . substr($file->index, 0, 2);
         $filename = $filepath . '/' . $file->index;
-        if (!file_exists($filename))
-        {
+        if (!file_exists($filename)) {
             throw new \UnexpectedValueException('file does not exist.', -15100);
         }
 
@@ -155,19 +143,17 @@ class FileController extends Controller
     /**
      * get avatar file.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      */
     public function getAvatar(Request $request)
     {
         $fid = $request->input('fid');
-        if (!isset($fid) || !$fid)
-        {
+        if (!isset($fid) || !$fid) {
             throw new \UnexpectedValueException('the avatar file id cannot empty.', -15100);
         }
 
         $filename = config('filesystems.disks.local.root', '/tmp') . '/avatar/' . $fid;
-        if (!file_exists($filename))
-        {
+        if (!file_exists($filename)) {
             throw new \UnexpectedValueException('the avatar file does not exist.', -15100);
         }
 
@@ -177,9 +163,9 @@ class FileController extends Controller
     /**
      * Delete file.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  String $project_key
-     * @param  String $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  String                   $project_key
+     * @param  String                   $id
      * @return \Illuminate\Http\Response
      */
     public function delete(Request $request, $project_key, $id)
@@ -190,28 +176,24 @@ class FileController extends Controller
         //    throw new \UnexpectedValueException('file does not exist.', -15100);
         //}
 
-        if ($file && !$this->isPermissionAllowed($project_key, 'remove_file') && !($this->isPermissionAllowed($project_key, 'remove_self_file') && $file->uploader['id'] == $this->user->id)) 
-        {
+        if ($file && !$this->isPermissionAllowed($project_key, 'remove_file') && !($this->isPermissionAllowed($project_key, 'remove_self_file') && $file->uploader['id'] == $this->user->id)) {
             return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         $issue_id = $request->input('issue_id');
         $field_key = $request->input('field_key');
-        if (isset($issue_id) && $issue_id && isset($field_key) && $field_key)
-        {
+        if (isset($issue_id) && $issue_id && isset($field_key) && $field_key) {
             $user = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
             Event::fire(new FileDelEvent($project_key, $issue_id, $field_key, $id, $user));
         }
 
         // logically deleted
-        if ($file)
-        {
+        if ($file) {
             $file->fill([ 'del_flg' => 1 ])->save();
         }
 
         $issue = DB::collection('issue_' . $project_key)->where('_id', $issue_id)->first();
-        if (array_search($id, $issue[$field_key]) === false)
-        {
+        if (array_search($id, $issue[$field_key]) === false) {
             return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
         }
         else
@@ -223,22 +205,20 @@ class FileController extends Controller
     /**
      * Upload temporary file.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function uploadTmpFile(Request $request)
     {
         set_time_limit(0);
 
-        if (empty($_FILES) || $_FILES['file']['error'] > 0)
-        {
+        if (empty($_FILES) || $_FILES['file']['error'] > 0) {
             throw new \UnexpectedValueException('upload file errors.', -15101);
         }
 
         $basename = md5(microtime() . $_FILES['file']['name']);
         $sub_save_path = config('filesystems.disks.local.root', '/tmp') . '/' . substr($basename, 0, 2) . '/';
-        if (!is_dir($sub_save_path))
-        {
+        if (!is_dir($sub_save_path)) {
             @mkdir($sub_save_path);
         }
         $filename = '/tmp/' . $basename;

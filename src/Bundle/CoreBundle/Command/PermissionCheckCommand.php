@@ -37,7 +37,8 @@ class PermissionCheckCommand extends AbstractCommand
             ->addArgument('permission', InputArgument::REQUIRED, 'Name of permission')
             ->addOption('project', null, InputOption::VALUE_OPTIONAL, 'If it\'s a project permission, indicate the project')
             ->setDescription('Tests a permission and returns 0 if OK, 1 otherwise')
-            ->setHelp(<<<EOF
+            ->setHelp(
+                <<<EOF
 The <info>fabrica:permission-check</info> allows you to test if a user has a given permission/
 
 You can specify a project with <info>--project</info> option.
@@ -49,8 +50,7 @@ You can specify a project with <info>--project</info> option.
     Tests if alice is contributor of project foo
 
 EOF
-            )
-        ;
+            );
     }
 
     /**

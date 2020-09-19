@@ -27,10 +27,9 @@ class Configuration implements ConfigurationInterface
 
         $rootNode->children()
             ->arrayNode('job_classes')
-                ->prototype('scalar')
-                ->end()
+            ->prototype('scalar')
             ->end()
-        ;
+            ->end();
 
         return $treeBuilder;
     }

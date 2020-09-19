@@ -37,9 +37,11 @@ class UserCreateCommandTest extends CommandTestCase
 
         $em = $this->client->getKernel()->getContainer()->get('doctrine')->getManager();
 
-        $user = $em->getRepository('FabricaCoreBundle:User')->findOneBy(array(
+        $user = $em->getRepository('FabricaCoreBundle:User')->findOneBy(
+            array(
             'username' => 'foo'
-        ));
+            )
+        );
 
         $this->assertInstanceOf('Fabrica\Models\Code\User', $user);
 

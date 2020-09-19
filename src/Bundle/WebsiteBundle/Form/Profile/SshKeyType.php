@@ -22,15 +22,16 @@ class SshKeyType extends AbstractType
     {
         $builder
             ->add('title', 'text', array('label' => 'form.title'))
-            ->add('content', 'textarea', array('label' => 'form.content'))
-        ;
+            ->add('content', 'textarea', array('label' => 'form.content'));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             'translation_domain' => 'profile_ssh'
-        ));
+            )
+        );
     }
 
     public function getName()

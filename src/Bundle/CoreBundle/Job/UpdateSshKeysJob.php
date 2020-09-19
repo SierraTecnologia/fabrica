@@ -15,13 +15,15 @@ class UpdateSshKeysJob extends Job
 
         $file = $this->findFile();
 
-        $keyList = $em->transactional(function ($em) {
-            $repository = $em->getRepository('FabricaCoreBundle:UserSshKey');
-            $keyList = $repository->getKeyList();
-            $repository->markAllAsInstalled();
+        $keyList = $em->transactional(
+            function ($em) {
+                $repository = $em->getRepository('FabricaCoreBundle:UserSshKey');
+                $keyList = $repository->getKeyList();
+                $repository->markAllAsInstalled();
 
-            return $keyList;
-        });
+                return $keyList;
+            }
+        );
 
         // Here we test true, because $em->transactional returns true if the list was an empty list
         if (empty($keyList) || true === $keyList) {

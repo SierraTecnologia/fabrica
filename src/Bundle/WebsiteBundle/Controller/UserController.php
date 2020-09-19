@@ -34,11 +34,13 @@ class UserController extends Controller
 
         $newsfeed = $this->getRepository('FabricaCoreBundle:Message')->getPagerForUser($user, $projects)->setPage($page);
 
-        return $this->render('FabricaWebsiteBundle:User:show.html.twig', array(
+        return $this->render(
+            'FabricaWebsiteBundle:User:show.html.twig', array(
             'user'     => $user,
             'projects' => $projects,
             'newsfeed' => $newsfeed,
-        ));
+            )
+        );
     }
 
     protected function findByUsername($username)

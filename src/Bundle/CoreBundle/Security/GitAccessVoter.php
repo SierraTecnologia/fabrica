@@ -47,10 +47,10 @@ class GitAccessVoter implements VoterInterface
         $type = ProjectGitAccess::WRITE_PERMISSION;
         foreach ($attributes as $attribute) {
             switch ($attribute) {
-                case 'GIT_DELETE';
-                case 'GIT_FORCE':
-                    $type = ProjectGitAccess::ADMIN_PERMISSION;
-                    break 2;
+            case 'GIT_DELETE';
+            case 'GIT_FORCE':
+                $type = ProjectGitAccess::ADMIN_PERMISSION;
+                break 2;
             }
         }
 

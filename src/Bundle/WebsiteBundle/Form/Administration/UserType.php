@@ -26,10 +26,11 @@ class UserType extends AbstractType
             ->add('fullname', 'text', array('label' => 'form.fullname'))
             ->add('timezone', 'timezone', array('label' => 'form.timezone'))
             ->add('locale', 'fabrica_locale', array('label' => 'form.locale'))
-            ->add('globalRoles', 'entity', array(
+            ->add(
+                'globalRoles', 'entity', array(
                 'label'   => 'form.global_roles',
                 'class'   => 'Fabrica\Models\Code\Role',
-                'query_builder' => function(EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) {
                     $query = $er
                         ->createQueryBuilder('R')
                         ->where('R.isGlobal = true')
@@ -40,17 +41,19 @@ class UserType extends AbstractType
                 'property' => 'name',
                 'multiple' => true,
                 'expanded' => true,
-            ))
-        ;
+                )
+            );
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             'data_class'         => 'Fabrica\Models\Code\User',
             'translation_domain' => 'administration_user',
             'user'               => null,
-        ));
+            )
+        );
     }
 
     public function getName()

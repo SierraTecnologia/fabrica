@@ -71,7 +71,6 @@ class LoadProjectData extends Fixture
     {
         $this->container
             ->get('fabrica_core.event_dispatcher')
-            ->dispatch(FabricaEvents::PROJECT_CREATE, new ProjectEvent($project))
-        ;
+            ->dispatch(FabricaEvents::PROJECT_CREATE, new ProjectEvent($project));
     }
 }

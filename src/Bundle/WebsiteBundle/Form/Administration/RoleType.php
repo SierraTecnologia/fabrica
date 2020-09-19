@@ -27,35 +27,37 @@ class RoleType extends AbstractType
             ->add('name', 'text', array('label' => 'form.name'))
             ->add('slug', 'text', array('label' => 'form.slug'))
             ->add('description', 'text', array('label' => 'form.description'))
-            ->add('permissions', 'entity', array(
+            ->add(
+                'permissions', 'entity', array(
                 'class'              => 'Fabrica\Models\Code\Permission',
                 'property'           => 'name',
                 'multiple'           => true,
                 'expanded'           => true,
                 'label'              => 'form.permissions',
-                'query_builder' => function (Options $options) //use ($options)
-                {
+                'query_builder' => function (Options $options) {
+                    //use ($options)
                     return function (EntityRepository $repository) use ($options) {
                         return $repository
                             ->createQueryBuilder('r')
                             ->where('r.isGlobal = :isGlobal')
-                            ->setParameters(array('isGlobal' => $options['is_global']))
-                        ;
+                            ->setParameters(array('isGlobal' => $options['is_global']));
                     };
                 }
-            ))
+                )
+            )
             ->add('global', 'checkbox', array('required' => false))
-            ->add('submit', 'submit', array('label' => 'button.save'))
-        ;
+            ->add('submit', 'submit', array('label' => 'button.save'));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults(
+            array(
             'data_class'         => 'Fabrica\Models\Code\Role',
             'translation_domain' => 'administration_role',
             'is_global'          => true
-        ));
+            )
+        );
     }
 
     public function getName()

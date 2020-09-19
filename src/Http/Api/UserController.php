@@ -41,23 +41,19 @@ class UserController extends Controller
     {
         $email = $request->input('email');
         $password = $request->input('password');
-        if (!$email || !$password)
-        {
+        if (!$email || !$password) {
             throw new \UnexpectedValueException('email or password cannot be empty.', -10003);
         }
 
-        if (strpos($email, '@') === false)
-        {
+        if (strpos($email, '@') === false) {
             $setting = SysSetting::first();
-            if ($setting && isset($setting->properties) && isset($setting->properties['login_mail_domain']))
-            {
+            if ($setting && isset($setting->properties) && isset($setting->properties['login_mail_domain'])) {
                 $email = $email . '@' . $setting->properties['login_mail_domain'];
             }
         }
 
         $user = Sentinel::authenticate([ 'email' => $email, 'password' => $password ]);
-        if ($user)
-        {
+        if ($user) {
             return response()->json([ 'ecode' => 0, 'data' => $user ]);
         }
         else
@@ -75,25 +71,22 @@ class UserController extends Controller
     {
         $s = $request->input('s');
         $users = [];
-        if ($s)
-        {
+        if ($s) {
             $search_users = EloquentUser::Where('first_name', 'like', '%' . $s .  '%')
-                                ->orWhere('email', 'like', '%' . $s .  '%')
-                                ->get([ 'first_name', 'last_name', 'email', 'invalid_flag' ]);
+                ->orWhere('email', 'like', '%' . $s .  '%')
+                ->get([ 'first_name', 'last_name', 'email', 'invalid_flag' ]);
 
             $i = 0;
             foreach ($search_users as $key => $user)
             {
-                if ((isset($user->invalid_flag) && $user->invalid_flag === 1) || Activation::completed($user) === false || $user->email === 'admin@action.view')
-                {
+                if ((isset($user->invalid_flag) && $user->invalid_flag === 1) || Activation::completed($user) === false || $user->email === 'admin@action.view') {
                     continue;
                 }
 
                 $users[$i]['id'] = $user->id;
                 $users[$i]['name'] = $user->first_name ?: '';
                 $users[$i]['email'] = $user->email;
-                if (++$i >= 10)
-                {
+                if (++$i >= 10) {
                     break;
                 }
             }
@@ -110,24 +103,22 @@ class UserController extends Controller
     {
         $query = EloquentUser::where('email', '<>', '')->where('email', '<>', 'admin@action.view');
 
-        if ($name = $request->input('name'))
-        {
-            $query->where(function ($query) use ($name) {
-                $query->where('email', 'like', '%' . $name . '%')->orWhere('name', 'like', '%' . $name . '%');
-            });
+        if ($name = $request->input('name')) {
+            $query->where(
+                function ($query) use ($name) {
+                    $query->where('email', 'like', '%' . $name . '%')->orWhere('name', 'like', '%' . $name . '%');
+                }
+            );
         }
 
-        if ($group_id = $request->input('group'))
-        {
+        if ($group_id = $request->input('group')) {
             $group = Group::find($group_id);
-            if ($group)
-            {
+            if ($group) {
                 $query->whereIn('_id', $group->users ?: []);
             }
         }
 
-        if ($directory = $request->input('directory'))
-        {
+        if ($directory = $request->input('directory')) {
             $query->where('directory', $directory);
         }
 
@@ -161,28 +152,24 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function register(Request $request)
     {
-        if (!($first_name = $request->input('first_name')))
-        {
+        if (!($first_name = $request->input('first_name'))) {
             throw new \UnexpectedValueException('the name can not be empty.', -10100);
         }
 
-        if (!($email = $request->input('email')))
-        {
+        if (!($email = $request->input('email'))) {
             throw new \UnexpectedValueException('the email can not be empty.', -10101);
         }
 
-        if (Sentinel::findByCredentials([ 'email' => $email ]))
-        {
+        if (Sentinel::findByCredentials([ 'email' => $email ])) {
             throw new \InvalidArgumentException('the email has already been registered.', -10102);
         }
 
-        if (!$password = $request->input('password'))
-        {
+        if (!$password = $request->input('password')) {
             throw new \UnexpectedValueException('the password can not be empty.', -10103);
         }
 
@@ -193,23 +180,20 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        if (!($first_name = $request->input('first_name')))
-        {
+        if (!($first_name = $request->input('first_name'))) {
             throw new \UnexpectedValueException('the name can not be empty.', -10100);
         }
 
-        if (!($email = $request->input('email')))
-        {
+        if (!($email = $request->input('email'))) {
             throw new \UnexpectedValueException('the email can not be empty.', -10101);
         }
 
-        if (Sentinel::findByCredentials([ 'email' => $email ]))
-        {
+        if (Sentinel::findByCredentials([ 'email' => $email ])) {
             throw new \InvalidArgumentException('email has already existed.', -10102);
         }
 
@@ -224,69 +208,64 @@ class UserController extends Controller
     /**
      * import the users.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function imports(Request $request)
     {
-        if (!($fid = $request->input('fid')))
-        {
+        if (!($fid = $request->input('fid'))) {
             throw new \UnexpectedValueException('the user file ID can not be empty.', -11140);
         }
 
         $pattern = $request->input('pattern');
-        if (!isset($pattern))
-        {
+        if (!isset($pattern)) {
             $pattern = '1';
         }
 
         $file = config('filesystems.disks.local.root', '/tmp') . '/' . substr($fid, 0, 2) . '/' . $fid;
-        if (!file_exists($file))
-        {
+        if (!file_exists($file)) {
             throw new \UnexpectedValueException('the file cannot be found.', -11141);
         }
 
-        Excel::load($file, function($reader) use($pattern) {
-            $reader = $reader->getSheet(0);
-            $data = $reader->toArray();
+        Excel::load(
+            $file, function ($reader) use ($pattern) {
+                $reader = $reader->getSheet(0);
+                $data = $reader->toArray();
 
-            $fields = [ 'first_name' => '姓名', 'email' => '邮箱', 'phone' => '手机号' ];
-            $data = $this->arrangeExcel($data, $fields);
+                $fields = [ 'first_name' => '姓名', 'email' => '邮箱', 'phone' => '手机号' ];
+                $data = $this->arrangeExcel($data, $fields);
 
-            foreach ($data as $value) 
-            {
-                if (!isset($value['first_name']) || !$value['first_name'])
+                foreach ($data as $value) 
                 {
-                    throw new \UnexpectedValueException('there is empty value in the name column', -10110);
+                    if (!isset($value['first_name']) || !$value['first_name']) {
+                        throw new \UnexpectedValueException('there is empty value in the name column', -10110);
+                    }
+
+                    if (!isset($value['email']) || !$value['email']) {
+                        throw new \UnexpectedValueException('there is empty value in the email column', -10111);
+                    }
                 }
 
-                if (!isset($value['email']) || !$value['email'])
+                foreach ($data as $value)
                 {
-                    throw new \UnexpectedValueException('there is empty value in the email column', -10111);
-                }
-            }
+                    $old_user = Sentinel::findByCredentials([ 'email' => $value['email'] ]);
+                    if ($old_user) {
+                        if ($pattern == '1') {
+                            continue;
+                        }
+                        else
+                        {
+                            Sentinel::update($old_user, $value + [ 'password' => 'actionview' ]); 
+                        }
 
-            foreach ($data as $value)
-            {
-                $old_user = Sentinel::findByCredentials([ 'email' => $value['email'] ]);
-                if ($old_user)
-                {
-                    if ($pattern == '1')
-                    {
-                        continue;
                     }
                     else
                     {
-                        Sentinel::update($old_user, $value + [ 'password' => 'actionview' ]); 
+                        Sentinel::register($value + [ 'password' => 'actionview' ], true);
                     }
-
-                }
-                else
-                {
-                    Sentinel::register($value + [ 'password' => 'actionview' ], true);
                 }
             }
-        });
+        );
 
         return response()->json([ 'ecode' => 0, 'data' => [ 'ok' => true ] ]);
     }
@@ -294,7 +273,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -305,30 +284,25 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $first_name = $request->input('first_name');
-        if (isset($first_name))
-        {
-            if (!$first_name)
-            {
+        if (isset($first_name)) {
+            if (!$first_name) {
                 throw new \UnexpectedValueException('the name can not be empty.', -10100);
             }
         }
 
         $email = $request->input('email');
-        if (isset($email))
-        {
-            if (!$email)
-            {
+        if (isset($email)) {
+            if (!$email) {
                 throw new \UnexpectedValueException('the email can not be empty.', -10101);
             }
-            if ($user = Sentinel::findByCredentials([ 'email' => $email ]))
-            {
+            if ($user = Sentinel::findByCredentials([ 'email' => $email ])) {
                 if ($user->id !== $id) {
                     throw new \InvalidArgumentException('email has already existed.', -10102);
                 }
@@ -336,18 +310,15 @@ class UserController extends Controller
         }
 
         $user = Sentinel::findById($id);
-        if (!$user)
-        {
+        if (!$user) {
             throw new \UnexpectedValueException('the user does not exist.', -10106);
         }
-        if (isset($user->diectory) && $user->directory && $user->diectory != 'self')
-        {
+        if (isset($user->diectory) && $user->directory && $user->diectory != 'self') {
             throw new \UnexpectedValueException('the user come from external directroy.', -10109);
         }
 
         $valid = Sentinel::validForUpdate($user, array_only($request->all(), ['first_name', 'email', 'phone', 'invalid_flag']));
-        if (!$valid)
-        {
+        if (!$valid) {
             throw new \UnexpectedValueException('updating the user does fails.', -10107);
         }
 
@@ -362,18 +333,16 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $user = Sentinel::findById($id);
-        if (!$user)
-        {
+        if (!$user) {
             throw new \UnexpectedValueException('the user does not exist.', -10106);
         }
-        if (isset($user->diectory) && $user->directory && $user->diectory != 'self')
-        {
+        if (isset($user->diectory) && $user->directory && $user->diectory != 'self') {
             throw new \UnexpectedValueException('the user come from external directroy.', -10109);
         }
 
@@ -390,8 +359,7 @@ class UserController extends Controller
     public function delMultiUsers(Request $request)
     {
         $ids = $request->input('ids');
-        if (!isset($ids) || !$ids)
-        {
+        if (!isset($ids) || !$ids) {
             throw new \InvalidArgumentException('the selected users cannot been empty.', -10108);
         }
 
@@ -399,10 +367,8 @@ class UserController extends Controller
         foreach ($ids as $id)
         {
             $user = Sentinel::findById($id);
-            if ($user)
-            {
-                if (isset($user->directory) && $user->directory && $user->directory != 'self')
-                {
+            if ($user) {
+                if (isset($user->directory) && $user->directory && $user->directory != 'self') {
                     continue;
                 }
 
@@ -422,8 +388,7 @@ class UserController extends Controller
     public function InvalidateMultiUsers(Request $request)
     {
         $ids = $request->input('ids');
-        if (!isset($ids) || !$ids)
-        {
+        if (!isset($ids) || !$ids) {
             throw new \InvalidArgumentException('the selected users cannot been empty.', -10108);
         }
 
@@ -433,10 +398,8 @@ class UserController extends Controller
         foreach ($ids as $id)
         {
             $user = Sentinel::findById($id);
-            if ($user)
-            {
-                if (isset($user->directory) && $user->directory && $user->directory != 'self')
-                {
+            if ($user) {
+                if (isset($user->directory) && $user->directory && $user->directory != 'self') {
                     continue;
                 }
                 Sentinel::update($user, [ 'invalid_flag' => $flag ]);
@@ -449,21 +412,19 @@ class UserController extends Controller
     /**
      * reset the user password.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function renewPwd(Request $request, $id)
     {
         $user = Sentinel::findById($id);
-        if (!$user)
-        {
+        if (!$user) {
             throw new \UnexpectedValueException('the user does not exist.', -10106);
         }
 
         $valid = Sentinel::validForUpdate($user, [ 'password' => 'actionview' ]);
-        if (!$valid)
-        {
+        if (!$valid) {
             throw new \UnexpectedValueException('updating the user does fails.', -10107);
         }
 
@@ -474,49 +435,41 @@ class UserController extends Controller
     /**
      * send the reset password link to the mail.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function sendMailForResetpwd(Request $request)
     {
         $email = $request->input('email');
-        if (!isset($email) || !$email)
-        {
+        if (!isset($email) || !$email) {
             throw new \UnexpectedValueException('the email can not be empty.', -10019);
         }
 
         $obscured_email = $sendto_email = $email;
 
         $last_reset_times = ResetPwdCode::where('requested_at', '>=', time() - 10 * 60)->count();
-        if ($last_reset_times >= 10)
-        {
+        if ($last_reset_times >= 10) {
             throw new \UnexpectedValueException('sending the email is too often.', -10016);
         }
 
         $last_reset_times = ResetPwdCode::where('requested_at', '>=', time() - 10 * 60)->where('email', $email)->count();
-        if ($last_reset_times >= 3)
-        {
+        if ($last_reset_times >= 3) {
             throw new \UnexpectedValueException('sending the email is too often.', -10016);
         }
 
         $user = Sentinel::findByCredentials([ 'email' => $email ]);
-        if (!$user)
-        {
+        if (!$user) {
             throw new \UnexpectedValueException('the user is not exists.', -10010);
         }
-        else if ($user->invalid_flag === 1)
-        {
+        else if ($user->invalid_flag === 1) {
             throw new \UnexpectedValueException('the user has been disabled.', -10011);
         }
-        else if ($user->directory && $user->directory != 'self')
-        {
+        else if ($user->directory && $user->directory != 'self') {
             throw new \UnexpectedValueException('the user is external sync user.', -10012);
         }
 
-        if ($email === 'admin@action.view')
-        {
-            if (isset($user->bind_email) && $user->bind_email)
-            {
+        if ($email === 'admin@action.view') {
+            if (isset($user->bind_email) && $user->bind_email) {
                 $sendto_email = $user->bind_email;
                 $sections = explode('@', $user->bind_email);
                 $sections[0] = substr($sections[0], 0, 1) . '***' . substr($sections[0], -1, 1);
@@ -536,12 +489,14 @@ class UserController extends Controller
 
         $this->sendMail($sendto_email, $data);
 
-        ResetPwdCode::create([
+        ResetPwdCode::create(
+            [
             'email' => $email,
             'code' => $rand_code,
             'requested_at' => time(),
             'expired_at' => time() + 24 * 60 * 60,
-        ]);
+            ]
+        );
 
         return response()->json([ 'ecode' => 0, 'data' => [ 'sendto_email' => $obscured_email ] ]);
     }
@@ -550,7 +505,7 @@ class UserController extends Controller
      * send the reset link to the address.
      *
      * @param  string $to
-     * @param  array $data
+     * @param  array  $data
      * @return \Illuminate\Http\Response
      */
     public function sendMail($to, $data)
@@ -563,8 +518,8 @@ class UserController extends Controller
             && isset($syssetting['mailserver']['smtp']['host'])
             && isset($syssetting['mailserver']['smtp']['port'])
             && isset($syssetting['mailserver']['smtp']['username'])
-            && isset($syssetting['mailserver']['smtp']['password']))
-        {
+            && isset($syssetting['mailserver']['smtp']['password'])
+        ) {
             Config::set('mail.from', $syssetting['mailserver']['send']['from']);
             Config::set('mail.host', $syssetting['mailserver']['smtp']['host']);
             Config::set('mail.port', $syssetting['mailserver']['smtp']['port']);
@@ -579,19 +534,21 @@ class UserController extends Controller
 
         $mail_prefix = 'ActionView';
         if (isset($syssetting['mailserver']['send']['prefix'])
-            && $syssetting['mailserver']['send']['prefix'])
-        {
+            && $syssetting['mailserver']['send']['prefix']
+        ) {
             $mail_prefix = $syssetting['mailserver']['send']['prefix'];
         }
 
         $subject = '[' . $mail_prefix . ']重置密码';
 
         try {
-            Mail::send('emails.resetpwdlink', $data, function($message) use($to, $subject) {
-                $message->from(Config::get('mail.from'), 'master')
-                    ->to($to)
-                    ->subject($subject);
-            });
+            Mail::send(
+                'emails.resetpwdlink', $data, function ($message) use ($to, $subject) {
+                    $message->from(Config::get('mail.from'), 'master')
+                        ->to($to)
+                        ->subject($subject);
+                }
+            );
         } catch (Exception $e){
             throw new Exception('send mail failed.', -15200);
         }
@@ -600,44 +557,37 @@ class UserController extends Controller
     /**
      * show the reset password link.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function showResetpwd(Request $request)
     {
         $code = $request->input('code');
-        if (!isset($code) || !$code)
-        {
+        if (!isset($code) || !$code) {
             throw new \UnexpectedValueException('the link is not exists.', -10018);
         }
 
         $reset_code = ResetPwdCode::where('code', $code)->first();
-        if (!$reset_code)
-        {
+        if (!$reset_code) {
             throw new \UnexpectedValueException('the link is not exists.', -10018);
         }
 
-        if ($reset_code->invalid_flag == 1)
-        {
+        if ($reset_code->invalid_flag == 1) {
             throw new \UnexpectedValueException('the link has been invalid.', -10020);
         }
-        else if ($reset_code->expired_at < time())
-        {
+        else if ($reset_code->expired_at < time()) {
             throw new \UnexpectedValueException('the link has been expired.', -10017);
         }
 
         $email = $reset_code->email;
         $user = Sentinel::findByCredentials([ 'email' => $email ]);
-        if (!$user)
-        {
+        if (!$user) {
             throw new \UnexpectedValueException('the user is not exists.', -10010);
         }
-        else if ($user->invalid_flag === 1)
-        {
+        else if ($user->invalid_flag === 1) {
             throw new \UnexpectedValueException('the user has been disabled.', -10011);
         }
-        else if ($user->directory && $user->directory != 'self')
-        {
+        else if ($user->directory && $user->directory != 'self') {
             throw new \UnexpectedValueException('the user is external sync user.', -10012);
         }
 
@@ -647,56 +597,47 @@ class UserController extends Controller
     /**
      * reset the password.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function doResetpwd(Request $request)
     {
         $code = $request->input('code');
-        if (!isset($code) || !$code)
-        {
+        if (!isset($code) || !$code) {
             throw new \UnexpectedValueException('the link is not exists.', -10018);
         }
 
         $password = $request->input('password');
-        if (!isset($password) || !$password)
-        {
+        if (!isset($password) || !$password) {
             throw new \UnexpectedValueException('the password can not be empty.', -10103);
         }
 
         $reset_code = ResetPwdCode::where('code', $code)->first();
-        if (!$reset_code)
-        {
+        if (!$reset_code) {
             throw new \UnexpectedValueException('the link is not exists.', -10018);
         }
 
-        if ($reset_code->invalid_flag == 1)
-        {
+        if ($reset_code->invalid_flag == 1) {
             throw new \UnexpectedValueException('the link has been invalid.', -10020);
         }
-        else if ($reset_code->expired_at < time())
-        {
+        else if ($reset_code->expired_at < time()) {
             throw new \UnexpectedValueException('the link has been expired.', -10017);
         }
 
         $email = $reset_code->email;
         $user = Sentinel::findByCredentials([ 'email' => $email ]);
-        if (!$user)
-        {
+        if (!$user) {
             throw new \UnexpectedValueException('the user is not exsits.', -10010);
         }
-        else if ($user->invalid_flag === 1)
-        {
+        else if ($user->invalid_flag === 1) {
             throw new \UnexpectedValueException('the user has been disabled.', -10011);
         }
-        else if ($user->directory && $user->directory != 'self')
-        {
+        else if ($user->directory && $user->directory != 'self') {
             throw new \UnexpectedValueException('the user is external sync user.', -10012);
         }
 
         $valid = Sentinel::validForUpdate($user, [ 'password' => $password ]);
-        if (!$valid)
-        {
+        if (!$valid) {
             throw new \UnexpectedValueException('updating the user does fails.', -10107);
         }
 
@@ -711,7 +652,7 @@ class UserController extends Controller
     /**
      * Download user template file.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      */
     public function downloadUserTpl(Request $request)
     {

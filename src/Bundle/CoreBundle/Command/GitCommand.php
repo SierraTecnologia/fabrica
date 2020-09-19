@@ -39,7 +39,8 @@ class GitCommand extends ContainerAwareCommand
             ->addArgument('username', InputArgument::REQUIRED, 'Authenticated user')
             ->addOption('stderr', null, InputOption::VALUE_OPTIONAL, 'Use stderr for errors ?', true)
             ->setDescription('Wraps the Git command to ensure authorization')
-            ->setHelp(<<<EOF
+            ->setHelp(
+                <<<EOF
 The <info>fabrica:git</info> command wraps Git to check the authorizations of
 the user passed as argument.
 
@@ -51,8 +52,7 @@ configured via the <info>authorized_keys</info> file, containing lines like:
 It does not manage the <info>authentication</info>, but only the <info>authorization</info>
 of the user.
 EOF
-            )
-        ;
+            );
     }
 
     /**
@@ -101,21 +101,23 @@ EOF
         $project = $this->getProject($vars[2]);
 
         switch ($action) {
-            case 'git-receive-pack':
-            case 'git-upload-pack':
-                if (!$securityContext->isGranted('PROJECT_READ', $project)) {
-                    throw new \RuntimeException('You are not allowed to read on this repository');
-                }
-                break;
+        case 'git-receive-pack':
+        case 'git-upload-pack':
+            if (!$securityContext->isGranted('PROJECT_READ', $project)) {
+                throw new \RuntimeException('You are not allowed to read on this repository');
+            }
+            break;
 
-            default:
-                throw new \RuntimeException('Action seems illegal: '.$action);
+        default:
+            throw new \RuntimeException('Action seems illegal: '.$action);
         }
 
-        $this->getContainer()->get('fabrica_core.git.shell_handler')->handle($project, $action, array(
+        $this->getContainer()->get('fabrica_core.git.shell_handler')->handle(
+            $project, $action, array(
             'GITONOMY_PROJECT' => $project->getSlug(),
             'GITONOMY_USER'    => $user->getUsername(),
-        ));
+            )
+        );
     }
 
     protected function outputUserInformation(OutputInterface $output, User $user)
@@ -150,8 +152,7 @@ EOF
     {
         $user = $this->getContainer()->get('doctrine')
             ->getRepository('FabricaCoreBundle:User')
-            ->findOneByUsername($username)
-        ;
+            ->findOneByUsername($username);
 
         if (null === $user) {
             throw new \RuntimeException('Sorry, seems the user your are using does not exists anymore');
@@ -171,8 +172,7 @@ EOF
     {
         $project = $this->getContainer()->get('doctrine')
             ->getRepository('FabricaCoreBundle:Project')
-            ->findOneBySlug($slug)
-        ;
+            ->findOneBySlug($slug);
 
         if (!$project) {
             throw new \RuntimeException(sprintf('No project with slug "%s" found', $slug));

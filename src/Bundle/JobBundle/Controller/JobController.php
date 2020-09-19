@@ -20,9 +20,11 @@ class JobController extends Controller
             return $this->redirect($redirect);
         }
 
-        return $this->render('FabricaJobBundle:Job:wait.html.twig', array(
+        return $this->render(
+            'FabricaJobBundle:Job:wait.html.twig', array(
             'id' => $id
-        ));
+            )
+        );
     }
 
     public function statusAction($id)

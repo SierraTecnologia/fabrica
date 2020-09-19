@@ -32,16 +32,15 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('repository_path')->cannotBeEmpty()->end()
-                ->booleanNode('debug')->defaultFalse()->end()
-                ->arrayNode('config_defaults')
-                    ->normalizeKeys(false)
-                    ->useAttributeAsKey('key')
-                    ->prototype('scalar')
-                    ->end()
-                ->end()
+            ->scalarNode('repository_path')->cannotBeEmpty()->end()
+            ->booleanNode('debug')->defaultFalse()->end()
+            ->arrayNode('config_defaults')
+            ->normalizeKeys(false)
+            ->useAttributeAsKey('key')
+            ->prototype('scalar')
             ->end()
-        ;
+            ->end()
+            ->end();
 
         return $treeBuilder;
     }

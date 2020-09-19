@@ -39,7 +39,8 @@ class GitPermissionCheckCommand extends AbstractCommand
             ->addArgument('permission', InputArgument::REQUIRED, 'Name of permission')
             ->addArgument('reference',  InputArgument::REQUIRED, 'Reference')
             ->setDescription('Tests a permission and returns 0 if OK, 1 otherwise')
-            ->setHelp(<<<EOF
+            ->setHelp(
+                <<<EOF
 The <info>fabrica:git-permission-check</info> tests git permission on a repository.
 
 <comment>Sample usages</comment>
@@ -47,8 +48,7 @@ The <info>fabrica:git-permission-check</info> tests git permission on a reposito
   > php app/console fabrica:git-permission-check foobar alice GIT_DELETE refs/head/my-feature
 
 EOF
-            )
-        ;
+            );
     }
 
     /**

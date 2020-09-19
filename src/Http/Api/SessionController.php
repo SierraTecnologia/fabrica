@@ -25,30 +25,26 @@ class SessionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
     {
         $email = $request->input('email');
         $password = $request->input('password');
-        if (!$email || !$password)
-        {
+        if (!$email || !$password) {
             throw new \UnexpectedValueException('email or password cannot be empty.', -10003);
         }
 
         $setting = SysSetting::first();
-        if (strpos($email, '@') === false) 
-        {
-            if ($setting && isset($setting->properties) && isset($setting->properties['login_mail_domain']))
-            {
+        if (strpos($email, '@') === false) {
+            if ($setting && isset($setting->properties) && isset($setting->properties['login_mail_domain'])) {
                 $email = $email . '@' . $setting->properties['login_mail_domain']; 
             }
         }
 
         try {
-            if (!($setting && isset($setting->properties) && isset($setting->properties['enable_login_protection']) && $setting->properties['enable_login_protection'] === 1))
-            {
+            if (!($setting && isset($setting->properties) && isset($setting->properties['enable_login_protection']) && $setting->properties['enable_login_protection'] === 1)) {
                 Sentinel::removeCheckpoint('throttle');
             }
 
@@ -61,8 +57,7 @@ class SessionController extends Controller
         }
 
         // ldap authenticate
-        if (!$user)
-        {
+        if (!$user) {
             $configs = [];
             $directories = Directory::where('type', 'OpenLDAP')
                 ->where('invalid_flag', '<>', 1)
@@ -72,23 +67,19 @@ class SessionController extends Controller
                 $configs[$d->id] = $d->configs ?: [];
             }
 
-            if ($configs)
-            {
+            if ($configs) {
                 $user = LDAP::attempt($configs, $email, $password);
             }
         }
 
-        if ($user)
-        {
-            if ($user->invalid_flag == 1)
-            {
+        if ($user) {
+            if ($user->invalid_flag == 1) {
                 throw new Exception('the user is disabed.', -10006);
             }
 
             Sentinel::login($user);
             $latest_access_project = $this->getLatestAccessProject($user->id);
-            if ($latest_access_project)
-            {
+            if ($latest_access_project) {
                 $user->latest_access_project = $latest_access_project->key;
             }
 
@@ -103,7 +94,7 @@ class SessionController extends Controller
     /**
      * get the latest project.
      *
-     * @param  string  $uid
+     * @param  string $uid
      * @return Object 
      */
     public function getLatestAccessProject($uid)
@@ -114,11 +105,9 @@ class SessionController extends Controller
             ->orderBy('latest_access_time', 'desc')
             ->first();
 
-        if ($latest_access_project)
-        {
+        if ($latest_access_project) {
             $project = Project::where('key', $latest_access_project->project_key)->first();
-            if ($project && $project->status === 'active')
-            {
+            if ($project && $project->status === 'active') {
                 return $project;
             }
         }
@@ -128,17 +117,15 @@ class SessionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function getSess(Request $request)
     {
         $user = Sentinel::getUser();
-        if ($user)
-        {
+        if ($user) {
             $latest_access_project = $this->getLatestAccessProject($user->id);
-            if ($latest_access_project)
-            {
+            if ($latest_access_project) {
                 $user->latest_access_project = $latest_access_project->key;
             }
             return response()->json([ 'ecode' => 0, 'data' => [ 'user' => $user ] ]);
@@ -152,7 +139,7 @@ class SessionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)

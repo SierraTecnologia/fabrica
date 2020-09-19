@@ -34,19 +34,21 @@ class SprintController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $project_key)
     {
         $sprint_count = Sprint::where('project_key', $project_key)->count();
-        $sprint = Sprint::create([ 
+        $sprint = Sprint::create(
+            [ 
             'project_key' => $project_key, 
             'no' => $sprint_count + 1, 
             'name' => 'Sprint ' . ($sprint_count + 1),
             'status' => 'waiting', 
             'issues' => [] 
-        ]);
+            ]
+        );
         return response()->json(['ecode' => 0, 'data' => $this->getValidSprintList($project_key)]);
     }
 
@@ -58,59 +60,48 @@ class SprintController extends Controller
     public function moveIssue(Request $request, $project_key)
     {
         $issue_no = $request->input('issue_no');
-        if (!$issue_no)
-        {
+        if (!$issue_no) {
             throw new \UnexpectedValueException('the moved issue cannot be empty', -11700);
         }
 
         $src_sprint_no = $request->input('src_sprint_no');
-        if (!isset($src_sprint_no))
-        {
+        if (!isset($src_sprint_no)) {
             throw new \UnexpectedValueException('the src sprint of moved issue cannot be empty', -11701);
         }
         $src_sprint_no = intval($src_sprint_no);
 
         $dest_sprint_no = $request->input('dest_sprint_no');
-        if (!isset($dest_sprint_no))
-        {
+        if (!isset($dest_sprint_no)) {
             throw new \UnexpectedValueException('the dest sprint of moved issue cannot be empty', -11702);
         }
         $dest_sprint_no = intval($dest_sprint_no);
 
-        if ($src_sprint_no > 0)
-        {
+        if ($src_sprint_no > 0) {
             $src_sprint = Sprint::where('project_key', $project_key)->where('no', $src_sprint_no)->first(); 
-            if (!in_array($issue_no, $src_sprint->issues ?: []))
-            {
+            if (!in_array($issue_no, $src_sprint->issues ?: [])) {
                 throw new \UnexpectedValueException('the moved issue cannot be found in the src sprint', -11703);
             }
-            if ($src_sprint->status == 'completed')
-            {
+            if ($src_sprint->status == 'completed') {
                 throw new \UnexpectedValueException('the moved issue cannot be moved into or moved out of the completed sprint', -11706);
             }
             $src_sprint->fill([ 'issues' => array_values(array_diff($src_sprint->issues, [ $issue_no ]) ?: []) ])->save();
 
-            if ($src_sprint->status == 'active')
-            {
+            if ($src_sprint->status == 'active') {
                 $this->popSprint($project_key, $issue_no, $src_sprint_no);
             }
         }
 
-        if ($dest_sprint_no > 0)
-        {
+        if ($dest_sprint_no > 0) {
             $dest_sprint = Sprint::where('project_key', $project_key)->where('no', $dest_sprint_no)->first();
-            if (in_array($issue_no, $dest_sprint->issues ?: []))
-            {
+            if (in_array($issue_no, $dest_sprint->issues ?: [])) {
                 throw new \UnexpectedValueException('the moved issue has been in the dest sprint', -11704);
             }
-            if ($dest_sprint->status == 'completed')
-            {
+            if ($dest_sprint->status == 'completed') {
                 throw new \UnexpectedValueException('the moved issue cannot be moved into or moved out of the completed sprint', -11706);
             }
             $dest_sprint->fill([ 'issues' => array_values(array_merge($dest_sprint->issues ?: [], [ $issue_no ])) ])->save();
 
-            if ($dest_sprint->status == 'active')
-            {
+            if ($dest_sprint->status == 'active') {
                 $this->pushSprint($project_key, $issue_no, $dest_sprint_no);
             }
         }
@@ -121,14 +112,13 @@ class SprintController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($project_key, $no)
     {
         $sprint = Sprint::where('project_key', $project_key)->where('no', intval($no))->first();
-        if (!$sprint->name)
-        {
+        if (!$sprint->name) {
             $sprint->name = 'Sprint ' . $sprint->no;
         }
 
@@ -138,14 +128,13 @@ class SprintController extends Controller
     /**
      * publish the sprint.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function publish(Request $request, $project_key, $no)
     {
-        if (!$no)
-        {
+        if (!$no) {
             throw new \UnexpectedValueException('the published sprint cannot be empty', -11705);
         }
         $no = intval($no);
@@ -153,8 +142,7 @@ class SprintController extends Controller
         $active_sprint_exists = Sprint::where('project_key', $project_key)
             ->where('status', 'active')
             ->exists();
-        if ($active_sprint_exists)
-        {
+        if ($active_sprint_exists) {
             throw new \UnexpectedValueException('the active sprint has been exists.', -11706);
         }
 
@@ -162,24 +150,21 @@ class SprintController extends Controller
             ->where('status', 'waiting')
             ->where('no', '<', $no)
             ->exists();
-        if ($before_waiting_sprint_exists)
-        {
+        if ($before_waiting_sprint_exists) {
             throw new \UnexpectedValueException('the more first sprint has been exists.', -11707);
         }
 
         $sprint = Sprint::where('project_key', $project_key)
             ->where('no', $no)
             ->first();
-        if (!$sprint || $project_key != $sprint->project_key)
-        {
+        if (!$sprint || $project_key != $sprint->project_key) {
             throw new \UnexpectedValueException('the sprint does not exist or is not in the project.', -11708);
         }
 
         $updValues = [ 'status' => 'active' ];
 
         $start_time = $request->input('start_time');
-        if (isset($start_time) && $start_time)
-        {
+        if (isset($start_time) && $start_time) {
             $updValues['start_time'] = $start_time;
         }
         else
@@ -188,8 +173,7 @@ class SprintController extends Controller
         }
 
         $complete_time = $request->input('complete_time');
-        if (isset($complete_time) && $complete_time)
-        {
+        if (isset($complete_time) && $complete_time) {
             $updValues['complete_time'] = $complete_time;
         }
         else
@@ -198,20 +182,17 @@ class SprintController extends Controller
         }
 
         $name = $request->input('name');
-        if (isset($name) && $name)
-        {
+        if (isset($name) && $name) {
             $updValues['name'] = $name;
         }
 
         $description = $request->input('description');
-        if (isset($description) && $description)
-        {
+        if (isset($description) && $description) {
             $updValues['description'] = $description;
         }
 
         $kanban_id = $request->input('kanban_id');
-        if (!isset($kanban_id) || !$kanban_id)
-        {
+        if (!isset($kanban_id) || !$kanban_id) {
             throw new \UnexpectedValueException('the kanban id cannot be empty', -11717);
         }
 
@@ -237,35 +218,31 @@ class SprintController extends Controller
     /**
      * edit the sprint.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $project_key, $no)
     {
-        if (!$no)
-        {
+        if (!$no) {
             throw new \UnexpectedValueException('the updated sprint cannot be empty', -11718);
         }
         $no = intval($no);
 
         $sprint = Sprint::where('project_key', $project_key)->where('no', $no)->first();
-        if (!$sprint || $project_key != $sprint->project_key)
-        {
+        if (!$sprint || $project_key != $sprint->project_key) {
             throw new \UnexpectedValueException('the sprint does not exist or is not in the project.', -11708);
         }
 
         $updValues = [];
 
         $name = $request->input('name');
-        if (isset($name) && $name)
-        {
+        if (isset($name) && $name) {
             $updValues['name'] = $name;
         }
 
         $description = $request->input('description');
-        if (isset($description) && $description)
-        {
+        if (isset($description) && $description) {
             $updValues['description'] = $description;
         }
 
@@ -277,42 +254,37 @@ class SprintController extends Controller
     /**
      * publish the sprint.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function complete(Request $request, $project_key, $no)
     {
-        if (!$no)
-        {
+        if (!$no) {
             throw new \UnexpectedValueException('the completed sprint cannot be empty', -11711);
         }
         $no = intval($no);
 
         $sprint = Sprint::where('project_key', $project_key)->where('no', $no)->first();
-        if (!$sprint || $project_key != $sprint->project_key)
-        {
+        if (!$sprint || $project_key != $sprint->project_key) {
             throw new \UnexpectedValueException('the sprint does not exist or is not in the project.', -11708);
         }
 
-        if (!isset($sprint->status) || $sprint->status != 'active')
-        {
+        if (!isset($sprint->status) || $sprint->status != 'active') {
             throw new \UnexpectedValueException('the completed sprint must be active.', -11712);
         }
 
         $completed_issues = $request->input('completed_issues') ?: [];
-        if (array_diff($completed_issues, $sprint->issues))
-        {
+        if (array_diff($completed_issues, $sprint->issues)) {
             throw new \UnexpectedValueException('the completed sprint issues have errors.', -11713);
         }
 
         $incompleted_issues = array_values(array_diff($sprint->issues, $completed_issues));
 
         $valid_incompleted_issues = DB::collection('issue_' . $project_key)->whereIn('no', $incompleted_issues)->where('del_flg', '<>', 1)->get([ 'no' ]);
-        if ($valid_incompleted_issues)
-        {
-    	    $valid_incompleted_issues = array_column($valid_incompleted_issues, 'no');
-    	    $incompleted_issues = array_values(array_intersect($incompleted_issues, $valid_incompleted_issues));
+        if ($valid_incompleted_issues) {
+            $valid_incompleted_issues = array_column($valid_incompleted_issues, 'no');
+            $incompleted_issues = array_values(array_intersect($incompleted_issues, $valid_incompleted_issues));
         }
 
         $updValues = [ 
@@ -324,11 +296,9 @@ class SprintController extends Controller
 
         $sprint->fill($updValues)->save();
 
-        if ($incompleted_issues)
-        {
+        if ($incompleted_issues) {
             $next_sprint = Sprint::where('project_key', $project_key)->where('status', 'waiting')->orderBy('no', 'asc')->first();
-            if ($next_sprint)
-            {
+            if ($next_sprint) {
                 $issues = !isset($next_sprint->issues) || !$next_sprint->issues ? [] : $next_sprint->issues;
                 $issues = array_merge($incompleted_issues, $issues);
                 $next_sprint->fill([ 'issues' => $issues ])->save();
@@ -345,33 +315,28 @@ class SprintController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($project_key, $no)
     {
-        if (!$no)
-        {
+        if (!$no) {
             throw new \UnexpectedValueException('the deleted sprint cannot be empty', -11714);
         }
         $no = intval($no);
 
         $sprint = Sprint::where('project_key', $project_key)->where('no', $no)->first();
-        if (!$sprint || $project_key != $sprint->project_key)
-        {
+        if (!$sprint || $project_key != $sprint->project_key) {
             throw new \UnexpectedValueException('the sprint does not exist or is not in the project.', -11708);
         }
 
-        if ($sprint->status == 'completed' || $sprint->status == 'active')
-	{
+        if ($sprint->status == 'completed' || $sprint->status == 'active') {
             throw new \UnexpectedValueException('the active or completed sprint cannot be removed.', -11715);
         }
 
-        if (isset($sprint->issues) && $sprint->issues)
-        {
+        if (isset($sprint->issues) && $sprint->issues) {
             $next_sprint = Sprint::where('project_key', $project_key)->where('no', '>', $no)->first();
-            if ($next_sprint)
-            {
+            if ($next_sprint) {
                 $issues = !isset($next_sprint->issues) || !$next_sprint->issues ? [] : $next_sprint->issues;
                 $issues = array_merge($sprint->issues, $issues);
                 $next_sprint->fill([ 'issues' => $issues ])->save();
@@ -388,7 +353,7 @@ class SprintController extends Controller
     /**
      * get waiting or active sprint list.
      *
-     * @param  string  $project_key
+     * @param  string $project_key
      * @return array 
      */
     public function getValidSprintList($project_key)
@@ -400,8 +365,7 @@ class SprintController extends Controller
 
         foreach ($sprints as $sprint)
         {
-            if (!$sprint->name)
-            {
+            if (!$sprint->name) {
                 $sprint->name = 'Sprint ' . $sprint->no;
             }
         }
@@ -412,22 +376,20 @@ class SprintController extends Controller
     /**
      * push sprint to issue detail.
      *
-     * @param  string  $project_key
-     * @param  string  $issue_no
-     * @param  string  $sprint_no
+     * @param  string $project_key
+     * @param  string $issue_no
+     * @param  string $sprint_no
      * @return void 
      */
     public function pushSprint($project_key, $issue_no, $sprint_no)
     {
         $issue = DB::collection('issue_' . $project_key)->where('no', $issue_no)->first();
-        if (!$issue)
-        {
+        if (!$issue) {
             return;
         }
 
         $sprints = [];
-        if (isset($issue['sprints']) && $issue['sprints'])
-        {
+        if (isset($issue['sprints']) && $issue['sprints']) {
             $sprints = $issue['sprints'];
         }
         array_push($sprints, $sprint_no);
@@ -438,22 +400,20 @@ class SprintController extends Controller
     /**
      * pop sprint from issue detail.
      *
-     * @param  string  $project_key
-     * @param  string  $issue_no
-     * @param  string  $sprint_no
+     * @param  string $project_key
+     * @param  string $issue_no
+     * @param  string $sprint_no
      * @return void 
      */
     public function popSprint($project_key, $issue_no, $sprint_no)
     {
         $issue = DB::collection('issue_' . $project_key)->where('no', $issue_no)->first();
-        if (!$issue)
-        {
+        if (!$issue) {
             return;
         }
 
         $sprints = [];
-        if (isset($issue['sprints']) && $issue['sprints'])
-        {
+        if (isset($issue['sprints']) && $issue['sprints']) {
             $sprints = $issue['sprints'];
         }
         $new_sprints = array_diff($sprints, [ $sprint_no ]);
@@ -461,7 +421,7 @@ class SprintController extends Controller
         DB::collection('issue_' . $project_key)->where('no', $issue_no)->update(['sprints' => $new_sprints]);
     }
 
-   /**
+    /**
      * get the last column state of the kanban.
      *
      * @param  string $kanban_id
@@ -472,19 +432,17 @@ class SprintController extends Controller
         // remaining start
         $last_column_states = [];
         $board = Board::find($kanban_id);
-        if ($board && isset($board->columns))
-        {
+        if ($board && isset($board->columns)) {
             $board_columns = $board->columns;
             $last_column = array_pop($board_columns) ?: [];
-            if ($last_column && isset($last_column['states']) && $last_column['states'])
-            {
+            if ($last_column && isset($last_column['states']) && $last_column['states']) {
                 $last_column_states = $last_column['states'];
             }
         }
         return $last_column_states; 
     }
 
-   /**
+    /**
      * get sprint original state.
      *
      * @param  string $project_key
@@ -517,7 +475,7 @@ class SprintController extends Controller
         return [ 'issues' => $new_issue_nos, 'origin_issues' => $origin_issues ];
     }
 
-   /**
+    /**
      * get sprint original state.
      *
      * @param  string $project_key 
@@ -541,8 +499,8 @@ class SprintController extends Controller
     /**
      * get sprint log.
      *
-     * @param  string  $project_key
-     * @param  string  $sprint_no
+     * @param  string $project_key
+     * @param  string $sprint_no
      * @return \Illuminate\Http\Response
      */
     public function getLog(Request $request, $project_key, $sprint_no)
@@ -550,27 +508,23 @@ class SprintController extends Controller
         $sprint_no = intval($sprint_no);
 
         $kanban_id = $request->input('kanban_id');
-        if (!$kanban_id)
-        {
+        if (!$kanban_id) {
             throw new \UnexpectedValueException('the kanban id cannot be empty', -11717);
         }
 
         $sprint = Sprint::where('project_key', $project_key)
             ->where('no', $sprint_no)
             ->first();
-        if (!$sprint)
-        {
+        if (!$sprint) {
             throw new \UnexpectedValueException('the sprint does not exist or is not in the project.', -11708);
         }
 
         $origin_issue_count = 0;
-        if (isset($sprint->origin_issues))
-        {
+        if (isset($sprint->origin_issues)) {
             $origin_issue_count = count($sprint->origin_issues); 
         }
         $origin_story_points = 0;
-        if (isset($sprint->origin_issues))
-        {
+        if (isset($sprint->origin_issues)) {
             foreach ($sprint->origin_issues as $val)
             {
                 $origin_story_points += $val['story_points']; 
@@ -593,8 +547,7 @@ class SprintController extends Controller
         $tmp_story_points = $origin_story_points;
         foreach ($workingDays as $day => $flag)
         {
-            if ($flag === 1)
-            {
+            if ($flag === 1) {
                 $tmp_issue_count = max([ round($tmp_issue_count - $origin_issue_count / $workingDayNum, 2), 0 ]);
                 $tmp_story_points = max([ round($tmp_story_points - $origin_story_points / $workingDayNum, 2), 0 ]);
             }
@@ -613,8 +566,8 @@ class SprintController extends Controller
 
         $issue_count_remaining = [];
         $story_points_remaining = [];
-	$issue_count_remaining[] = [ 'day' => '', 'value' => $origin_issue_count ];
-	$story_points_remaining[] = [ 'day' => '', 'value' => $origin_story_points ];
+        $issue_count_remaining[] = [ 'day' => '', 'value' => $origin_issue_count ];
+        $story_points_remaining[] = [ 'day' => '', 'value' => $origin_story_points ];
         foreach($sprint_day_log as $daylog)
         {
             $incompleted_issue_num = 0;
@@ -622,8 +575,7 @@ class SprintController extends Controller
             $issues = isset($daylog->issues) ? $daylog->issues : []; 
             foreach ($issues as $issue)
             {
-                if (!in_array($issue['state'], $last_column_states))
-                {
+                if (!in_array($issue['state'], $last_column_states)) {
                     $incompleted_issue_num++;
                     $incompleted_story_points += isset($issue['story_points']) ? $issue['story_points'] : 0;
                 } 
@@ -639,8 +591,8 @@ class SprintController extends Controller
     /**
      * get working day flag.
      *
-     * @param  int  $start_time
-     * @param  int  $complete_time
+     * @param  int $start_time
+     * @param  int $complete_time
      * @return \Illuminate\Http\Response
      */
     public function getWorkingDay($start_time, $end_time)
@@ -679,16 +631,13 @@ class SprintController extends Controller
             $t = substr($v, 0, strlen($v) - 1);
             $u = substr($v, -1);
 
-            if ($u == 'w' || $u == 'W')
-            {
+            if ($u == 'w' || $u == 'W') {
                 $total += $total + $t * $w2d * $d2h;
             }
-            else if ($u == 'd' || $u == 'D')
-            {
+            else if ($u == 'd' || $u == 'D') {
                 $total += $t * $d2h * 60;
             }
-            else if ($u == 'h' || $u == 'H')
-            {
+            else if ($u == 'h' || $u == 'H') {
                 $total += $t * 60;
             }
             else 
@@ -703,14 +652,12 @@ class SprintController extends Controller
     {
         $origin_estimate_time = 0;
         $issue = DB::where('no', $issue_no)->first();
-        if (isset($issue['original_estimate']))
-        {
+        if (isset($issue['original_estimate'])) {
             $origin_estimate_time = $issue['original_estimate'];
         }
 
         $leave_estimate_m = $this->t2m($origin_estimate_time);
-        if ($leave_estimate_m <= 0)
-        {
+        if ($leave_estimate_m <= 0) {
             return 0;
         }
 
@@ -721,19 +668,15 @@ class SprintController extends Controller
 
         foreach ($worklogs as $worklog)
         {
-            if (!isset($worklog['spend']))
-            {
+            if (!isset($worklog['spend'])) {
                 continue;
             }
-            if (isset($worklog['adjust_type']))
-            {
-                if ($worklog['adjust_type'] == 1)
-                {
+            if (isset($worklog['adjust_type'])) {
+                if ($worklog['adjust_type'] == 1) {
                     $spend_m = $this->t2m($worklog['spend']);
                     $leave_estimate_m = $leave_estimate_m - $spend_m;
                 }
-                else if ($worklog['adjust_type'] == 3)
-                {
+                else if ($worklog['adjust_type'] == 3) {
                     $leave_estimate_m = $this->t2m(isset($worklog['cut']) ? $worklog['cut'] : 0);
                 }
             }

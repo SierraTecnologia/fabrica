@@ -4,9 +4,10 @@ namespace Fabrica\Utils;
 
 /**
  * Lunar class 阴历类库
- * @author cxa
+ *
+ * @author  cxa
  * @version 1.0
- * @time 2019-09-24
+ * @time    2019-09-24
  */
 class Lunar
 {
@@ -51,30 +52,34 @@ class Lunar
     );
     /**
      * 将阳历转换为阴历
+     *
      * @param year 公历-年
      * @param month 公历-月
      * @param date 公历-日
      */
-    function convertSolarToLunar($year, $month, $date) {
+    function convertSolarToLunar($year, $month, $date)
+    {
         //debugger;
         $yearData = $this->lunarInfo[$year-$this->MIN_YEAR];
-        if($year==$this->MIN_YEAR&&$month <= 2 && $date <= 9){
+        if($year==$this->MIN_YEAR&&$month <= 2 && $date <= 9) {
             return array(1891,'正月','初一','辛卯',1,1,'兔');
         }
         return $this->getLunarByBetween($year, $this->getDaysBetweenSolar($year, $month, $date, $yearData[1], $yearData[2]));
     }
 
-    function convertSolarMonthToLunar($year,$month, $date) {
+    function convertSolarMonthToLunar($year,$month, $date)
+    {
         $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
-        if($year == $this->MIN_YEAR && $month <= 2&&$date <=9 ){
+        if($year == $this->MIN_YEAR && $month <= 2&&$date <=9 ) {
             return array(1891,'正月','初一','辛卯',1,1,'兔');
         }
         $month_days_ary = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
         $dd = $month_days_ary[$month];
-        if($this->isLeapYear($year) && $month == 2) $dd++;
+        if($this->isLeapYear($year) && $month == 2) { $dd++;
+        }
         $lunar_ary = array();
         for ($i = 1; $i < $dd; $i++) {
-            $array = $this->getLunarByBetween($year,$this->getDaysBetweenSolar($year, $month, $i, $yearData[1], $yearData[2]));
+            $array = $this->getLunarByBetween($year, $this->getDaysBetweenSolar($year, $month, $i, $yearData[1], $yearData[2]));
             $array[] = $year . '-' . $month . '-' . $i;
             $lunar_ary[$i] = $array;
         }
@@ -82,11 +87,13 @@ class Lunar
     }
     /**
      * 将阴历转换为阳历
+     *
      * @param year 阴历-年
      * @param month 阴历-月，闰月处理：例如如果当年闰五月，那么第二个五月就传六月，相当于阴历有13个月，只是有的时候第13个月的天数为0
      * @param date 阴历-日
      */
-    function convertLunarToSolar($year, $month, $date){
+    function convertLunarToSolar($year, $month, $date)
+    {
         $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
         $between = $this->getDaysBetweenLunar($year, $month, $date);
         $res = mktime(0, 0, 0, $yearData[1], $yearData[2], $year);
@@ -99,16 +106,20 @@ class Lunar
     }
     /**
      * 判断是否是闰年
+     *
      * @param year
      */
-    function isLeapYear($year){
+    function isLeapYear($year)
+    {
         return (($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0));
     }
     /**
      * 获取干支纪年
+     *
      * @param year
      */
-    function getLunarYearName($year){
+    function getLunarYearName($year)
+    {
         $sky = array('庚','辛','壬','癸','甲','乙','丙','丁','戊','己');
         $earth = array('申','酉','戌','亥','子','丑','寅','卯','辰','巳','午','未');
         $year = $year.'';
@@ -116,35 +127,43 @@ class Lunar
     }
     /**
      * 根据阴历年获取生肖
+     *
      * @param year 阴历年
      */
-    function getYearZodiac($year){
+    function getYearZodiac($year)
+    {
         $zodiac = array('猴','鸡','狗','猪','鼠','牛','虎','兔','龙','蛇','马','羊');
         return $zodiac[$year % 12];
     }
     /**
      * 获取阳历月份的天数
+     *
      * @param year 阳历-年
      * @param month 阳历-月
      */
-    function getSolarMonthDays($year, $month){
+    function getSolarMonthDays($year, $month)
+    {
         $monthHash = array('1' => 31,'2' => $this->isLeapYear($year) ? 29 : 28,'3' => 31,'4' => 30,'5' => 31,'6' => 30,'7' => 31,'8' => 31,'9' => 30,'10' => 31,'11' => 30,'12' => 31);
         return $monthHash["$month"];
     }
     /**
      * 获取阴历月份的天数
+     *
      * @param year 阴历-年
      * @param month 阴历-月，从一月开始
      */
-    function getLunarMonthDays($year, $month){
+    function getLunarMonthDays($year, $month)
+    {
         $monthData = $this->getLunarMonths($year);
         return $monthData[$month - 1];
     }
     /**
      * 获取阴历每月的天数的数组
+     *
      * @param year
      */
-    function getLunarMonths($year){
+    function getLunarMonths($year)
+    {
         $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
         $leapMonth = $yearData[0];
         $bit = decbin($yearData[3]);
@@ -162,15 +181,18 @@ class Lunar
     }
     /**
      * 获取农历每年的天数
+     *
      * @param year 农历年份
      */
-    function getLunarYearDays($year){
+    function getLunarYearDays($year)
+    {
         $yearData = $this->lunarInfo[$year-$this->MIN_YEAR];
         $monthArray = $this->getLunarYearMonths($year);
         $len = count($monthArray);
         return ($monthArray[$len-1] == 0 ? $monthArray[$len-2] : $monthArray[$len-1]);
     }
-    function getLunarYearMonths($year){
+    function getLunarYearMonths($year)
+    {
         //debugger;
         $monthData = $this->getLunarMonths($year);
         $res=array();
@@ -188,19 +210,23 @@ class Lunar
     }
     /**
      * 获取闰月
+     *
      * @param year 阴历年份
      */
-    function getLeapMonth($year){
+    function getLeapMonth($year)
+    {
         $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
         return $yearData[0];
     }
     /**
      * 计算阴历日期与正月初一相隔的天数
+     *
      * @param year
      * @param month
      * @param date
      */
-    function getDaysBetweenLunar($year, $month, $date){
+    function getDaysBetweenLunar($year, $month, $date)
+    {
         $yearMonth = $this->getLunarMonths($year);
         $res = 0;
         for($i = 1; $i < $month; $i++){
@@ -211,23 +237,27 @@ class Lunar
     }
     /**
      * 计算2个阳历日期之间的天数
+     *
      * @param year 阳历年
      * @param cmonth
      * @param cdate
      * @param dmonth 阴历正月对应的阳历月份
      * @param ddate 阴历初一对应的阳历天数
      */
-    function getDaysBetweenSolar($year, $cmonth, $cdate, $dmonth, $ddate){
+    function getDaysBetweenSolar($year, $cmonth, $cdate, $dmonth, $ddate)
+    {
         $a = mktime(0, 0, 0, $cmonth, $cdate, $year);
         $b = mktime(0, 0, 0, $dmonth, $ddate, $year);
         return ceil(($a - $b) / 24 / 3600);
     }
     /**
      * 根据距离正月初一的天数计算阴历日期
+     *
      * @param year 阳历年
      * @param between 天数
      */
-    function getLunarByBetween($year,$between){
+    function getLunarByBetween($year,$between)
+    {
         //debugger;
         $lunarArray = array();
         $yearMonth = array();
@@ -235,7 +265,7 @@ class Lunar
         $e = 0;
         $leapMonth = 0;
         $m = '';
-        if($between == 0){
+        if($between == 0) {
             array_push($lunarArray, $year, '正月', '初一');
             $t = 1;
             $e = 1;
@@ -266,7 +296,8 @@ class Lunar
         return $lunarArray;
     }
     //转换成中文年份
-    function toYear($year){
+    function toYear($year)
+    {
         $arr = array("零", "一", "二", "三", "四", "五", "六", "七", "八", "九");
         $year_arr = str_split($year);
         $str = $arr[$year_arr[0]].$arr[$year_arr[1]].$arr[$year_arr[2]].$arr[$year_arr[3]];
@@ -274,26 +305,28 @@ class Lunar
     }
     /**
      * 获取数字的阴历叫法
+     *
      * @param num 数字
      * @param isMonth 是否是月份的数字
      */
-    function getCapitalNum($num, $isMonth){
+    function getCapitalNum($num, $isMonth)
+    {
         $isMonth = $isMonth || false;
         $dateHash = array('0'=>'','1'=>'一','2'=>'二','3'=>'三','4'=>'四','5'=>'五','6'=>'六','7'=>'七','8'=>'八','9'=>'九','10'=>'十 ');
         $monthHash = array('0'=>'','1'=>'正月','2'=>'二月','3'=>'三月','4'=>'四月','5'=>'五月','6'=>'六月','7'=>'七月','8'=>'八月','9'=>'九月','10'=>'十月','11'=>'冬月','12'=>'腊月');
         $res = '';
-        if($isMonth){
+        if($isMonth) {
             $res = $monthHash[$num];
         }else{
             if($num<=10) {
                 $res = '初'.$dateHash[$num];
-            } else if ($num > 10 && $num < 20){
+            } else if ($num > 10 && $num < 20) {
                 $res = '十'.$dateHash[$num - 10];
-            } else if ($num==20){
+            } else if ($num==20) {
                 $res = "二十";
-            } else if ($num > 20 && $num < 30){
+            } else if ($num > 20 && $num < 30) {
                 $res = "廿".$dateHash[$num - 20];
-            } else if ($num == 30){
+            } else if ($num == 30) {
                 $res = "三十";
             }
         }

@@ -104,7 +104,7 @@ class RepositoryPool implements EventSubscriberInterface
      * Returns the Git repository associated the a model project.
      *
      * @param Fabrica\Models\Code\Project $project A
-     * project model instance
+     *                                             project model instance
      *
      * @return Fabrica\Tools\Programs\Git\Repository A Git repository
      */
