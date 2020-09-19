@@ -60,7 +60,7 @@ class RoleController extends Controller
 
             $roles[$key]['permissions'] = $this->getPermissions($project_key, $role['_id']);
         }
-        return Response()->json([ 'ecode' => 0, 'data' => $roles ]);
+        return response()->json([ 'ecode' => 0, 'data' => $roles ]);
     }
 
     /**
@@ -95,7 +95,7 @@ class RoleController extends Controller
             $role->permissions = $permissions;
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $role ]);
+        return response()->json([ 'ecode' => 0, 'data' => $role ]);
     }
 
     /**
@@ -107,7 +107,7 @@ class RoleController extends Controller
     public function show($project_key, $id)
     {
         $role = Role::find($id);
-        return Response()->json([ 'ecode' => 0, 'data' => $role ]);
+        return response()->json([ 'ecode' => 0, 'data' => $role ]);
     }
 
     /**
@@ -139,7 +139,7 @@ class RoleController extends Controller
         $data->users = $user_groups['users'];
         $data->groups = $user_groups['groups'];
 
-        return Response()->json([ 'ecode' => 0, 'data' => $data ]);
+        return response()->json([ 'ecode' => 0, 'data' => $data ]);
     }
 
     /**
@@ -171,7 +171,7 @@ class RoleController extends Controller
         $data->users = $user_groups['users'];
         $data->groups = $user_groups['groups'];
 
-        return Response()->json([ 'ecode' => 0, 'data' => $data ]);
+        return response()->json([ 'ecode' => 0, 'data' => $data ]);
     }
 
     /**
@@ -210,7 +210,7 @@ class RoleController extends Controller
         $role->fill($request->except(['project_key']))->save();
 
         $data = Role::find($id);
-        return Response()->json([ 'ecode' => 0, 'data' => $data ]);
+        return response()->json([ 'ecode' => 0, 'data' => $data ]);
     }
 
     /**
@@ -256,7 +256,7 @@ class RoleController extends Controller
         }
         Role::destroy($id);
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'id' => $id ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'id' => $id ] ]);
     }
 
     /**
@@ -351,7 +351,7 @@ class RoleController extends Controller
         }
 
         $role->permissions = $this->getPermissions($project_key, $id);
-        return Response()->json(['ecode' => 0, 'data' => $role]);
+        return response()->json(['ecode' => 0, 'data' => $role]);
     }
 
     /**
@@ -388,7 +388,7 @@ class RoleController extends Controller
         $rp = RolePermissions::where([ 'project_key' => '$_sys_$', 'role_id' => $role_id ])->first();
         $role['permissions'] = $rp && isset($rp->permissions) ? $rp->permissions : [];
 
-        return Response()->json(['ecode' => 0, 'data' => $role]);
+        return response()->json(['ecode' => 0, 'data' => $role]);
     }
 
     /**
@@ -400,7 +400,7 @@ class RoleController extends Controller
     {
         if ($project_key !== '$_sys_$')
         {
-            return Response()->json(['ecode' => 0, 'data' => [] ]);
+            return response()->json(['ecode' => 0, 'data' => [] ]);
         }
 
         $res = [];
@@ -418,6 +418,6 @@ class RoleController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => $res ]);
+        return response()->json(['ecode' => 0, 'data' => $res ]);
     }
 }

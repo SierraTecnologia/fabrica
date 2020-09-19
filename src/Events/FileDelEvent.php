@@ -1,12 +1,17 @@
 <?php
 namespace Fabrica\Events;
-use Fabrica\Events\Event;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class FileDelEvent extends Event
+use Fabrica\Events\Event;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Queue\SerializesModels;
+
+class FileDelEvent extends FieldDeleteEvent
 {
     use SerializesModels;
+
+    public $file_id;
+
+    public $user;
     /**
      * Create a new event instance.
      *

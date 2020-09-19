@@ -92,7 +92,7 @@ class BoardController extends Controller
             ->where('status', 'completed')
             ->max('no');
 
-        return Response()->json([ 'ecode' => 0, 'data' => $list, 'options' => [ 'epics' => $epics, 'sprints' => $sprints, 'versions' => $versions, 'completed_sprint_num' => $completed_sprint_num ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => $list, 'options' => [ 'epics' => $epics, 'sprints' => $sprints, 'versions' => $versions, 'completed_sprint_num' => $completed_sprint_num ] ]);
 
 /*
 $example = [ 
@@ -112,7 +112,7 @@ $example = [
     [ 'no' => 3, 'id' => '33333', 'name' => '333333' ],
   ],
 ];
-        return Response()->json([ 'ecode' => 0, 'data' => [ $example ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ $example ] ]);
 */
     }
 
@@ -165,7 +165,7 @@ $example = [
             'query' => [ 'subtask' => true ], 
             'columns' => $columns ] + $request->all());
 
-        return Response()->json(['ecode' => 0, 'data' => $board]);
+        return response()->json(['ecode' => 0, 'data' => $board]);
     }
 
     /**
@@ -232,7 +232,7 @@ $example = [
         //}
 
         $board->fill($updValues)->save();
-        return Response()->json(['ecode' => 0, 'data' => Board::find($id)]);
+        return response()->json(['ecode' => 0, 'data' => Board::find($id)]);
     }
 
     /**
@@ -248,7 +248,7 @@ $example = [
         //{
         //    throw new \UnexpectedValueException('the board does not exist or is not in the project.', -10002);
         //}
-        return Response()->json(['ecode' => 0, 'data' => $state]);
+        return response()->json(['ecode' => 0, 'data' => $state]);
     }
 
     /**
@@ -352,7 +352,7 @@ $example = [
         BoardRankMap::create([ 'board_id' => $id, 'rank' => $rank ]);
 
         $rankmap = BoardRankMap::where([ 'board_id' => $id ])->first(); 
-        return Response()->json([ 'ecode' => 0, 'data' => $rankmap ]);
+        return response()->json([ 'ecode' => 0, 'data' => $rankmap ]);
     }
 
     /**
@@ -372,7 +372,7 @@ $example = [
           'user_id' => $this->user->id, 
           'board_id' => $id, 
           'latest_access_time' => time() ]);
-        return Response()->json(['ecode' => 0, 'data' => [ 'id' => $id ] ]);
+        return response()->json(['ecode' => 0, 'data' => [ 'id' => $id ] ]);
     }
 
     /**
@@ -396,7 +396,7 @@ $example = [
         BoardRankMap::where('board_id', $id)->delete();
 
         Board::destroy($id);
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
         
     }
 }

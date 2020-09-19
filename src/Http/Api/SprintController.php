@@ -47,7 +47,7 @@ class SprintController extends Controller
             'status' => 'waiting', 
             'issues' => [] 
         ]);
-        return Response()->json(['ecode' => 0, 'data' => $this->getValidSprintList($project_key)]);
+        return response()->json(['ecode' => 0, 'data' => $this->getValidSprintList($project_key)]);
     }
 
     /**
@@ -115,7 +115,7 @@ class SprintController extends Controller
             }
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $this->getValidSprintList($project_key) ]);
+        return response()->json([ 'ecode' => 0, 'data' => $this->getValidSprintList($project_key) ]);
     }
 
     /**
@@ -132,7 +132,7 @@ class SprintController extends Controller
             $sprint->name = 'Sprint ' . $sprint->no;
         }
 
-        return Response()->json(['ecode' => 0, 'data' => $sprint]);
+        return response()->json(['ecode' => 0, 'data' => $sprint]);
     }
 
     /**
@@ -231,7 +231,7 @@ class SprintController extends Controller
         $user = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
         Event::fire(new SprintEvent($project_key, $user, [ 'event_key' => 'start_sprint', 'isSendMsg' => $isSendMsg, 'data' => [ 'sprint_no' => $no ] ]));
 
-        return Response()->json([ 'ecode' => 0, 'data' => $this->getValidSprintList($project_key) ]);
+        return response()->json([ 'ecode' => 0, 'data' => $this->getValidSprintList($project_key) ]);
     }
 
     /**
@@ -271,7 +271,7 @@ class SprintController extends Controller
 
         $sprint->fill($updValues)->save();
 
-        return Response()->json([ 'ecode' => 0, 'data' => $this->getValidSprintList($project_key) ]);
+        return response()->json([ 'ecode' => 0, 'data' => $this->getValidSprintList($project_key) ]);
     }
 
     /**
@@ -339,7 +339,7 @@ class SprintController extends Controller
         $user = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
         Event::fire(new SprintEvent($project_key, $user, [ 'event_key' => 'complete_sprint', 'isSendMsg' => $isSendMsg, 'data' => [ 'sprint_no' => $no ] ]));
 
-        return Response()->json([ 'ecode' => 0, 'data' => $this->getValidSprintList($project_key) ]);
+        return response()->json([ 'ecode' => 0, 'data' => $this->getValidSprintList($project_key) ]);
     }
 
     /**
@@ -382,7 +382,7 @@ class SprintController extends Controller
 
         Sprint::where('project_key', $project_key)->where('no', '>', $no)->decrement('no');
 
-        return Response()->json([ 'ecode' => 0, 'data' => $this->getValidSprintList($project_key) ]);
+        return response()->json([ 'ecode' => 0, 'data' => $this->getValidSprintList($project_key) ]);
     }
 
     /**
@@ -633,7 +633,7 @@ class SprintController extends Controller
         }
         // remaining start
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'issue_count' => [ 'guideline' => $issue_count_guideline, 'remaining' => $issue_count_remaining ], 'story_points' => [ 'guideline' => $story_points_guideline, 'remaining' => $story_points_remaining ] ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'issue_count' => [ 'guideline' => $issue_count_guideline, 'remaining' => $issue_count_remaining ], 'story_points' => [ 'guideline' => $story_points_guideline, 'remaining' => $story_points_remaining ] ] ]);
     }
 
     /**

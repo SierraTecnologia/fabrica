@@ -28,12 +28,12 @@ class DocumentController extends Controller
         $s =  $request->input('s');
         if (!$s)
         {
-            return Response()->json(['ecode' => 0, 'data' => []]);
+            return response()->json(['ecode' => 0, 'data' => []]);
         }
 
         if ($s === '/')
         {
-            return Response()->json(['ecode' => 0, 'data' => [ [ 'id' => '0', 'name' => '/' ] ] ]);
+            return response()->json(['ecode' => 0, 'data' => [ [ 'id' => '0', 'name' => '/' ] ] ]);
         }
 
         $query = DB::collection('document_' . $project_key)
@@ -73,7 +73,7 @@ class DocumentController extends Controller
             $path .= '/' . $d['name'];
             $ret[] = [ 'id' => $d['_id']->__toString(), 'name' => $path ];
         }
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($ret)]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($ret)]);
     }
 
     /**
@@ -96,7 +96,7 @@ class DocumentController extends Controller
     	    $res[] = [ 'id' => $val['_id']->__toString(), 'name' => $val['name'] ];
         }
 
-    	return Response()->json([ 'ecode' => 0, 'data' => $res ]);
+    	return response()->json([ 'ecode' => 0, 'data' => $res ]);
     }
 
     /**
@@ -139,7 +139,7 @@ class DocumentController extends Controller
     	    $this->addChildren2Tree($dt, $val, $sub_dirs);
         }
 
-    	return Response()->json([ 'ecode' => 0, 'data' => $dt ]);
+    	return response()->json([ 'ecode' => 0, 'data' => $dt ]);
     }
 
     /**
@@ -193,7 +193,7 @@ class DocumentController extends Controller
             ->distinct('uploader')
             ->get([ 'uploader' ]);
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'uploader' => $uploaders ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'uploader' => $uploaders ]]);
     }
 
     /**
@@ -310,7 +310,7 @@ class DocumentController extends Controller
             $path[] = [ 'id' => $directory, 'name' => $d['name'] ];
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => parent::arrange($documents), 'options' => [ 'path' => $path ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => parent::arrange($documents), 'options' => [ 'path' => $path ] ]);
     }
 
     /**
@@ -370,7 +370,7 @@ class DocumentController extends Controller
         $id = DB::collection('document_' . $project_key)->insertGetId($insValues);
 
         $document = DB::collection('document_' . $project_key)->where('_id', $id)->first();
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
     }
 
     /**
@@ -425,14 +425,14 @@ class DocumentController extends Controller
         {
             if (!$this->isPermissionAllowed($project_key, 'manage_project')) 
             {
-                return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
         else
         {
             if (!$this->isPermissionAllowed($project_key, 'manage_project') && $old_document['uploader']['id'] !== $this->user->id) 
             {
-                return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
 
@@ -463,7 +463,7 @@ class DocumentController extends Controller
         DB::collection('document_' . $project_key)->where('_id', $id)->update([ 'name' => $name ]);
         $new_document = DB::collection('document_' . $project_key)->where('_id', $id)->first();
 
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($new_document)]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($new_document)]);
     }
 
     /**
@@ -500,14 +500,14 @@ class DocumentController extends Controller
         {
             if (!$this->isPermissionAllowed($project_key, 'manage_project'))
             {
-                return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
         else
         {
             if (!$this->isPermissionAllowed($project_key, 'manage_project') && $document['uploader']['id'] !== $this->user->id)
             {
-                return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
 
@@ -561,7 +561,7 @@ class DocumentController extends Controller
         }
 
         $document = DB::collection('document_' . $project_key)->where('_id', $id)->first();
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
     }
 
     /**
@@ -586,14 +586,14 @@ class DocumentController extends Controller
         {
             if (!$this->isPermissionAllowed($project_key, 'manage_project'))
             {
-                return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
         else
         {
             if (!$this->isPermissionAllowed($project_key, 'manage_project') && $document['uploader']['id'] !== $this->user->id)
             {
-                return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
 
@@ -604,7 +604,7 @@ class DocumentController extends Controller
             DB::collection('document_' . $project_key)->whereRaw([ 'pt' => $id ])->update([ 'del_flag' => 1 ]);
         }
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
     }
 
     /**
@@ -736,7 +736,7 @@ class DocumentController extends Controller
         $id = DB::collection('document_' . $project_key)->insertGetId($data);
         $document = DB::collection('document_' . $project_key)->where('_id', $id)->first();
 
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
     }
 
     /**
@@ -905,6 +905,6 @@ class DocumentController extends Controller
             DocumentFavorites::create([ 'project_key' => $project_key, 'did' => $id, 'user' => $cur_user ]);
         }
 
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id, 'user' => $cur_user, 'favorited' => $flag]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id, 'user' => $cur_user, 'favorited' => $flag]]);
     }
 }

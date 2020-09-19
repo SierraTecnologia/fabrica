@@ -36,7 +36,7 @@ class ModuleController extends Controller
             $module->is_used = $this->isFieldUsedByIssue($project_key, 'module', $module->toArray()); 
         }
         $users = Provider::getUserList($project_key);
-        return Response()->json([ 'ecode' => 0, 'data' => $modules, 'options' => [ 'users' => $users ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => $modules, 'options' => [ 'users' => $users ] ]);
     }
 
     /**
@@ -76,7 +76,7 @@ class ModuleController extends Controller
         // trigger event of version added
         //Event::fire(new ModuleEvent($project_key, $creator, [ 'event_key' => 'create_module', 'data' => $module->name ]));
 
-        return Response()->json([ 'ecode' => 0, 'data' => $module ]);
+        return response()->json([ 'ecode' => 0, 'data' => $module ]);
     }
 
     /**
@@ -90,7 +90,7 @@ class ModuleController extends Controller
         $module = Module::find($id);
         $module->is_used = $this->isFieldUsedByIssue($project_key, 'module', $module->toArray());
 
-        return Response()->json(['ecode' => 0, 'data' => $module]);
+        return response()->json(['ecode' => 0, 'data' => $module]);
     }
 
     /**
@@ -145,7 +145,7 @@ class ModuleController extends Controller
         //$cur_user = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
         //Event::fire(new ModuleEvent($project_key, $cur_user, [ 'event_key' => 'edit_module', 'data' => $request->all() ]));
 
-        return Response()->json([ 'ecode' => 0, 'data' => Module::find($id) ]);
+        return response()->json([ 'ecode' => 0, 'data' => Module::find($id) ]);
     }
 
     /**
@@ -209,7 +209,7 @@ class ModuleController extends Controller
         }
         else
         {
-            return Response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
+            return response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
         }
     }
 
@@ -285,6 +285,6 @@ class ModuleController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence_modules ] ]);
+        return response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence_modules ] ]);
     }
 }

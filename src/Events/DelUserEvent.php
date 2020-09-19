@@ -10,6 +10,8 @@ class DelUserEvent extends Event
 {
     use SerializesModels;
 
+    public $user_id;
+
     /**
      * Create a new event instance.
      *

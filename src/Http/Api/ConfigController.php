@@ -41,7 +41,7 @@ class ConfigController extends Controller
             $role->permissions = $this->getPermissions($project_key, $role->id);
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'types' => $new_types, 'roles' => $roles, 'priorities' => $priorities ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'types' => $new_types, 'roles' => $roles, 'priorities' => $priorities ] ]);
     }
 
     /**

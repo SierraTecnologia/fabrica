@@ -315,7 +315,7 @@ class SummaryController extends Controller
 
         $sorted_module_unresolved_issues = $this->calPercent($sorted_module_unresolved_issues);
 
-        return Response()->json([ 
+        return response()->json([ 
             'ecode' => 0, 
             'data' => [ 
                 'filters' => $filters,

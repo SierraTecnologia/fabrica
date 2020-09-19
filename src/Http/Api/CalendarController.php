@@ -49,7 +49,7 @@ class CalendarController extends Controller
 
     	$dates = $this->getYearDates(intval($year));
 
-        return Response()->json([ 'ecode' => 0, 'data' => $dates, 'options' => [ 'year' => date('Y'), 'date' => date('Y/m/d') ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => $dates, 'options' => [ 'year' => date('Y'), 'date' => date('Y/m/d') ] ]);
     }
 
     /**
@@ -204,7 +204,7 @@ class CalendarController extends Controller
             }
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $this->getYearDates(intval(substr($start_date, 0, 4)))]);
+        return response()->json([ 'ecode' => 0, 'data' => $this->getYearDates(intval(substr($start_date, 0, 4)))]);
     }
 
     /**
@@ -248,6 +248,6 @@ class CalendarController extends Controller
                 ]);   
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $this->getYearDates($year) ]);
+        return response()->json([ 'ecode' => 0, 'data' => $this->getYearDates($year) ]);
     }
 }

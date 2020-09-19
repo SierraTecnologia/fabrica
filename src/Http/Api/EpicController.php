@@ -73,7 +73,7 @@ class EpicController extends Controller
             $epic->inestimable = $inestimable_issue_cnt;
         }
             
-        return Response()->json([ 'ecode' => 0, 'data' => $epics, 'options' => [ 'completed_states' => $completed_states, 'incompleted_states' => array_diff($all_states, $completed_states) ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => $epics, 'options' => [ 'completed_states' => $completed_states, 'incompleted_states' => array_diff($all_states, $completed_states) ] ]);
     }
 
     /**
@@ -102,7 +102,7 @@ class EpicController extends Controller
         }
 
         $epic = Epic::create([ 'project_key' => $project_key, 'sn' => time() ] + $request->all());
-        return Response()->json(['ecode' => 0, 'data' => $epic]);
+        return response()->json(['ecode' => 0, 'data' => $epic]);
     }
 
     /**
@@ -116,7 +116,7 @@ class EpicController extends Controller
         $epic = Epic::find($id);
         $epic->is_used = $this->isFieldUsedByIssue($project_key, 'epic', $epic->toArray());
 
-        return Response()->json(['ecode' => 0, 'data' => $epic]);
+        return response()->json(['ecode' => 0, 'data' => $epic]);
     }
 
     /**
@@ -159,7 +159,7 @@ class EpicController extends Controller
 
         $epic->fill($request->except(['project_key']))->save();
 
-        return Response()->json(['ecode' => 0, 'data' => Epic::find($id)]);
+        return response()->json(['ecode' => 0, 'data' => Epic::find($id)]);
     }
 
     /**
@@ -187,7 +187,7 @@ class EpicController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence_epics ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence_epics ]]);
     }
 
     /**
@@ -241,7 +241,7 @@ class EpicController extends Controller
 
         Epic::destroy($id);
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
 
         //if ($operate_flg === '1')
         //{
@@ -249,7 +249,7 @@ class EpicController extends Controller
         //}
         //else
         //{
-        //    return Response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
+        //    return response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
         //}
     }
 

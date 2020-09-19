@@ -117,7 +117,7 @@ class FieldController extends Controller
             });
         }
         $types = Provider::getTypeList($project_key, ['name']);
-        return Response()->json(['ecode' => 0, 'data' => $fields, 'options' => [ 'types' => $types ]]);
+        return response()->json(['ecode' => 0, 'data' => $fields, 'options' => [ 'types' => $types ]]);
     }
 
     /**
@@ -204,7 +204,7 @@ class FieldController extends Controller
         {
             $field = Field::create([ 'project_key' => $project_key ] + $request->all());
         }
-        return Response()->json(['ecode' => 0, 'data' => $field]);
+        return response()->json(['ecode' => 0, 'data' => $field]);
     }
 
     /**
@@ -223,7 +223,7 @@ class FieldController extends Controller
         // get related screen
         $field->screens = Screen::whereRaw([ 'field_ids' => $id ])->get(['name']);
 
-        return Response()->json(['ecode' => 0, 'data' => $field]);
+        return response()->json(['ecode' => 0, 'data' => $field]);
     }
 
     /**
@@ -334,7 +334,7 @@ class FieldController extends Controller
 
         Event::fire(new FieldChangeEvent($id));
 
-        return Response()->json(['ecode' => 0, 'data' => Field::find($id)]);
+        return response()->json(['ecode' => 0, 'data' => Field::find($id)]);
     }
 
     /**
@@ -365,7 +365,7 @@ class FieldController extends Controller
         Field::destroy($id);
 
         Event::fire(new FieldDeleteEvent($project_key, $id, $field->key, $field->type));
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
     }
 
     /**
@@ -377,7 +377,7 @@ class FieldController extends Controller
     {
         if ($project_key !== '$_sys_$')
         {
-            return Response()->json(['ecode' => 0, 'data' => [] ]);
+            return response()->json(['ecode' => 0, 'data' => [] ]);
         }
 
         $res = [];
@@ -396,6 +396,6 @@ class FieldController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => $res ]);
+        return response()->json(['ecode' => 0, 'data' => $res ]);
     }
 }

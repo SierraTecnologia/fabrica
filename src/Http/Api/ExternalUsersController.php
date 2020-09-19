@@ -20,7 +20,7 @@ class ExternalUsersController extends Controller
     public function index($project_key)
     {
         $external_users = ExternalUsers::where('project_key', $project_key)->get();
-        return Response()->json(['ecode' => 0, 'data' => $external_users]);
+        return response()->json(['ecode' => 0, 'data' => $external_users]);
     }
 
     /**
@@ -74,6 +74,6 @@ class ExternalUsersController extends Controller
         $external_user->fill($data);
         $external_user->save();
 
-        return Response()->json(['ecode' => 0, 'data' => $external_user]);
+        return response()->json(['ecode' => 0, 'data' => $external_user]);
     }
 }

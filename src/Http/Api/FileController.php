@@ -103,7 +103,7 @@ class FileController extends Controller
             Event::fire(new FileUploadEvent($project_key, $issue_id, $field, $file->id, $data['uploader']));
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'field' => $field, 'file' => File::find($file->id), 'filename' => '/actionview/api/project/' . $project_key . '/file/' . $file->id ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'field' => $field, 'file' => File::find($file->id), 'filename' => '/actionview/api/project/' . $project_key . '/file/' . $file->id ] ]);
     }
 
     /**
@@ -192,7 +192,7 @@ class FileController extends Controller
 
         if ($file && !$this->isPermissionAllowed($project_key, 'remove_file') && !($this->isPermissionAllowed($project_key, 'remove_self_file') && $file->uploader['id'] == $this->user->id)) 
         {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         $issue_id = $request->input('issue_id');
@@ -212,7 +212,7 @@ class FileController extends Controller
         $issue = DB::collection('issue_' . $project_key)->where('_id', $issue_id)->first();
         if (array_search($id, $issue[$field_key]) === false)
         {
-            return Response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
+            return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
         }
         else
         {
@@ -249,6 +249,6 @@ class FileController extends Controller
         $data['uploader'] = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
         $file = File::create($data);
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'fid' => $basename, 'fname' => $_FILES['file']['name'] ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'fid' => $basename, 'fname' => $_FILES['file']['name'] ] ]);
     }
 }

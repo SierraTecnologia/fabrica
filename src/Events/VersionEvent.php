@@ -8,6 +8,12 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class VersionEvent extends Event
 {
     use SerializesModels;
+
+    public $project_key;
+
+    public $user;
+
+    public $param;
     /**
      * Create a new event instance.
      *

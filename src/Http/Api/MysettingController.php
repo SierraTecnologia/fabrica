@@ -120,7 +120,7 @@ class MysettingController extends Controller
             $data['favorites'] = $user_setting->favorites;
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $data ]);
+        return response()->json([ 'ecode' => 0, 'data' => $data ]);
     }
 
     /**
@@ -164,7 +164,7 @@ class MysettingController extends Controller
         //$user->password = password_hash($new_password, PASSWORD_DEFAULT);
         Sentinel::update($user, [ 'password' => $new_password ]);
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'accounts' => $user ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'accounts' => $user ] ]);
     }
 
     /**
@@ -211,7 +211,7 @@ class MysettingController extends Controller
 
         $user = Sentinel::update($user, [ 'id' => $this->user->id ]);
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'accounts' => $user ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'accounts' => $user ] ]);
     }
 
     /**
@@ -242,7 +242,7 @@ class MysettingController extends Controller
 
         $notifications = UserSetting::where('user_id', $this->user->id)->first()->notifications;
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'notifications' => $notifications ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'notifications' => $notifications ] ]);
     }
 
     /**
@@ -273,6 +273,6 @@ class MysettingController extends Controller
 
         $favorites = UserSetting::where(user_id, $this->user->id)->first()->favorites;
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'favorites' => $favorites ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'favorites' => $favorites ] ]);
     }
 }

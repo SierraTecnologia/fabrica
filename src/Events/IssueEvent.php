@@ -1,12 +1,21 @@
 <?php
 namespace Fabrica\Events;
+
 use Fabrica\Events\Event;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Queue\SerializesModels;
 
 class IssueEvent extends Event
 {
     use SerializesModels;
+
+    public $project_key;
+
+    public $issue_id;
+
+    public $user;
+
+    public $param;
     /**
      * Create a new event instance.
      *

@@ -27,12 +27,12 @@ class WikiController extends Controller
         $s =  $request->input('s');
         if (!$s)
         {
-            return Response()->json(['ecode' => 0, 'data' => []]);
+            return response()->json(['ecode' => 0, 'data' => []]);
         }
 
         if ($s === '/')
         {
-            return Response()->json(['ecode' => 0, 'data' => [ [ 'id' => '0', 'name' => '/' ] ] ]);
+            return response()->json(['ecode' => 0, 'data' => [ [ 'id' => '0', 'name' => '/' ] ] ]);
         }
 
         $query = DB::collection('wiki_' . $project_key)
@@ -72,7 +72,7 @@ class WikiController extends Controller
             $path .= '/' . $d['name'];
             $ret[] = [ 'id' => $d['_id']->__toString(), 'name' => $path ];
         }
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($ret)]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($ret)]);
     }
 
     /**
@@ -99,7 +99,7 @@ class WikiController extends Controller
             ];
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $res ]);
+        return response()->json([ 'ecode' => 0, 'data' => $res ]);
     }
 
     /**
@@ -144,7 +144,7 @@ class WikiController extends Controller
             $this->addChildren2Tree($dt, $val, $sub_dirs);
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $dt ]);
+        return response()->json([ 'ecode' => 0, 'data' => $dt ]);
     }
 
     /**
@@ -302,7 +302,7 @@ class WikiController extends Controller
             $path[] = [ 'id' => $directory, 'name' => $d['name'] ];
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => parent::arrange($documents), 'options' => [ 'path' => $path, 'home' => parent::arrange($home) ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => parent::arrange($documents), 'options' => [ 'path' => $path, 'home' => parent::arrange($home) ] ]);
     }
 
     /**
@@ -319,7 +319,7 @@ class WikiController extends Controller
         {
             if (!$this->isPermissionAllowed($project_key, 'manage_project'))
             {
-                return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
             return $this->createFolder($request, $project_key);
         }
@@ -453,7 +453,7 @@ class WikiController extends Controller
         $id = DB::collection('wiki_' . $project_key)->insertGetId($insValues);
 
         $document = DB::collection('wiki_' . $project_key)->where('_id', $id)->first();
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
     }
 
     /**
@@ -626,7 +626,7 @@ class WikiController extends Controller
 
         $path = $this->getPathTreeDetail($project_key, $document['pt']);
 
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($document), 'options' => [ 'path' => $path ]]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($document), 'options' => [ 'path' => $path ]]);
     }
 
     /**
@@ -658,7 +658,7 @@ class WikiController extends Controller
         {
             if (!$this->isPermissionAllowed($project_key, 'manage_project')) 
             {
-                return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
         else
@@ -733,7 +733,7 @@ class WikiController extends Controller
         else
         {
             $document = DB::collection('wiki_' . $project_key)->where('_id', $id)->first();
-            return Response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
+            return response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
         }
     }
 
@@ -837,7 +837,7 @@ class WikiController extends Controller
         $new_id = DB::collection('wiki_' . $project_key)->insertGetId($insValues);         
 
         $document = DB::collection('wiki_' . $project_key)->where('_id', $new_id)->first();
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
     }
 
     /**
@@ -874,7 +874,7 @@ class WikiController extends Controller
         {
             if (!$this->isPermissionAllowed($project_key, 'manage_project'))
             {
-                return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
 
@@ -928,7 +928,7 @@ class WikiController extends Controller
         }
 
         $document = DB::collection('wiki_' . $project_key)->where('_id', $id)->first();
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($document)]);
     }
 
     /**
@@ -952,7 +952,7 @@ class WikiController extends Controller
         {
             if (!$this->isPermissionAllowed($project_key, 'manage_project'))
             {
-                return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
         }
 
@@ -966,7 +966,7 @@ class WikiController extends Controller
         $user = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
         Event::fire(new WikiEvent($project_key, $user, [ 'event_key' => 'delete_wiki', 'wiki_id' => $id ]));
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
     }
 
     /**
@@ -1030,7 +1030,7 @@ class WikiController extends Controller
         $attachments[] = $data;
         DB::collection('wiki_' . $project_key)->where('_id', $wid)->update([ 'attachments' => $attachments ]);
 
-        return Response()->json(['ecode' => 0, 'data' => $data]);
+        return response()->json(['ecode' => 0, 'data' => $data]);
     }
 
     /**
@@ -1067,7 +1067,7 @@ class WikiController extends Controller
         }
 
         DB::collection('wiki_' . $project_key)->where('_id', $wid)->update([ 'attachments' => $new_attachments ]);
-        return Response()->json(['ecode' => 0, 'data' => [ 'id' => $fid ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'id' => $fid ]]);
     }
 
     /**
@@ -1227,6 +1227,6 @@ class WikiController extends Controller
             WikiFavorites::create([ 'project_key' => $project_key, 'wid' => $id, 'user' => $cur_user ]);
         }
 
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id, 'user' => $cur_user, 'favorited' => $flag]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id, 'user' => $cur_user, 'favorited' => $flag]]);
     }
 }

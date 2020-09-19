@@ -31,7 +31,7 @@ class TypeController extends Controller
         $workflows = Provider::getWorkflowList($project_key, ['name']);
         $options = [ 'screens' => $screens, 'workflows' => $workflows ];
 
-        return Response()->json([ 'ecode' => 0, 'data' => $types, 'options' => $options ]);
+        return response()->json([ 'ecode' => 0, 'data' => $types, 'options' => $options ]);
     }
 
     /**
@@ -88,7 +88,7 @@ class TypeController extends Controller
         //}
 
         $type = Type::create([ 'project_key' => $project_key, 'sn' => time() ] + $request->all());
-        return Response()->json(['ecode' => 0, 'data' => $type]);
+        return response()->json(['ecode' => 0, 'data' => $type]);
     }
 
     /**
@@ -104,7 +104,7 @@ class TypeController extends Controller
         //{
         //    throw new \UnexpectedValueException('the type does not exist or is not in the project.', -10002);
         //}
-        return Response()->json(['ecode' => 0, 'data' => $type]);
+        return response()->json(['ecode' => 0, 'data' => $type]);
     }
 
     /**
@@ -185,7 +185,7 @@ class TypeController extends Controller
         $new_type = Type::find($id);
         $new_type->is_used = $this->isFieldUsedByIssue($project_key, 'type', $new_type->toArray());
 
-        return Response()->json(['ecode' => 0, 'data' => $new_type]);
+        return response()->json(['ecode' => 0, 'data' => $new_type]);
     }
 
     /**
@@ -209,7 +209,7 @@ class TypeController extends Controller
         }
 
         Type::destroy($id);
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
     }
 
     /**
@@ -262,6 +262,6 @@ class TypeController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence_types ?: null, 'default' => $default_type_id ?: null ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence_types ?: null, 'default' => $default_type_id ?: null ]]);
     }
 }

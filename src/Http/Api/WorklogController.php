@@ -29,7 +29,7 @@ class WorklogController extends Controller
             ->where('issue_id', $issue_id)
             ->orderBy('recorded_at', $sort)
             ->get();
-        return Response()->json(['ecode' => 0, 'data' => $worklogs, 'options' => [ 'current_time' => time() ]]);
+        return response()->json(['ecode' => 0, 'data' => $worklogs, 'options' => [ 'current_time' => time() ]]);
     }
 
     /**
@@ -41,7 +41,7 @@ class WorklogController extends Controller
     public function store(Request $request, $project_key, $issue_id)
     {
         if (!$this->isPermissionAllowed($project_key, 'add_worklog')) {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         $values = [];
@@ -118,7 +118,7 @@ class WorklogController extends Controller
         // trigger event of issue worklog added
         Event::fire(new IssueEvent($project_key, $issue_id, $recorder, [ 'event_key' => 'add_worklog', 'data' => $values ]));
 
-        return Response()->json(['ecode' => 0, 'data' => $worklog]);
+        return response()->json(['ecode' => 0, 'data' => $worklog]);
     }
 
     /**
@@ -134,7 +134,7 @@ class WorklogController extends Controller
         //{
         //    throw new \UnexpectedValueException('the worklog does not exist or is not in the project.', -10002);
         //}
-        return Response()->json(['ecode' => 0, 'data' => $worklog]);
+        return response()->json(['ecode' => 0, 'data' => $worklog]);
     }
 
     /**
@@ -154,7 +154,7 @@ class WorklogController extends Controller
 
         if (!$this->isPermissionAllowed($project_key, 'edit_worklog') && !($worklog->recorder['id'] == $this->user->id && $this->isPermissionAllowed($project_key, 'edit_self_worklog'))) 
         {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         $values = [];
@@ -235,7 +235,7 @@ class WorklogController extends Controller
         $cur_user = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
         Event::fire(new IssueEvent($project_key, $issue_id, $cur_user, [ 'event_key' => 'edit_worklog', 'data' => $worklog->toArray() ]));
 
-        return Response()->json(['ecode' => 0, 'data' => $worklog]);
+        return response()->json(['ecode' => 0, 'data' => $worklog]);
     }
 
     /**
@@ -254,7 +254,7 @@ class WorklogController extends Controller
 
         if (!$this->isPermissionAllowed($project_key, 'delete_worklog') && !($worklog->recorder['id'] == $this->user->id && $this->isPermissionAllowed($project_key, 'delete_self_worklog'))) 
         {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         Worklog::destroy($id);
@@ -263,6 +263,6 @@ class WorklogController extends Controller
         $cur_user = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
         Event::fire(new IssueEvent($project_key, $issue_id, $cur_user, [ 'event_key' => 'del_worklog', 'data' => $worklog->toArray() ]));
 
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
     }
 }

@@ -84,7 +84,7 @@ class ReportController extends Controller
             $filters[$mode] = $this->convFilters($project_key, $some_filters);
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $filters ]);
+        return response()->json([ 'ecode' => 0, 'data' => $filters ]);
     }
 
     /**
@@ -185,7 +185,7 @@ class ReportController extends Controller
             $filters = isset($res->filters) ? $res->filters : [];
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $filters ]);
+        return response()->json([ 'ecode' => 0, 'data' => $filters ]);
     }
 
     /**
@@ -438,7 +438,7 @@ class ReportController extends Controller
            ->orderBy('recorded_at', 'desc')
            ->get();
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'total' => $total, 'parts' => $parts ] ]);
+        return response()->json(['ecode' => 0, 'data' => [ 'total' => $total, 'parts' => $parts ] ]);
     }
 
     /**
@@ -480,7 +480,7 @@ class ReportController extends Controller
 
         usort($new_results, function ($a, $b) { return $a['no'] <= $b['no']; });
 
-        return Response()->json([ 'ecode' => 0, 'data' => $new_results ]);
+        return response()->json([ 'ecode' => 0, 'data' => $new_results ]);
     }
 
     /**
@@ -522,7 +522,7 @@ class ReportController extends Controller
             $new_results[] = [ 'user' => [ 'id' => 'other', 'name' => '' ], 'value' => $other_val ];
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $new_results ]);
+        return response()->json([ 'ecode' => 0, 'data' => $new_results ]);
     }
 
     /**
@@ -547,7 +547,7 @@ class ReportController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => $worklogs ]);
+        return response()->json(['ecode' => 0, 'data' => $worklogs ]);
     }
 
      /* get timetracks report by project_key.
@@ -617,7 +617,7 @@ class ReportController extends Controller
             $new_issues[] = $tmp;
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $new_issues ]);
+        return response()->json([ 'ecode' => 0, 'data' => $new_issues ]);
     }
 
     /**
@@ -849,7 +849,7 @@ class ReportController extends Controller
             }
         }
 
-        return Response()->json([ 
+        return response()->json([ 
             'ecode' => 0, 
             'data' => array_values($results), 
             'options' => [ 'trend_start_stat_date' => date('Y/m/d', $start_stat_time), 'trend_end_stat_date' => date('Y/m/d', $end_stat_time) ] 
@@ -1239,7 +1239,7 @@ class ReportController extends Controller
                 }
             }
         }
-        return Response()->json([ 'ecode' => 0, 'data' => $this->arrangeRegressionData($results, $project_key, $dimension) ]);
+        return response()->json([ 'ecode' => 0, 'data' => $this->arrangeRegressionData($results, $project_key, $dimension) ]);
     }
 
     /* init the X,Y data by dimension.
@@ -1480,6 +1480,6 @@ class ReportController extends Controller
             }
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' =>  array_values($results) ]);
+        return response()->json([ 'ecode' => 0, 'data' =>  array_values($results) ]);
     }
 }

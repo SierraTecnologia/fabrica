@@ -39,7 +39,7 @@ class DirectoryController extends Controller
                 unset($directories[$k]['configs']['admin_password']);
             }
         }
-        return Response()->json([ 'ecode' => 0, 'data' => $directories ]);
+        return response()->json([ 'ecode' => 0, 'data' => $directories ]);
     }
 
     /**
@@ -141,7 +141,7 @@ class DirectoryController extends Controller
         $configs['group_membership_attr'] = $group_membership_attr;
 
         $directory = Directory::create([ 'name' => $name, 'type' => 'OpenLDAP', 'invalid_flag' => 0, 'configs' => $configs ]);
-        return Response()->json([ 'ecode' => 0, 'data' => $directory ]);
+        return response()->json([ 'ecode' => 0, 'data' => $directory ]);
     }
 
     /**
@@ -157,7 +157,7 @@ class DirectoryController extends Controller
         {
             throw new \UnexpectedValueException('the directory does not exist.', -10314);
         }
-        return Response()->json([ 'ecode' => 0, 'data' => $directory ]);
+        return response()->json([ 'ecode' => 0, 'data' => $directory ]);
     }
 
     /**
@@ -391,7 +391,7 @@ class DirectoryController extends Controller
         }
 
         Directory::destroy($id);
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'id' => $id ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'id' => $id ] ]);
     }
 
     /**
@@ -416,7 +416,7 @@ class DirectoryController extends Controller
         ];
 
         $ret = LDAP::test($configs);
-        return Response()->json([ 'ecode' => 0, 'data' => array_pop($ret) ]);
+        return response()->json([ 'ecode' => 0, 'data' => array_pop($ret) ]);
     }
 
     /**
@@ -455,6 +455,6 @@ class DirectoryController extends Controller
             throw new \UnexpectedValueException('the group sync failed.', -10317);
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'user' => $sync_info['user'], 'group' => $sync_info['group'] ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'user' => $sync_info['user'], 'group' => $sync_info['group'] ] ]);
     }
 }

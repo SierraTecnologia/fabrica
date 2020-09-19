@@ -112,6 +112,6 @@ class ActivityController extends Controller
                 $cache_issues[$activity['issue_id']] = $issue;
             }
         }
-        return Response()->json([ 'ecode' => 0, 'data' => parent::arrange($activities), 'options' => [ 'current_time' => time() ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => parent::arrange($activities), 'options' => [ 'current_time' => time() ] ]);
     }
 }

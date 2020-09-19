@@ -39,7 +39,7 @@ class SyssettingController extends Controller
         {
             $syssetting['mailserver']['smtp']['password'] = '******';
         }
-        return Response()->json([ 'ecode' => 0, 'data' => $syssetting ]);
+        return response()->json([ 'ecode' => 0, 'data' => $syssetting ]);
     }
 
     /**
@@ -144,7 +144,7 @@ class SyssettingController extends Controller
         $syssetting->smtp = array_merge($syssetting->smtp, [ 'send_auth_pwd' => $pwd ]);
         $syssetting->save();
 
-        return Response()->json([ 'ecode' => 0, 'data' => SysSetting::first() ]);
+        return response()->json([ 'ecode' => 0, 'data' => SysSetting::first() ]);
     }
 
     /**
@@ -204,7 +204,7 @@ class SyssettingController extends Controller
             throw new Exception('send mail failed.', -15200);
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => '' ]);
+        return response()->json([ 'ecode' => 0, 'data' => '' ]);
     }
 
     /**

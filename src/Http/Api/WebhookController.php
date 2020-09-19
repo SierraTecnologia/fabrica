@@ -26,7 +26,7 @@ class WebhookController extends Controller
 
         if (!in_array($type, ['gitlab', 'github']))
         {
-            return Response()->json([ 'ecode' => -2, 'emsg' => 'the request url has error.' ]);
+            return response()->json([ 'ecode' => -2, 'emsg' => 'the request url has error.' ]);
         }
 
         $external_user = ExternalUsers::where('project_key', $project_key)
@@ -34,11 +34,11 @@ class WebhookController extends Controller
             ->first();
         if (!$external_user)
         {
-            return Response()->json([ 'ecode' => -3, 'emsg' => 'the user has not been used.' ]);
+            return response()->json([ 'ecode' => -3, 'emsg' => 'the user has not been used.' ]);
         } 
         else if ($external_user->status !== 'enabled')
         {
-            return Response()->json([ 'ecode' => -4, 'emsg' => 'the user has been disabled.' ]);
+            return response()->json([ 'ecode' => -4, 'emsg' => 'the user has been disabled.' ]);
         }
 
         $payload = file_get_contents('php://input');
@@ -46,13 +46,13 @@ class WebhookController extends Controller
         {
             if ($_SERVER['HTTP_X_GITLAB_EVENT'] !== 'Push Hook')
             { 
-                return Response()->json([ 'ecode' => -5, 'emsg' => 'the event has error.' ]);
+                return response()->json([ 'ecode' => -5, 'emsg' => 'the event has error.' ]);
             }
 
             $token = $external_user->pwd ?: '';
             if (!$token || $token !== $_SERVER['HTTP_X_GITLAB_TOKEN']) 
             {
-                return Response()->json([ 'ecode' => -1, 'emsg' => 'the token has error.' ]);
+                return response()->json([ 'ecode' => -1, 'emsg' => 'the token has error.' ]);
             }
 
             $push = new GitLabPush(json_decode($payload, true));
@@ -62,19 +62,19 @@ class WebhookController extends Controller
         {
             if ($_SERVER['HTTP_X_GITHUB_EVENT'] !== 'push')
             {
-                return Response()->json([ 'ecode' => -5, 'emsg' => 'the event has error.' ]);
+                return response()->json([ 'ecode' => -5, 'emsg' => 'the event has error.' ]);
             }
 
             $token = $external_user->pwd ?: '';
             if (!$token)
             {
-                return Response()->json([ 'ecode' => -1, 'emsg' => 'the token can not be empty.' ]);
+                return response()->json([ 'ecode' => -1, 'emsg' => 'the token can not be empty.' ]);
             }
 
             $signature = 'sha1=' . hash_hmac('sha1', $payload, $token);
             if ($signature !== $_SERVER['HTTP_X_HUB_SIGNATURE'])
             {
-                return Response()->json([ 'ecode' => -1, 'emsg' => 'the token has error.' ]);
+                return response()->json([ 'ecode' => -1, 'emsg' => 'the token has error.' ]);
             }
 
             $push = new GitHubPush(json_decode($payload, true));
@@ -97,6 +97,6 @@ class WebhookController extends Controller
             ->orderBy('committed_at', $sort)
             ->get();
 
-        return Response()->json([ 'ecode' => 0, 'data' => parent::arrange($commits), 'options' => [ 'current_time' => time() ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => parent::arrange($commits), 'options' => [ 'current_time' => time() ] ]);
     }
 }

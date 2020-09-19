@@ -20,7 +20,7 @@ class WebhooksController extends Controller
     public function index($project_key)
     {
         $Webhooks = Webhooks::where('project_key', $project_key)->get();
-        return Response()->json(['ecode' => 0, 'data' => $Webhooks]);
+        return response()->json(['ecode' => 0, 'data' => $Webhooks]);
     }
 
     /**
@@ -56,7 +56,7 @@ class WebhooksController extends Controller
         }
 
         $webhook = Webhooks::create([ 'project_key' => $project_key, 'status' => 'enabled' ] + $insValues);
-        return Response()->json(['ecode' => 0, 'data' => $webhook]);
+        return response()->json(['ecode' => 0, 'data' => $webhook]);
     }
 
     /**
@@ -85,7 +85,7 @@ class WebhooksController extends Controller
             $webhook->fill($updValues)->save();
         }
 
-        return Response()->json(['ecode' => 0, 'data' => Webhooks::find($id)]);
+        return response()->json(['ecode' => 0, 'data' => Webhooks::find($id)]);
     }
 
     /**
@@ -103,6 +103,6 @@ class WebhooksController extends Controller
         }
 
         Webhooks::destroy($id);
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
     }
 }

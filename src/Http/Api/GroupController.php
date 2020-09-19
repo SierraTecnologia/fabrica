@@ -37,7 +37,7 @@ class GroupController extends Controller
                 ->get([ 'name' ]);
 
         }
-        return Response()->json([ 'ecode' => 0, 'data' => $groups ]);
+        return response()->json([ 'ecode' => 0, 'data' => $groups ]);
     }
 
     /**
@@ -72,7 +72,7 @@ class GroupController extends Controller
             $group->users = EloquentUser::find($group->users ?: []);
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $groups, 'options' => [ 'total' => $total, 'sizePerPage' => $page_size, 'directories' => Directory::all() ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => $groups, 'options' => [ 'total' => $total, 'sizePerPage' => $page_size, 'directories' => Directory::all() ] ]);
     }
 
     /**
@@ -90,7 +90,7 @@ class GroupController extends Controller
         }
 
         $group = Group::create($request->all());
-        return Response()->json([ 'ecode' => 0, 'data' => $group ]);
+        return response()->json([ 'ecode' => 0, 'data' => $group ]);
     }
 
     /**
@@ -108,7 +108,7 @@ class GroupController extends Controller
         }
         $group->users = EloquentUser::find($group->users);
 
-        return Response()->json([ 'ecode' => 0, 'data' => $group ]);
+        return response()->json([ 'ecode' => 0, 'data' => $group ]);
     }
 
     /**
@@ -172,7 +172,7 @@ class GroupController extends Controller
 
         Group::destroy($id);
         Event::fire(new DelGroupEvent($id));
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'id' => $id ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'id' => $id ] ]);
     }
 
     /**
@@ -203,6 +203,6 @@ class GroupController extends Controller
                 $deleted_ids[] = $id;
             }
         }
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $deleted_ids ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $deleted_ids ] ]);
     }
 }

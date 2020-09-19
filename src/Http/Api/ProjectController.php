@@ -156,7 +156,7 @@ class ProjectController extends Controller
         $syssetting = SysSetting::first();
         $allow_create_project = isset($syssetting->properties['allow_create_project']) ? $syssetting->properties['allow_create_project'] : 0;
 
-        return Response()->json([ 'ecode' => 0, 'data' => $projects, 'options' => [ 'limit' => $limit, 'allow_create_project' => $allow_create_project ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => $projects, 'options' => [ 'limit' => $limit, 'allow_create_project' => $allow_create_project ] ]);
     }
 
     /**
@@ -178,7 +178,7 @@ class ProjectController extends Controller
             $newPrincipals[] = $tmp;
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'principals' => $newPrincipals ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'principals' => $newPrincipals ] ]);
     }
 
     /**
@@ -195,7 +195,7 @@ class ProjectController extends Controller
         }
         if ($project->principal['id'] !== $this->user->id && !$this->user->hasAccess('sys_admin'))
         {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         Schema::collection('issue_' . $project->key, function($col) {
@@ -230,7 +230,7 @@ class ProjectController extends Controller
             $col->index('parent');
         });
 
-        return Response()->json([ 'ecode' => 0, 'data' => $project ]);
+        return response()->json([ 'ecode' => 0, 'data' => $project ]);
     }
 
     /**
@@ -285,7 +285,7 @@ class ProjectController extends Controller
                 $col->index('parent');
             });
         }
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $ids ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $ids ] ]);
     }
 
     /**
@@ -315,7 +315,7 @@ class ProjectController extends Controller
 
         Project::whereRaw([ '_id' => [ '$in' => $newIds ] ])->update([ 'status' => $status ]);
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $ids ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $ids ] ]);
     }
 
     /**
@@ -337,7 +337,7 @@ class ProjectController extends Controller
 
         $projects = $query->take(10)->get([ 'name', 'key' ]);
 
-        return Response()->json([ 'ecode' => 0, 'data' => parent::arrange($projects) ]);
+        return response()->json([ 'ecode' => 0, 'data' => parent::arrange($projects) ]);
     }
 
     /**
@@ -383,7 +383,7 @@ class ProjectController extends Controller
             $projects[$key]['principal']['nameAndEmail'] = $project['principal']['name'] . '(' . $project['principal']['email'] . ')';
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => parent::arrange($projects), 'options' => [ 'total' => $total, 'sizePerPage' => $page_size ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => parent::arrange($projects), 'options' => [ 'total' => $total, 'sizePerPage' => $page_size ] ]);
     }
 
     /**
@@ -398,7 +398,7 @@ class ProjectController extends Controller
         $allow_create_project = isset($syssetting->properties['allow_create_project']) ? $syssetting->properties['allow_create_project'] : 0;        
         if ($allow_create_project !== 1 && !$this->user->hasAccess('sys_admin'))
         {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         $insValues = [];
@@ -458,7 +458,7 @@ class ProjectController extends Controller
             $project->principal = array_merge($insValues['principal'], [ 'nameAndEmail' => $insValues['principal']['name'] . '(' . $insValues['principal']['email'] . ')' ]);
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $project ]);
+        return response()->json([ 'ecode' => 0, 'data' => $project ]);
     }
 
     /**
@@ -488,12 +488,12 @@ class ProjectController extends Controller
         $project = Project::where('key', $key)->first();
         if (!$project)
         {
-            return Response()->json(['ecode' => -14004, 'emsg' => 'the project does not exist.']);
+            return response()->json(['ecode' => -14004, 'emsg' => 'the project does not exist.']);
         }
 
         if ($project->status !== 'active')
         {
-            return Response()->json(['ecode' => -14009, 'emsg' => 'the project has been closed.']);
+            return response()->json(['ecode' => -14009, 'emsg' => 'the project has been closed.']);
         }
 
         // get action allow of the project.
@@ -541,7 +541,7 @@ class ProjectController extends Controller
             AccessProjectLog::create([ 'project_key' => $key, 'user_id' => $this->user->id, 'latest_access_time' => time() ]);
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $project, 'options' => parent::arrange([ 'permissions' => $permissions ]) ]);
+        return response()->json([ 'ecode' => 0, 'data' => $project, 'options' => parent::arrange([ 'permissions' => $permissions ]) ]);
     }
 
     /**
@@ -599,7 +599,7 @@ class ProjectController extends Controller
         }
         if ($project->principal['id'] !== $this->user->id && !$this->user->hasAccess('sys_admin'))
         {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         $old_principal = $project->principal;
@@ -614,7 +614,7 @@ class ProjectController extends Controller
             }
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => Project::find($id) ]);
+        return response()->json([ 'ecode' => 0, 'data' => Project::find($id) ]);
     }
 
     /**
@@ -662,7 +662,7 @@ class ProjectController extends Controller
         // delete from the project table
         Project::destroy($id);
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'id' => $id ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'id' => $id ] ]);
     }
 
     /**
@@ -674,6 +674,6 @@ class ProjectController extends Controller
     public function checkKey($key)
     {
         $isExisted = Project::Where('key', $key)->exists(); 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'flag' => $isExisted ? '2' : '1' ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'flag' => $isExisted ? '2' : '1' ] ]);
     }
 }

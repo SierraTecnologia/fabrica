@@ -29,7 +29,7 @@ class CommentsController extends Controller
             ->orderBy('created_at', $sort)
             ->get();
 
-        return Response()->json([ 'ecode' => 0, 'data' => parent::arrange($comments), 'options' => [ 'current_time' => time() ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => parent::arrange($comments), 'options' => [ 'current_time' => time() ] ]);
     }
 
     /**
@@ -42,7 +42,7 @@ class CommentsController extends Controller
     {
         if (!$this->isPermissionAllowed($project_key, 'add_comments')) 
         {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         $contents = $request->input('contents');
@@ -61,7 +61,7 @@ class CommentsController extends Controller
         Event::fire(new IssueEvent($project_key, $issue_id, $creator, [ 'event_key' => 'add_comments', 'data' => array_only($request->all(), [ 'contents', 'atWho' ]) ])); 
 
         $comments = DB::collection($table)->find($id);
-        return Response()->json([ 'ecode' => 0, 'data' => parent::arrange($comments) ]);
+        return response()->json([ 'ecode' => 0, 'data' => parent::arrange($comments) ]);
     }
 
     /**
@@ -73,7 +73,7 @@ class CommentsController extends Controller
     public function show($project_key, $id)
     {
         $comments = DB::collection('comments_' . $project_key)->find($id);
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($comments)]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($comments)]);
     }
 
     /**
@@ -120,7 +120,7 @@ class CommentsController extends Controller
             {
                 if (!$this->isPermissionAllowed($project_key, 'add_comments')) 
                 {
-                    return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                    return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
                 }
 
                 $reply_id = md5(microtime() . $this->user->id); 
@@ -139,7 +139,7 @@ class CommentsController extends Controller
                 {
                     if (!$this->isPermissionAllowed($project_key, 'edit_comments') && !($comments['reply'][$index]['creator']['id'] == $this->user->id && $this->isPermissionAllowed($project_key, 'edit_self_comments')))
                     {
-                        return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                        return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
                     }
                
                     $comments['reply'][$index] = array_merge($comments['reply'][$index], [ 'updated_at' => time(), 'edited_flag' => 1 ] + array_only($request->all(), [ 'contents', 'atWho' ]));
@@ -162,7 +162,7 @@ class CommentsController extends Controller
                 {
                     if (!$this->isPermissionAllowed($project_key, 'delete_comments') && !($comments['reply'][$index]['creator']['id'] == $this->user->id && $this->isPermissionAllowed($project_key, 'delete_self_comments')))
                     {
-                        return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                        return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
                     }
 
                     $changedComments = array_only($comments['reply'][$index], [ 'contents', 'atWho' ]) + [ 'to' => $comments['creator'] ];
@@ -179,7 +179,7 @@ class CommentsController extends Controller
         {
             if (!$this->isPermissionAllowed($project_key, 'edit_comments') && !($comments['creator']['id'] == $this->user->id && $this->isPermissionAllowed($project_key, 'edit_self_comments')))
             {
-                return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+                return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
             }
 
             DB::collection($table)->where('_id', $id)->update([ 'updated_at' => time(), 'edited_flag' => 1 ] + array_only($request->all(), [ 'contents', 'atWho' ]) );
@@ -200,7 +200,7 @@ class CommentsController extends Controller
         }
         Event::fire(new IssueEvent($project_key, $issue_id, $user, [ 'event_key' => $event_key, 'data' => $changedComments ]));
 
-        return Response()->json([ 'ecode' => 0, 'data' => parent::arrange(DB::collection($table)->find($id)) ]);
+        return response()->json([ 'ecode' => 0, 'data' => parent::arrange(DB::collection($table)->find($id)) ]);
     }
 
     /**
@@ -220,7 +220,7 @@ class CommentsController extends Controller
 
         if (!$this->isPermissionAllowed($project_key, 'manage_project') && !($comments['creator']['id'] == $this->user->id && $this->isPermissionAllowed($project_key, 'delete_self_comments'))) 
         {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         DB::collection($table)->where('_id', $id)->delete();
@@ -229,7 +229,7 @@ class CommentsController extends Controller
         // trigger the event of del comments
         Event::fire(new IssueEvent($project_key, $issue_id, $user, [ 'event_key' => 'del_comments', 'data' => array_only($comments, [ 'contents', 'atWho' ]) ])); 
 
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
     }
 
     /**

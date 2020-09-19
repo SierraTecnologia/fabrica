@@ -28,7 +28,7 @@ class ResolutionController extends Controller
         {
             $resolutions[$key]['is_used'] = $this->isFieldUsedByIssue($project_key, 'resolution', $resolution);
         }
-        return Response()->json(['ecode' => 0, 'data' => $resolutions]);
+        return response()->json(['ecode' => 0, 'data' => $resolutions]);
     }
 
     /**
@@ -53,7 +53,7 @@ class ResolutionController extends Controller
         $resolution = Resolution::create([ 'project_key' => $project_key, 'sn' => time() ] + $request->all());
         // trigger to change resolution field config
         //Event::fire(new ResolutionConfigChangeEvent($project_key));
-        return Response()->json(['ecode' => 0, 'data' => $resolution]);
+        return response()->json(['ecode' => 0, 'data' => $resolution]);
     }
 
     /**
@@ -69,7 +69,7 @@ class ResolutionController extends Controller
         //{
         //    throw new \UnexpectedValueException('the resolution does not exist or is not in the project.', -10002);
         //}
-        return Response()->json(['ecode' => 0, 'data' => $resolution]);
+        return response()->json(['ecode' => 0, 'data' => $resolution]);
     }
 
     /**
@@ -108,7 +108,7 @@ class ResolutionController extends Controller
         $resolution->fill($request->except(['project_key']))->save();
         // trigger to change resolution field config
         //Event::fire(new ResolutionConfigChangeEvent($project_key));
-        return Response()->json(['ecode' => 0, 'data' => Resolution::find($id)]);
+        return response()->json(['ecode' => 0, 'data' => Resolution::find($id)]);
     }
 
     /**
@@ -163,7 +163,7 @@ class ResolutionController extends Controller
 
         // trigger to change resolution field config
         // Event::fire(new ResolutionConfigChangeEvent($project_key));
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
     }
 
     /**
@@ -218,7 +218,7 @@ class ResolutionController extends Controller
              ResolutionProperty::create([ 'project_key' => $project_key ] + $properties);
         }
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence ?: null, 'default' => $defaultValue ?: null ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence ?: null, 'default' => $defaultValue ?: null ]]);
     }
 
     /**
@@ -271,7 +271,7 @@ class ResolutionController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence ?: null, 'default' => $default_resolution_id ?: null ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence ?: null, 'default' => $default_resolution_id ?: null ]]);
     }
 
     /**
@@ -283,7 +283,7 @@ class ResolutionController extends Controller
     {
         if ($project_key !== '$_sys_$')
         {
-            return Response()->json(['ecode' => 0, 'data' => [] ]);
+            return response()->json(['ecode' => 0, 'data' => [] ]);
         }
 
         $res = [];
@@ -300,6 +300,6 @@ class ResolutionController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => $res ]);
+        return response()->json(['ecode' => 0, 'data' => $res ]);
     }
 }

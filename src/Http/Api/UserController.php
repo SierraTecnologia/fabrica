@@ -58,11 +58,11 @@ class UserController extends Controller
         $user = Sentinel::authenticate([ 'email' => $email, 'password' => $password ]);
         if ($user)
         {
-            return Response()->json([ 'ecode' => 0, 'data' => $user ]);
+            return response()->json([ 'ecode' => 0, 'data' => $user ]);
         }
         else
         {
-            return Response()->json([ 'ecode' => -10000, 'data' => [] ]);
+            return response()->json([ 'ecode' => -10000, 'data' => [] ]);
         }
     }
 
@@ -98,7 +98,7 @@ class UserController extends Controller
                 }
             }
         }
-        return Response()->json([ 'ecode' => 0, 'data' => $users ]);
+        return response()->json([ 'ecode' => 0, 'data' => $users ]);
     }
 
     /**
@@ -155,7 +155,7 @@ class UserController extends Controller
 
             $users[] = $tmp;
         }
-        return Response()->json([ 'ecode' => 0, 'data' => $users, 'options' => [ 'total' => $total, 'sizePerPage' => $page_size, 'groups' => Group::all(), 'directories' => Directory::all() ] ]); 
+        return response()->json([ 'ecode' => 0, 'data' => $users, 'options' => [ 'total' => $total, 'sizePerPage' => $page_size, 'groups' => Group::all(), 'directories' => Directory::all() ] ]); 
     }
 
     /**
@@ -187,7 +187,7 @@ class UserController extends Controller
         }
 
         $user = Sentinel::register([ 'first_name' => $first_name, 'email' => $email, 'password' => $password ], true);
-        return Response()->json([ 'ecode' => 0, 'data' => $user ]);
+        return response()->json([ 'ecode' => 0, 'data' => $user ]);
     }
 
     /**
@@ -218,7 +218,7 @@ class UserController extends Controller
         $user = Sentinel::register([ 'first_name' => $first_name, 'email' => $email, 'password' => 'actionview', 'phone' => $phone ], true);
         $user->status = Activation::completed($user) ? 'active' : 'unactivated';
 
-        return Response()->json([ 'ecode' => 0, 'data' => $user ]);
+        return response()->json([ 'ecode' => 0, 'data' => $user ]);
     }
 
     /**
@@ -288,7 +288,7 @@ class UserController extends Controller
             }
         });
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'ok' => true ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'ok' => true ] ]);
     }
 
     /**
@@ -299,7 +299,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return Response()->json([ 'ecode' => 0, 'data' => Sentinel::findById($id) ]);
+        return response()->json([ 'ecode' => 0, 'data' => Sentinel::findById($id) ]);
     }
 
     /**
@@ -356,7 +356,7 @@ class UserController extends Controller
 
         $user->groups = array_column(Group::whereRaw([ 'users' => $user->id ])->get([ 'name' ])->toArray() ?: [], 'name');
 
-        return Response()->json([ 'ecode' => 0, 'data' => $user ]);
+        return response()->json([ 'ecode' => 0, 'data' => $user ]);
     }
 
     /**
@@ -379,7 +379,7 @@ class UserController extends Controller
 
         $user->delete();
         Event::fire(new DelUserEvent($id));
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'id' => $id ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'id' => $id ] ]);
     }
 
     /**
@@ -411,7 +411,7 @@ class UserController extends Controller
                 $deleted_ids[] = $id;
             }
         }
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $deleted_ids ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $deleted_ids ] ]);
     }
 
     /**
@@ -443,7 +443,7 @@ class UserController extends Controller
                 $new_ids[] = $id;
             }
         }
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $new_ids ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $new_ids ] ]);
     }
 
     /**
@@ -468,7 +468,7 @@ class UserController extends Controller
         }
 
         $user = Sentinel::update($user, [ 'password' => 'actionview' ]);
-        return Response()->json([ 'ecode' => 0, 'data' => $user ]);
+        return response()->json([ 'ecode' => 0, 'data' => $user ]);
     }
 
     /**
@@ -543,7 +543,7 @@ class UserController extends Controller
             'expired_at' => time() + 24 * 60 * 60,
         ]);
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'sendto_email' => $obscured_email ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'sendto_email' => $obscured_email ] ]);
     }
 
     /**
@@ -641,7 +641,7 @@ class UserController extends Controller
             throw new \UnexpectedValueException('the user is external sync user.', -10012);
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'email' => $reset_code['email'] ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'email' => $reset_code['email'] ] ]);
     }
 
     /**
@@ -705,7 +705,7 @@ class UserController extends Controller
         $reset_code->invalid_flag = 1;
         $reset_code->save();
         
-        return Response()->json([ 'ecode' => 0, 'data' => $user ]);
+        return response()->json([ 'ecode' => 0, 'data' => $user ]);
     }
 
     /**

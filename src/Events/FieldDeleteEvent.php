@@ -3,12 +3,18 @@
 namespace Fabrica\Events;
 
 use Fabrica\Events\Event;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Queue\SerializesModels;
 
-class FieldDeleteEvent extends Event
+class FieldDeleteEvent extends FieldChangeEvent
 {
     use SerializesModels;
+
+    public $project_key;
+
+    public $field_key;
+
+    public $field_type;
 
     /**
      * Create a new event instance.

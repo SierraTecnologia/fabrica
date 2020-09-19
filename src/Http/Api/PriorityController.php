@@ -28,7 +28,7 @@ class PriorityController extends Controller
         {
             $priorities[$key]['is_used'] = $this->isFieldUsedByIssue($project_key, 'priority', $priority); 
         }
-        return Response()->json(['ecode' => 0, 'data' => $priorities]);
+        return response()->json(['ecode' => 0, 'data' => $priorities]);
     }
 
     /**
@@ -53,7 +53,7 @@ class PriorityController extends Controller
         $priority = Priority::create([ 'project_key' => $project_key, 'sn' => time() ] + $request->all());
         // trigger to change priority field config
         // Event::fire(new PriorityConfigChangeEvent($project_key));
-        return Response()->json(['ecode' => 0, 'data' => $priority]);
+        return response()->json(['ecode' => 0, 'data' => $priority]);
     }
 
     /**
@@ -69,7 +69,7 @@ class PriorityController extends Controller
         //{
         //    throw new \UnexpectedValueException('the priority does not exist or is not in the project.', -10002);
         //}
-        return Response()->json(['ecode' => 0, 'data' => $priority]);
+        return response()->json(['ecode' => 0, 'data' => $priority]);
     }
 
     /**
@@ -108,7 +108,7 @@ class PriorityController extends Controller
         $priority->fill($request->except(['project_key']))->save();
         // trigger to change priority field config
         // Event::fire(new PriorityConfigChangeEvent($project_key));
-        return Response()->json(['ecode' => 0, 'data' => Priority::find($id)]);
+        return response()->json(['ecode' => 0, 'data' => Priority::find($id)]);
     }
 
     /**
@@ -163,7 +163,7 @@ class PriorityController extends Controller
 
         // trigger to change priority field config
         // Event::fire(new PriorityConfigChangeEvent($project_key));
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
     }
 
     /**
@@ -218,7 +218,7 @@ class PriorityController extends Controller
              PriorityProperty::create([ 'project_key' => $project_key ] + $properties);
         }
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence ?: null, 'default' => $defaultValue ?: null ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence ?: null, 'default' => $defaultValue ?: null ]]);
     }
 
     /**
@@ -271,7 +271,7 @@ class PriorityController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence ?: null, 'default' => $default_priority_id ?: null ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence ?: null, 'default' => $default_priority_id ?: null ]]);
     }
 
     /**
@@ -283,7 +283,7 @@ class PriorityController extends Controller
     {
         if ($project_key !== '$_sys_$')
         {
-            return Response()->json(['ecode' => 0, 'data' => [] ]);
+            return response()->json(['ecode' => 0, 'data' => [] ]);
         }
 
         $res = [];
@@ -300,6 +300,6 @@ class PriorityController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => $res ]);
+        return response()->json(['ecode' => 0, 'data' => $res ]);
     }
 }

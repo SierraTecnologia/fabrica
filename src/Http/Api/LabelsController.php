@@ -49,7 +49,7 @@ class LabelsController extends Controller
             $label->all_cnt = $all_cnt;
         }
             
-        return Response()->json([ 'ecode' => 0, 'data' => $labels ]);
+        return response()->json([ 'ecode' => 0, 'data' => $labels ]);
     }
 
     /**
@@ -72,7 +72,7 @@ class LabelsController extends Controller
         }
 
         $label = Labels::create([ 'project_key' => $project_key ] + $request->all());
-        return Response()->json(['ecode' => 0, 'data' => $label]);
+        return response()->json(['ecode' => 0, 'data' => $label]);
     }
 
     /**
@@ -111,7 +111,7 @@ class LabelsController extends Controller
 
         $label->fill($request->except(['project_key']))->save();
 
-        return Response()->json(['ecode' => 0, 'data' => Labels::find($id)]);
+        return response()->json(['ecode' => 0, 'data' => Labels::find($id)]);
     }
 
     /**
@@ -165,7 +165,7 @@ class LabelsController extends Controller
 
         Labels::destroy($id);
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
 
         //if ($operate_flg === '1')
         //{
@@ -173,7 +173,7 @@ class LabelsController extends Controller
         //}
         //else
         //{
-        //    return Response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
+        //    return response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
         //}
     }
 

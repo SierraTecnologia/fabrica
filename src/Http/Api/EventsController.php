@@ -43,7 +43,7 @@ class EventsController extends Controller
             } 
         }
 
-        return Response()->json(['ecode' => 0, 'data' => $events, 'options' => [ 'roles' => $roles, 'users' => $users, 'single_user_fields' => $single_user_fields, 'multi_user_fields' => $multi_user_fields ]]);
+        return response()->json(['ecode' => 0, 'data' => $events, 'options' => [ 'roles' => $roles, 'users' => $users, 'single_user_fields' => $single_user_fields, 'multi_user_fields' => $multi_user_fields ]]);
     }
 
     /**
@@ -66,7 +66,7 @@ class EventsController extends Controller
         }
 
         $event = Events::create([ 'project_key' => $project_key, 'apply' => 'workflow' ] + $request->all());
-        return Response()->json(['ecode' => 0, 'data' => $event]);
+        return response()->json(['ecode' => 0, 'data' => $event]);
     }
 
     /**
@@ -78,7 +78,7 @@ class EventsController extends Controller
     public function show($project_key, $id)
     {
         $event = Events::find($id);
-        return Response()->json(['ecode' => 0, 'data' => $event]);
+        return response()->json(['ecode' => 0, 'data' => $event]);
     }
 
     /**
@@ -113,7 +113,7 @@ class EventsController extends Controller
         $event = Events::find($id);
         $event->notifications = $this->getNotifications($project_key, $id);
 
-        return Response()->json(['ecode' => 0, 'data' => $event]);
+        return response()->json(['ecode' => 0, 'data' => $event]);
     }
 
     /**
@@ -134,7 +134,7 @@ class EventsController extends Controller
         $en && $en->delete();
 
         Events::destroy($id);
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
     }
 
     /**
@@ -162,7 +162,7 @@ class EventsController extends Controller
         }
         $event->notifications = $this->getNotifications($project_key, $id);
 
-        return Response()->json(['ecode' => 0, 'data' => $event]);
+        return response()->json(['ecode' => 0, 'data' => $event]);
     }
 
     /**
@@ -199,6 +199,6 @@ class EventsController extends Controller
         $en = EventNotifications::where([ 'project_key' => '$_sys_$', 'event_id' => $event_id ])->first();
         $event['notifications'] = $en && isset($en->notifications) ? $en->notifications : [];
 
-        return Response()->json(['ecode' => 0, 'data' => $event]);
+        return response()->json(['ecode' => 0, 'data' => $event]);
     }
 }

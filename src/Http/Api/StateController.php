@@ -43,7 +43,7 @@ class StateController extends Controller
                 return $item['project_key'] === $project_key || $item['project_key'] === '$_sys_$';
             });
         }
-        return Response()->json(['ecode' => 0, 'data' => $states]);
+        return response()->json(['ecode' => 0, 'data' => $states]);
     }
 
     /**
@@ -72,7 +72,7 @@ class StateController extends Controller
         }
 
         $state = State::create([ 'project_key' => $project_key, 'sn' => time() ] + $request->all());
-        return Response()->json(['ecode' => 0, 'data' => $state]);
+        return response()->json(['ecode' => 0, 'data' => $state]);
     }
 
     /**
@@ -88,7 +88,7 @@ class StateController extends Controller
         //{
         //    throw new \UnexpectedValueException('the state does not exist or is not in the project.', -10002);
         //}
-        return Response()->json(['ecode' => 0, 'data' => $state]);
+        return response()->json(['ecode' => 0, 'data' => $state]);
     }
 
     /**
@@ -131,7 +131,7 @@ class StateController extends Controller
         }
 
         $state->fill($request->except(['project_key']))->save();
-        return Response()->json(['ecode' => 0, 'data' => State::find($id)]);
+        return response()->json(['ecode' => 0, 'data' => State::find($id)]);
     }
 
     /**
@@ -166,7 +166,7 @@ class StateController extends Controller
         }
 
         State::destroy($id);
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
     }
 
     /**
@@ -214,7 +214,7 @@ class StateController extends Controller
              StateProperty::create([ 'project_key' => $project_key ] + $properties);
         }
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence ]]);
     }
 
     /**
@@ -242,7 +242,7 @@ class StateController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'sequence' => $sequence ]]);
     }
 
     /**
@@ -254,7 +254,7 @@ class StateController extends Controller
     {
         if ($project_key !== '$_sys_$')
         {
-            return Response()->json(['ecode' => 0, 'data' => [] ]);
+            return response()->json(['ecode' => 0, 'data' => [] ]);
         }
 
         $res = [];
@@ -281,6 +281,6 @@ class StateController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => $res ]);
+        return response()->json(['ecode' => 0, 'data' => $res ]);
     }
 }

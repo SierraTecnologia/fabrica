@@ -92,11 +92,11 @@ class SessionController extends Controller
                 $user->latest_access_project = $latest_access_project->key;
             }
 
-            return Response()->json([ 'ecode' => 0, 'data' => [ 'user' => $user ] ]);
+            return response()->json([ 'ecode' => 0, 'data' => [ 'user' => $user ] ]);
         }
         else 
         {
-            return Response()->json([ 'ecode' => -10000, 'data' => [] ]);
+            return response()->json([ 'ecode' => -10000, 'data' => [] ]);
         }
     }
 
@@ -141,11 +141,11 @@ class SessionController extends Controller
             {
                 $user->latest_access_project = $latest_access_project->key;
             }
-            return Response()->json([ 'ecode' => 0, 'data' => [ 'user' => $user ] ]);
+            return response()->json([ 'ecode' => 0, 'data' => [ 'user' => $user ] ]);
         }
         else
         {
-            return Response()->json([ 'ecode' => -10001, 'data' => [ 'user' => [] ] ]);
+            return response()->json([ 'ecode' => -10001, 'data' => [ 'user' => [] ] ]);
         }
     }
 
@@ -158,6 +158,6 @@ class SessionController extends Controller
     public function destroy(Request $request)
     {
         Sentinel::logout();
-        return Response()->json([ 'ecode' => 0, 'data' => [] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [] ]);
     }
 }

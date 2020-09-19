@@ -205,7 +205,7 @@ class IssueController extends Controller
             $options['today'] = date('Y/m/d');
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => parent::arrange($issues), 'options' => $options ]);
+        return response()->json([ 'ecode' => 0, 'data' => parent::arrange($issues), 'options' => $options ]);
     }
 
     /**
@@ -260,7 +260,7 @@ class IssueController extends Controller
 
         $query->take($limit)->orderBy('created_at', 'desc');
         $issues = $query->get();
-        return Response()->json([ 'ecode' => 0, 'data' => parent::arrange($issues) ]);
+        return response()->json([ 'ecode' => 0, 'data' => parent::arrange($issues) ]);
     }
 
     /**
@@ -366,7 +366,7 @@ class IssueController extends Controller
         {
             if ($assignee_id != $this->user->id && !$this->isPermissionAllowed($project_key, 'assigned_issue', $assignee_id))
             {
-                return Response()->json(['ecode' => -11118, 'emsg' => 'the assigned user has not assigned-issue permission.']);
+                return response()->json(['ecode' => -11118, 'emsg' => 'the assigned user has not assigned-issue permission.']);
             }
 
             $user_info = Sentinel::findById($assignee_id);
@@ -568,7 +568,7 @@ class IssueController extends Controller
             ->where('issue_id', $id)
             ->count();
 
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($issue)]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($issue)]);
     }
 
     /**
@@ -592,7 +592,7 @@ class IssueController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => parent::arrange($wfactions)]);
+        return response()->json(['ecode' => 0, 'data' => parent::arrange($wfactions)]);
     }
 
     /**
@@ -641,7 +641,7 @@ class IssueController extends Controller
         // get issue link relations
         $relations = $this->getLinkRelations();
 
-        return Response()->json([ 
+        return response()->json([ 
             'ecode' => 0, 
             'data' => parent::arrange([ 
                 'users' => $users, 
@@ -683,7 +683,7 @@ class IssueController extends Controller
 
         if (!$this->isPermissionAllowed($project_key, 'assign_issue'))
         {
-            return Response()->json(['ecode' => -11116, 'emsg' => 'the current user has not assign-issue permission.']);
+            return response()->json(['ecode' => -11116, 'emsg' => 'the current user has not assign-issue permission.']);
         }
 
         $updValues = []; $assignee = [];
@@ -697,7 +697,7 @@ class IssueController extends Controller
         {
             if (!$this->isPermissionAllowed($project_key, 'assigned_issue'))
             {
-                return Response()->json(['ecode' => -11117, 'emsg' => 'the current user has not assigned-issue permission.']);
+                return response()->json(['ecode' => -11117, 'emsg' => 'the current user has not assigned-issue permission.']);
             }
 
             $assignee = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
@@ -707,7 +707,7 @@ class IssueController extends Controller
         {
             if (!$this->isPermissionAllowed($project_key, 'assigned_issue', $assignee_id))
             {
-                return Response()->json(['ecode' => -11118, 'emsg' => 'the assigned user has not assigned-issue permission.']);
+                return response()->json(['ecode' => -11118, 'emsg' => 'the assigned user has not assigned-issue permission.']);
             }
 
             $user_info = Sentinel::findById($assignee_id);
@@ -748,7 +748,7 @@ class IssueController extends Controller
     {
         if (!$this->isPermissionAllowed($project_key, 'edit_issue'))
         {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         $labels = $request->input('labels');
@@ -897,7 +897,7 @@ class IssueController extends Controller
     {
         if (!$this->isPermissionAllowed($project_key, 'edit_issue') && !$this->isPermissionAllowed($project_key, 'exec_workflow'))
         {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         if (!$request->all())
@@ -981,7 +981,7 @@ class IssueController extends Controller
         {
             if ((!isset($issue['assignee']) || (isset($issue['assignee']) && $assignee_id != $issue['assignee']['id'])) && !$this->isPermissionAllowed($project_key, 'assigned_issue', $assignee_id))
             {
-                return Response()->json(['ecode' => -11118, 'emsg' => 'the assigned user has not assigned-issue permission.']);
+                return response()->json(['ecode' => -11118, 'emsg' => 'the assigned user has not assigned-issue permission.']);
             }
 
             $user_info = Sentinel::findById($assignee_id);
@@ -1063,7 +1063,7 @@ class IssueController extends Controller
         // trigger event of issue deleted 
         Event::fire(new IssueEvent($project_key, $id, $user, [ 'event_key' => 'del_issue' ]));
 
-        return Response()->json(['ecode' => 0, 'data' => [ 'ids' => $ids ]]);
+        return response()->json(['ecode' => 0, 'data' => [ 'ids' => $ids ]]);
     }
 
     /**
@@ -1074,7 +1074,7 @@ class IssueController extends Controller
      */
     public function getIssueFilters($project_key)
     {
-        return Response()->json([ 'ecode' => 0, 'data' => Provider::getIssueFilters($project_key, $this->user->id) ]);
+        return response()->json([ 'ecode' => 0, 'data' => Provider::getIssueFilters($project_key, $this->user->id) ]);
     }
 
     /**
@@ -1154,7 +1154,7 @@ class IssueController extends Controller
      */
     public function getDisplayColumns($project_key)
     {
-        return Response()->json([ 'ecode' => 0, 'data' => Provider::getIssueDisplayColumns($project_key, $this->user->id) ]);
+        return response()->json([ 'ecode' => 0, 'data' => Provider::getIssueDisplayColumns($project_key, $this->user->id) ]);
     }
 
     /**
@@ -1407,7 +1407,7 @@ class IssueController extends Controller
             $changedRecords = array_reverse($changedRecords);
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $changedRecords, 'options' => [ 'current_time' => time() ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => $changedRecords, 'options' => [ 'current_time' => time() ] ]);
     }
 
     /**
@@ -1462,7 +1462,7 @@ class IssueController extends Controller
             Event::fire(new IssueEvent($project_key, $id, $cur_user, [ 'event_key' => 'unwatched_issue' ]));
         }
         
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id, 'user' => $cur_user, 'watching' => $flag]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id, 'user' => $cur_user, 'watching' => $flag]]);
     }
 
     /**
@@ -1483,7 +1483,7 @@ class IssueController extends Controller
             {
                 if (!$this->isPermissionAllowed($project_key, 'assigned_issue', $assignee_id))
                 {
-                    return Response()->json(['ecode' => -11118, 'emsg' => 'the assigned user has not assigned-issue permission.']);
+                    return response()->json(['ecode' => -11118, 'emsg' => 'the assigned user has not assigned-issue permission.']);
                 }
 
                 $user_info = Sentinel::findById($assignee_id);
@@ -1576,7 +1576,7 @@ class IssueController extends Controller
             {
                 if (!$this->isPermissionAllowed($project_key, 'assigned_issue', $assignee_id))
                 {
-                    return Response()->json(['ecode' => -11118, 'emsg' => 'the assigned user has not assigned-issue permission.']);
+                    return response()->json(['ecode' => -11118, 'emsg' => 'the assigned user has not assigned-issue permission.']);
                 }
 
                 $user_info = Sentinel::findById($assignee_id);
@@ -1775,7 +1775,7 @@ class IssueController extends Controller
         $isSendMsg = $request->input('isSendMsg') && true;
         Event::fire(new VersionEvent($project_key, $user, [ 'event_key' => 'create_release_version', 'isSendMsg' => $isSendMsg, 'data' => [ 'released_issues' => $ids, 'release_version' => $version->toArray() ] ]));
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $ids ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $ids ] ]);
     }
 
     /**
@@ -2723,11 +2723,11 @@ class IssueController extends Controller
 
         if ($emsgs)
         {
-            return Response()->json([ 'ecode' => -11146, 'emsg' => $emsgs ]);
+            return response()->json([ 'ecode' => -11146, 'emsg' => $emsgs ]);
         }
         else
         {
-            return Response()->json([ 'ecode' => 0, 'emsg' => '' ]);
+            return response()->json([ 'ecode' => 0, 'emsg' => '' ]);
         }
     }
 
@@ -3086,7 +3086,7 @@ class IssueController extends Controller
     {
         if (!$this->isPermissionAllowed($project_key, 'delete_issue'))
         {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         $user = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
@@ -3129,7 +3129,7 @@ class IssueController extends Controller
             Event::fire(new IssueEvent($project_key, $id, $user, [ 'event_key' => 'del_issue' ]));
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $ids ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $ids ] ]);
     }
 
     /**
@@ -3144,7 +3144,7 @@ class IssueController extends Controller
     {
         if (!$this->isPermissionAllowed($project_key, 'edit_issue'))
         {
-            return Response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
+            return response()->json(['ecode' => -10002, 'emsg' => 'permission denied.']);
         }
 
         $schemas = [];
@@ -3287,6 +3287,6 @@ class IssueController extends Controller
             $this->createLabels($project_key, $updValues['labels']);
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $ids ] ]); 
+        return response()->json([ 'ecode' => 0, 'data' => [ 'ids' => $ids ] ]); 
     }
 }

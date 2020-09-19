@@ -27,7 +27,7 @@ class WorkflowController extends Controller
             $workflow->is_used = Type::where('workflow_id', $workflow->id)->exists(); 
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $workflows ]);
+        return response()->json([ 'ecode' => 0, 'data' => $workflows ]);
     }
 
     /**
@@ -71,7 +71,7 @@ class WorkflowController extends Controller
         }
 
         $workflow = Definition::create([ 'project_key' => $project_key, 'latest_modifier' => $latest_modifier, 'latest_modified_time' => $latest_modified_time, 'state_ids' => $state_ids, 'screen_ids' => $screen_ids, 'steps' => $steps, 'contents' => $contents ] + $request->all());
-        return Response()->json([ 'ecode' => 0, 'data' => $workflow ]);
+        return response()->json([ 'ecode' => 0, 'data' => $workflow ]);
     }
 
     /**
@@ -85,7 +85,7 @@ class WorkflowController extends Controller
         $workflow = Definition::find($id);
         if ($workflow)
         {
-            return Response()->json([ 'ecode' => 0, 'data' => $workflow ]);
+            return response()->json([ 'ecode' => 0, 'data' => $workflow ]);
         }
         else
         {
@@ -114,7 +114,7 @@ class WorkflowController extends Controller
         $events = Provider::getEventOptions($project_key);
         $users = Provider::getUserList($project_key);
 
-        return Response()->json([ 'ecode' => 0, 'data' => $workflow, 'options' => [ 'states' => $states, 'screens' => $screens, 'resolutions' => $resolutions, 'events' => $events, 'roles' => $roles, 'users' => $users ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => $workflow, 'options' => [ 'states' => $states, 'screens' => $screens, 'resolutions' => $resolutions, 'events' => $events, 'roles' => $roles, 'users' => $users ] ]);
     }
 
     /**
@@ -154,7 +154,7 @@ class WorkflowController extends Controller
         }
 
         $workflow->fill($request->except([ 'project_key' ]))->save();
-        return Response()->json([ 'ecode' => 0, 'data' => Definition::find($id) ]);
+        return response()->json([ 'ecode' => 0, 'data' => Definition::find($id) ]);
     }
 
     /**
@@ -178,7 +178,7 @@ class WorkflowController extends Controller
         }
 
         Definition::destroy($id);
-        return Response()->json([ 'ecode' => 0, 'data' => [ 'id' => $id ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => [ 'id' => $id ] ]);
     }
 
     /**
@@ -190,7 +190,7 @@ class WorkflowController extends Controller
     {
         if ($project_key !== '$_sys_$')
         {
-            return Response()->json(['ecode' => 0, 'data' => [] ]);
+            return response()->json(['ecode' => 0, 'data' => [] ]);
         }
 
         $res = [];
@@ -209,6 +209,6 @@ class WorkflowController extends Controller
             }
         }
 
-        return Response()->json(['ecode' => 0, 'data' => $res ]);
+        return response()->json(['ecode' => 0, 'data' => $res ]);
     }
 }

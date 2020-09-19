@@ -73,7 +73,7 @@ class LinkController extends Controller
         // trigger event of issue linked
         Event::fire(new IssueEvent($project_key, $src, $values['creator'], [ 'event_key' => 'create_link', 'data' => [ 'dest' => $dest, 'relation' => $relation ]]));
 
-        return Response()->json([ 'ecode' => 0, 'data' => parent::arrange($link) ]);
+        return response()->json([ 'ecode' => 0, 'data' => parent::arrange($link) ]);
     }
 
     /**
@@ -95,6 +95,6 @@ class LinkController extends Controller
         $user = [ 'id' => $this->user->id, 'name' => $this->user->first_name, 'email' => $this->user->email ];
         Event::fire(new IssueEvent($project_key, $link->src, $user, [ 'event_key' => 'del_link', 'data' => [ 'dest' => $link->dest, 'relation' => $link->relation ]]));
 
-        return Response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
+        return response()->json(['ecode' => 0, 'data' => ['id' => $id]]);
     }
 }

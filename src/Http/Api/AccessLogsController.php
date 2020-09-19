@@ -108,7 +108,7 @@ class AccessLogsController extends Controller
             exit();
         }
 
-        return Response()->json([ 'ecode' => 0, 'data' => $logs, 'options' => [ 'total' => $total, 'sizePerPage' => $page_size ] ]);
+        return response()->json([ 'ecode' => 0, 'data' => $logs, 'options' => [ 'total' => $total, 'sizePerPage' => $page_size ] ]);
     }
 
     /**

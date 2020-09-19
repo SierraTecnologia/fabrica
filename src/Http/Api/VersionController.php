@@ -65,7 +65,7 @@ class VersionController extends Controller
 
         $options = [ 'total' => $total, 'sizePerPage' => $page_size, 'current_time' => time() ];
 
-        return Response()->json([ 'ecode' => 0, 'data' => $versions, 'options' => $options ]);
+        return response()->json([ 'ecode' => 0, 'data' => $versions, 'options' => $options ]);
     }
 
     /**
@@ -118,7 +118,7 @@ class VersionController extends Controller
         // trigger event of version added
         Event::fire(new VersionEvent($project_key, $creator, [ 'event_key' => 'create_version', 'data' => $version->toArray() ]));
 
-        return Response()->json([ 'ecode' => 0, 'data' => $version ]);
+        return response()->json([ 'ecode' => 0, 'data' => $version ]);
     }
 
     /**
@@ -154,7 +154,7 @@ class VersionController extends Controller
             $version->is_used = $this->isFieldUsedByIssue($project_key, 'version', $version->toArray(), $version_fields);
         }
 
-        return Response()->json(['ecode' => 0, 'data' => $version]);
+        return response()->json(['ecode' => 0, 'data' => $version]);
     }
 
     /**
@@ -460,7 +460,7 @@ class VersionController extends Controller
         }
         else
         {
-            return Response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
+            return response()->json(['ecode' => 0, 'data' => [ 'id' => $id ]]);
         }
     }
 }
