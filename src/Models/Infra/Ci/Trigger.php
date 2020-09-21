@@ -2,7 +2,7 @@
 
 namespace Fabrica\Models\Infra\Ci;
     
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 class Trigger extends Base
 {

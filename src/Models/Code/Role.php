@@ -12,7 +12,7 @@
 
 namespace Fabrica\Models\Code;
 
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 use Symfony\Component\Security\Core\Role\Role as SecurityRole;
 

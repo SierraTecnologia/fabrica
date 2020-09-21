@@ -6,7 +6,7 @@
 
 namespace Fabrica\Models\Infra;
 
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 class DomainRuleType extends Base
 {

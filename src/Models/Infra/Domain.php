@@ -3,7 +3,7 @@
 namespace Fabrica\Models\Infra;
 
 use Finder\Models\Digital\Internet\Url;
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 class Domain extends Base
 {

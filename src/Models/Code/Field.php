@@ -3,7 +3,7 @@
 namespace Fabrica\Models\Code;
 
 use Finder\Models\Reference;
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 class Field extends Base
 {

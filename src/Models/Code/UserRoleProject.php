@@ -12,7 +12,7 @@
 
 namespace Fabrica\Models\Code;
 
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 use Fabrica\Bundle\CoreBundle\Security\ProjectRole;
 

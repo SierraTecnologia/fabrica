@@ -5,7 +5,7 @@ namespace Fabrica\Models\Code;
 use Doctrine\Common\Collections\ArrayCollection;
 use Fabrica\Tools\Programs\Git\Repository;
 
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 class Lib extends Base
 {

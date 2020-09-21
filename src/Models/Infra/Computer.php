@@ -3,7 +3,7 @@
 namespace Fabrica\Models\Infra;
 
 use Fabrica\Tools\Ssh;
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 class Computer extends Base
 {

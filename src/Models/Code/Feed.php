@@ -14,7 +14,7 @@ namespace Fabrica\Models\Code;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 /**
  * @author Julien DIDIER <genzo.wm@gmail.com>

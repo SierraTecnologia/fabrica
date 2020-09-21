@@ -3,7 +3,7 @@
 namespace Fabrica\Models\Infra\Ci\Base;
 
 use Fabrica\Tools\Exception\InvalidArgumentException;
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 class Project extends Base
 {

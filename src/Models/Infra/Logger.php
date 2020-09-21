@@ -2,7 +2,7 @@
 
 namespace Fabrica\Models\Infra;
 
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 use Fabrica\Tools\Ssh;
 
 class Logger extends Base

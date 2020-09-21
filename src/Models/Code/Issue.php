@@ -6,7 +6,7 @@ use Fabrica\Models\Code\Project;
 use Finder\Models\Reference;
 use Illuminate\Support\Str;
 use StdClass;
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 class Issue extends Base
 {

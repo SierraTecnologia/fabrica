@@ -2,7 +2,7 @@
 
 namespace Fabrica\Models\Infra;
 
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 use Fabrica\Helper\File;
 
 // set_include_path(get_include_path() . get_include_path().'/phpseclib');

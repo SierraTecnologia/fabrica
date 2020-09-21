@@ -7,7 +7,7 @@ use Fabrica\Helper\General;
 
 use Fabrica\Tools\Programs\Git\Repository;
 use Finder\Models\Reference;
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 class Project extends Base
 {

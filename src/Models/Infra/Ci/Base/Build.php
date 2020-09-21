@@ -3,7 +3,7 @@
 namespace Fabrica\Models\Infra\Ci\Base;
 
 use Fabrica\Tools\Exception\InvalidArgumentException;
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 use Fabrica\Tools\Store\BuildStore;
 use Fabrica\Tools\Store\Factory;
 

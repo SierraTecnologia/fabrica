@@ -5,7 +5,7 @@
 
 namespace Fabrica\Models\Code;
 
-use Support\Models\Base;
+use Pedreiro\Models\Base;
 
 class ProjectMember extends Base
 {
