@@ -2,8 +2,8 @@
 
 namespace Fabrica\Models\Infra\Ci\Base;
 
+use Pedreiro\Exceptions\InvalidArgumentException;
 use Pedreiro\Models\Base;
-use Fabrica\Tools\Exception\InvalidArgumentException;
 
 class User extends Base
 {

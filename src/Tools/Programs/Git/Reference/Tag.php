@@ -11,7 +11,7 @@
  */
 namespace Fabrica\Tools\Programs\Git\Reference;
 
-use Fabrica\Tools\Programs\Git\Exception\RuntimeException;
+use Pedreiro\Exceptions\RuntimeException;
 use Fabrica\Tools\Programs\Git\Reference;
 
 /**

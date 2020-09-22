@@ -2,7 +2,7 @@
 
 namespace Fabrica\Models\Infra\Ci\Base;
 
-use Fabrica\Tools\Exception\InvalidArgumentException;
+use Pedreiro\Exceptions\InvalidArgumentException;
 use Pedreiro\Models\Base;
 use Fabrica\Tools\Store\BuildStore;
 use Fabrica\Tools\Store\Factory;

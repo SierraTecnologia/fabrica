@@ -12,8 +12,8 @@
 namespace Fabrica\Tools\Programs\Git;
 
 use Fabrica\Tools\Programs\Git\Diff\Diff;
-use Fabrica\Tools\Programs\Git\Exception\InvalidArgumentException;
-use Fabrica\Tools\Programs\Git\Exception\LogicException;
+use Pedreiro\Exceptions\InvalidArgumentException;
+use Pedreiro\Exceptions\LogicException;
 
 /**
  * @author Alexandre Salomé <alexandre.salome@gmail.com>

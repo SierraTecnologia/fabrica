@@ -11,8 +11,8 @@
  */
 namespace Fabrica\Tools\Programs\Git;
 
-use Fabrica\Tools\Programs\Git\Exception\ReferenceNotFoundException;
-use Fabrica\Tools\Programs\Git\Exception\RuntimeException;
+use Pedreiro\Exceptions\ReferenceNotFoundException;
+use Pedreiro\Exceptions\RuntimeException;
 use Fabrica\Tools\Programs\Git\Reference\Branch;
 use Fabrica\Tools\Programs\Git\Reference\Stash;
 use Fabrica\Tools\Programs\Git\Reference\Tag;

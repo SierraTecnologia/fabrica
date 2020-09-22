@@ -11,8 +11,8 @@
  */
 namespace Fabrica\Tools\Programs\Git;
 
-use Fabrica\Tools\Programs\Git\Exception\InvalidArgumentException;
-use Fabrica\Tools\Programs\Git\Exception\LogicException;
+use Pedreiro\Exceptions\InvalidArgumentException;
+use Pedreiro\Exceptions\LogicException;
 
 /**
  * Hooks collection, aggregated by repository.

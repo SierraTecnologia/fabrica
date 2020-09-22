@@ -11,8 +11,8 @@
  */
 namespace Fabrica\Tools\Programs\Git;
 
-use Fabrica\Tools\Programs\Git\Exception\ProcessException;
-use Fabrica\Tools\Programs\Git\Exception\ReferenceNotFoundException;
+use Pedreiro\Exceptions\ProcessException;
+use Pedreiro\Exceptions\ReferenceNotFoundException;
 use Fabrica\Tools\Programs\Git\Util\StringHelper;
 
 /**

@@ -11,7 +11,7 @@ use Fabrica\Tools\Store\BuildErrorStore;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Parser as YamlParser;
 use Fabrica\Models\Infra\Ci\Base\Build as BaseBuild;
-use Fabrica\Tools\Exception\InvalidArgumentException;
+use Pedreiro\Exceptions\InvalidArgumentException;
 
 /**
  * @author Ricardo Sierra <ricardo@sierratecnologia.com>

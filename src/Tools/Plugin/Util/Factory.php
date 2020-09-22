@@ -2,7 +2,7 @@
 
 namespace Fabrica\Tools\Plugin\Util;
 
-use Fabrica\Tools\Exception\InvalidArgumentException;
+use Pedreiro\Exceptions\InvalidArgumentException;
 use Fabrica\Tools\Plugin;
 use Pimple\Container;
 

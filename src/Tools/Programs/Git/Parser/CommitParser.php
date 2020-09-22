@@ -11,7 +11,7 @@
  */
 namespace Fabrica\Tools\Programs\Git\Parser;
 
-use Fabrica\Tools\Programs\Git\Exception\RuntimeException;
+use Pedreiro\Exceptions\RuntimeException;
 
 class CommitParser extends ParserBase
 {

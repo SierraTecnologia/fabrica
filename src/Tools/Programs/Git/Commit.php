@@ -12,9 +12,9 @@
 namespace Fabrica\Tools\Programs\Git;
 
 use Fabrica\Tools\Programs\Git\Diff\Diff;
-use Fabrica\Tools\Programs\Git\Exception\InvalidArgumentException;
-use Fabrica\Tools\Programs\Git\Exception\ProcessException;
-use Fabrica\Tools\Programs\Git\Exception\ReferenceNotFoundException;
+use Pedreiro\Exceptions\InvalidArgumentException;
+use Pedreiro\Exceptions\ProcessException;
+use Pedreiro\Exceptions\ReferenceNotFoundException;
 use Fabrica\Tools\Programs\Git\Util\StringHelper;
 
 /**

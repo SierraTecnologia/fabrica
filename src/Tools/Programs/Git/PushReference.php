@@ -11,7 +11,7 @@
  */
 namespace Fabrica\Tools\Programs\Git;
 
-use Fabrica\Tools\Programs\Git\Exception\LogicException;
+use Pedreiro\Exceptions\LogicException;
 
 /**
  * Push reference contains a commit interval. This object aggregates methods

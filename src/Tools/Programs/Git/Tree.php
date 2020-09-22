@@ -11,8 +11,8 @@
  */
 namespace Fabrica\Tools\Programs\Git;
 
-use Fabrica\Tools\Programs\Git\Exception\InvalidArgumentException;
-use Fabrica\Tools\Programs\Git\Exception\UnexpectedValueException;
+use Pedreiro\Exceptions\InvalidArgumentException;
+use Pedreiro\Exceptions\UnexpectedValueException;
 
 /**
  * @author Alexandre Salomé <alexandre.salome@gmail.com>

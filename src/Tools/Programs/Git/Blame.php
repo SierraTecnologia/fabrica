@@ -12,7 +12,7 @@
 namespace Fabrica\Tools\Programs\Git;
 
 use Fabrica\Tools\Programs\Git\Blame\Line;
-use Fabrica\Tools\Programs\Git\Exception\InvalidArgumentException;
+use Pedreiro\Exceptions\InvalidArgumentException;
 use Fabrica\Tools\Programs\Git\Parser\BlameParser;
 
 /**
