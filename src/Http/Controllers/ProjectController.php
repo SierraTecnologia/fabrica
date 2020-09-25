@@ -13,19 +13,19 @@ class ProjectController extends Base
     /**
      * @var string
      */
-    protected $title = 'Projects';
-    protected $model = Project::class;
+    public $title = 'Projects';
+    public $model = Project::class;
     const VIEWS = "fabrica::projects";
 
     /**
      * @var string
      */
-    protected $description = 'Listagem de Projects.';
+    public $description = 'Listagem de Projects.';
 
     /**
      * @var array
      */
-    protected $columns = [
+    public $columns = [
         'name' => 'getName',
     ];
 
