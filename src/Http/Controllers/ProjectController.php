@@ -32,7 +32,7 @@ class ProjectController extends Base
     /**
      * @var array
      */
-    protected $search = [
+    public $search = [
         'name',
         // 'to',
         // 'code' => [
@@ -95,7 +95,7 @@ class ProjectController extends Base
     //  *
     //  * @return Illuminate\View\View
     //  */
-    // public function index()
+    // public function index(Request $request)
     // {
     //     return $this->populateView(
     //         'admin.orders.index', [
