@@ -31,10 +31,6 @@
         "gitonomy/gitlib":              "^1.2",
         "lorisleiva/laravel-actions": "^1.1"
     },
-    "require-dev": {
-        "behat/behat":                   ">=2.5",
-        "phpunit/phpunit": "^8.0|^9.0|^10.0"
-    },
     "suggest": {
         "leafo/lessphp":                ">=0.4",
         "phpbench/phpbench":            "*",
@@ -49,22 +45,25 @@
         "sebastian/phpcpd":             "*",
         "alexandresalome/php-webdriver": "Php webdriver"
     },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "orchestra/testbench": "^5.0",
+        "phpunit/phpunit": "^9.3",
+        "psalm/plugin-laravel": "^1.2",
+        "vimeo/psalm": "^3.11"
+    },
     "autoload": {
         "psr-4": {
             "Fabrica\\": "src/"
         }
     },
-    "scripts": {
-        "post-install-cmd": [
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
-        ],
-        "post-update-cmd": [
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
-        ]
+     "scripts": {
+        "psalm": "vendor/bin/psalm",
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage",
+        "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
+        "check-style": "phpcs -p --standard=PSR12 src --extensions=php",
+        "fix-style": "phpcbf -p --standard=PSR12 src --extensions=php"
     },
     "repositories": [
         {
