@@ -18,7 +18,7 @@ class Wiki extends Base
 {
     public static $TYPE_ID = 2;
 
-    protected $table = 'wikis';   
+    protected $table = 'wikis';
 
     protected $organizationPerspective = true;
 
