@@ -66,15 +66,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
         ]
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../**",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
+    "repositories": [{"type": "path","url":"../**","options":{"symlink": true}}],
     "config": {
         "bin-dir": "bin"
     },
