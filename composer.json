@@ -23,11 +23,11 @@
     ],
     "require": {
         "php": "^7.4",
-        "sierratecnologia/integrations":    "dev-master",
-        "sierratecnologia/operador":    "dev-master",
+        "sierratecnologia/integrations":    "^0.4.0",
+        "sierratecnologia/operador":    "^0.4.0",
         "deployer/deployer":            "^6.8",
         "guzzlehttp/guzzle": "^6.0 || ^7.0",
-        "sierratecnologia/muleta":      "dev-master",
+        "sierratecnologia/muleta":      "^0.4.0",
         "gitonomy/gitlib":              "^1.2",
         "lorisleiva/laravel-actions": "^1.1"
     },
@@ -66,7 +66,6 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
         ]
     },
-    "repositories": [{"type": "path","url":"../**","options":{"symlink": true}}],
     "config": {
         "bin-dir": "bin"
     },
