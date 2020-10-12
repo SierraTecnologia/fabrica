@@ -4,7 +4,7 @@ namespace Fabrica\Http\Controllers;
 
 use Fabrica\Models\Code\Project;
 use Facilitador\Exceptions\Exception;
-use Facilitador\Http\Controllers\Admin\Base;
+use Pedreiro\Http\Controllers\Admin\Base;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
