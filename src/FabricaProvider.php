@@ -339,7 +339,7 @@ class FabricaProvider extends ServiceProvider
         Config::set(
             'logging.channels.sitec-fabrica', [
             'driver' => 'single',
-            'path' => storage_path('logs'.DIRECTORY_SEPARACTOR.'sitec-fabrica.log'),
+            'path' => storage_path('logs'.DIRECTORY_SEPARATOR.'sitec-fabrica.log'),
             'level' => env('APP_LOG_LEVEL', 'debug'),
             ]
         );
