@@ -196,7 +196,7 @@ class FabricaProvider extends ServiceProvider
         /**
          * Transmissor; Routes
          */
-        $this->loadRoutesForRiCa(__DIR__.'/../routes');
+        $this->loadRoutesForRiCa(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'routes');
 
         // /**
         //  * Fabrica; Routes
@@ -292,7 +292,7 @@ class FabricaProvider extends ServiceProvider
         $this->publishes(
             [
             // Paths
-            $this->getPublishesPath('config/sitec') => config_path('sitec'),
+            $this->getPublishesPath('config'.DIRECTORY_SEPARATOR.'sitec') => config_path('sitec'),
             ], ['config',  'sitec', 'sitec-config']
         );
 
@@ -312,7 +312,7 @@ class FabricaProvider extends ServiceProvider
         $this->loadViewsFrom($viewsPath, 'fabrica');
         $this->publishes(
             [
-            $viewsPath => base_path('resources/views/vendor/fabrica'),
+            $viewsPath => base_path('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'fabrica'),
             ], ['views',  'sitec', 'sitec-views']
         );
     }
@@ -322,7 +322,7 @@ class FabricaProvider extends ServiceProvider
         // Publish lanaguage files
         $this->publishes(
             [
-            $this->getResourcesPath('lang') => resource_path('lang/vendor/fabrica')
+            $this->getResourcesPath('lang') => resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'fabrica')
             ], ['lang',  'sitec', 'sitec-lang', 'translations']
         );
 
@@ -339,7 +339,7 @@ class FabricaProvider extends ServiceProvider
         Config::set(
             'logging.channels.sitec-fabrica', [
             'driver' => 'single',
-            'path' => storage_path('logs/sitec-fabrica.log'),
+            'path' => storage_path('logs'.DIRECTORY_SEPARACTOR.'sitec-fabrica.log'),
             'level' => env('APP_LOG_LEVEL', 'debug'),
             ]
         );
