@@ -17,5 +17,16 @@ class Stage extends Base
      */
     protected $fillable = [
         'name',
+        'stage_step_id'
     ];
+
+    public function stageStep()
+    {
+        return $this->belongsTo('Fabrica\Models\Workflow\StageStep', 'stage_step_id', 'id');
+    }
+
+    public function workflows()
+    {
+        return $this->hasMany('Fabrica\Models\Workflow\Workflow');
+    }
 }

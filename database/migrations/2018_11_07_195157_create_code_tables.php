@@ -50,6 +50,7 @@ class CreateCodeTables extends Migration
                 $table->string('name');
                 $table->string('type')->nullable();
                 $table->integer('status')->default(1);
+                $table->string('stage_step_id')->nullable();
                 $table->timestamps();
             }
         );
