@@ -34,8 +34,8 @@ class Workflow extends Base
     {
         return $this->belongsTo('Fabrica\Models\Code\Stage', 'stage_id', 'id');
     }
-    // public function stages()
-    // {
-    //     return $this->hasMany('Fabrica\Models\Code\Stage');
-    // }
+    public function stages()
+    {
+        return $this->belongsToMany('Fabrica\Models\Code\Stage', 'workflow_stages', 'workflow_id', 'stage_id');
+    }
 }

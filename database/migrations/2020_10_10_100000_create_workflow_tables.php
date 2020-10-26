@@ -24,6 +24,14 @@ class CreateWorkflowTables extends Migration
             }
         );
         Schema::create(
+            'workflow_stages', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('workflow_id')->nullable();
+                $table->integer('stage_id')->nullable();
+                $table->timestamps();
+            }
+        );
+        Schema::create(
             'workflow_item_types', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('model');
