@@ -20,6 +20,25 @@ class Stage extends Base
         'stage_step_id'
     ];
 
+    public $formFields = [
+        [
+            'name' => 'name',
+            'label' => 'Nome',
+            'type' => 'text'
+        ],
+        [
+            'name' => 'stage_step_id',
+            'label' => 'Tipo',
+            'type' => 'select',
+            'relationship' => 'stageStep'
+        ],
+    ];
+
+    public $indexFields = [
+        'name',
+        'stage_step_id'
+    ];
+    
     public function stageStep()
     {
         return $this->belongsTo('Fabrica\Models\Workflow\StageStep', 'stage_step_id', 'id');

@@ -48,7 +48,6 @@ class CreateCodeTables extends Migration
             'code_stages', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
-                $table->string('type')->nullable();
                 $table->integer('status')->default(1);
                 $table->string('stage_step_id')->nullable();
                 $table->timestamps();
