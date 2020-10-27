@@ -102,8 +102,8 @@ class FabricaProvider extends ServiceProvider
             ],
             'Processos' => [
                 [
-                    'text'        => 'Arquitetura',
-                    'route'       => 'rica.fabrica.manager.arquitetura.index',
+                    'text'        => 'Stages',
+                    'route'       => 'admin.fabrica.stages.index',
                     'icon'        => 'fas fa-fw fa-car',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
@@ -111,11 +111,9 @@ class FabricaProvider extends ServiceProvider
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \App\Models\Role::$ADMIN
                 ],
-            ],
-            'Campos de Itens' => [
                 [
-                    'text'        => 'Fields',
-                    'route'       => 'admin.fabrica.fields.index',
+                    'text'        => 'Status',
+                    'route'       => 'admin.fabrica.status.index',
                     'icon'        => 'fas fa-fw fa-car',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
@@ -123,8 +121,6 @@ class FabricaProvider extends ServiceProvider
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \App\Models\Role::$ADMIN
                 ],
-            ],
-            'Resolutions' => [
                 [
                     'text'        => 'Resolutions',
                     'route'       => 'admin.fabrica.resolutions.index',
@@ -136,22 +132,10 @@ class FabricaProvider extends ServiceProvider
                     // 'access' => \App\Models\Role::$ADMIN
                 ],
             ],
-            'Stages' => [
+            'Tarefas' => [
                 [
-                    'text'        => 'Stages',
-                    'route'       => 'admin.fabrica.stages.index',
-                    'icon'        => 'fas fa-fw fa-car',
-                    'icon_color'  => 'blue',
-                    'label_color' => 'success',
-                    'section'     => 'admin',
-                    'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                    // 'access' => \App\Models\Role::$ADMIN
-                ],
-            ],
-            'Status' => [
-                [
-                    'text'        => 'Status',
-                    'route'       => 'admin.fabrica.status.index',
+                    'text'        => 'Fields',
+                    'route'       => 'admin.fabrica.fields.index',
                     'icon'        => 'fas fa-fw fa-car',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
@@ -196,7 +180,7 @@ class FabricaProvider extends ServiceProvider
         /**
          * Transmissor; Routes
          */
-        $this->loadRoutesForRiCa(__DIR__.'/../routes');
+        $this->loadRoutesForRiCa(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'routes');
 
         // /**
         //  * Fabrica; Routes
@@ -218,7 +202,7 @@ class FabricaProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom($this->getPublishesPath('config/sitec/fabrica.php'), 'sitec.fabrica');
+        $this->mergeConfigFrom($this->getPublishesPath('config'.DIRECTORY_SEPARATOR.'sitec'.DIRECTORY_SEPARATOR.'fabrica.php'), 'sitec.fabrica');
         
 
         $this->setProviders();
@@ -227,7 +211,7 @@ class FabricaProvider extends ServiceProvider
 
 
         // Register Migrations
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations');
 
         $this->app->singleton(
             'fabrica', function () {
@@ -292,7 +276,7 @@ class FabricaProvider extends ServiceProvider
         $this->publishes(
             [
             // Paths
-            $this->getPublishesPath('config/sitec') => config_path('sitec'),
+            $this->getPublishesPath('config'.DIRECTORY_SEPARATOR.'sitec') => config_path('sitec'),
             ], ['config',  'sitec', 'sitec-config']
         );
 
@@ -312,7 +296,7 @@ class FabricaProvider extends ServiceProvider
         $this->loadViewsFrom($viewsPath, 'fabrica');
         $this->publishes(
             [
-            $viewsPath => base_path('resources/views/vendor/fabrica'),
+            $viewsPath => base_path('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'fabrica'),
             ], ['views',  'sitec', 'sitec-views']
         );
     }
@@ -322,7 +306,7 @@ class FabricaProvider extends ServiceProvider
         // Publish lanaguage files
         $this->publishes(
             [
-            $this->getResourcesPath('lang') => resource_path('lang/vendor/fabrica')
+            $this->getResourcesPath('lang') => resource_path('lang'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'fabrica')
             ], ['lang',  'sitec', 'sitec-lang', 'translations']
         );
 
@@ -339,7 +323,7 @@ class FabricaProvider extends ServiceProvider
         Config::set(
             'logging.channels.sitec-fabrica', [
             'driver' => 'single',
-            'path' => storage_path('logs/sitec-fabrica.log'),
+            'path' => storage_path('logs'.DIRECTORY_SEPARATOR.'sitec-fabrica.log'),
             'level' => env('APP_LOG_LEVEL', 'debug'),
             ]
         );
