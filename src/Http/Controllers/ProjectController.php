@@ -166,7 +166,6 @@ class ProjectController extends Base
     //     // return $dataTable->render('orders.index');
 
     //     if ($request->has('query') && !empty($request->input('query'))) {
-    //         dd('oi');
     //         $orders = Project::search($request->input('query'))->orderBy('id', 'DESC')->simplePaginate(50);
     //     } else {
     //         $orders = Project::orderBy('id', 'DESC')->simplePaginate(50);
