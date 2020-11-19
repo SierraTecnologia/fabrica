@@ -47,7 +47,7 @@ class FabricaProvider extends ServiceProvider
                 'icon' => 'fas fa-fw fa-search',
                 'icon_color' => "blue",
                 'label_color' => "success",
-                'section'     => 'painel',
+                'section'     => 'admin',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
             ],
             'Desenvolvimento' => [
@@ -74,7 +74,7 @@ class FabricaProvider extends ServiceProvider
                         'icon'        => 'fas fa-fw fa-ship',
                         'icon_color'  => 'blue',
                         'label_color' => 'success',
-                        'section'     => 'painel',
+                        'section'     => 'admin',
                         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                         // 'access' => \App\Models\Role::$ADMIN
                     ],
