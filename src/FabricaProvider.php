@@ -57,7 +57,7 @@ class FabricaProvider extends ServiceProvider
                 //     'icon_color'  => 'blue',
                 //     'label_color' => 'success',
                 //     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                //     // 'access' => \App\Models\Role::$ADMIN
+                //     // 'access' => \Porteiro\Models\Role::$ADMIN
                 // ],
                 // [
                 //     'text'        => 'Administração',
@@ -65,7 +65,7 @@ class FabricaProvider extends ServiceProvider
                 //     'icon_color'  => 'blue',
                 //     'label_color' => 'success',
                 //     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                //     // 'access' => \App\Models\Role::$ADMIN
+                //     // 'access' => \Porteiro\Models\Role::$ADMIN
                 // ],
                 // 'Procurar' => [
                     [
@@ -76,7 +76,7 @@ class FabricaProvider extends ServiceProvider
                         'label_color' => 'success',
                         'section'     => 'admin',
                         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                        // 'access' => \App\Models\Role::$ADMIN
+                        // 'access' => \Porteiro\Models\Role::$ADMIN
                     ],
                     // ],
             ],
@@ -89,7 +89,7 @@ class FabricaProvider extends ServiceProvider
                 'label_color' => 'success',
                 'section'     => 'admin',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                // 'access' => \App\Models\Role::$ADMIN
+                // 'access' => \Porteiro\Models\Role::$ADMIN
             ],
             [
                 'text'        => 'Processos',
@@ -98,7 +98,7 @@ class FabricaProvider extends ServiceProvider
                 'label_color' => 'success',
                 'section'     => 'admin',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                // 'access' => \App\Models\Role::$ADMIN
+                // 'access' => \Porteiro\Models\Role::$ADMIN
             ],
             'Processos' => [
                 [
@@ -109,7 +109,7 @@ class FabricaProvider extends ServiceProvider
                     'label_color' => 'success',
                     'section'     => 'admin',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                    // 'access' => \App\Models\Role::$ADMIN
+                    // 'access' => \Porteiro\Models\Role::$ADMIN
                 ],
                 [
                     'text'        => 'Status',
@@ -119,7 +119,7 @@ class FabricaProvider extends ServiceProvider
                     'label_color' => 'success',
                     'section'     => 'admin',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                    // 'access' => \App\Models\Role::$ADMIN
+                    // 'access' => \Porteiro\Models\Role::$ADMIN
                 ],
                 [
                     'text'        => 'Resolutions',
@@ -129,7 +129,7 @@ class FabricaProvider extends ServiceProvider
                     'label_color' => 'success',
                     'section'     => 'admin',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                    // 'access' => \App\Models\Role::$ADMIN
+                    // 'access' => \Porteiro\Models\Role::$ADMIN
                 ],
             ],
             'Tarefas' => [
@@ -141,7 +141,7 @@ class FabricaProvider extends ServiceProvider
                     'label_color' => 'success',
                     'section'     => 'admin',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                    // 'access' => \App\Models\Role::$ADMIN
+                    // 'access' => \Porteiro\Models\Role::$ADMIN
                 ],
             ],
         ],
