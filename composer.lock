@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.163.0",
+            "version": "3.163.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "d3f51c57f17581d79151c9b5265e131391bd191f"
+                "reference": "7b6948915654f0f94847ccaf51172fa1a7f1cc59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/d3f51c57f17581d79151c9b5265e131391bd191f",
-                "reference": "d3f51c57f17581d79151c9b5265e131391bd191f",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/7b6948915654f0f94847ccaf51172fa1a7f1cc59",
+                "reference": "7b6948915654f0f94847ccaf51172fa1a7f1cc59",
                 "shasum": ""
             },
             "require": {
@@ -89,7 +89,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-11-18T19:12:41+00:00"
+            "time": "2020-11-19T19:26:10+00:00"
         },
         {
             "name": "brick/math",
@@ -4238,16 +4238,16 @@
         },
         {
             "name": "ricasolucoes/atlassian",
-            "version": "dev-master",
+            "version": "0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ricasolucoes/atlassian.git",
-                "reference": "8a8efe0e11593c92d463931528b48778392494ff"
+                "reference": "51ff6bcd98d36bb1a7cb9673a8f3874e1532d9f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ricasolucoes/atlassian/zipball/8a8efe0e11593c92d463931528b48778392494ff",
-                "reference": "8a8efe0e11593c92d463931528b48778392494ff",
+                "url": "https://api.github.com/repos/ricasolucoes/atlassian/zipball/51ff6bcd98d36bb1a7cb9673a8f3874e1532d9f6",
+                "reference": "51ff6bcd98d36bb1a7cb9673a8f3874e1532d9f6",
                 "shasum": ""
             },
             "require": {
@@ -4325,7 +4325,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-24T10:03:04+00:00"
+            "time": "2020-11-19T08:50:40+00:00"
         },
         {
             "name": "sabre/uri",
@@ -4493,16 +4493,16 @@
         },
         {
             "name": "sierratecnologia/crypto",
-            "version": "0.4.2",
+            "version": "0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SierraTecnologia/Crypto.git",
-                "reference": "1a8ccb741294fcef1ad97354f19d5a944ab251f2"
+                "reference": "0e51730ef9326005c17176bab0745720b885de7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SierraTecnologia/Crypto/zipball/1a8ccb741294fcef1ad97354f19d5a944ab251f2",
-                "reference": "1a8ccb741294fcef1ad97354f19d5a944ab251f2",
+                "url": "https://api.github.com/repos/SierraTecnologia/Crypto/zipball/0e51730ef9326005c17176bab0745720b885de7c",
+                "reference": "0e51730ef9326005c17176bab0745720b885de7c",
                 "shasum": ""
             },
             "require": {
@@ -4562,20 +4562,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-28T10:42:43+00:00"
+            "time": "2020-11-19T08:51:19+00:00"
         },
         {
             "name": "sierratecnologia/integrations",
-            "version": "0.4.0",
+            "version": "0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SierraTecnologia/integrations.git",
-                "reference": "12063a406714e68a170f6712ce906f271a0288cb"
+                "reference": "6e8e925758c09c43e1db214f6a52a9df02bc7378"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SierraTecnologia/integrations/zipball/12063a406714e68a170f6712ce906f271a0288cb",
-                "reference": "12063a406714e68a170f6712ce906f271a0288cb",
+                "url": "https://api.github.com/repos/SierraTecnologia/integrations/zipball/6e8e925758c09c43e1db214f6a52a9df02bc7378",
+                "reference": "6e8e925758c09c43e1db214f6a52a9df02bc7378",
                 "shasum": ""
             },
             "require": {
@@ -4593,7 +4593,7 @@
                 "m4tthumphrey/php-gitlab-api": "*",
                 "php": "^7.4",
                 "raiym/instagram-php-scraper": ">=0.9.10",
-                "ricasolucoes/atlassian": "dev-master",
+                "ricasolucoes/atlassian": "^0.4.0",
                 "sabre/xml": "*",
                 "sierratecnologia/muleta": "^0.4.0",
                 "srmklive/flysystem-dropbox-v2": "*",
@@ -4642,20 +4642,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-05T07:06:02+00:00"
+            "time": "2020-11-19T08:52:04+00:00"
         },
         {
             "name": "sierratecnologia/muleta",
-            "version": "0.4.2",
+            "version": "0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SierraTecnologia/muleta.git",
-                "reference": "54f95f57dc178be2e282e284d6ea7be2d8dc87f6"
+                "reference": "89af7aed316c6f3ee4178a1585165130c645b052"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SierraTecnologia/muleta/zipball/54f95f57dc178be2e282e284d6ea7be2d8dc87f6",
-                "reference": "54f95f57dc178be2e282e284d6ea7be2d8dc87f6",
+                "url": "https://api.github.com/repos/SierraTecnologia/muleta/zipball/89af7aed316c6f3ee4178a1585165130c645b052",
+                "reference": "89af7aed316c6f3ee4178a1585165130c645b052",
                 "shasum": ""
             },
             "require": {
@@ -4723,20 +4723,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-28T10:43:59+00:00"
+            "time": "2020-11-19T08:55:49+00:00"
         },
         {
             "name": "sierratecnologia/operador",
-            "version": "0.4.1",
+            "version": "0.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SierraTecnologia/Operador.git",
-                "reference": "e3b5a44fb3febc3a83976e92ed283a80a046c744"
+                "reference": "31a1fda1715efdb8a50164a90baf63962428ff5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SierraTecnologia/Operador/zipball/e3b5a44fb3febc3a83976e92ed283a80a046c744",
-                "reference": "e3b5a44fb3febc3a83976e92ed283a80a046c744",
+                "url": "https://api.github.com/repos/SierraTecnologia/Operador/zipball/31a1fda1715efdb8a50164a90baf63962428ff5f",
+                "reference": "31a1fda1715efdb8a50164a90baf63962428ff5f",
                 "shasum": ""
             },
             "require": {
@@ -4786,7 +4786,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-10-22T13:08:41+00:00"
+            "time": "2020-11-19T08:55:57+00:00"
         },
         {
             "name": "srmklive/flysystem-dropbox-v2",
