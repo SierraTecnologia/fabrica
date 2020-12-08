@@ -1,5 +1,5 @@
 <?php
-namespace Fabrica\Entitys;
+namespace Fabrica\Entities;
 
 use Muleta\Contracts\Support\Arrayable;
 use Muleta\Contracts\Support\ArrayableTrait;
