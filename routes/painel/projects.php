@@ -1,6 +1,8 @@
 <?php
 
-Route::resource('/projects', 'ProjectController');
+Route::resource('/projects', 'ProjectController')->parameters([
+    'projects' => 'id'
+]);
 
 Route::prefix('arquitetura')->group(
     function () {

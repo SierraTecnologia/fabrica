@@ -1,3 +1,5 @@
 <?php
 
-Route::resource('/fields', 'FieldController');
+Route::resource('/fields', 'FieldController')->parameters([
+    'fields' => 'id'
+]);

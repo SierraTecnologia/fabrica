@@ -56,6 +56,7 @@ class Project extends Base
     ];
 
     public $indexFields = [
+        'projectPathKey',
         'name',
         'url',
         'status'

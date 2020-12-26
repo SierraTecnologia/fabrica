@@ -41,13 +41,29 @@ class FabricaProvider extends ServiceProvider
      * Rotas do Menu
      */
     public static $menuItens = [
-        'Tecnologia|10' => [
+        [
+            'text' => 'Workspace',
+            'icon' => 'fas fa-fw fa-search',
+            'icon_color' => "blue",
+            'label_color' => "success",
+            'section'     => 'painel',
+            'level'       => 1, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        ],
+        [
+            'text' => 'Configurações',
+            'icon' => 'fas fa-fw fa-search',
+            'icon_color' => "blue",
+            'label_color' => "success",
+            'section'     => 'admin',
+            'level'       => 1, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        ],
+        'Workspace|5' => [
             [
                 'text' => 'Desenvolvimento',
                 'icon' => 'fas fa-fw fa-search',
                 'icon_color' => "blue",
                 'label_color' => "success",
-                'section'     => 'admin',
+                'section'     => 'painel',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
             ],
             'Desenvolvimento' => [
@@ -70,20 +86,39 @@ class FabricaProvider extends ServiceProvider
                 // 'Procurar' => [
                     [
                         'text'        => 'Projetos',
-                        'route'       => 'admin.fabrica.projects.index',
+                        'route'       => 'painel.fabrica.projects.index',
                         'icon'        => 'fas fa-fw fa-ship',
                         'icon_color'  => 'blue',
                         'label_color' => 'success',
-                        'section'     => 'admin',
+                        'section'     => 'painel',
+                        'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+                        // 'access' => \Porteiro\Models\Role::$ADMIN
+                    ],
+                    [
+                        'text'        => 'Issues',
+                        'route'       => 'painel.fabrica.issues.index',
+                        'icon'        => 'fas fa-fw fa-car',
+                        'icon_color'  => 'blue',
+                        'label_color' => 'success',
+                        'section'     => 'painel',
                         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                         // 'access' => \Porteiro\Models\Role::$ADMIN
                     ],
                     // ],
             ],
         ],
-        'Personalização|250' => [
+        'Configurações|250' => [
+            // [
+            //     'text'        => 'Tarefas',
+            //     'icon'        => 'fas fa-fw fa-search',
+            //     'icon_color'  => 'blue',
+            //     'label_color' => 'success',
+            //     'section'     => 'admin',
+            //     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+            //     // 'access' => \Porteiro\Models\Role::$ADMIN
+            // ],
             [
-                'text'        => 'Tarefas',
+                'text'        => 'Itens',
                 'icon'        => 'fas fa-fw fa-search',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
@@ -91,16 +126,7 @@ class FabricaProvider extends ServiceProvider
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \Porteiro\Models\Role::$ADMIN
             ],
-            [
-                'text'        => 'Processos',
-                'icon'        => 'fas fa-fw fa-search',
-                'icon_color'  => 'blue',
-                'label_color' => 'success',
-                'section'     => 'admin',
-                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-                // 'access' => \Porteiro\Models\Role::$ADMIN
-            ],
-            'Processos' => [
+            'Itens' => [
                 [
                     'text'        => 'Stages',
                     'route'       => 'admin.fabrica.stages.index',
@@ -131,8 +157,8 @@ class FabricaProvider extends ServiceProvider
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \Porteiro\Models\Role::$ADMIN
                 ],
-            ],
-            'Tarefas' => [
+            // ],
+            // 'Tarefas' => [
                 [
                     'text'        => 'Fields',
                     'route'       => 'admin.fabrica.fields.index',
