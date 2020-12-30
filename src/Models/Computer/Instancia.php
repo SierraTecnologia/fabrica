@@ -1,17 +1,20 @@
 <?php
+/**
+ * Instancias Reais (meu pc)
+ */
 
 namespace Fabrica\Models\Computer;
 
 use Fabrica\Tools\Ssh;
 use Pedreiro\Models\Base;
 
-class Computer extends Base
+class Instancia extends Base
 {
-    public static $apresentationName = 'Servidores';
+    public static $apresentationName = 'Instancias';
 
     protected $organizationPerspective = true;
 
-    protected $table = 'computer_catalogs';
+    protected $table = 'instancias';
 
     /**
      * The attributes that are mass assignable.

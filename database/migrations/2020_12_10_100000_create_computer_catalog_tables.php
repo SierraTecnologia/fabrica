@@ -14,7 +14,7 @@ class CreateComputerCatalogTables extends Migration
     public function up()
     {
         Schema::create(
-            'computers', function (Blueprint $table) {
+            'instancias', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->nullable();
                 $table->integer('status')->default(1);
@@ -30,7 +30,7 @@ class CreateComputerCatalogTables extends Migration
                 $table->string('location');
                 $table->integer('status')->default(1);
                 $table->integer('parent_id');
-                $table->integer('computer_id');
+                $table->integer('instancia_id');
                 $table->timestamps();
             }
         );
