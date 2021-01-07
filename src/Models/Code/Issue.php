@@ -89,8 +89,31 @@ class Issue extends Base
                     'code_issue_id' => $issueKey,
                     ]
                 );
+            } elseif ($fieldIdentify == 'summary') {
+                $this->title = $result;
+            } elseif ($fieldIdentify == 'description') {
+                $this->description = $result;
+            } elseif ($fieldIdentify == 'created') {
+                $this->created_at = (string) $result;
+            } elseif ($fieldIdentify == 'updated') {
+                $this->updated_at = (string) $result;
             } elseif ($fieldIdentify == 'lastViewed') {
+
             } elseif ($fieldIdentify == 'resolutiondate') {
+
+
+
+
+
+
+            } elseif ($fieldIdentify == 'priority') {
+                var_dump(
+                    [
+                        'IssueModel priority',
+                        $fieldIdentify,
+                        $result
+                    ]
+                );
             } else {
                 var_dump(
                     [
@@ -101,5 +124,7 @@ class Issue extends Base
                 );
             }
         }
+
+        $this->save();
     }
 }

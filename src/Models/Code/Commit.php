@@ -21,7 +21,7 @@ class Commit extends Base
 
     protected $organizationPerspective = true;
 
-    protected $table = 'code_project_commits';
+    protected $table = 'repository_commits';
 
     /**
      * The attributes that are mass assignable.
@@ -29,11 +29,11 @@ class Commit extends Base
      * @var array
      */
     protected $fillable = [
-        'author_id',
-        'committer_id',
-        'token',
-        'company_token',
-        'is_active'
+        'code',
+        'date',
+        'author',
+        'message',
+        'reference'
     ];
 
     public function stayInBranchOfAmbiente(Ambiente $ambiente)
@@ -47,9 +47,9 @@ class Commit extends Base
         return 'Numero do Commit';
     }
 
-    public function project()
+    public function repository()
     {
-        return $this->belongsTo('Fabrica\Models\Code\Project', 'code_project_id', 'id');
+        return $this->belongsTo(Repository::class, 'repository_id', 'id');
     }
 
 

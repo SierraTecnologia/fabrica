@@ -3,6 +3,8 @@
 namespace Fabrica\Helps\Git;
 
 use DateTime;
+use Pedreiro\Exceptions\Exception;
+use Pedreiro\Exceptions\RuntimeException;
 
 /**
  * Git Repository Interface Class
@@ -142,8 +144,20 @@ class GitRepo
      * @access public
      * @return string
      */
+    public function gitDirectoryPath()
+    {
+        return $this->git_directory_path();
+    }
+    
+    /**
+     * Get the path to the git repo directory (eg. the ".git" directory)
+     * 
+     * @access public
+     * @return string
+     */
     public function git_directory_path()
     {
+
         if ($this->bare) {
             return $this->repositoryPath;
         } else if (is_dir($this->repositoryPath."/.git")) {
@@ -408,6 +422,18 @@ class GitRepo
         return $this->run("branch ".(($force) ? '-D' : '-d')." $branch");
     }
 
+    
+    /**
+     * Runs a `git branch` call
+     *
+     * @access public
+     * @param  bool    keep asterisk mark on active branch
+     * @return array
+     */
+    public function listBranches($keep_asterisk = false)
+    {
+        return $this->list_branches($keep_asterisk);
+    }
     /**
      * Runs a `git branch` call
      *
