@@ -21,6 +21,13 @@ class Lib extends Base
     protected $defaultBranch = 'master';
 
     protected $table = 'code_libs';   
+    
+    public $incrementing = false;
+    protected $casts = [
+        'code' => 'string',
+    ];
+    protected $primaryKey = 'code';
+    protected $keyType = 'string';
 
     protected $organizationPerspective = true;
 
@@ -30,6 +37,8 @@ class Lib extends Base
      * @var array
      */
     protected $fillable = [
+        'code',
+        'description',
         'name',
         'slug',
         'url',
