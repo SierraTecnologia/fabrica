@@ -32,7 +32,7 @@ class FabricaProvider extends ServiceProvider
 
     public static $providers = [
 
-        \Support\SupportProviderService::class,
+        \Pedreiro\PedreiroServiceProvider::class,
 
         
     ];
@@ -41,32 +41,33 @@ class FabricaProvider extends ServiceProvider
      * Rotas do Menu
      */
     public static $menuItens = [
-        [
-            'text' => 'Workspace',
-            'icon' => 'fas fa-fw fa-search',
-            'icon_color' => "blue",
-            'label_color' => "success",
-            'section'     => 'painel',
-            'level'       => 1, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        ],
-        [
-            'text' => 'Configurações',
-            'icon' => 'fas fa-fw fa-search',
-            'icon_color' => "blue",
-            'label_color' => "success",
-            'section'     => 'admin',
-            'level'       => 1, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        ],
-        'Workspace|5' => [
-            [
-                'text' => 'Desenvolvimento',
-                'icon' => 'fas fa-fw fa-search',
-                'icon_color' => "blue",
-                'label_color' => "success",
-                'section'     => 'painel',
-                'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-            ],
-            'Desenvolvimento' => [
+        // [
+        //     'text' => 'Workspace',
+        //     'icon' => 'fas fa-fw fa-search',
+        //     'icon_color' => "blue",
+        //     'label_color' => "success",
+        //     'section'     => 'painel',
+        //     'level'       => 1, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        // ],
+        // [
+        //     'text' => 'Configurações',
+        //     'icon' => 'fas fa-fw fa-search',
+        //     'icon_color' => "blue",
+        //     'label_color' => "success",
+        //     'section'     => 'admin',
+        //     'level'       => 1, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        // ],
+        'Desenvolvimento|60',
+        // 'Workspace|5' => [
+        //     [
+        //         'text' => 'Desenvolvimento',
+        //         'icon' => 'fas fa-fw fa-search',
+        //         'icon_color' => "blue",
+        //         'label_color' => "success",
+        //         'section'     => 'painel',
+        //         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        //     ],
+            // 'Desenvolvimento' => [
                 // [
                 //     'text'        => 'Procurar',
                 //     'icon'        => 'fas fa-fw fa-search',
@@ -105,9 +106,10 @@ class FabricaProvider extends ServiceProvider
                         // 'access' => \Porteiro\Models\Role::$ADMIN
                     ],
                     // ],
-            ],
-        ],
-        'Configurações|250' => [
+        //     ],
+        // ],
+        'Configurações|250',
+        'Fabrica|245' => [
             // [
             //     'text'        => 'Tarefas',
             //     'icon'        => 'fas fa-fw fa-search',

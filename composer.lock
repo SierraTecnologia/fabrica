@@ -3541,7 +3541,7 @@
                 "reference": "e314e9d12b31ffe4729ef0aadfa2892c55e65463"
             },
             "require": {
-                "php": "^7.4"
+                "php": "^7.2|^8.0"
             },
             "type": "library",
             "extra": {
@@ -4596,7 +4596,7 @@
                 "league/pipeline": "*",
                 "league/plates": "^3.1|^4.0",
                 "m4tthumphrey/php-gitlab-api": "*",
-                "php": "^7.4",
+                "php": "^7.2|^8.0",
                 "raiym/instagram-php-scraper": ">=0.9.10",
                 "ricasolucoes/atlassian": "dev-master",
                 "sabre/xml": "*",
@@ -4662,7 +4662,7 @@
             },
             "require": {
                 "laravel/helpers": "^1.1",
-                "php": "^7.4",
+                "php": "^7.2|^8.0",
                 "ricardosierra/changelog": "~1.4",
                 "sierratecnologia/crypto": "dev-master"
             },
@@ -4744,7 +4744,7 @@
                 "reference": "19e235d497fd8788623219834a88fda76a40876b"
             },
             "require": {
-                "php": "^7.4",
+                "php": "^7.2|^8.0",
                 "privatejustice/tramite": "dev-master"
             },
             "type": "library",
@@ -8665,7 +8665,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4"
+        "php": "^7.2|^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"

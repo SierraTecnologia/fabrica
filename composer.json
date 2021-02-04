@@ -22,7 +22,7 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^7.2|^8.0",
         "sierratecnologia/integrations":    "dev-master",
         "sierratecnologia/operador":    "dev-master",
         "deployer/deployer":            "^6.8",
