@@ -33,7 +33,8 @@
     },
     "require-dev": {
         "behat/behat":                   ">=2.5",
-        "phpunit/phpunit": "^8.0|^9.0|^10.0"
+        "phpunit/phpunit": "^8.0|^9.0|^10.0",
+        "phpro/grumphp": "^1.3"
     },
     "suggest": {
         "leafo/lessphp":                ">=0.4",
