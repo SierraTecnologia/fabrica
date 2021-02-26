@@ -20,7 +20,7 @@ class ProjectCreateCommandTest extends CommandTestCase
     protected $repositoryPool;
     protected $hookInjector;
 
-    protected function setUp(): void: void
+    protected function setUp(): void
     {
         $this->client = self::createClient();
         $this->repositoryPool = $this->getMockBuilder('Fabrica\Bundle\CoreBundle\Git\RepositoryPool')
