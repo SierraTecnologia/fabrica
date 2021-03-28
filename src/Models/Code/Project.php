@@ -3,7 +3,7 @@
 namespace Fabrica\Models\Code;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Fabrica\Helper\General;
+use SiUtils\Helper\General;
 
 use Fabrica\Tools\Programs\Git\Repository;
 use Finder\Models\Reference;
