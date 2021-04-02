@@ -57,7 +57,7 @@ class FabricaProvider extends ServiceProvider
         //     'section'     => 'admin',
         //     'level'       => 1, // 0 (Public), 1, 2 (Admin) , 3 (Root)
         // ],
-        'Desenvolvimento|60',
+        'Desenvolvimento|530',
         // 'Workspace|5' => [
         //     [
         //         'text' => 'Desenvolvimento',
@@ -91,6 +91,7 @@ class FabricaProvider extends ServiceProvider
                         'icon'        => 'fas fa-fw fa-ship',
                         'icon_color'  => 'blue',
                         'label_color' => 'success',
+                        'order' => 550,
                         'section'     => 'painel',
                         'feature' => 'fabrica',
                         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
@@ -102,6 +103,7 @@ class FabricaProvider extends ServiceProvider
                         'icon'        => 'fas fa-fw fa-car',
                         'icon_color'  => 'blue',
                         'label_color' => 'success',
+                        'order' => 550,
                         'section'     => 'painel',
                         'feature' => 'fabrica',
                         'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
@@ -110,8 +112,7 @@ class FabricaProvider extends ServiceProvider
                     // ],
         //     ],
         // ],
-        'Configurações|250',
-        'Fabrica|245' => [
+        'Fabrica|2450' => [
             // [
             //     'text'        => 'Tarefas',
             //     'icon'        => 'fas fa-fw fa-search',
@@ -126,6 +127,7 @@ class FabricaProvider extends ServiceProvider
                 'icon'        => 'fas fa-fw fa-search',
                 'icon_color'  => 'blue',
                 'label_color' => 'success',
+                'order' => 2550,
                 'section'     => 'admin',
                 'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                 // 'access' => \Porteiro\Models\Role::$ADMIN
@@ -137,6 +139,7 @@ class FabricaProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-car',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
+                    'order' => 2550,
                     'section'     => 'admin',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \Porteiro\Models\Role::$ADMIN
@@ -147,6 +150,7 @@ class FabricaProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-car',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
+                    'order' => 2550,
                     'section'     => 'admin',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \Porteiro\Models\Role::$ADMIN
@@ -157,6 +161,7 @@ class FabricaProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-car',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
+                    'order' => 2550,
                     'section'     => 'admin',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \Porteiro\Models\Role::$ADMIN
@@ -169,6 +174,7 @@ class FabricaProvider extends ServiceProvider
                     'icon'        => 'fas fa-fw fa-car',
                     'icon_color'  => 'blue',
                     'label_color' => 'success',
+                    'order' => 2550,
                     'section'     => 'admin',
                     'level'       => 3, // 0 (Public), 1, 2 (Admin) , 3 (Root)
                     // 'access' => \Porteiro\Models\Role::$ADMIN
