@@ -16,13 +16,13 @@ use Integrations\Connectors\Gitlab\Import as GitlabImport;
 use Log;
 use Operador\Contracts\ActionInterface;
 
-use Finder\Actions\Action as ActionBase;
+use Operador\Actions\Action as ActionBase;
 
 class ImportFromToken extends ActionBase implements ActionInterface
 {
     const CODE = 'importIntegrationToken';
     CONST MODEL = \Integrations\Models\Token::class;
-    const TYPE = \Finder\Actions\Action::ROUTINE;
+    const TYPE = \Operador\Actions\Action::ROUTINE;
     
     protected $token = false;
 

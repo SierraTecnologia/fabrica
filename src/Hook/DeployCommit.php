@@ -5,8 +5,8 @@
 
 namespace Fabrica\Hook;
 
-use Finder\Actions\Action;
-use Finder\Actions\ActionCollection;
+use Operador\Actions\Action;
+use Operador\Actions\ActionCollection;
 
 use Fabrica\Models\Code\Commit;
 
