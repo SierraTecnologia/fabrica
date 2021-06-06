@@ -18,7 +18,7 @@ class ConfigShowCommandTest extends CommandTestCase
 {
     protected $client;
 
-    protected function setUp(): void: void
+    protected function setUp(): void
     {
         $this->client = self::createClient();
         $this->client->startIsolation();

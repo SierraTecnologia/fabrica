@@ -11,6 +11,7 @@ class FieldController extends Controller
 {
     use CrudController;
 
+
     public function __construct(Field $model)
     {
         $this->model = $model;

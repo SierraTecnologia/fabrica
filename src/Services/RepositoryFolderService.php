@@ -82,7 +82,7 @@ class RepositoryFolderService
 
             // //@todo
             // unset($composerLock->packages);
-            // dd(
+            // dd('Fabrica',
             //     // $composerLock,
             //     $composer,
             //     $realPath . $item

@@ -103,10 +103,12 @@ class CreateCodeTables extends Migration
 
         Schema::create(
             'code_libs', function (Blueprint $table) {
-                $table->increments('id');
+                $table->string('code')->unique();
+                $table->primary('code');
 
 
                 $table->string('name')->nullable();
+                $table->string('description')->nullable();
                 $table->string('slug')->nullable();
                 $table->string('url')->nullable();
                 $table->string('repository')->nullable();

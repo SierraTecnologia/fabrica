@@ -9,6 +9,7 @@ use Pedreiro\Models\Base; //use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
 use Muleta\Traits\Models\EloquentGetTableNameTrait;
+use Illuminate\Support\Str;
 
 class GroupMember extends Base
 {

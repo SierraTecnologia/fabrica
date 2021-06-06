@@ -1,9 +1,9 @@
 <?php
 
-namespace Fabrica\Entitys;
+namespace Fabrica\Entities;
 
 
-class ProjectEntity extends EntityAbstract
+class RepositoryEntity extends EntityAbstract
 {
     
     /**

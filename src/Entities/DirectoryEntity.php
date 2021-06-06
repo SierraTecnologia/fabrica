@@ -1,10 +1,11 @@
 <?php
 
-namespace Fabrica\Entitys;
+namespace Fabrica\Entities;
 
 
 class DirectoryEntity extends EntityAbstract
 {
+    public $type = '';
     public $files = [];
     public $directorys = [];
     

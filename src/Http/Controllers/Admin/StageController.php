@@ -9,12 +9,11 @@ use Pedreiro\CrudController;
 
 class StageController extends Controller
 {
-    public $title = 'Status';
-
     use CrudController;
 
     public function __construct(Stage $model)
     {
+        $this->title = 'Status';
         $this->model = $model;
         parent::__construct();
     }
