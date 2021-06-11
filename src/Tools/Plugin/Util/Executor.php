@@ -4,7 +4,7 @@ namespace Fabrica\Tools\Plugin\Util;
 
 use Fabrica\Tools\Store\Factory as StoreFactory;
 use Exception;
-use Fabrica\Helper\Lang;
+use Muleta\Helper\Lang;
 use Fabrica\Tools\Logging\BuildLogger;
 use Fabrica\Models\Infra\Ci\Build;
 use Fabrica\Tools\Plugin;

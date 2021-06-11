@@ -4,7 +4,7 @@ namespace Fabrica\Tools\Plugin;
 
 use Fabrica\Tools\Config;
 use Fabrica\Tools\View;
-use Fabrica\Helper\Email as EmailHelper;
+use Muleta\Helper\Email as EmailHelper;
 use Psr\Log\LogLevel;
 use Fabrica\Tools\Plugin;
 
