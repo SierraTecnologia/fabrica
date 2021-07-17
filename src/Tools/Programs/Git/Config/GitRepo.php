@@ -768,7 +768,7 @@ class GitRepo
         exec($command, $output, $returnValue);
 
         if ($returnValue !== 0) {
-            throw new RuntimeException(implode("\r\n", $output));
+            throw new RuntimeException(implode("\r\n", $output). ' -> '.$this->repositoryPath);
         }
 
         return $output;

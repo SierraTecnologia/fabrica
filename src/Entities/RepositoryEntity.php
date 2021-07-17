@@ -15,4 +15,15 @@ class RepositoryEntity extends EntityAbstract
     {
         return $this->code->getTargetPath();
     }
+
+
+    public function commits()
+    {
+        return $this;
+    }
+
+    public function attach($commit)
+    {
+
+    }
 }
