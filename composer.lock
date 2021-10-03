@@ -4595,7 +4595,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Tramite",
-                "reference": "bc98c08a4fa0f612e0fa1e18dc5b0b6fd41e1e48"
+                "reference": "526c93c5b98fa0e642db30be3db681eb4bd5e4eb"
             },
             "require": {
                 "php": "^7.2|^8.0"
@@ -5414,7 +5414,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Atlassian",
-                "reference": "a1d729f50e02a08a45c84ffebd8199ea8f8ea456"
+                "reference": "45182757aaf8bb28b5078400f35c900ce8a1bc0c"
             },
             "require": {
                 "ext-curl": "*",
@@ -5695,7 +5695,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Crypto",
-                "reference": "9668cd2c2ed5626ef95f6fe7a775bfd5bfa6486d"
+                "reference": "f448632f72f4a1548c949f88326ea99dca9b8b05"
             },
             "require": {
                 "defuse/php-encryption": "^2.2",
@@ -5767,7 +5767,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Integrations",
-                "reference": "6b3750b75a04db2a24b2829cd38f6c0151e9b8fe"
+                "reference": "9b510423c7b30c6444cc09aca8345f71139ce9e7"
             },
             "require": {
                 "aws/aws-sdk-php": "^3.0",
@@ -5845,7 +5845,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Muleta",
-                "reference": "8c91cceb0dc09bb4917ce2d6d30ec6494c771964"
+                "reference": "7f45fa28b5e9dc6cc18ae37ceaf41ea580d2ec9e"
             },
             "require": {
                 "laravel/helpers": "^1.1",
@@ -5949,7 +5949,7 @@
             "dist": {
                 "type": "path",
                 "url": "../Operador",
-                "reference": "e23c857ed2af7d91cdda0d9da63390f3b94f351b"
+                "reference": "fae570adb55fced5f3875b4a77dd87ec3b1c1984"
             },
             "require": {
                 "lorisleiva/laravel-actions": "^1.1",
