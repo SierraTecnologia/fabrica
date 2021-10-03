@@ -24,24 +24,30 @@ class Git
      * Sets git executable path
      *
      * @param string $path executable location
+     *
+     * @return void
      */
-    public static function set_bin($path)
+    public static function set_bin($path): void
     {
         self::$bin = $path;
     }
 
     /**
      * Gets git executable path
+     *
+     * @return string
      */
-    public static function get_bin()
+    public static function get_bin(): string
     {
         return self::$bin;
     }
 
     /**
      * Sets up library for use in a default Windows environment
+     *
+     * @return void
      */
-    public static function windows_mode()
+    public static function windows_mode(): void
     {
         self::set_bin('git');
     }

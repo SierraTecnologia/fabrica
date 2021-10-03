@@ -25,7 +25,8 @@ class UserRoleSetListener
     /**
      * Handle the event.
      *
-     * @param  FieldChangeEvent $event
+     * @param Event $event
+     *
      * @return void
      */
     public function handle(Event $event)

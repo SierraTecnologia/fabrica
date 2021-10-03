@@ -19,7 +19,7 @@ use Fabrica\Component\Config\PhpFileConfig;
  */
 class PhpFileConfigTest extends \PHPUnit\Framework\TestCase
 {
-    public function testInexisting()
+    public function testInexisting(): void
     {
         $file = $this->getTempFile();
 
@@ -39,8 +39,10 @@ class PhpFileConfigTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @expectedException RuntimeException
+     *
+     * @return void
      */
-    public function testInvalid()
+    public function testInvalid(): void
     {
         $file = $this->getTempFile();
         file_put_contents($file, '<?php return 1;');
@@ -51,8 +53,10 @@ class PhpFileConfigTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @expectedException RuntimeException
+     *
+     * @return void
      */
-    public function testUnreadable()
+    public function testUnreadable(): void
     {
         $file = $this->getTempFile();
         touch($file);
@@ -62,7 +66,7 @@ class PhpFileConfigTest extends \PHPUnit\Framework\TestCase
         $storage->get('foo');
     }
 
-    public function testWritable()
+    public function testWritable(): void
     {
         $file = $this->getTempFile();
         $a = new PhpFileConfig($file);
@@ -72,6 +76,9 @@ class PhpFileConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('bar', $b->get('foo'));
     }
 
+    /**
+     * @return false|string
+     */
     private function getTempFile()
     {
         $file = tempnam(sys_get_temp_dir(), 'fabricatest_');

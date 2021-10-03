@@ -16,10 +16,13 @@ class LDAP
     /**
      * connect ldap server.
      *
-     * @var    array $config
+     * @var array $config
+     *
      * @return array 
+     *
+     * @param array $configs
      */
-    public static function test($configs)
+    public static function test(array $configs)
     {
         $ad = new Adldap(self::filterConnectConfigs($configs));
 
@@ -90,10 +93,13 @@ class LDAP
     /**
      * connect ldap server.
      *
-     * @var    array $config
+     * @var array $config
+     *
      * @return array 
+     *
+     * @param array $configs
      */
-    public static function sync($configs)
+    public static function sync(array $configs)
     {
         $ret = [];
         $ad = new Adldap(self::filterConnectConfigs($configs));
@@ -124,8 +130,10 @@ class LDAP
      * arrange configs.
      *
      * @return array
+     *
+     * @param (array|mixed)[] $configs
      */
-    public static function filterConnectConfigs($configs)
+    public static function filterConnectConfigs(array $configs)
     {
         $connect_configs = [];
         foreach ($configs as $key => $config)
@@ -187,6 +195,8 @@ class LDAP
      * get group dn.
      *
      * @return string 
+     *
+     * @param \ArrayAccess|array $config
      */
     public static function getGroupDN($config)
     {
@@ -211,6 +221,8 @@ class LDAP
      * sync the users.
      *
      * @return bool 
+     *
+     * @param (int|string) $directory
      */
     public static function syncUsers($provider, $directory, $config)
     {
@@ -271,6 +283,8 @@ class LDAP
      * sync the groups.
      *
      * @return bool 
+     *
+     * @param (int|string) $directory
      */
     public static function syncGroups($provider, $directory, $config)
     {
@@ -327,12 +341,15 @@ class LDAP
     /**
      * ldap user authenticate.
      *
-     * @var    array $configs
-     * @var    string $username
-     * @var    string $password
+     * @var array $configs
+     * @var string $username
+     * @var string $password
+     *
      * @return object 
+     *
+     * @param (array|mixed)[] $configs
      */
-    public static function attempt($configs, $username, $password)
+    public static function attempt(array $configs, $username, $password)
     {
         $pass = false;
         $user = null;

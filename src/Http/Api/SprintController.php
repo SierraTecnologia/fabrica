@@ -25,9 +25,9 @@ class SprintController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function index($project_key)
+    public function index($project_key): void
     {
     }
 
@@ -648,6 +648,11 @@ class SprintController extends Controller
         return $total;
     }
 
+    /**
+     * @return int|null
+     *
+     * @psalm-return 0|null
+     */
     public function getRemainingTime($issue_no)
     {
         $origin_estimate_time = 0;

@@ -29,6 +29,9 @@ class Message
     protected $type;
     protected $publishedAt;
 
+    /**
+     * @return CloseMessage|CommitMessage|null
+     */
     public static function createFromEvent(PushReferenceEvent $event, Feed $feed)
     {
         $user          = $event->getUser();
@@ -82,7 +85,10 @@ class Message
         return $this->feed;
     }
 
-    public function setFeed(Feed $feed)
+    /**
+     * @return static
+     */
+    public function setFeed(Feed $feed): self
     {
         $this->feed = $feed;
 
@@ -98,12 +104,15 @@ class Message
         return $this->user;
     }
 
-    public function hasUser()
+    public function hasUser(): bool
     {
         return null !== $this->user;
     }
 
-    public function setUser($user)
+    /**
+     * @return static
+     */
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
@@ -115,18 +124,27 @@ class Message
         return $this->publishedAt;
     }
 
-    public function setPublishedAt(\DateTime $publishedAt = null)
+    /**
+     * @return static
+     */
+    public function setPublishedAt(\DateTime $publishedAt = null): self
     {
         $this->publishedAt = $publishedAt ? $publishedAt : new \DateTime();
 
         return $this;
     }
 
+    /**
+     * @return false|int
+     */
     public function isBranch()
     {
         return preg_match('#^refs/heads/#', $this->getFeed()->getReference());
     }
 
+    /**
+     * @return false|string
+     */
     public function getBranch()
     {
         if (!$this->isBranch()) {
@@ -136,11 +154,17 @@ class Message
         return substr($this->getFeed()->getReference(), 11); // refs/heads/
     }
 
+    /**
+     * @return false|int
+     */
     public function isTag()
     {
         return preg_match('#^refs/tags/#', $this->getFeed()->getReference());
     }
 
+    /**
+     * @return false|string
+     */
     public function getTag()
     {
         if (!$this->isTag()) {
@@ -150,6 +174,9 @@ class Message
         return substr($this->getFeed()->getReference(), 10); // refs/tags/
     }
 
+    /**
+     * @return false|string
+     */
     public function getShortReferenceName()
     {
         if ($this->isTag()) {

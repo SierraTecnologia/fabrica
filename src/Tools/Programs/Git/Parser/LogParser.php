@@ -15,6 +15,9 @@ class LogParser extends CommitParser
 {
     public $log = array();
 
+    /**
+     * @return void
+     */
     protected function doParse()
     {
         $this->log = array();

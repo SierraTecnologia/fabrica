@@ -72,8 +72,10 @@ class Campfire extends Plugin
      * Join a Campfire room.
      *
      * @param $roomId
+     *
+     * @return void
      */
-    public function joinRoom($roomId)
+    public function joinRoom($roomId): void
     {
         $this->getPageByPost('/room/'.$roomId.'/join.json');
     }
@@ -82,8 +84,10 @@ class Campfire extends Plugin
      * Leave a Campfire room.
      *
      * @param $roomId
+     *
+     * @return void
      */
-    public function leaveRoom($roomId)
+    public function leaveRoom($roomId): void
     {
         $this->getPageByPost('/room/'.$roomId.'/leave.json');
     }
@@ -96,7 +100,7 @@ class Campfire extends Plugin
      * @param  bool $isPaste
      * @return bool|mixed
      */
-    public function speak($message, $roomId, $isPaste = false)
+    public function speak(string $message, $roomId, $isPaste = false)
     {
         $page = '/room/'.$roomId.'/speak.json';
 
@@ -116,7 +120,7 @@ class Campfire extends Plugin
      * @param  null $data
      * @return bool|mixed
      */
-    private function getPageByPost($page, $data = null)
+    private function getPageByPost(string $page, $data = null)
     {
         $url = $this->url . $page;
         // The new API allows JSON, so we can pass

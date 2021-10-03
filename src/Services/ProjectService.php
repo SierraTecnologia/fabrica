@@ -22,8 +22,10 @@ class ProjectService
 
     /**
      * @todo Terminar de Fazer
+     *
+     * @return true
      */
-    public static function import($data)
+    public static function import($data): bool
     {   
         $registerData = $data;
         // if (isset($data['Nome Completo'])) {

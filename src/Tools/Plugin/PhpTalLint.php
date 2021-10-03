@@ -104,7 +104,7 @@ class PhpTalLint extends Plugin
      * @param  $itemPath
      * @return bool
      */
-    protected function lintItem($item, $itemPath)
+    protected function lintItem(\DirectoryIterator $item, string $itemPath)
     {
         $success = true;
 
@@ -125,7 +125,7 @@ class PhpTalLint extends Plugin
      * @param  $path
      * @return bool
      */
-    protected function lintDirectory($path)
+    protected function lintDirectory(string $path)
     {
         $success = true;
         $directory = new \DirectoryIterator($this->builder->buildPath . $path);
@@ -155,7 +155,7 @@ class PhpTalLint extends Plugin
      * @param  $path
      * @return bool
      */
-    protected function lintFile($path)
+    protected function lintFile(string $path)
     {
         $success = true;
 

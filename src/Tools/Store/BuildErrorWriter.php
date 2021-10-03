@@ -64,6 +64,8 @@ class BuildErrorWriter
      * @param int      $lineStart
      * @param int      $lineEnd
      * @param DateTime $createdDate
+     *
+     * @return void
      */
     public function write(
         $plugin,
@@ -73,7 +75,7 @@ class BuildErrorWriter
         $lineStart = null,
         $lineEnd = null,
         $createdDate = null
-    ) {
+    ): void {
         if (is_null($createdDate)) {
             $createdDate = new DateTime();
         }
@@ -103,6 +105,8 @@ class BuildErrorWriter
 
     /**
      * Flush buffer
+     *
+     * @return void
      */
     public function flush()
     {

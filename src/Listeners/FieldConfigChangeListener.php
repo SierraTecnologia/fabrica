@@ -51,11 +51,13 @@ class FieldConfigChangeListener
     /**
      * update the schema.
      *
-     * @param  string   $field_id
-     * @param  int flag
+     * @param string   $field_id
+     * @param int flag
+     * @param int $flag
+     *
      * @return void
      */
-    public function updateSchema($field_id, $flag)
+    public function updateSchema($field_id, int $flag)
     {
         $screens = Screen::whereRaw([ 'field_ids' => $field_id ])->get([ 'schema' ]);
         foreach ($screens as $screen)

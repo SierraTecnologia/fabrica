@@ -185,8 +185,10 @@ class FabricaProvider extends ServiceProvider
 
     /**
      * Alias the services in the boot.
+     *
+     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         
         // Register configs, migrations, etc
@@ -325,7 +327,7 @@ class FabricaProvider extends ServiceProvider
         $this->loadTranslations();
     }
 
-    private function loadViews()
+    private function loadViews(): void
     {
         // View namespace
         $viewsPath = $this->getResourcesPath('views');
@@ -337,7 +339,7 @@ class FabricaProvider extends ServiceProvider
         );
     }
     
-    private function loadTranslations()
+    private function loadTranslations(): void
     {
         // Publish lanaguage files
         $this->publishes(
@@ -352,9 +354,9 @@ class FabricaProvider extends ServiceProvider
 
 
     /**
-     *
+     * @return void
      */
-    private function loadLogger()
+    private function loadLogger(): void
     {
         Config::set(
             'logging.channels.sitec-fabrica', [

@@ -45,10 +45,13 @@ class SummaryController extends Controller
     /**
      * get the past two week trend data.
      *
-     * @param  string $project_key
-     * @return \Illuminate\Http\Response
+     * @param string $project_key
+     *
+     * @return (int|string)[][]
+     *
+     * @psalm-return list<array{day: 0|string, new: 0|positive-int, resolved: 0|positive-int, closed: 0|positive-int}>
      */
-    public function getPulseData($project_key)
+    public function getPulseData($project_key): array
     {
         // initialize the results
         $trend = [];
@@ -315,7 +318,14 @@ class SummaryController extends Controller
         );
     }
 
-    function calPercent($arr)
+    /**
+     * @param (int)[][] $arr
+     *
+     * @return (float|int)[][]
+     *
+     * @psalm-return array<array<float|int>>
+     */
+    function calPercent(array $arr): array
     {
         $total = 0;
         $counts = [];

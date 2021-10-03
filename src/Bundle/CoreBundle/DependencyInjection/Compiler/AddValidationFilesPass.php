@@ -18,6 +18,9 @@ use Symfony\Component\Finder\Finder;
 
 class AddValidationFilesPass implements CompilerPassInterface
 {
+    /**
+     * @return void
+     */
     public function process(ContainerBuilder $container)
     {
         $dirs = array();

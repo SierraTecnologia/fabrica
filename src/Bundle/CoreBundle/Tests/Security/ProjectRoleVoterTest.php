@@ -18,7 +18,7 @@ use Fabrica\Models\Code\Project;
 
 class ProjectRoleVoterTest extends \PHPUnit\Framework\TestCase
 {
-    public function testNoRole()
+    public function testNoRole(): void
     {
         $project = new Project('A', 'A');
         $token = $this->getToken(array(), $project);
@@ -27,7 +27,7 @@ class ProjectRoleVoterTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(ProjectRoleVoter::ACCESS_DENIED, $voter->vote($token, $project, array('PROJECT_FOO')));
     }
 
-    public function testSimpleRole()
+    public function testSimpleRole(): void
     {
         $project = new Project('A', 'A');
         $token = $this->getToken(array('PROJECT_FOO'), $project);
@@ -36,7 +36,7 @@ class ProjectRoleVoterTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(ProjectRoleVoter::ACCESS_GRANTED, $voter->vote($token, $project, array('PROJECT_FOO')));
     }
 
-    public function testAndOKAttributes()
+    public function testAndOKAttributes(): void
     {
         $project = new Project('A', 'A');
         $token = $this->getToken(array('PROJECT_FOO', 'PROJECT_BAR'), $project);
@@ -45,7 +45,7 @@ class ProjectRoleVoterTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(ProjectRoleVoter::ACCESS_GRANTED, $voter->vote($token, $project, array('PROJECT_FOO', 'PROJECT_BAR')));
     }
 
-    public function testAndKOAttributes()
+    public function testAndKOAttributes(): void
     {
         $project = new Project('A', 'A');
         $token = $this->getToken(array('PROJECT_FOO', 'PROJECT_BAR'), $project);
@@ -54,7 +54,7 @@ class ProjectRoleVoterTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(ProjectRoleVoter::ACCESS_DENIED, $voter->vote($token, $project, array('PROJECT_BAR', 'PROJECT_BAZ')));
     }
 
-    public function testNotCorrectProject()
+    public function testNotCorrectProject(): void
     {
         $project = new Project('A', 'A');
         $projectOther = new Project('B', 'B');

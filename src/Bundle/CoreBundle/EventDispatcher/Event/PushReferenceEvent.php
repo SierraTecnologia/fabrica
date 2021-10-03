@@ -40,17 +40,17 @@ class PushReferenceEvent extends Event
         $this->reference = $reference;
     }
 
-    public function getProject()
+    public function getProject(): Project
     {
         return $this->project;
     }
 
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    public function getReference()
+    public function getReference(): PushReference
     {
         return $this->reference;
     }

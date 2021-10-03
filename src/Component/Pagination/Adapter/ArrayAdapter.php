@@ -23,12 +23,23 @@ class ArrayAdapter implements PagerAdapterInterface
         $this->array = $array;
     }
 
+    /**
+     * @return int
+     *
+     * @psalm-return 0|positive-int
+     */
     public function count()
     {
         return count($this->array);
     }
 
-    public function get($offset, $limit)
+    /**
+     * @return array
+     *
+     * @param int $offset
+     * @param int $limit
+     */
+    public function get(int $offset, int $limit)
     {
         return array_slice($this->array, $offset, $limit);
     }

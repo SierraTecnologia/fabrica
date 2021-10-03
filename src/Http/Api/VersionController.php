@@ -73,7 +73,7 @@ class VersionController extends Controller
      *
      * @return array 
      */
-    public function getVersionFields($project_key)
+    public function getVersionFields(string $project_key)
     {
         $version_fields = [];
         // get all project fields
@@ -123,7 +123,7 @@ class VersionController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($project_key, $id)
+    public function show(string $project_key, $id)
     {
         $version = Version::find($id);
 

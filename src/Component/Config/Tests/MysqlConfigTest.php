@@ -24,7 +24,7 @@ use Fabrica\Component\Config\MysqlConfig;
  */
 class MysqlConfigTest extends \PHPUnit\Framework\TestCase
 {
-    public function testAbstract()
+    public function testAbstract(): void
     {
         $path = $this->tempFile();
         $configA = $this->createConfig($path);
@@ -38,13 +38,19 @@ class MysqlConfigTest extends \PHPUnit\Framework\TestCase
         unlink($path);
     }
 
-    protected function createConfig($path)
+    /**
+     * @param false|string $path
+     */
+    protected function createConfig($path): MysqlConfig
     {
         $conn = new Connection(array('path' => $path), new SqliteDriver());
 
         return new MysqlConfig($conn);
     }
 
+    /**
+     * @return false|string
+     */
     protected function tempFile()
     {
         $file = tempnam(sys_get_temp_dir(), 'fabrica_');

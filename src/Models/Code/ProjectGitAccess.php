@@ -35,8 +35,10 @@ class ProjectGitAccess
     /**
      * @param string $reference  Fully qualified reference name ("refs/heads/master")
      * @param int    $permission Write or Admin permission (see self::*_PERMISSION)
+     *
+     * @return bool
      */
-    public function isGranted(User $user, $reference, $permission)
+    public function isGranted(User $user, $reference, $permission): bool
     {
         $userRole = $this->project->getUserRole($user);
 
@@ -47,7 +49,7 @@ class ProjectGitAccess
         return $this->matches($reference) && $this->verifyPermission($permission);
     }
 
-    public function matches($reference)
+    public function matches(string $reference): bool
     {
         $pattern = preg_quote($this->reference);
         $pattern = str_replace('\*', '.*', $pattern);
@@ -56,7 +58,7 @@ class ProjectGitAccess
         return 0 != preg_match($pattern, $reference);
     }
 
-    public function verifyPermission($permission)
+    public function verifyPermission(int $permission)
     {
         if ($permission === self::WRITE_PERMISSION) {
             return $this->isWrite || $this->isAdmin;
@@ -71,17 +73,17 @@ class ProjectGitAccess
         return $this->id;
     }
 
-    public function getProject()
+    public function getProject(): Project
     {
         return $this->project;
     }
 
-    public function getRole()
+    public function getRole(): Role
     {
         return $this->role;
     }
 
-    public function setRole(Role $role)
+    public function setRole(Role $role): void
     {
         $this->role = $role;
     }
@@ -91,7 +93,7 @@ class ProjectGitAccess
         return $this->reference;
     }
 
-    public function setReference($reference)
+    public function setReference($reference): void
     {
         $this->reference = $reference;
     }
@@ -101,7 +103,7 @@ class ProjectGitAccess
         return $this->isWrite;
     }
 
-    public function setWrite($isWrite)
+    public function setWrite($isWrite): void
     {
         $this->isWrite = $isWrite;
     }
@@ -111,7 +113,7 @@ class ProjectGitAccess
         return $this->isAdmin;
     }
 
-    public function setAdmin($isAdmin)
+    public function setAdmin($isAdmin): void
     {
         $this->isAdmin = $isAdmin;
     }

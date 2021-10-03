@@ -80,7 +80,7 @@ class Lint extends Plugin
      * @param  $itemPath
      * @return bool
      */
-    protected function lintItem($php, $item, $itemPath)
+    protected function lintItem(string $php, \DirectoryIterator $item, string $itemPath)
     {
         $success = true;
 
@@ -103,7 +103,7 @@ class Lint extends Plugin
      * @param  $path
      * @return bool
      */
-    protected function lintDirectory($php, $path)
+    protected function lintDirectory(string $php, string $path)
     {
         $success = true;
         $directory = new \DirectoryIterator($this->builder->buildPath . $path);
@@ -134,7 +134,7 @@ class Lint extends Plugin
      * @param  $path
      * @return bool
      */
-    protected function lintFile($php, $path)
+    protected function lintFile($php, string $path)
     {
         $success = true;
 

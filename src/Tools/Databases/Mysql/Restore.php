@@ -92,6 +92,9 @@ class Restore
         }
     }
 
+    /**
+     * @return false|mysqli
+     */
     protected function initializeDatabase()
     {
         try {
@@ -124,8 +127,10 @@ class Restore
      * Use '*' for whole database or 'table1 table2 table3...'
      *
      * @param string $tables
+     *
+     * @return bool
      */
-    public function restoreDb()
+    public function restoreDb(): bool
     {
         try {
             $sql = '';
@@ -199,6 +204,9 @@ class Restore
      *
      * @return string New filename (without .gz appended and without backup directory) if success, or false if operation fails
      */
+    /**
+     * @return false|string
+     */
     protected function gunzipBackupFile()
     {
         // Raising this value may increase performance
@@ -242,8 +250,13 @@ class Restore
 
     /**
      * Prints message forcing output buffer flush
+     *
+     * @param int $lineBreaksBefore
+     * @param int $lineBreaksAfter
+     *
+     * @return false|null
      */
-    public function obfPrint($msg = '', $lineBreaksBefore = 0, $lineBreaksAfter = 1)
+    public function obfPrint(string $msg = '', int $lineBreaksBefore = 0, int $lineBreaksAfter = 1)
     {
         if (!$msg) {
             return false;

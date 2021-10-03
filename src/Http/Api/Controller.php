@@ -26,7 +26,10 @@ class Controller extends BaseController
         $this->user = Sentinel::getUser(); 
     }
 
-    public function arrange($data)
+    /**
+     * @param ((array|mixed|string)[]|\Fabrica\Project\collection|mixed)[] $data
+     */
+    public function arrange(array $data)
     {
         if (!is_array($data)) {
             return $data;
@@ -52,7 +55,7 @@ class Controller extends BaseController
      *
      * @return bool
      */
-    public function isPermissionAllowed($project_key, $permission, $user_id='')
+    public function isPermissionAllowed(string $project_key, string $permission, $user_id='')
     {
         $uid = isset($user_id) && $user_id ? $user_id : $this->user->id;
 
@@ -74,8 +77,10 @@ class Controller extends BaseController
      * check if the field is used by issue.
      *
      * @return true 
+     *
+     * @param array|string $ext_info
      */
-    public function isFieldUsedByIssue($project_key, $field_key, $field, $ext_info='')
+    public function isFieldUsedByIssue(string $project_key, string $field_key, $field, $ext_info='')
     {
         if ($field['project_key'] !== $project_key) {
              return true;
@@ -151,7 +156,7 @@ class Controller extends BaseController
         }
     }
 
-    public function getIssueQueryWhere($project_key, $query)
+    public function getIssueQueryWhere(string $project_key, array $query)
     {
         $special_fields = [
             [ 'key' => 'no', 'type' => 'Number' ],

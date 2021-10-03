@@ -166,12 +166,13 @@ class LabelsController extends Controller
     /**
      * update the issues label
      *
-     * @param  array  $issues
-     * @param  string $source
-     * @param  string $dest
-     * @return \Illuminate\Http\Response
+     * @param array  $issues
+     * @param string $source
+     * @param string $dest
+     *
+     * @return void
      */
-    public function updIssueLabels($project_key, $source, $dest)
+    public function updIssueLabels($project_key, $source, $dest): void
     {
         $issues = DB::collection('issue_' . $project_key)
             ->where('labels', $source)

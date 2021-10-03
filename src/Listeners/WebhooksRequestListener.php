@@ -27,7 +27,8 @@ class WebhooksRequestListener
     /**
      * Handle the event.
      *
-     * @param  FileChangeEvent $event
+     * @param Event $event
+     *
      * @return void
      */
     public function handle(Event $event)
@@ -45,6 +46,9 @@ class WebhooksRequestListener
         }
     }
 
+    /**
+     * @return void
+     */
     public function push2WebhookEvents(Event $event, $request_url, $token='')
     {
         $event_key = $event->param['event_key'];

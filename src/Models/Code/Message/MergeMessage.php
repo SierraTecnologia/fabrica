@@ -19,12 +19,12 @@ use Fabrica\Models\Code\Message;
  */
 class MergeMessage extends Message
 {
-    public function getSentence()
+    public function getSentence(): string
     {
         return 'merged';
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'merge';
     }

@@ -15,6 +15,9 @@ use Fabrica\Tools\Bash;
 class Explorer
 {
 
+    /**
+     * @return \mysqli|null
+     */
     function login($loginParams)
     {
         $connection = @mysqli_connect($loginParams['svr'], $loginParams['name'], $loginParams['psw'])
@@ -25,12 +28,15 @@ class Explorer
     }
     
 
-    public function getFields($tableName)
+    public function getFields($tableName): void
     {
         $this->exec('DESCRIBE '.$tableName);
     }
 
-    public function mergeFrom($database)
+    /**
+     * @return true
+     */
+    public function mergeFrom($database): bool
     {
         $tables = $this->getTables();
 
@@ -41,7 +47,7 @@ class Explorer
         return true;
     }
 
-    function load_db($first)
+    function load_db($first): void
     {
         if($first) {
             setDbSession();
@@ -63,7 +69,7 @@ class Explorer
 
 
 
-    function getDatabases($first)
+    function getDatabases($first): void
     {
         if($first) {
             setSession();
@@ -84,7 +90,7 @@ class Explorer
 
 
 
-    function loadTable()
+    function loadTable(): void
     {
         $connection = login(getSession());
         $db = getDbSession();

@@ -26,14 +26,17 @@ class PostMessage extends Message
         return $this->message;
     }
 
-    public function setMessage($message)
+    /**
+     * @return static
+     */
+    public function setMessage($message): self
     {
         $this->message = $message;
 
         return $this;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'post';
     }

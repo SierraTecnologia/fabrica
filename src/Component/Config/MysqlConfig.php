@@ -53,6 +53,8 @@ class MysqlConfig extends AbstractConfig
 
     /**
      * {@inheritDoc}
+     *
+     * @return void
      */
     protected function doSetAll(array $values)
     {
@@ -69,8 +71,10 @@ class MysqlConfig extends AbstractConfig
      *
      * @param string $query      SQL query
      * @param array  $parameters query parameters
+     *
+     * @return \Doctrine\DBAL\Result
      */
-    protected function runSQL($query, array $parameters = array())
+    protected function runSQL($query, array $parameters = array()): \Doctrine\DBAL\Result
     {
         try {
             return $this->connection->executeQuery($query, $parameters);

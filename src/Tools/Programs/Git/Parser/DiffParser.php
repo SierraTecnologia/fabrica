@@ -18,6 +18,9 @@ class DiffParser extends ParserBase
 {
     public $files;
 
+    /**
+     * @return void
+     */
     protected function doParse()
     {
         $this->files = array();

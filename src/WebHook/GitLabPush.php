@@ -11,8 +11,9 @@ class GitLabPush extends GitPush
     /**
      * parse the data.
      *
-     * @param  array $data
-     * @return array
+     * @param array $data
+     *
+     * @return void
      */
     public function parse($data)
     {

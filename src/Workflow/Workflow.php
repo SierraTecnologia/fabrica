@@ -87,11 +87,12 @@ class Workflow
     /**
      * create workflow.
      *
-     * @param  string $definition_id
-     * @param  string $caller
-     * @return string
+     * @param string $definition_id
+     * @param string $caller
+     *
+     * @return self
      */
-    public static function createInstance($definition_id, $caller)
+    public static function createInstance($definition_id, $caller): self
     {
         $entry = new Entry;
         $entry->definition_id = $definition_id;
@@ -130,10 +131,12 @@ class Workflow
     /**
      * initialize workflow.
      *
-     * @param  array options 
-     * @return void
+     * @param array options
+     * @param array $options
+     *
+     * @return static
      */
-    public function start($options=[])
+    public function start(array $options=[]): self
     {
         $this->options = array_merge($this->options, $options);
 
@@ -222,12 +225,14 @@ class Workflow
     }
 
     /**
-     *  get step meta.
+     * get step meta.
      *
-     * @param  string $step_id
+     * @param string $step_id
+     * @param string $name
+     *
      * @return array
      */
-    public function getStepMeta($step_id, $name='')
+    public function getStepMeta($step_id, string $name='')
     {
         $step_description = $this->getStepDescriptor($step_id);
         if ($name) {
@@ -309,7 +314,7 @@ class Workflow
      * @param  int   $action;
      * @return void
      */
-    private function transitionWorkflow($current_steps, $action_id)
+    private function transitionWorkflow($current_steps, int $action_id)
     {
         foreach ($current_steps as $current_step)
         {
@@ -399,21 +404,24 @@ class Workflow
     }
 
     /**
-     * check if the join is completed 
+     * check if the join is completed
+     *
+     * @return bool
      */
-    private function isJoinCompleted()
+    private function isJoinCompleted(): bool
     {
         return !CurrentStep::where('entry_id', $this->entry->id)->exists();
     }
 
     /**
-     * execute action 
+     * execute action
      *
-     * @param  string $action_id
-     * @param  array  $options;
-     * @return string
+     * @param string $action_id
+     * @param array  $options;
+     *
+     * @return void
      */
-    public function doAction($action_id, $options=[])
+    public function doAction($action_id, array $options=[]): void
     {
         $state = $this->getEntryState($this->entry->id);
         if ($state != self::OSWF_CREATED && $state != self::OSWF_ACTIVATED) {
@@ -530,11 +538,13 @@ class Workflow
     /**
      * get all available actions
      *
-     * @param  array $info
-     * @param  bool  $dest_state added for kanban dnd, is not common param.
+     * @param array $info
+     * @param bool  $dest_state added for kanban dnd, is not common param.
+     * @param (int|mixed|string)[] $options
+     *
      * @return array
      */
-    public function getAvailableActions($options=[], $dest_state = false)
+    public function getAvailableActions(array $options=[], $dest_state = false)
     {
         // set options
         $this->options = array_merge($this->options, $options);

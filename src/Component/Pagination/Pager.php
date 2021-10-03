@@ -29,29 +29,34 @@ class Pager implements \IteratorAggregate, \Countable
         $this->perPage = $perPage;
     }
 
-    public function setOffset($offset)
+    public function setOffset($offset): void
     {
         $this->offset = $offset;
     }
 
-    public function setPage($page)
+    /**
+     * @return static
+     *
+     * @param int $page
+     */
+    public function setPage(int $page): self
     {
         $this->offset = (max(1, (int) $page) - 1) * $this->perPage;
 
         return $this;
     }
 
-    public function isFirstPage()
+    public function isFirstPage(): bool
     {
         return $this->getPage() == 1;
     }
 
-    public function isLastPage()
+    public function isLastPage(): bool
     {
         return $this->getPage() == $this->getPageCount();
     }
 
-    public function getPage()
+    public function getPage(): float
     {
         return floor($this->offset/$this->perPage) + 1;
     }
@@ -61,7 +66,10 @@ class Pager implements \IteratorAggregate, \Countable
         return $this->offset;
     }
 
-    public function setPerPage($perPage)
+    /**
+     * @param int $perPage
+     */
+    public function setPerPage(int $perPage): void
     {
         $this->perPage = (int) $perPage;
     }
@@ -77,13 +85,18 @@ class Pager implements \IteratorAggregate, \Countable
 
     /**
      * Can be zero.
+     *
+     * @return float
      */
-    public function getPageCount()
+    public function getPageCount(): float
     {
         return ceil($this->count() / $this->perPage);
     }
 
-    public function getResults()
+    /**
+     * @return \Traversable
+     */
+    public function getResults(): \Traversable
     {
         return $this->getIterator();
     }

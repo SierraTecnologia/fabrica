@@ -15,6 +15,9 @@ class ReferenceParser extends ParserBase
 {
     public $references;
 
+    /**
+     * @return void
+     */
     protected function doParse()
     {
         $this->references = array();

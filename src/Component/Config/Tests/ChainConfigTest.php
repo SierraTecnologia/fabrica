@@ -20,7 +20,7 @@ use Fabrica\Component\Config\ArrayConfig;
  */
 class ChainConfigTest extends \PHPUnit\Framework\TestCase
 {
-    public function testElementCount()
+    public function testElementCount(): void
     {
         $mock = $this->createConfig();
 
@@ -42,7 +42,7 @@ class ChainConfigTest extends \PHPUnit\Framework\TestCase
         $config = new ChainConfig(array($mock, $mock));
     }
 
-    public function testGetWithExistingValue()
+    public function testGetWithExistingValue(): void
     {
         $first  = $this->createConfigMock();
         $second = $this->createConfigMock();
@@ -55,7 +55,7 @@ class ChainConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('bar', $chain->get('foo'));
     }
 
-    public function testGetWithNotExistingValue()
+    public function testGetWithNotExistingValue(): void
     {
         $first  = $this->createConfigMock();
         $second = $this->createConfigMock();
@@ -69,7 +69,7 @@ class ChainConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('bar', $chain->get('foo'));
     }
 
-    public function testSet()
+    public function testSet(): void
     {
         $first  = $this->createConfigMock();
         $second = $this->createConfigMock();
@@ -84,7 +84,7 @@ class ChainConfigTest extends \PHPUnit\Framework\TestCase
         $chain->set('foo', 'bar');
     }
 
-    public function testGetWithFailing()
+    public function testGetWithFailing(): void
     {
         $first  = $this->createConfigMock();
         $second = $this->createConfigMock();
@@ -97,7 +97,7 @@ class ChainConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('baz', $chain->get('foo'));
     }
 
-    public function testAllWithFailing()
+    public function testAllWithFailing(): void
     {
         $first  = $this->createConfigMock();
         $second = $this->createConfigMock();
@@ -110,7 +110,7 @@ class ChainConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(array('foo' => 'baz'), $chain->all());
     }
 
-    protected function createConfig($values = array())
+    protected function createConfig($values = array()): ArrayConfig
     {
         return new ArrayConfig($values);
     }

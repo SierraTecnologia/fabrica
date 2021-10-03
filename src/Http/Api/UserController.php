@@ -504,11 +504,12 @@ class UserController extends Controller
     /**
      * send the reset link to the address.
      *
-     * @param  string $to
-     * @param  array  $data
-     * @return \Illuminate\Http\Response
+     * @param string $to
+     * @param array  $data
+     *
+     * @return void
      */
-    public function sendMail($to, $data)
+    public function sendMail($to, $data): void
     {
         $syssetting = SysSetting::first()->toArray();
         if (isset($syssetting['mailserver'])
@@ -653,6 +654,8 @@ class UserController extends Controller
      * Download user template file.
      *
      * @param \Illuminate\Http\Request $request
+     *
+     * @return never
      */
     public function downloadUserTpl(Request $request)
     {

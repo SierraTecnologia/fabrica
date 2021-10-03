@@ -81,11 +81,12 @@ class Irc extends Plugin
     }
 
     /**
-     * @param  resource $socket
-     * @param  array    $commands
-     * @return bool
+     * @param resource $socket
+     * @param array    $commands
+     *
+     * @return void
      */
-    private function executeIrcCommands($socket, array $commands)
+    private function executeIrcCommands($socket, array $commands): void
     {
         foreach ($commands as $command) {
             fputs($socket, $command . "\n");

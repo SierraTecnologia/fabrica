@@ -25,7 +25,8 @@ class NoticeAddListener
     /**
      * Handle the event.
      *
-     * @param  FileChangeEvent $event
+     * @param Event $event
+     *
      * @return void
      */
     public function handle(Event $event)
@@ -51,7 +52,7 @@ class NoticeAddListener
      * @param  string $activity_id
      * @return void
      */
-    public function putMQ($project_key, $issue_id, $user, $param)
+    public function putMQ($project_key, $issue_id, $user, array $param)
     {
         $info = [ 'project_key' => $project_key, 'issue_id' => $issue_id, 'event_key' => $param['event_key'], 'user' => $user, 'data' => isset($param['data']) ? $param['data'] : '', 'created_at' => time() ];
 

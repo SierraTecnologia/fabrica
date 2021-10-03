@@ -5,7 +5,7 @@
 
 class Golang
 {
-    public function getVersion()
+    public function getVersion(): string
     {
         return '1.2';
     }

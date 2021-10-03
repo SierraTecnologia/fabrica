@@ -28,12 +28,12 @@ abstract class Reference extends Revision
         $this->commitHash = $commitHash;
     }
 
-    public function getFullname()
+    public function getFullname(): string
     {
         return $this->revision;
     }
 
-    public function delete()
+    public function delete(): void
     {
         $this->repository->getReferences()->delete($this->getFullname());
     }
@@ -63,7 +63,7 @@ abstract class Reference extends Revision
         return $this->repository->getCommit($this->getCommitHash());
     }
 
-    public function getLastModification($path = null)
+    public function getLastModification($path = null): Commit
     {
         return $this->getCommit()->getLastModification($path);
     }

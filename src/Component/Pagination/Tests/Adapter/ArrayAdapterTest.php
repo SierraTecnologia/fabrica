@@ -16,7 +16,7 @@ use Fabrica\Component\Pagination\Adapter\ArrayAdapter;
 
 class ArrayAdapterTest extends \PHPUnit\Framework\TestCase
 {
-    public function testAll()
+    public function testAll(): void
     {
         $adapter = new ArrayAdapter(array(1, 2, 3, 4, 5, 6, 7, 8));
         $this->assertEquals(8, $adapter->count(), 'Count works correctly');

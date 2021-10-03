@@ -35,6 +35,9 @@ class ProjectSubscriber implements EventSubscriber
         );
     }
 
+    /**
+     * @return void
+     */
     public function postLoad(LifecycleEventArgs $args)
     {
         $entity = $args->getEntity();

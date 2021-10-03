@@ -33,7 +33,7 @@ class RepositoryFolderService
         // }
     }
     
-    public static function findPackages()
+    public static function findPackages(): void
     {
         // Project::truncate();
         $realPath = '/sierra/Dev/Libs/';
@@ -47,7 +47,7 @@ class RepositoryFolderService
 
     }
 
-    public static function readFolderPackages($item, $realPath)
+    public static function readFolderPackages($item, string $realPath): void
     {
         if (in_array($item, ['.', '..'])) {
             return;

@@ -77,9 +77,9 @@ class UserStore extends Store
      *
      * @throws HttpException
      *
-     * @return User
+     * @return User|null
      */
-    public function getByEmail($email)
+    public function getByEmail($email): ?User
     {
         if (is_null($email)) {
             throw new HttpException('Value passed to ' . __FUNCTION__ . ' cannot be null.');
@@ -106,9 +106,9 @@ class UserStore extends Store
      *
      * @throws HttpException
      *
-     * @return User
+     * @return User|null
      */
-    public function getByEmailOrName($emailOrName)
+    public function getByEmailOrName($emailOrName): ?User
     {
         if (is_null($emailOrName)) {
             throw new HttpException('Value passed to ' . __FUNCTION__ . ' cannot be null.');
@@ -134,9 +134,9 @@ class UserStore extends Store
      *
      * @throws HttpException
      *
-     * @return User
+     * @return User|null
      */
-    public function getByRememberKey($rememberKey)
+    public function getByRememberKey($rememberKey): ?User
     {
         if (is_null($rememberKey)) {
             throw new HttpException('Value passed to ' . __FUNCTION__ . ' cannot be null.');
@@ -180,7 +180,7 @@ class UserStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\User {
                 return new User($item);
             };
             $rtn = array_map($map, $res);

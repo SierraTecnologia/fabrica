@@ -18,14 +18,14 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 {
     const USER_CLASS = 'Fabrica\Models\Code\User';
 
-    public function testInstanciation()
+    public function testInstanciation(): void
     {
         $email = new Email($this->getMock(self::USER_CLASS));
 
         $this->assertFalse($email->isDefault(), "E-mail is not default on creation");
     }
 
-    public function testActivation_ValidToken_ActivateMail()
+    public function testActivation_ValidToken_ActivateMail(): void
     {
         $email = new Email($this->getMock(self::USER_CLASS));
 
@@ -36,8 +36,10 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @expectedException InvalidArgumentException
+     *
+     * @return void
      */
-    public function testActivaction_InvalidToken_ThrowsException()
+    public function testActivaction_InvalidToken_ThrowsException(): void
     {
         $email = new Email($this->getMock(self::USER_CLASS));
 
@@ -47,8 +49,10 @@ class EmailTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @expectedException LogicException
+     *
+     * @return void
      */
-    public function testActivaction_AlreadyActive_ThrowsException()
+    public function testActivaction_AlreadyActive_ThrowsException(): void
     {
         $email = new Email($this->getMock(self::USER_CLASS));
 

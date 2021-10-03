@@ -9,7 +9,12 @@ use Fabrica\Bundle\DistributionBundle\Installation\StepInterface;
 
 class DoctrineStep implements StepInterface
 {
-    public function testValues(array $parameters)
+    /**
+     * @return (int|string)[]
+     *
+     * @psalm-return array{0: 0|1, 1: string}
+     */
+    public function testValues(array $parameters): array
     {
         $driver   = isset($parameters['database_driver'])   ? $parameters['database_driver']   : null;
         $host     = isset($parameters['database_host'])     ? $parameters['database_host']     : null;
@@ -39,6 +44,11 @@ class DoctrineStep implements StepInterface
         return array(self::STATUS_OK, "OK");
     }
 
+    /**
+     * @return int
+     *
+     * @psalm-return 0|1
+     */
     public function getStatus(array $parameters)
     {
         list($status, $message) = $this->testValues($parameters);
@@ -46,21 +56,36 @@ class DoctrineStep implements StepInterface
         return $status;
     }
 
+    /**
+     * @return string
+     *
+     * @psalm-return 'database'
+     */
     public function getSlug()
     {
         return 'database';
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Database';
     }
 
+    /**
+     * @return string
+     *
+     * @psalm-return 'FabricaDistributionBundle:Configuration:step_doctrine.html.twig'
+     */
     public function getTemplate()
     {
         return 'FabricaDistributionBundle:Configuration:step_doctrine.html.twig';
     }
 
+    /**
+     * @return string
+     *
+     * @psalm-return 'installation_step_doctrine'
+     */
     public function getForm()
     {
         return 'installation_step_doctrine';

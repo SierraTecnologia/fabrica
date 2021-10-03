@@ -31,27 +31,35 @@ abstract class Job implements JobInterface, ContainerAwareInterface
         return $this->id;
     }
 
-    public function setId($id)
+    /**
+     * @return static
+     */
+    public function setId(int $id): self
     {
         $this->id = $id;
 
         return $this;
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
     }
 
-    public function getParameter($name, $default = null)
+    /**
+     * @param string $name
+     */
+    public function getParameter(string $name, $default = null)
     {
         return array_key_exists($name, $this->parameters) ? $this->parameters[$name] : $default;
     }
@@ -65,7 +73,10 @@ abstract class Job implements JobInterface, ContainerAwareInterface
         return $this->container;
     }
 
-    protected function getService($id)
+    /**
+     * @param string $id
+     */
+    protected function getService(string $id)
     {
         return $this->getContainer()->get($id);
     }

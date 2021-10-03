@@ -89,10 +89,13 @@ class ReportController extends Controller
     /**
      * convert the filters.
      *
-     * @param  array $filters
-     * @return \Illuminate\Http\Response
+     * @param array $filters
+     *
+     * @return array
+     *
+     * @psalm-return list<mixed>
      */
-    public function convFilters($project_key, $filters)
+    public function convFilters(string $project_key, $filters): array
     {
         foreach($filters as $key => $filter)
         {
@@ -293,10 +296,13 @@ class ReportController extends Controller
     /**
      * get worklog report pipeline.
      *
-     * @param  string $project_key
-     * @return \Illuminate\Http\Response
+     * @param string $project_key
+     *
+     * @return ((array|false|int)[]|mixed|string)[]
+     *
+     * @psalm-return array{issue_id: array{$in: list<mixed>}|mixed, recorded_at?: array{$gte?: false|int, $lt?: false|int, $lte?: false|int}, 'recorder.id'?: mixed, project_key: string}
      */
-    public function getWorklogWhere($project_key, $options)
+    public function getWorklogWhere($project_key, array $options): array
     {
         $where = [];
 
@@ -589,12 +595,16 @@ class ReportController extends Controller
     /**
      * get initialized trend data.
      *
-     * @param  string $interval
-     * @param  number $star_stat_time
-     * @param  number $end_stat_time 
-     * @return \Illuminate\Http\Response
+     * @param string $interval
+     * @param number $star_stat_time
+     * @param number $end_stat_time 
+     * @param false|int $start_stat_time
+     *
+     * @return (int|string)[][]
+     *
+     * @psalm-return array<array{new: 0, resolved: 0, closed: 0, category: string, notWorking?: 0|1}>
      */
-    public function getInitializedTrendData($interval, $start_stat_time, $end_stat_time)
+    public function getInitializedTrendData($interval, $start_stat_time, $end_stat_time): array
     {
         // initialize the results
         $results = [];
@@ -817,7 +827,14 @@ class ReportController extends Controller
         }
     }
 
-    public function arrangeRegressionData($data, $project_key, $dimension)
+    /**
+     * @param (array|mixed|string)[][] $data
+     *
+     * @return (array|mixed|string)[][]
+     *
+     * @psalm-return array<array<array|mixed|string>>
+     */
+    public function arrangeRegressionData(array $data, string $project_key, $dimension): array
     {
         if (!$dimension) {
             return $data;
@@ -1142,7 +1159,12 @@ class ReportController extends Controller
      * @param  string $dimension
      * @return array 
      */
-    public function initXYData($project_key, $dimension)
+    /**
+     * @return (array|mixed|string)[][]
+     *
+     * @psalm-return array<array{name: mixed|string, nos: array<empty, empty>}>
+     */
+    public function initXYData($project_key, $dimension): array
     {
         $results = [];
 

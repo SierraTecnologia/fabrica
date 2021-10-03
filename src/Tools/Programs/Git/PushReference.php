@@ -101,7 +101,7 @@ class PushReference
         );
     }
 
-    public function getRevision()
+    public function getRevision(): string
     {
         if ($this->isDelete()) {
             throw new LogicException('No revision for deletion');
@@ -149,7 +149,7 @@ class PushReference
     /**
      * @return bool
      */
-    protected function isZero($reference)
+    protected function isZero(string $reference)
     {
         return self::ZERO === $reference;
     }

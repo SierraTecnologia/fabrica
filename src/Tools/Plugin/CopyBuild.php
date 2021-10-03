@@ -72,8 +72,10 @@ class CopyBuild extends Plugin
      * Wipe the destination directory if it already exists.
      *
      * @throws \RuntimeException
+     *
+     * @return void
      */
-    protected function wipeExistingDirectory()
+    protected function wipeExistingDirectory(): void
     {
         if ($this->wipe === true && $this->directory !== '/' && is_dir($this->directory)) {
             $cmd = 'cd "%s" && rm -Rf "%s"';
@@ -91,8 +93,10 @@ class CopyBuild extends Plugin
 
     /**
      * Delete any ignored files from the build prior to copying.
+     *
+     * @return void
      */
-    protected function deleteIgnoredFiles()
+    protected function deleteIgnoredFiles(): void
     {
         if ($this->respectIgnore) {
             foreach ($this->builder->ignore as $file) {

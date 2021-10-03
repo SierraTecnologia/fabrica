@@ -143,8 +143,12 @@ class Admin
 
     /**
      * This internal method is used to create a process object.
+     *
+     * @param string $command
+     *
+     * @return Process
      */
-    private static function getProcess($command, array $args = array(), array $options = array())
+    private static function getProcess(string $command, array $args = array(), array $options = array()): Process
     {
         $is_windows = defined('PHP_WINDOWS_VERSION_BUILD');
         $options = array_merge(

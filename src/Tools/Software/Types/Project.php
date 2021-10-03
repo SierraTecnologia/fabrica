@@ -15,7 +15,12 @@ class Project
         $this->file = $file;
     }
 
-    public function getWrites()
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{GanttProject: 'gan', MsProjectMPX: 'mpx'}
+     */
+    public function getWrites(): array
     {
         return array(
             'GanttProject' => 'gan',
@@ -23,7 +28,7 @@ class Project
         );
     }
 
-    public function reader()
+    public function reader(): void
     {
         // Create new PHPProject object
         echo date('H:i:s') . ' Create new PHPProject object'.EOL;
@@ -63,7 +68,7 @@ class Project
     }
 
 
-    public function create()
+    public function create(): void
     {
         
         // Create new PHPProject object

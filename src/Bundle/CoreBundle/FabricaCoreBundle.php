@@ -20,6 +20,9 @@ use Fabrica\Bundle\CoreBundle\DependencyInjection\Compiler\AddFabricaListenersPa
 
 class FabricaCoreBundle extends Bundle
 {
+    /**
+     * @return void
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

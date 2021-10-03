@@ -29,7 +29,7 @@ class CommitMessage extends Message
     protected $revision;
     protected $isForce = false;
 
-    public function fromLog(Log $log)
+    public function fromLog(Log $log): void
     {
         $log->setLimit(self::DEFAULT_LIMIT);
         $commits = array();
@@ -62,7 +62,10 @@ class CommitMessage extends Message
         return $this->commits;
     }
 
-    public function setCommits(array $commits)
+    /**
+     * @return static
+     */
+    public function setCommits(array $commits): self
     {
         $this->commitList = json_encode($commits);
 
@@ -74,7 +77,7 @@ class CommitMessage extends Message
         return $this->revision;
     }
 
-    public function setRevision($revision)
+    public function setRevision(string $revision): void
     {
         $this->revision = $revision;
     }
@@ -84,14 +87,17 @@ class CommitMessage extends Message
         return $this->commitCount;
     }
 
-    public function setCommitCount($commitCount)
+    /**
+     * @return static
+     */
+    public function setCommitCount(int $commitCount): self
     {
         $this->commitCount = $commitCount;
 
         return $this;
     }
 
-    public function setForce($force)
+    public function setForce(bool $force): void
     {
         $this->isForce = (bool) $force;
     }
@@ -101,7 +107,7 @@ class CommitMessage extends Message
         return $this->isForce;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'commit';
     }

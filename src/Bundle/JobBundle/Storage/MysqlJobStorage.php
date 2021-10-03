@@ -38,7 +38,7 @@ class MysqlJobStorage implements StorageInterface
         $this->tableName  = $tableName;
     }
 
-    public function store($name, array $parameters)
+    public function store($name, array $parameters): string
     {
         $this->runSql(
             sprintf('INSERT INTO %s (name, parameters, created_at) VALUES (:name, :parameters, NOW())', $this->tableName), array(
@@ -52,8 +52,12 @@ class MysqlJobStorage implements StorageInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return (bool|int|mixed|null)[]
+     *
+     * @psalm-return array{finished: bool, running: false|int, fails: int, error_message: mixed|null}
      */
-    public function getStatus($id)
+    public function getStatus($id): array
     {
         $stmt = $this->runSql(
             sprintf('SELECT fails, locked, message FROM %s WHERE id = :id', $this->tableName), array(
@@ -81,6 +85,11 @@ class MysqlJobStorage implements StorageInterface
         return $status;
     }
 
+    /**
+     * @return array|null
+     *
+     * @psalm-return array{0: mixed, 1: mixed, 2: mixed}|null
+     */
     public function find()
     {
         $stmt = $this->runSql(sprintf('SELECT id, name, parameters FROM %s WHERE locked = 0 AND fails < 10 ORDER BY created_at ASC', $this->tableName));
@@ -94,6 +103,9 @@ class MysqlJobStorage implements StorageInterface
         return array($row['id'], $row['name'], json_decode($row['parameters'], true));
     }
 
+    /**
+     * @return void
+     */
     public function finish($id, $success, $message)
     {
         if ($success) {
@@ -113,8 +125,10 @@ class MysqlJobStorage implements StorageInterface
      *
      * @param string $query      SQL query
      * @param array  $parameters query parameters
+     *
+     * @return \Doctrine\DBAL\Result
      */
-    protected function runSQL($query, array $parameters = array())
+    protected function runSQL($query, array $parameters = array()): \Doctrine\DBAL\Result
     {
         try {
             return $this->connection->executeQuery($query, $parameters);

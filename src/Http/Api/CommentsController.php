@@ -213,9 +213,12 @@ class CommentsController extends Controller
     /**
      * define the array function of searching for array object.
      *
-     * @param  array $needle
-     * @param  array $haystack
-     * @return \Illuminate\Http\Response
+     * @param array $needle
+     * @param array $haystack
+     *
+     * @return (int|string)|false
+     *
+     * @psalm-return array-key|false
      */
     public function array_find($needle, $haystack)
     {

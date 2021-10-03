@@ -102,8 +102,10 @@ class FileController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param String                   $id
+     *
+     * @return void
      */
-    public function downloadThumbnail(Request $request, $project_key, $id)
+    public function downloadThumbnail(Request $request, $project_key, $id): void
     {
         $file = File::find($id);
         $filepath = config('filesystems.disks.local.root', '/tmp') . '/' . substr($file->index, 0, 2);
@@ -121,8 +123,10 @@ class FileController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param String                   $id
+     *
+     * @return void
      */
-    public function download(Request $request, $project_key, $id)
+    public function download(Request $request, $project_key, $id): void
     {
         set_time_limit(0);
 
@@ -144,8 +148,10 @@ class FileController extends Controller
      * get avatar file.
      *
      * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
-    public function getAvatar(Request $request)
+    public function getAvatar(Request $request): void
     {
         $fid = $request->input('fid');
         if (!isset($fid) || !$fid) {

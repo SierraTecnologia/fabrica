@@ -26,7 +26,14 @@ class JobHydrator
         $this->jobClasses = $jobClasses;
     }
 
-    public function getName($class)
+    /**
+     * @param get-class-of<$job, Fabrica\Bundle\JobBundle\Job\Job> $class
+     *
+     * @return (int|string)
+     *
+     * @psalm-return array-key
+     */
+    public function getName(string $class)
     {
         foreach ($this->jobClasses as $name => $current) {
             if ($class == $current) {
@@ -37,7 +44,7 @@ class JobHydrator
         throw new \InvalidArgumentException(sprintf('Job class "%s" is not registered.', $class));
     }
 
-    public function hydrateJob($name, array $parameters = array())
+    public function hydrateJob($name, array $parameters = array()): object
     {
         if (!isset($this->jobClasses[$name])) {
             throw new \InvalidArgumentException(

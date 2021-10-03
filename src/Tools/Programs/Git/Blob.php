@@ -60,8 +60,10 @@ class Blob
      * Returns content of the blob.
      *
      * @throws ProcessException Error occurred while getting content of blob
+     *
+     * @return string
      */
-    public function getContent()
+    public function getContent(): string
     {
         if (null === $this->content) {
             $this->content = $this->repository->run('cat-file', array('-p', $this->hash));

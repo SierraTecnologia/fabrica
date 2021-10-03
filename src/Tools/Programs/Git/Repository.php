@@ -148,8 +148,10 @@ class Repository
      *
      * @param string $gitDir     directory of a working copy with files checked out
      * @param string $workingDir directory containing git files (objects, config...)
+     *
+     * @return void
      */
-    private function initDir($gitDir, $workingDir = null)
+    private function initDir($gitDir, $workingDir = null): void
     {
         $realGitDir = realpath($gitDir);
 
@@ -365,7 +367,7 @@ class Repository
         return $this->objects[$hash];
     }
 
-    public function getBlame($revision, $file, $lineRange = null)
+    public function getBlame($revision, $file, $lineRange = null): Blame
     {
         if (is_string($revision)) {
             $revision = $this->getRevision($revision);
@@ -395,8 +397,10 @@ class Repository
 
     /**
      * @return Diff
+     *
+     * @param RevisionList|null $revisions
      */
-    public function getDiff($revisions)
+    public function getDiff(?RevisionList $revisions)
     {
         if (null !== $revisions && !$revisions instanceof RevisionList) {
             $revisions = new RevisionList($this, $revisions);
@@ -413,7 +417,7 @@ class Repository
     /**
      * Returns the size of repository, in kilobytes.
      *
-     * @return int A sum, in kilobytes
+     * @return null|string A sum, in kilobytes
      *
      * @throws RuntimeException An error occurred while computing size
      */
@@ -445,8 +449,10 @@ class Repository
      * Executes a shell command on the repository, using PHP pipes.
      *
      * @param string $command The command to execute
+     *
+     * @return void
      */
-    public function shell($command, array $env = array())
+    public function shell($command, array $env = array()): void
     {
         $argument = sprintf('%s \'%s\'', $command, $this->gitDir);
 
@@ -527,7 +533,7 @@ class Repository
      * @param string $command Git command to run (checkout, branch, tag)
      * @param array  $args    Arguments of git command
      *
-     * @return string Output of a successful process or null if execution failed and debug-mode is disabled.
+     * @return null|string Output of a successful process or null if execution failed and debug-mode is disabled.
      *
      * @throws RuntimeException Error while executing git command (debug-mode only)
      */
@@ -612,8 +618,10 @@ class Repository
      * run method ensures logging and debug.
      *
      * @see self::run
+     *
+     * @return Process
      */
-    private function getProcess($command, $args = array())
+    private function getProcess(string $command, array $args = array()): Process
     {
         $base = array($this->command, '--git-dir', $this->gitDir);
 

@@ -83,6 +83,8 @@ class ChainConfig extends AbstractConfig
 
     /**
      * {@inheritDoc}
+     *
+     * @return void
      */
     public function doSetAll(array $values)
     {

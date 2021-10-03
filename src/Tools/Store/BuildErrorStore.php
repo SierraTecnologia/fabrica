@@ -127,7 +127,7 @@ class BuildErrorStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\BuildError {
                 return new BuildError($item);
             };
             $rtn = array_map($map, $res);
@@ -262,7 +262,7 @@ class BuildErrorStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): int {
                 return (int)$item['severity'];
             };
             $rtn = array_map($map, $res);

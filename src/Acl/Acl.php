@@ -24,11 +24,14 @@ class Acl
     /**
      * get role list in the project by userid.
      *
-     * @var    string $project_key
-     * @var    string $user_id
-     * @return collection
+     * @var string $project_key
+     * @var string $user_id
+     *
+     * @return array
+     *
+     * @psalm-return list<mixed>
      */
-    public static function getRolesByUid($project_key, $user_id)
+    public static function getRolesByUid($project_key, $user_id): array
     {
         $role_ids = [];
 
@@ -58,11 +61,14 @@ class Acl
     /**
      * get user list who has the permission allow in the project.
      *
-     * @var    string permission
-     * @var    string project_key
+     * @var string permission
+     * @var string project_key
+     *
      * @return array
+     *
+     * @param string $permission
      */
-    public static function getUserIdsByPermission($permission, $project_key)
+    public static function getUserIdsByPermission(string $permission, string $project_key)
     {
         $role_ids = [];
         $rps = RolePermissions::whereRaw([ 'permissions' => $permission, 'project_key' => $project_key ])->get();
@@ -199,8 +205,10 @@ class Acl
      * get permission list.
      *
      * @return array
+     *
+     * @psalm-return array{0: mixed, 1: mixed, 2: mixed, 3: mixed, 4: mixed, 5: mixed, 6: mixed, 7: mixed, 8: mixed, 9: mixed, 10: mixed, 11: mixed, 12: mixed, 13: mixed, 14: mixed, 15: mixed, 16: mixed, 17: mixed, 18: mixed, 19: mixed, 20: mixed, 21: mixed, 22: mixed, 23: mixed, 24: mixed, 25: mixed, 26: mixed, 27: mixed}
      */
-    public static function getAllPermissions()
+    public static function getAllPermissions(): array
     {
         return Permissions::all();
     }

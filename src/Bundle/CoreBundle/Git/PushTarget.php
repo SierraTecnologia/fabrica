@@ -25,7 +25,7 @@ class PushTarget
         $this->reference = $reference;
     }
 
-    public function getProject()
+    public function getProject(): Project
     {
         return $this->project;
     }

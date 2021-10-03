@@ -209,10 +209,12 @@ class PriorityController extends Controller
     /**
      * update sort or defaultValue etc..
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
+     * @param string $project_key
+     *
      * @return void
      */
-    public function handleSys(Request $request, $project_key)
+    public function handleSys(Request $request, string $project_key)
     {
         // set type sort.
         $sequence = $request->input('sequence');

@@ -39,7 +39,7 @@ class ConfigListener implements EventSubscriberInterface
         );
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(GetResponseEvent $event): void
     {
         // locale
         $token = $this->container->get('security.context')->getToken();

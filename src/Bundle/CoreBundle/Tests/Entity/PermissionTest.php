@@ -16,7 +16,7 @@ use Fabrica\Models\Code\Permission;
 
 class PermissionTest extends \PHPUnit\Framework\TestCase
 {
-    public function testInstanciation()
+    public function testInstanciation(): void
     {
         $permission = new Permission('Name');
 

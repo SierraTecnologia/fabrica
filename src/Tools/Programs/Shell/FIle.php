@@ -17,17 +17,17 @@ class File
         return $this->directory;
     }
     
-    public function link($target)
+    public function link($target): string
     {
         return 'ln -s '.$this->path.' '.$target;
     }
     
-    public function move($target)
+    public function move($target): string
     {
         return 'mv '.$this->path.' '.$target;
     }
     
-    public function copy($target)
+    public function copy($target): string
     {
         $options = '';
 

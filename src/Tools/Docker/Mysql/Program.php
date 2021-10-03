@@ -41,7 +41,7 @@ class Program
 
 
 
-    public function singleBackup($connectString)
+    public function singleBackup(string $connectString)
     {
         $dockerRunCode = 'docker run \\'.
         '--rm --entrypoint "" \\'.

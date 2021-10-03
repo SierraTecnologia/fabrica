@@ -17,12 +17,15 @@ class RepositoryEntity extends EntityAbstract
     }
 
 
-    public function commits()
+    /**
+     * @return static
+     */
+    public function commits(): self
     {
         return $this;
     }
 
-    public function attach($commit)
+    public function attach($commit): void
     {
 
     }

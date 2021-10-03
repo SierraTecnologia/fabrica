@@ -97,7 +97,7 @@ class BuildStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\Build {
                 return new Build($item);
             };
             $rtn = array_map($map, $res);
@@ -135,7 +135,7 @@ class BuildStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\Build {
                 return new Build($item);
             };
             $rtn = array_map($map, $res);
@@ -165,7 +165,7 @@ class BuildStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\Build {
                 return new Build($item);
             };
             $rtn = array_map($map, $res);
@@ -228,7 +228,7 @@ class BuildStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\Build {
                 return new Build($item);
             };
             $rtn = array_map($map, $res);
@@ -245,7 +245,9 @@ class BuildStore extends Store
      * @param int|null $projectId
      * @param int      $status
      *
-     * @return array|Build
+     * @return Build|array|null
+     *
+     * @psalm-return Build|array<empty, empty>|null
      */
     public function getLastBuildByStatus($projectId = null, $status = Build::STATUS_SUCCESS)
     {
@@ -374,7 +376,7 @@ class BuildStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\Build {
                 return new Build($item);
             };
 
@@ -495,8 +497,10 @@ class BuildStore extends Store
      * @param int    $buildId
      * @param string $key
      * @param string $value
+     *
+     * @return void
      */
-    public function setMeta($buildId, $key, $value)
+    public function setMeta($buildId, $key, $value): void
     {
         /**
  * @var BuildMetaStore $store 
@@ -547,7 +551,7 @@ class BuildStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\Build {
                 return new Build($item);
             };
             $rtn = array_map($map, $res);

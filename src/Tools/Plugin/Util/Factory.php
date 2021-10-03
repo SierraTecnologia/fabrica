@@ -73,9 +73,9 @@ class Factory
      * @param string     $className
      * @param array|null $options
      *
-     * @return \PHPCensor\Plugin
+     * @return Plugin
      */
-    public function buildPlugin($className, $options = [])
+    public function buildPlugin($className, $options = []): Plugin
     {
         $this->currentPluginOptions = $options;
 
@@ -114,12 +114,14 @@ class Factory
      * @throws InvalidArgumentException
      *
      * @internal param mixed $resource
+     *
+     * @return void
      */
     public function registerResource(
         $loader,
         $name = null,
         $type = null
-    ) {
+    ): void {
         if ($name === null && $type === null) {
             throw new InvalidArgumentException(
                 "Type or Name must be specified"
@@ -195,12 +197,15 @@ class Factory
     }
 
     /**
-     * @param  $existingArgs
-     * @param  \ReflectionParameter $param
+     * @param $existingArgs
+     * @param \ReflectionParameter $param
+     * @param (array|mixed|null)[] $existingArgs
+     *
      * @return array
+     *
      * @throws \DomainException
      */
-    private function addArgFromParam($existingArgs, \ReflectionParameter $param)
+    private function addArgFromParam(array $existingArgs, \ReflectionParameter $param): array
     {
         $name = $param->getName();
         $type = $this->getParamType($param);

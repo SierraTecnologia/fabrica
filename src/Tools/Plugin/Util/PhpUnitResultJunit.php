@@ -35,6 +35,9 @@ class PhpUnitResultJunit extends PhpUnitResult
         return $this;
     }
 
+    /**
+     * @return string
+     */
     protected function getSeverity($testCase)
     {
         $severity = self::SEVERITY_PASS;
@@ -70,6 +73,9 @@ class PhpUnitResultJunit extends PhpUnitResult
         return $severity;
     }
 
+    /**
+     * @return false|string
+     */
     protected function buildMessage($testCase)
     {
         $tracePos = -1;
@@ -90,11 +96,19 @@ class PhpUnitResultJunit extends PhpUnitResult
         return $msg;
     }
 
+    /**
+     * @return string
+     */
     protected function getOutput($testCase)
     {
         return (string)$testCase->{'system-out'};
     }
 
+    /**
+     * @return string[]
+     *
+     * @psalm-return list<string>
+     */
     protected function buildTrace($testCase)
     {
         if (!is_int($testCase['_tracePos'])) {
@@ -111,7 +125,7 @@ class PhpUnitResultJunit extends PhpUnitResult
         return $trace;
     }
 
-    private function getMessageTrace($testCase)
+    private function getMessageTrace($testCase): string
     {
         $msg = '';
         foreach ($testCase as $child) {
@@ -133,9 +147,9 @@ class PhpUnitResultJunit extends PhpUnitResult
     }
 
     /**
-     * @return \SimpleXMLElement
+     * @return \SimpleXMLElement|null
      */
-    private function loadResultFile()
+    private function loadResultFile(): ?\SimpleXMLElement
     {
         if (!file_exists($this->outputFile) || 0 === filesize($this->outputFile)) {
             $this->internalProblem('empty output file');
@@ -148,6 +162,8 @@ class PhpUnitResultJunit extends PhpUnitResult
 
     /**
      * @param string $description
+     *
+     * @return never
      */
     private function internalProblem($description)
     {

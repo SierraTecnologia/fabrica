@@ -25,6 +25,9 @@ class BlameParser extends ParserBase
         $this->repository = $repository;
     }
 
+    /**
+     * @return void
+     */
     protected function doParse()
     {
         $this->lines = array();

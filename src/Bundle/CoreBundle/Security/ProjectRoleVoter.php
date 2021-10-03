@@ -38,7 +38,7 @@ class ProjectRoleVoter implements VoterInterface
         return true;
     }
 
-    public function vote(TokenInterface $token, $object, array $attributes)
+    public function vote(TokenInterface $token, Project $object, array $attributes)
     {
         $user = $token->getUser();
 

@@ -26,7 +26,7 @@ class WebFabricaRequirements extends FabricaRequirements
         parent::__construct();
     }
 
-    protected function isDocumentRoot()
+    protected function isDocumentRoot(): bool
     {
         $request = Request::createFromGlobals();
 

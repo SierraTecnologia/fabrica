@@ -9,6 +9,9 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class AddStepToListPass implements CompilerPassInterface
 {
+    /**
+     * @return void
+     */
     public function process(ContainerBuilder $container)
     {
         if (!$container->has('fabrica_distribution.steps')) {
