@@ -145,12 +145,13 @@ class WikiController extends Controller
     /**
      * add children to tree.
      *
-     * @param  array  $dt
-     * @param  string $parent_id
-     * @param  array  $sub_dirs
-     * @return void
+     * @param array  $dt
+     * @param string $parent_id
+     * @param array  $sub_dirs
+     *
+     * @return bool
      */
-    public function addChildren2Tree(&$dt, $parent_id, $sub_dirs)
+    public function addChildren2Tree(&$dt, $parent_id, $sub_dirs): bool
     {
         $new_dirs = [];
         foreach($sub_dirs as $val)
@@ -430,11 +431,12 @@ class WikiController extends Controller
     /**
      * check in the wiki.
      *
-     * @param  string $project_key
-     * @param  string $id
-     * @return array
+     * @param string $project_key
+     * @param string $id
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function checkin(Request $request, $project_key, $id)
+    public function checkin(Request $request, $project_key, $id): \Illuminate\Http\Response
     {
         $document = DB::collection('wiki_' . $project_key)
             ->where('_id', $id)
@@ -460,11 +462,12 @@ class WikiController extends Controller
     /**
      * check out the wiki.
      *
-     * @param  string $project_key
-     * @param  string $id
-     * @return array
+     * @param string $project_key
+     * @param string $id
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function checkout(Request $request, $project_key, $id)
+    public function checkout(Request $request, $project_key, $id): \Illuminate\Http\Response
     {
         $document = DB::collection('wiki_' . $project_key)
             ->where('_id', $id)
@@ -692,10 +695,11 @@ class WikiController extends Controller
     /**
      * record the last version.
      *
-     * @param  array $document
-     * @return \Illuminate\Http\Response
+     * @param array $document
+     *
+     * @return void
      */
-    public function recordVersion($project_key, $document)
+    public function recordVersion(string $project_key, $document): void
     {
         $insValues = [];
 
@@ -997,12 +1001,13 @@ class WikiController extends Controller
     /**
      * Download file or directory.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  String                   $project_key
-     * @param  String                   $wid
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param String                   $project_key
+     * @param String                   $wid
+     *
+     * @return void
      */
-    public function download2(Request $request, $project_key, $wid)
+    public function download2(Request $request, $project_key, $wid): void
     {
         set_time_limit(0);
 
@@ -1024,13 +1029,14 @@ class WikiController extends Controller
     /**
      * Download file or directory.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  String                   $project_key
-     * @param  String                   $wid
-     * @param  String                   $fid
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param String                   $project_key
+     * @param String                   $wid
+     * @param String                   $fid
+     *
+     * @return void
      */
-    public function download(Request $request, $project_key, $wid, $fid)
+    public function download(Request $request, $project_key, $wid, $fid): void
     {
         set_time_limit(0);
 
@@ -1065,11 +1071,12 @@ class WikiController extends Controller
     /**
      * Download file.
      *
-     * @param  String $name
-     * @param  array  $attachments
-     * @return \Illuminate\Http\Response
+     * @param String $name
+     * @param array  $attachments
+     *
+     * @return void
      */
-    public function downloadFolder($name, $attachments)
+    public function downloadFolder($name, $attachments): void
     {
         setlocale(LC_ALL, 'zh_CN.UTF-8'); 
 
@@ -1100,11 +1107,12 @@ class WikiController extends Controller
     /**
      * Download file.
      *
-     * @param  String $name
-     * @param  String $index
-     * @return \Illuminate\Http\Response
+     * @param String $name
+     * @param String $index
+     *
+     * @return void
      */
-    public function downloadFile($name, $index)
+    public function downloadFile($name, $index): void
     {
         $filepath = config('filesystems.disks.local.root', '/tmp') . '/' . substr($index, 0, 2);
         $filename = $filepath . '/' . $index;

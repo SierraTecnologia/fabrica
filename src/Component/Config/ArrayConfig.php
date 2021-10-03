@@ -39,6 +39,8 @@ class ArrayConfig extends AbstractConfig
 
     /**
      * {@inheritDoc}
+     *
+     * @return void
      */
     public function doSetAll(array $values)
     {

@@ -29,7 +29,7 @@ class JobManager
         $this->storage  = $storage;
     }
 
-    public function stop()
+    public function stop(): void
     {
         if ($this->currentJob) {
             $this->storage->finish($this->currentJob->getId(), false, "Stopped");
@@ -38,7 +38,7 @@ class JobManager
         $this->currentJob = null;
     }
 
-    public function delegate(Job $job)
+    public function delegate(Job $job): Job
     {
         $name = $this->hydrator->getName(get_class($job));
         $id = $this->storage->store($name, $job->getParameters());
@@ -48,12 +48,15 @@ class JobManager
         return $job;
     }
 
+    /**
+     * @return int|string
+     */
     public function getStatus($id)
     {
         return $this->storage->getStatus($id);
     }
 
-    public function runBackground(OutputInterface $output, $pollInterval = 5, $iterations = 100)
+    public function runBackground(OutputInterface $output, $pollInterval = 5, $iterations = 100): void
     {
         $output->writeln(sprintf('<comment>Job manager started (poll every %s seconds, %s iterations)</comment>', $pollInterval, $iterations));
 

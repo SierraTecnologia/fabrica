@@ -44,9 +44,11 @@ class Permissions
     /**
      * Return an object representing all actions.
      *
-     * @return Permissions
+     * @return array
+     *
+     * @psalm-return array{0: mixed, 1: mixed, 2: mixed, 3: mixed, 4: mixed, 5: mixed, 6: mixed, 7: mixed, 8: mixed, 9: mixed, 10: mixed, 11: mixed, 12: mixed, 13: mixed, 14: mixed, 15: mixed, 16: mixed, 17: mixed, 18: mixed, 19: mixed, 20: mixed, 21: mixed, 22: mixed, 23: mixed, 24: mixed, 25: mixed, 26: mixed, 27: mixed}
      */
-    public static function all()
+    public static function all(): array
     {
         return [
             static::VIEW_PROJECT,

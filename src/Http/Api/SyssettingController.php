@@ -101,12 +101,14 @@ class SyssettingController extends Controller
     /**
      * reset the smtp auth pwd.
      *
-     * @param  string $type
-     * @param  array  $added_user_ids
-     * @param  array  $deleted_user_ids
+     * @param string $type
+     * @param array  $added_user_ids
+     * @param array  $deleted_user_ids
+     * @param string $permission
+     *
      * @return void 
      */
-    public function handleUserPermission($permission, $added_user_ids, $deleted_user_ids)
+    public function handleUserPermission(string $permission, $added_user_ids, $deleted_user_ids)
     {
         foreach($added_user_ids as $uid)
         {

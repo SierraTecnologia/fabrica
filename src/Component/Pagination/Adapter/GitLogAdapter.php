@@ -24,6 +24,9 @@ class GitLogAdapter implements PagerAdapterInterface
         $this->log = $log;
     }
 
+    /**
+     * @return array
+     */
     public function get($offset, $limit)
     {
         $this->log->setOffset($offset);
@@ -32,6 +35,9 @@ class GitLogAdapter implements PagerAdapterInterface
         return $this->log->getCommits();
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
         return $this->log->countCommits();

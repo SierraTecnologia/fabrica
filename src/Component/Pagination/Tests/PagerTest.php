@@ -17,7 +17,10 @@ use Fabrica\Component\Pagination\Adapter\ArrayAdapter;
 
 class PagerTest extends \PHPUnit\Framework\TestCase
 {
-    private function createPager($value)
+    /**
+     * @param int|string[] $value
+     */
+    private function createPager($value): Pager
     {
         if (is_array($value)) {
             $array = $value;
@@ -28,7 +31,7 @@ class PagerTest extends \PHPUnit\Framework\TestCase
         return new Pager(new ArrayAdapter($array));
     }
 
-    public function testEmpty()
+    public function testEmpty(): void
     {
         $pager = $this->createPager(0);
 
@@ -38,7 +41,7 @@ class PagerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $pager->getPage(),      "Default to first page");
     }
 
-    public function testSimple()
+    public function testSimple(): void
     {
         $pager = $this->createPager(array('a', 'b', 'c', 'd'));
 
@@ -57,12 +60,17 @@ class PagerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(array('d'), (array) $pager->getIterator());
     }
 
-    public function testPerPage()
+    public function testPerPage(): void
     {
         $pager = $this->createPager(54);
     }
 
-    public function provideRoundingPagination()
+    /**
+     * @return int[][]
+     *
+     * @psalm-return array{0: array{0: 0, 1: 0}, 1: array{0: 1, 1: 1}, 2: array{0: 29, 1: 3}, 3: array{0: 30, 1: 3}, 4: array{0: 31, 1: 4}}
+     */
+    public function provideRoundingPagination(): array
     {
         return array(
             array(0,  0),
@@ -75,8 +83,10 @@ class PagerTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider provideRoundingPagination
+     *
+     * @return void
      */
-    public function testRoundingPagination($count, $pageCount)
+    public function testRoundingPagination($count, $pageCount): void
     {
         $pager = $this->createPager($count);
 

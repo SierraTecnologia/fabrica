@@ -32,6 +32,11 @@ class FileChange
         $this->lines = $lines;
     }
 
+    /**
+     * @return int
+     *
+     * @psalm-return 0|positive-int
+     */
     public function getCount($type)
     {
         $result = 0;
@@ -69,7 +74,12 @@ class FileChange
         return $this->lines;
     }
 
-    public function toArray()
+    /**
+     * @return array
+     *
+     * @psalm-return array{range_old_start: mixed, range_old_count: mixed, range_new_start: mixed, range_new_count: mixed, lines: mixed}
+     */
+    public function toArray(): array
     {
         return array(
             'range_old_start' => $this->rangeOldStart,
@@ -80,7 +90,7 @@ class FileChange
         );
     }
 
-    public static function fromArray(array $array)
+    public static function fromArray(array $array): self
     {
         return new self($array['range_old_start'], $array['range_old_count'], $array['range_new_start'], $array['range_new_count'], $array['lines']);
     }

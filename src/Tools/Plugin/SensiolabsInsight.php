@@ -99,7 +99,7 @@ class SensiolabsInsight extends Plugin
      *
      * @throws \Exception
      */
-    protected function processReport($xmlString)
+    protected function processReport(string $xmlString)
     {
         $xml = simplexml_load_string($xmlString);
 
@@ -136,8 +136,10 @@ class SensiolabsInsight extends Plugin
      * Execute Sensiolabs Insight.
      *
      * @param $binaryPath
+     *
+     * @return void
      */
-    protected function executeSensiolabsInsight($binaryPath)
+    protected function executeSensiolabsInsight(string $binaryPath): void
     {
         $cmd = $binaryPath . ' -n analyze --reference %s %s --api-token %s --user-uuid %s';
 

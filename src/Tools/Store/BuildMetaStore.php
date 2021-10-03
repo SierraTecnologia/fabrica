@@ -124,7 +124,7 @@ class BuildMetaStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\BuildMeta {
                 return new BuildMeta($item);
             };
             $rtn = array_map($map, $res);
@@ -157,7 +157,7 @@ class BuildMetaStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\BuildMeta {
                 return new BuildMeta($item);
             };
             $rtn = array_map($map, $res);

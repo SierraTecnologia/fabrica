@@ -32,6 +32,9 @@ class GitPush
         $this->parse($contents);
     }
 
+    /**
+     * @return void
+     */
     public function parse($contents)
     {
     }

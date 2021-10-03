@@ -24,7 +24,7 @@ class RequirementCollection
         $this->requirements = $requirements;
     }
 
-    public function isValid()
+    public function isValid(): bool
     {
         foreach ($this->requirements as $requirement) {
             if (!$requirement->isValid()) {
@@ -35,12 +35,12 @@ class RequirementCollection
         return true;
     }
 
-    public function addRequirement($isValid, $requirement)
+    public function addRequirement(bool $isValid, string $requirement): void
     {
         $this->requirements[] = new Requirement($isValid, $requirement);
     }
 
-    public function getErrors()
+    public function getErrors(): array
     {
         return array_filter(
             $this->requirements, function ($requirement) {

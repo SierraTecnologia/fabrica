@@ -57,8 +57,10 @@ class RepositoryPool implements EventSubscriberInterface
 
     /**
      * Method called when a project is created
+     *
+     * @return void
      */
-    public function onProjectCreate(ProjectEvent $event)
+    public function onProjectCreate(ProjectEvent $event): void
     {
         $project = $event->getProject();
 
@@ -73,8 +75,10 @@ class RepositoryPool implements EventSubscriberInterface
 
     /**
      * Method called when a project is deleted
+     *
+     * @return void
      */
-    public function onProjectDelete(ProjectEvent $event)
+    public function onProjectDelete(ProjectEvent $event): void
     {
         $path = $this->getPath($event->getProject());
 
@@ -92,7 +96,7 @@ class RepositoryPool implements EventSubscriberInterface
         rmdir($path);
     }
 
-    public function onProjectPush(PushReferenceEvent $event)
+    public function onProjectPush(PushReferenceEvent $event): void
     {
         $project = $event->getProject();
         $repository = $this->getGitRepository($project);
@@ -103,20 +107,21 @@ class RepositoryPool implements EventSubscriberInterface
     /**
      * Returns the Git repository associated the a model project.
      *
-     * @param Fabrica\Models\Code\Project $project A
-     *                                             project model instance
+     * @param Project $project
      *
-     * @return Fabrica\Tools\Programs\Git\Repository A Git repository
+     * @return Repository A Git repository
      */
-    public function getGitRepository(Project $project)
+    public function getGitRepository(Project $project): Repository
     {
         return new Repository($this->getPath($project));
     }
 
     /**
      * Computes the repository path for a given project.
+     *
+     * @return string
      */
-    protected function getPath(Project $project)
+    protected function getPath(Project $project): string
     {
         return $this->repositoryPath.'/'.$project->getSlug().'.git';
     }

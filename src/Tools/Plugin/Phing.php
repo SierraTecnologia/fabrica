@@ -98,9 +98,9 @@ class Phing extends Plugin
     /**
      * @param array|string $targets
      *
-     * @return $this
+     * @return void
      */
-    public function setTargets($targets)
+    public function setTargets($targets): void
     {
         if (is_string($targets)) {
             $targets = [$targets];
@@ -120,10 +120,11 @@ class Phing extends Plugin
     /**
      * @param mixed $buildFile
      *
-     * @return $this
+     * @return void
+     *
      * @throws \Exception
      */
-    public function setBuildFile($buildFile)
+    public function setBuildFile($buildFile): void
     {
         if (!file_exists($this->directory . $buildFile)) {
             throw new \Exception('Specified build file does not exist.');
@@ -176,9 +177,9 @@ class Phing extends Plugin
     /**
      * @param array|string $properties
      *
-     * @return $this
+     * @return void
      */
-    public function setProperties($properties)
+    public function setProperties($properties): void
     {
         if (is_string($properties)) {
             $properties = [$properties];
@@ -198,10 +199,11 @@ class Phing extends Plugin
     /**
      * @param string $propertyFile
      *
-     * @return $this
+     * @return void
+     *
      * @throws \Exception
      */
-    public function setPropertyFile($propertyFile)
+    public function setPropertyFile($propertyFile): void
     {
         if (!file_exists($this->getDirectory() . '/' . $propertyFile)) {
             throw new \Exception('Specified property file does not exist.');

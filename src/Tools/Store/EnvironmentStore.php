@@ -92,7 +92,7 @@ class EnvironmentStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\Environment {
                 return new Environment($item);
             };
             $rtn = array_map($map, $res);

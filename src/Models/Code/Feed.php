@@ -37,7 +37,7 @@ class Feed
         return $id;
     }
 
-    public function getProject()
+    public function getProject(): Project
     {
         return $this->project;
     }

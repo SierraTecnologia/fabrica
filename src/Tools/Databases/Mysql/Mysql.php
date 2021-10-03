@@ -25,12 +25,12 @@ class Mysql
         $this->collection = $collection;
     }
 
-    public function connect()
+    public function connect(): void
     {
         $this->local->exec('mysql '.$this->getConnectString($this->database->host, $this->database->user, $this->database->password, $this->collection->getName()));
     }
 
-    public function getConnectString($databaseHost, $databaseUser, $password, $databaseName = false)
+    public function getConnectString($databaseHost, $databaseUser, $password, $databaseName = false): string
     {
         $string = '-h '.$databaseHost.' -u '.$databaseUser.' -p'.$password;
         
@@ -41,7 +41,7 @@ class Mysql
         return $string;
     }
 
-    public function backup()
+    public function backup(): void
     {
 
             /**
@@ -70,7 +70,7 @@ class Mysql
 
     }
 
-    public function restore()
+    public function restore(): void
     {
 
         /**
@@ -110,12 +110,17 @@ class Mysql
         return (new \Fabrica\Tools\Docker\Mysql\Program())->singleBackup($connectString);
     }
 
-    public function import($fileName)
+    public function import($fileName): void
     {
         $this->local->exec('mysql '.$this->getConnectString($this->database->host, $this->database->user, $this->database->password, $this->collection->getName()).' < '.$fileName.'.sql');
     }
 
-    public function getTables()
+    /**
+     * @return string[]
+     *
+     * @psalm-return non-empty-list<string>
+     */
+    public function getTables(): array
     {
         /**
          * +-----------------------+
@@ -139,12 +144,15 @@ class Mysql
         return $tables;
     }
 
-    public function getFields($tableName)
+    public function getFields($tableName): void
     {
         $this->exec('DESCRIBE '.$tableName);
     }
 
-    public function mergeFrom($database)
+    /**
+     * @return true
+     */
+    public function mergeFrom($database): bool
     {
         $tables = $this->getTables();
 

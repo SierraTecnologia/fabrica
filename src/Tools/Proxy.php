@@ -41,6 +41,9 @@ class Proxy
 
     }
 
+    /**
+     * @return bool|string
+     */
     public function curl( $url, $postParameter = null )
     {
 
@@ -63,9 +66,9 @@ class Proxy
     /**
      * @param string $url
      *
-     * @return string
+     * @return void
      */
-    protected function get($url)
+    protected function get($url): void
     {
         $torSocks5Proxy = "socks5://127.0.0.1:9050";
 
@@ -81,7 +84,12 @@ class Proxy
         curl_setopt($this->ch, CURLOPT_HEADER, false);
     }
     
-    public static function getOpts($proxy = false)
+    /**
+     * @return (array|string)[]
+     *
+     * @psalm-return array{headers: array{User-Agent: mixed}, proxy?: 'http://222.141.11.17:8118'}
+     */
+    public static function getOpts($proxy = false): array
     {
         $opts = [
         // //Set the timeout time in seconds

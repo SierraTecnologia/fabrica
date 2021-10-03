@@ -11,11 +11,14 @@ class DebugRepositoryPool extends RepositoryPool
 {
     protected $collector;
 
-    public function setDataCollector(GitDataCollector $collector)
+    public function setDataCollector(GitDataCollector $collector): void
     {
         $this->collector = $collector;
     }
 
+    /**
+     * @param Project $project
+     */
     public function getGitRepository(Project $project)
     {
         $repository = parent::getGitRepository($project);

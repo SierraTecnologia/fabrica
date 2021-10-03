@@ -468,11 +468,12 @@ class ProjectController extends Controller
     /**
      * initialize project data.
      *
-     * @param  string $key
-     * @param  int    $id
-     * @return 
+     * @param string $key
+     * @param int    $id
+     *
+     * @return void
      */
-    public function initialize($key)
+    public function initialize($key): void
     {
         $types = Type::where('project_key', '$_sys_$')->get()->toArray();
         foreach ($types as $type)

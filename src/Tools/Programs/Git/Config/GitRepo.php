@@ -31,12 +31,15 @@ class GitRepo
      * Accepts a creation path, and, optionally, a source path
      *
      * @access public
-     * @param  string  repository path
-     * @param  string  directory to source
-     * @param  string  reference path
+     *
+     * @param string  repository path
+     * @param string  directory to source
+     * @param string  reference path
+     * @param false $remote_source
+     *
      * @return GitRepo
      */
-    public static function &create_new($repositoryPath, $source = null, $remote_source = false, $reference = null)
+    public static function &create_new($repositoryPath, $source = null, bool $remote_source = false, $reference = null)
     {
         if (is_dir($repositoryPath) && file_exists($repositoryPath."/.git")) {
             throw new Exception('"'.$repositoryPath.'" is already a git repository');
@@ -91,7 +94,7 @@ class GitRepo
      * @param  bool    initialize new Git repo if not exists?
      * @return void
      */
-    public function set_repositoryPath($repositoryPath, $create_new = false, $_init = true)
+    public function set_repositoryPath(string $repositoryPath, $create_new = false, $_init = true)
     {
         if (is_string($repositoryPath)) {
             if ($new_path = realpath($repositoryPath)) {
@@ -208,7 +211,7 @@ class GitRepo
      * @param  string  command to run
      * @return string
      */
-    protected function run_command($command)
+    protected function run_command(string $command)
     {
         $descriptorspec = array(
         1 => array('pipe', 'w'),
@@ -258,7 +261,7 @@ class GitRepo
      * @param  string  command to run
      * @return string
      */
-    public function run($command)
+    public function run(string $command)
     {
         return $this->run_command(Git::get_bin()." ".$command);
     }
@@ -358,7 +361,7 @@ class GitRepo
      * @param  string  source directory
      * @return string
      */
-    public function clone_from($source)
+    public function clone_from(string $source)
     {
         return $this->run("clone --local $source ".$this->repositoryPath);
     }
@@ -374,7 +377,7 @@ class GitRepo
      * @param  string  reference path
      * @return string
      */
-    public function clone_remote($source, $reference)
+    public function clone_remote(string $source, $reference)
     {
         return $this->run("clone $reference $source ".$this->repositoryPath);
     }
@@ -441,7 +444,7 @@ class GitRepo
      * @param  bool    keep asterisk mark on active branch
      * @return array
      */
-    public function list_branches($keep_asterisk = false)
+    public function list_branches(bool $keep_asterisk = false)
     {
         $branchArray = explode("\n", $this->run("branch"));
         foreach($branchArray as $i => &$branch) {
@@ -638,8 +641,10 @@ class GitRepo
      * Sets the project description.
      *
      * @param string $new
+     *
+     * @return void
      */
-    public function set_description($new)
+    public function set_description($new): void
     {
         $path = $this->git_directory_path();
         file_put_contents($path."/description", $new);
@@ -661,16 +666,20 @@ class GitRepo
      *
      * @param string key
      * @param string value
+     *
+     * @return void
      */
-    public function setenv($key, $value)
+    public function setenv($key, $value): void
     {
         $this->envopts[$key] = $value;
     }
 
     /**
      * @param string $revision
+     *
+     * @return void
      */
-    public function checkoutForce($revision)
+    public function checkoutForce($revision): void
     {
         $this->execute(
             'checkout --force --quiet ' . $revision
@@ -753,11 +762,11 @@ class GitRepo
     /**
      * @param string $command
      *
-     * @return string
+     * @return array
      *
      * @throws RuntimeException
      */
-    protected function execute($command)
+    protected function execute($command): array
     {
         $command = 'cd ' . escapeshellarg($this->repositoryPath) . '; git ' . $command . ' 2>&1';
  

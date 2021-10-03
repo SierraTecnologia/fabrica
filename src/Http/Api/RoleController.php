@@ -243,11 +243,12 @@ class RoleController extends Controller
     /**
      * set users.
      *
-     * @param  string $project_key
-     * @param  array  $uids
-     * @return array
+     * @param string $project_key
+     * @param array  $uids
+     *
+     * @return void
      */
-    public function setUsers($project_key, $role_id, $uids)
+    public function setUsers($project_key, int $role_id, $uids): void
     {
         $actor = Roleactor::where([ 'project_key' => $project_key, 'role_id' => $role_id ])->first();
         $actor && $actor->delete();
@@ -258,11 +259,12 @@ class RoleController extends Controller
     /**
      * set groups.
      *
-     * @param  string $project_key
-     * @param  array  $gids
-     * @return array
+     * @param string $project_key
+     * @param array  $gids
+     *
+     * @return void
      */
-    public function setGroups($project_key, $role_id, $gids)
+    public function setGroups($project_key, int $role_id, $gids): void
     {
         $actor = Roleactor::where([ 'project_key' => $project_key, 'role_id' => $role_id ])->first();
         $actor && $actor->delete();

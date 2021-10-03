@@ -17,7 +17,7 @@ use Fabrica\Models\Code\Project;
 
 class ProjectRoleTest extends \PHPUnit\Framework\TestCase
 {
-    public function testInstanciation()
+    public function testInstanciation(): void
     {
         $project = new Project('project', 'project');
         $role = new ProjectRole($project, 'FOO');

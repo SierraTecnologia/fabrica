@@ -56,8 +56,12 @@ class Lunar
      * @param year 公历-年
      * @param month 公历-月
      * @param date 公历-日
+     *
+     * @return (int|mixed|string)[]
+     *
+     * @psalm-return array{0: 0|1|1891|mixed|positive-int|string}
      */
-    function convertSolarToLunar($year, $month, $date)
+    function convertSolarToLunar(\Fabrica\Http\Api\number $year, \Fabrica\Http\Api\number $month, \Fabrica\Http\Api\number $date): array
     {
         //debugger;
         $yearData = $this->lunarInfo[$year-$this->MIN_YEAR];
@@ -67,7 +71,12 @@ class Lunar
         return $this->getLunarByBetween($year, $this->getDaysBetweenSolar($year, $month, $date, $yearData[1], $yearData[2]));
     }
 
-    function convertSolarMonthToLunar($year,$month, $date)
+    /**
+     * @return (int|mixed|string|string[])[]
+     *
+     * @psalm-return array<int|positive-int, 1|1891|mixed|non-empty-list<string>|string>
+     */
+    function convertSolarMonthToLunar($year,$month, $date): array
     {
         $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
         if($year == $this->MIN_YEAR && $month <= 2&&$date <=9 ) {
@@ -91,8 +100,12 @@ class Lunar
      * @param year 阴历-年
      * @param month 阴历-月，闰月处理：例如如果当年闰五月，那么第二个五月就传六月，相当于阴历有13个月，只是有的时候第13个月的天数为0
      * @param date 阴历-日
+     *
+     * @return string[]
+     *
+     * @psalm-return array{0: string, 1: string, 2: string}
      */
-    function convertLunarToSolar($year, $month, $date)
+    function convertLunarToSolar($year, $month, $date): array
     {
         $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
         $between = $this->getDaysBetweenLunar($year, $month, $date);
@@ -108,8 +121,10 @@ class Lunar
      * 判断是否是闰年
      *
      * @param year
+     *
+     * @return bool
      */
-    function isLeapYear($year)
+    function isLeapYear($year): bool
     {
         return (($year % 4 == 0 && $year % 100 != 0) || ($year % 400 == 0));
     }
@@ -117,8 +132,10 @@ class Lunar
      * 获取干支纪年
      *
      * @param year
+     *
+     * @return string
      */
-    function getLunarYearName($year)
+    function getLunarYearName($year): string
     {
         $sky = array('庚','辛','壬','癸','甲','乙','丙','丁','戊','己');
         $earth = array('申','酉','戌','亥','子','丑','寅','卯','辰','巳','午','未');
@@ -129,8 +146,10 @@ class Lunar
      * 根据阴历年获取生肖
      *
      * @param year 阴历年
+     *
+     * @return string
      */
-    function getYearZodiac($year)
+    function getYearZodiac($year): string
     {
         $zodiac = array('猴','鸡','狗','猪','鼠','牛','虎','兔','龙','蛇','马','羊');
         return $zodiac[$year % 12];
@@ -161,8 +180,10 @@ class Lunar
      * 获取阴历每月的天数的数组
      *
      * @param year
+     *
+     * @return array
      */
-    function getLunarMonths($year)
+    function getLunarMonths($year): array
     {
         $yearData = $this->lunarInfo[$year - $this->MIN_YEAR];
         $leapMonth = $yearData[0];
@@ -191,7 +212,12 @@ class Lunar
         $len = count($monthArray);
         return ($monthArray[$len-1] == 0 ? $monthArray[$len-2] : $monthArray[$len-1]);
     }
-    function getLunarYearMonths($year)
+    /**
+     * @return array
+     *
+     * @psalm-return list<mixed>
+     */
+    function getLunarYearMonths($year): array
     {
         //debugger;
         $monthData = $this->getLunarMonths($year);
@@ -243,8 +269,11 @@ class Lunar
      * @param cdate
      * @param dmonth 阴历正月对应的阳历月份
      * @param ddate 阴历初一对应的阳历天数
+     * @param int $cdate
+     *
+     * @return float
      */
-    function getDaysBetweenSolar($year, $cmonth, $cdate, $dmonth, $ddate)
+    function getDaysBetweenSolar(\Fabrica\Http\Api\number $year, \Fabrica\Http\Api\number $cmonth, int $cdate, $dmonth, $ddate): float
     {
         $a = mktime(0, 0, 0, $cmonth, $cdate, $year);
         $b = mktime(0, 0, 0, $dmonth, $ddate, $year);
@@ -255,8 +284,12 @@ class Lunar
      *
      * @param year 阳历年
      * @param between 天数
+     *
+     * @return (int|mixed|string)[]
+     *
+     * @psalm-return non-empty-list<0|mixed|positive-int|string>
      */
-    function getLunarByBetween($year,$between)
+    function getLunarByBetween(\Fabrica\Http\Api\number $year,float $between): array
     {
         //debugger;
         $lunarArray = array();
@@ -296,7 +329,7 @@ class Lunar
         return $lunarArray;
     }
     //转换成中文年份
-    function toYear($year)
+    function toYear($year): string
     {
         $arr = array("零", "一", "二", "三", "四", "五", "六", "七", "八", "九");
         $year_arr = str_split($year);
@@ -308,8 +341,10 @@ class Lunar
      *
      * @param num 数字
      * @param isMonth 是否是月份的数字
+     *
+     * @return string
      */
-    function getCapitalNum($num, $isMonth)
+    function getCapitalNum(int $num, bool $isMonth): string
     {
         $isMonth = $isMonth || false;
         $dateHash = array('0'=>'','1'=>'一','2'=>'二','3'=>'三','4'=>'四','5'=>'五','6'=>'六','7'=>'七','8'=>'八','9'=>'九','10'=>'十 ');

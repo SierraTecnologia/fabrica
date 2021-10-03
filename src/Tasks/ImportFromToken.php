@@ -31,7 +31,7 @@ class ImportFromToken extends ActionBase implements ActionInterface
         $this->token = $token;
     }
 
-    public function execute()
+    public function execute(): bool
     {
         if (!$this->token->account || !$this->token->account->status) {
             $this->notice('Token ignorado sem account .. '.print_r($this->token, true));

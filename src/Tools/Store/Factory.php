@@ -48,9 +48,9 @@ class Factory
     /**
      * @param string $store
      *
-     * @return Store;
+     * @return object
      */
-    public function loadStore($store)
+    public function loadStore($store): object
     {
         if (!isset($this->loadedStores[$store])) {
             $class = 'PHPCensor\\Store\\' . $store . 'Store';

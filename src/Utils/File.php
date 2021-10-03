@@ -5,7 +5,7 @@ namespace Fabrica\Utils;
 class File
 {
 
-    static function download($filename, $displayname)
+    static function download(string $filename, string $displayname): void
     {
         header("Content-type: application/octet-stream");
         header("Accept-Ranges: bytes");

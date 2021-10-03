@@ -93,7 +93,7 @@ class Provider
      *
      * @return array
      */
-    public static function getDefaultDisplayColumns($project_key)
+    public static function getDefaultDisplayColumns(string $project_key)
     {
         $res = ProjectIssueListColumns::where('project_key', $project_key)->first(); 
         if ($res) {
@@ -148,7 +148,7 @@ class Provider
         $stateProperty = StateProperty::Where('project_key', $project_key)->first();
         if ($stateProperty) {
             if ($sequence = $stateProperty->sequence) {
-                $func = function ($v1, $v2) use ($sequence) {
+                $func = function ($v1, $v2) use ($sequence): int {
                     $i1 = array_search($v1['_id'], $sequence);
                     $i1 = $i1 !== false ? $i1 : 998;
                     $i2 = array_search($v2['_id'], $sequence);
@@ -165,11 +165,14 @@ class Provider
     /**
      * get state options.
      *
-     * @param  string $project_key
-     * @param  array  $fields
-     * @return collection
+     * @param string $project_key
+     * @param array  $fields
+     *
+     * @return (mixed|string)[][]
+     *
+     * @psalm-return list<array{_id: mixed, name: string, category: ''|mixed}>
      */
-    public static function getStateOptions($project_key)
+    public static function getStateOptions($project_key): array
     {
         $states = self::getStateList($project_key);
 
@@ -188,11 +191,14 @@ class Provider
     /**
      * get state options.
      *
-     * @param  string $project_key
-     * @param  array  $fields
-     * @return collection
+     * @param string $project_key
+     * @param array  $fields
+     *
+     * @return (mixed|string)[][]
+     *
+     * @psalm-return list<array{name: mixed, bgColor: ''|mixed}>
      */
-    public static function getLabelOptions($project_key)
+    public static function getLabelOptions($project_key): array
     {
         $options = [];
 
@@ -228,10 +234,13 @@ class Provider
     /**
      * get event options.
      *
-     * @param  string $project_key
-     * @return collection
+     * @param string $project_key
+     *
+     * @return (mixed|string)[][]
+     *
+     * @psalm-return list<array{_id: mixed, name: string}>
      */
-    public static function getEventOptions($project_key)
+    public static function getEventOptions($project_key): array
     {
         $events = self::getEventList($project_key); 
 
@@ -293,7 +302,7 @@ class Provider
         $priorityProperty = PriorityProperty::Where('project_key', $project_key)->first();
         if ($priorityProperty) {
             if ($sequence = $priorityProperty->sequence) {
-                $func = function ($v1, $v2) use ($sequence) {
+                $func = function ($v1, $v2) use ($sequence): int {
                     $i1 = array_search($v1['_id'], $sequence);
                     $i1 = $i1 !== false ? $i1 : 998;
                     $i2 = array_search($v2['_id'], $sequence);
@@ -388,7 +397,7 @@ class Provider
         $resolutionProperty = ResolutionProperty::Where('project_key', $project_key)->first();
         if ($resolutionProperty) {
             if ($sequence = $resolutionProperty->sequence) {
-                $func = function ($v1, $v2) use ($sequence) {
+                $func = function ($v1, $v2) use ($sequence): int {
                     $i1 = array_search($v1['_id'], $sequence);
                     $i1 = $i1 !== false ? $i1 : 998;
                     $i2 = array_search($v2['_id'], $sequence);
@@ -754,12 +763,14 @@ class Provider
     }
 
     /**
-     * get issue type schema 
+     * get issue type schema
      *
-     * @param  string $project_key
+     * @param string $project_key
+     * @param (array|collection)[] $options
+     *
      * @return array 
      */
-    public static function getTypeListExt($project_key, $options)
+    public static function getTypeListExt($project_key, array $options)
     {
         $typeOptions = [];
         $types = self::getTypeList($project_key);
@@ -779,10 +790,12 @@ class Provider
     /**
      * get issue type schema
      *
-     * @param  string $project_key
+     * @param string $project_key
+     * @param (array|collection)[] $options
+     *
      * @return array
      */
-    private static function _repairSchema($project_key, $issue_type, $schema, $options)
+    private static function _repairSchema($project_key, $issue_type, $schema, array $options)
     {
         $new_schema = [];
         foreach ($schema as $key => $val)
@@ -939,7 +952,7 @@ class Provider
      * @param  string $type_id
      * @return array
      */
-    public static function getScreenSchema($project_key, $type_id, $screen)
+    public static function getScreenSchema(string $project_key, $type_id, $screen)
     {
         $new_schema = [];
         $versions = null;
@@ -1275,13 +1288,16 @@ class Provider
     }
 
     /**
-     * get all subtasks of the parent  
+     * get all subtasks of the parent
      *
-     * @param  string $project_key
-     * @param  string $parent_no
-     * @return bool
+     * @param string $project_key
+     * @param string $parent_no
+     *
+     * @return array
+     *
+     * @psalm-return list<mixed>
      */
-    public static function getChildrenByParentNo($project_key, $parent_no)
+    public static function getChildrenByParentNo($project_key, $parent_no): array
     {
         $parent = DB::collection('issue_' . $project_key)->where('no', $parent_no)->first();
         if (!$parent) { return []; 

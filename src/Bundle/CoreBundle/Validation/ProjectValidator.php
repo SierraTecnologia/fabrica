@@ -20,7 +20,7 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  */
 class ProjectValidator
 {
-    public static function isSlugValid(Project $project, ExecutionContextInterface $context)
+    public static function isSlugValid(Project $project, ExecutionContextInterface $context): void
     {
         if (!preg_match('#^'.Project::SLUG_PATTERN.'$#', $project->getSlug())) {
             $context->addViolationAt('slug', 'This value is not valid.', array(), null);

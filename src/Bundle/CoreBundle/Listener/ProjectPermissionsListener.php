@@ -51,6 +51,9 @@ class ProjectPermissionsListener implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @return void
+     */
     public function onProjectCreate(ProjectEvent $event)
     {
         $project = $event->getProject();

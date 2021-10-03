@@ -109,8 +109,10 @@ class XMPP extends Plugin
 
     /**
      * Find config file for sendxmpp binary (default is .sendxmpprc)
+     *
+     * @return null|true
      */
-    public function findConfigFile()
+    public function findConfigFile(): ?bool
     {
         if (file_exists($this->builder->buildPath . '.sendxmpprc')) {
             if (md5(file_get_contents($this->builder->buildPath . '.sendxmpprc'))!== md5($this->getConfigFormat())
@@ -182,7 +184,7 @@ class XMPP extends Plugin
      * @param  $messageFile
      * @return int
      */
-    protected function buildMessage($messageFile)
+    protected function buildMessage(string $messageFile)
     {
         if ($this->build->isSuccessful()) {
             $message = "✔ [" . $this->build->getProjectTitle() . "] Build #" . $this->build->getId() . " successful";

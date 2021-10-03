@@ -6,6 +6,11 @@ use Fabrica\Bundle\DistributionBundle\Installation\StepInterface;
 
 class SecretStep implements StepInterface
 {
+    /**
+     * @return int
+     *
+     * @psalm-return 0|1
+     */
     public function getStatus(array $parameters)
     {
         foreach (array('secret', 'remember_secret') as $key) {
@@ -17,21 +22,36 @@ class SecretStep implements StepInterface
         return self::STATUS_OK;
     }
 
+    /**
+     * @return string
+     *
+     * @psalm-return 'secret'
+     */
     public function getSlug()
     {
         return 'secret';
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Secret';
     }
 
+    /**
+     * @return string
+     *
+     * @psalm-return 'FabricaDistributionBundle:Configuration:step_secret.html.twig'
+     */
     public function getTemplate()
     {
         return 'FabricaDistributionBundle:Configuration:step_secret.html.twig';
     }
 
+    /**
+     * @return string
+     *
+     * @psalm-return 'installation_step_secret'
+     */
     public function getForm()
     {
         return 'installation_step_secret';

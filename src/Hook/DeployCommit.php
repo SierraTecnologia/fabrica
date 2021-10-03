@@ -48,12 +48,12 @@ class DeployCommit extends ActionCollection
         return parent::execute();
     }
 
-    public function prepareTargets(Commit $sshKey)
+    public function prepareTargets(Commit $sshKey): void
     {
         $externalTargetZeroClass = $sshKey;
     }
 
-    public function hasTargets()
+    public function hasTargets(): bool
     {
         if ($this->externalTargetZeroInstance === false) {
             return false;
@@ -61,7 +61,7 @@ class DeployCommit extends ActionCollection
         return true;
     }
     
-    public function prepareAction()
+    public function prepareAction(): void
     {
         $stage = 0;
         $action = Action::getActionByCode('updateBusinessAmbiente');

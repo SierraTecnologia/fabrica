@@ -106,7 +106,7 @@ class Builder implements LoggerAwareInterface
     /**
      * Set up the builder.
      *
-     * @param \PHPCensor\Model\Build $build
+     * @param Build $build
      * @param LoggerInterface        $logger
      */
     public function __construct(Build $build, LoggerInterface $logger = null)
@@ -151,8 +151,10 @@ class Builder implements LoggerAwareInterface
      * @param array $config
      *
      * @throws \Exception
+     *
+     * @return void
      */
-    public function setConfig(array $config)
+    public function setConfig(array $config): void
     {
         $this->config = $config;
     }
@@ -201,8 +203,10 @@ class Builder implements LoggerAwareInterface
     /**
      * @throws Exception\HttpException
      * @throws Exception\InvalidArgumentException
+     *
+     * @return void
      */
-    public function execute()
+    public function execute(): void
     {
         $this->build->setStatusRunning();
         $this->build->setStartDate(new \DateTime());
@@ -306,8 +310,10 @@ class Builder implements LoggerAwareInterface
     /**
      * @throws Exception\HttpException
      * @throws Exception\InvalidArgumentException
+     *
+     * @return void
      */
-    protected function setErrorTrend()
+    protected function setErrorTrend(): void
     {
         $this->build->setErrorsTotal($this->store->getErrorsCount($this->build->getId()));
 
@@ -357,8 +363,10 @@ class Builder implements LoggerAwareInterface
      * Specify whether exec output should be logged.
      *
      * @param bool $enableLog
+     *
+     * @return void
      */
-    public function logExecOutput($enableLog = true)
+    public function logExecOutput($enableLog = true): void
     {
         $this->commandExecutor->logExecOutput = $enableLog;
     }
@@ -479,8 +487,10 @@ class Builder implements LoggerAwareInterface
      * @param string $message
      * @param string $level
      * @param array  $context
+     *
+     * @return void
      */
-    public function log($message, $level = LogLevel::INFO, $context = [])
+    public function log($message, $level = LogLevel::INFO, $context = []): void
     {
         $this->buildLogger->log($message, $level, $context);
     }
@@ -489,8 +499,10 @@ class Builder implements LoggerAwareInterface
      * Add a warning-coloured message to the log.
      *
      * @param string $message
+     *
+     * @return void
      */
-    public function logWarning($message)
+    public function logWarning($message): void
     {
         $this->buildLogger->logWarning($message);
     }
@@ -499,8 +511,10 @@ class Builder implements LoggerAwareInterface
      * Add a success-coloured message to the log.
      *
      * @param string $message
+     *
+     * @return void
      */
-    public function logSuccess($message)
+    public function logSuccess($message): void
     {
         $this->buildLogger->logSuccess($message);
     }
@@ -510,8 +524,10 @@ class Builder implements LoggerAwareInterface
      *
      * @param string     $message
      * @param \Exception $exception The exception that caused the error.
+     *
+     * @return void
      */
-    public function logFailure($message, \Exception $exception = null)
+    public function logFailure($message, \Exception $exception = null): void
     {
         $this->buildLogger->logFailure($message, $exception);
     }
@@ -520,8 +536,10 @@ class Builder implements LoggerAwareInterface
      * Add a debug-coloured message to the log.
      *
      * @param string $message
+     *
+     * @return void
      */
-    public function logDebug($message)
+    public function logDebug($message): void
     {
         $this->buildLogger->logDebug($message);
     }

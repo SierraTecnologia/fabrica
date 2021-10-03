@@ -126,7 +126,7 @@ class ProjectStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\Project {
                 return new Project($item);
             };
             $rtn = array_map($map, $res);
@@ -185,7 +185,7 @@ class ProjectStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\Project {
                 return new Project($item);
             };
             $rtn = array_map($map, $res);
@@ -228,7 +228,7 @@ class ProjectStore extends Store
         if ($stmt->execute()) {
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $map = function ($item) {
+            $map = function ($item): \PHPCensor\Model\Project {
                 return new Project($item);
             };
             $rtn = array_map($map, $res);

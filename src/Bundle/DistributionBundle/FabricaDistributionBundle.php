@@ -19,6 +19,9 @@ use Fabrica\Bundle\DistributionBundle\DependencyInjection\CompilerPass\AddStepTo
 
 class FabricaDistributionBundle extends Bundle
 {
+    /**
+     * @return void
+     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

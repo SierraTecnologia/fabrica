@@ -79,7 +79,7 @@ class File
         $this->changes = array();
     }
 
-    public function addChange(FileChange $change)
+    public function addChange(FileChange $change): void
     {
         $this->changes[] = $change;
     }
@@ -118,8 +118,10 @@ class File
 
     /**
      * Indicates if the file mode has changed.
+     *
+     * @return bool
      */
-    public function isChangeMode()
+    public function isChangeMode(): bool
     {
         return $this->isModification() && $this->oldMode !== $this->newMode;
     }
@@ -170,17 +172,17 @@ class File
         return $result;
     }
 
-    public function getOldName()
+    public function getOldName(): string
     {
         return $this->oldName;
     }
 
-    public function getNewName()
+    public function getNewName(): string
     {
         return $this->newName;
     }
 
-    public function getName()
+    public function getName(): string
     {
         if (null === $this->newName) {
             return $this->oldName;
@@ -189,37 +191,42 @@ class File
         return $this->newName;
     }
 
-    public function getOldMode()
+    public function getOldMode(): string
     {
         return $this->oldMode;
     }
 
-    public function getNewMode()
+    public function getNewMode(): string
     {
         return $this->newMode;
     }
 
-    public function getOldIndex()
+    public function getOldIndex(): string
     {
         return $this->oldIndex;
     }
 
-    public function getNewIndex()
+    public function getNewIndex(): string
     {
         return $this->newIndex;
     }
 
-    public function isBinary()
+    public function isBinary(): bool
     {
         return $this->isBinary;
     }
 
-    public function getChanges()
+    public function getChanges(): array
     {
         return $this->changes;
     }
 
-    public function toArray()
+    /**
+     * @return (array|bool|string)[]
+     *
+     * @psalm-return array{old_name: string, new_name: string, old_mode: string, new_mode: string, old_index: string, new_index: string, is_binary: bool, changes: array}
+     */
+    public function toArray(): array
     {
         return array(
             'old_name' => $this->oldName,
@@ -237,7 +244,7 @@ class File
         );
     }
 
-    public static function fromArray(array $array)
+    public static function fromArray(array $array): self
     {
         $file = new self($array['old_name'], $array['new_name'], $array['old_mode'], $array['new_mode'], $array['old_index'], $array['new_index'], $array['is_binary']);
 
@@ -248,22 +255,25 @@ class File
         return $file;
     }
 
+    /**
+     * @return false|string
+     */
     public function getAnchor()
     {
         return substr($this->newIndex, 0, 12);
     }
 
-    public function getRepository()
+    public function getRepository(): Repository
     {
         return $this->repository;
     }
 
-    public function setRepository(Repository $repository)
+    public function setRepository(Repository $repository): void
     {
         $this->repository = $repository;
     }
 
-    public function getOldBlob()
+    public function getOldBlob(): \Fabrica\Tools\Programs\Git\Blob
     {
         if (null === $this->repository) {
             throw new \RuntimeException('Repository is missing to return Blob object.');
@@ -276,7 +286,7 @@ class File
         return $this->repository->getBlob($this->oldIndex);
     }
 
-    public function getNewBlob()
+    public function getNewBlob(): \Fabrica\Tools\Programs\Git\Blob
     {
         if (null === $this->repository) {
             throw new \RuntimeException('Repository is missing to return Blob object.');

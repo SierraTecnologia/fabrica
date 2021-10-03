@@ -25,17 +25,23 @@ class StringHelper
         return self::$encoding;
     }
 
-    public static function setEncoding($encoding)
+    public static function setEncoding($encoding): void
     {
         self::$encoding = $encoding;
     }
 
-    public static function strlen($string)
+    public static function strlen(string $string): int
     {
         return function_exists('mb_strlen') ? mb_strlen($string, self::$encoding) : strlen($string);
     }
 
-    public static function substr($string, $start, $length = false)
+    /**
+     * @param int $start
+     * @param false|int $length
+     *
+     * @return false|string
+     */
+    public static function substr(string $string, int $start, $length = false)
     {
         if (false === $length) {
             $length = self::strlen($string);
@@ -44,12 +50,22 @@ class StringHelper
         return function_exists('mb_substr') ? mb_substr($string, $start, $length, self::$encoding) : substr($string, $start, $length);
     }
 
-    public static function strpos($haystack, $needle, $offset = 0)
+    /**
+     * @param string $needle
+     *
+     * @return false|int
+     */
+    public static function strpos(string $haystack, string $needle, int $offset = 0)
     {
         return function_exists('mb_strpos') ? mb_strpos($haystack, $needle, $offset, self::$encoding) : strpos($haystack, $needle, $offset);
     }
 
-    public static function strrpos($haystack, $needle, $offset = 0)
+    /**
+     * @param string $needle
+     *
+     * @return false|int
+     */
+    public static function strrpos(string $haystack, string $needle, $offset = 0)
     {
         return function_exists('mb_strrpos') ? mb_strrpos($haystack, $needle, $offset, self::$encoding) : strrpos($haystack, $needle, $offset);
     }

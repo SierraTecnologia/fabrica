@@ -28,17 +28,17 @@ class ProjectEvent extends Event
         $this->user    = $user;
     }
 
-    public function getProject()
+    public function getProject(): Project
     {
         return $this->project;
     }
 
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function hasUser()
+    public function hasUser(): bool
     {
         return null !== $this->user;
     }

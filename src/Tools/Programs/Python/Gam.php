@@ -9,7 +9,7 @@ class Gam
 {
     protected $repositoryUrl = 'https://git.io/install-gam';
 
-    public function installCommand()
+    public function installCommand(): string
     {
         return 'bash <(curl -s -S -L '.$this->repositoryUrl.')';
     }

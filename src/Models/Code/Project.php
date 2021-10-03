@@ -221,7 +221,10 @@ class Project extends Base
         return $this->repositorySize;
     }
 
-    public function setRepositorySize($repositorySize)
+    /**
+     * @param null|string $repositorySize
+     */
+    public function setRepositorySize(?string $repositorySize)
     {
         $this->repositorySize = $repositorySize;
     }

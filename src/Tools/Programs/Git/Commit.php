@@ -34,7 +34,7 @@ class Commit extends Revision
     /**
      * Constructor.
      *
-     * @param Fabrica\Tools\Programs\Git\Repository $repository Repository of the commit
+     * @param Repository $repository
      * @param string                                $hash       Hash of the commit
      */
     public function __construct(Repository $repository, $hash, array $data = array())
@@ -48,7 +48,7 @@ class Commit extends Revision
         $this->setData($data);
     }
 
-    public function setData(array $data)
+    public function setData(array $data): void
     {
         foreach ($data as $name => $value) {
             $this->data[$name] = $value;
@@ -90,6 +90,8 @@ class Commit extends Revision
 
     /**
      * Returns a fixed-with short hash.
+     *
+     * @return false|string
      */
     public function getFixedShortHash($length = 6)
     {
@@ -342,7 +344,7 @@ class Commit extends Revision
         return $this;
     }
 
-    private function getData($name)
+    private function getData(string $name)
     {
         if (isset($this->data[$name])) {
             return $this->data[$name];

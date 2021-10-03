@@ -28,7 +28,12 @@ class FilePrograms
         
     }
 
-    public function getRequirements()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return array{php: array{0: 'PHP 5.3.0', 1: bool}, xml: array{0: 'PHP extension XML', 1: bool}, zip: array{0: 'PHP extension ZipArchive (optional)', 1: bool}, xmlw: array{0: 'PHP extension XMLWriter (optional)', 1: bool}}
+     */
+    public function getRequirements(): array
     {
         return array(
         'php'   => array('PHP 5.3.0', version_compare(phpversion(), '5.3.0', '>=')),
@@ -38,7 +43,12 @@ class FilePrograms
         );
     }
 
-    public function getExtension($extension)
+    /**
+     * @return array[]
+     *
+     * @psalm-return array<list<mixed>>
+     */
+    public function getExtension($extension): array
     {
         $returnWrites = [];
         $types = $this->getTypes;
@@ -57,14 +67,19 @@ class FilePrograms
         return $returnWrites;
     }
 
-    public function getTypes()
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{0: Types\Project::class}
+     */
+    public function getTypes(): array
     {
         return [
         Types\Project::class
         ];
     }
 
-    public function run()
+    public function run(): void
     {
         $this->header();
         $this->getRequirements();
@@ -101,7 +116,7 @@ class FilePrograms
 
 
     }
-    public function reader()
+    public function reader(): void
     {
         // Create new PHPProject object
         echo date('H:i:s') . ' Create new PHPProject object'.EOL;
@@ -140,6 +155,9 @@ class FilePrograms
         }
     }
 
+    /**
+     * @return void
+     */
     public function header()
     {
 
@@ -216,8 +234,10 @@ class FilePrograms
      * @param \PhpOffice\PhpWord\PhpWord $phpWord
      * @param string                     $filename
      * @param array                      $writers
+     *
+     * @return string
      */
-    function write($phpPowerPoint, $filename, $writers)
+    function write($phpPowerPoint, $filename, $writers): string
     {
         $result = '';
         
@@ -243,8 +263,10 @@ class FilePrograms
      * Get ending notes
      *
      * @param array $writers
+     *
+     * @return string
      */
-    function getEndingNotes($writers)
+    function getEndingNotes($writers): string
     {
         $result = '';
 
@@ -277,7 +299,7 @@ class FilePrograms
         return $result;
     }
 
-    function echoTask($oPHPProject, $oTask, $level = 0)
+    function echoTask($oPHPProject, $oTask, $level = 0): void
     {
         echo '<strong>'.str_repeat('>', 2 * $level).' Task : '.$oTask->getName().'</strong>'.EOL;
         echo ' '.str_repeat('>', 2 * ($level + 1)).' Duration : '.$oTask->getDuration().EOL;

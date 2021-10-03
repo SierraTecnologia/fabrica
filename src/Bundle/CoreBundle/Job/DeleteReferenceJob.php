@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DeleteReferenceJob extends Job
 {
-    public static function create(Project $project, Reference $reference, User $user)
+    public static function create(Project $project, Reference $reference, User $user): self
     {
         return new self(
             array(
@@ -26,6 +26,8 @@ class DeleteReferenceJob extends Job
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function execute()
     {

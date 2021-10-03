@@ -19,7 +19,7 @@ use Fabrica\Models\Code\Message;
  */
 class OpenMessage extends Message
 {
-    public function getName()
+    public function getName(): string
     {
         return 'open';
     }

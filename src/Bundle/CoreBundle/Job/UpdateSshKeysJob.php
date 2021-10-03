@@ -8,6 +8,8 @@ class UpdateSshKeysJob extends Job
 {
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function execute()
     {
@@ -35,7 +37,7 @@ class UpdateSshKeysJob extends Job
         file_put_contents($file, $content);
     }
 
-    private function generate($keyList)
+    private function generate($keyList): string
     {
         $command = $this->getContainer()->getParameter('fabrica_core.git.shell_command');
         $output = '';
@@ -47,7 +49,7 @@ class UpdateSshKeysJob extends Job
         return $output;
     }
 
-    private function findFile()
+    private function findFile(): string
     {
         $candidates = array();
 

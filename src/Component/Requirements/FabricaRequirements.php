@@ -33,7 +33,12 @@ class FabricaRequirements extends RequirementCollection
         );
     }
 
-    protected function findGit()
+    /**
+     * @return (bool|string)[]
+     *
+     * @psalm-return array{0: bool, 1: string}
+     */
+    protected function findGit(): array
     {
         $proc = proc_open(
             'git --version',

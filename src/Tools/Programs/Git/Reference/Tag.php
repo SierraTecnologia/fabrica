@@ -21,7 +21,7 @@ use Fabrica\Tools\Programs\Git\Reference;
  */
 class Tag extends Reference
 {
-    public function getName()
+    public function getName(): string
     {
         if (!preg_match('#^refs/tags/(.*)$#', $this->revision, $vars)) {
             throw new RuntimeException(sprintf('Cannot extract tag name from "%s"', $this->revision));

@@ -61,6 +61,8 @@ class PhpFileConfig extends AbstractConfig
 
     /**
      * {@inheritDoc}
+     *
+     * @return static
      */
     protected function doSetAll(array $values)
     {

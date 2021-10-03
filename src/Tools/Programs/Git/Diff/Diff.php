@@ -46,7 +46,7 @@ class Diff
     /**
      * @return Diff
      */
-    public static function parse($rawDiff)
+    public static function parse(string $rawDiff)
     {
         $parser = new DiffParser();
         $parser->parse($rawDiff);
@@ -54,7 +54,7 @@ class Diff
         return new self($parser->files, $rawDiff);
     }
 
-    public function setRepository(Repository $repository)
+    public function setRepository(Repository $repository): void
     {
         foreach ($this->files as $file) {
             $file->setRepository($repository);

@@ -39,7 +39,12 @@ class WorkingCopy
         return WorkingStatus::parseOutput();
     }
 
-    public function getUntrackedFiles()
+    /**
+     * @return (false|string)[]
+     *
+     * @psalm-return array<int, false|string>
+     */
+    public function getUntrackedFiles(): array
     {
         $lines = explode("\0", $this->run('status', array('--porcelain', '--untracked-files=all', '-z')));
         $lines = array_filter(
@@ -56,7 +61,7 @@ class WorkingCopy
         return $lines;
     }
 
-    public function getDiffPending()
+    public function getDiffPending(): Diff
     {
         $diff = Diff::parse($this->run('diff', array('-r', '-p', '-m', '-M', '--full-index')));
         $diff->setRepository($this->repository);
@@ -64,7 +69,7 @@ class WorkingCopy
         return $diff;
     }
 
-    public function getDiffStaged()
+    public function getDiffStaged(): Diff
     {
         $diff = Diff::parse($this->run('diff', array('-r', '-p', '-m', '-M', '--full-index', '--staged')));
         $diff->setRepository($this->repository);
@@ -97,7 +102,7 @@ class WorkingCopy
         return $this;
     }
 
-    protected function run($command, array $args = array())
+    protected function run(string $command, array $args = array()): string
     {
         return $this->repository->run($command, $args);
     }

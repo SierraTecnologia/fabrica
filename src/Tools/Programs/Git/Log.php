@@ -76,17 +76,17 @@ class Log implements \Countable, \IteratorAggregate
     }
 
     /**
-     * @return Diff
+     * @return Diff\Diff
      */
-    public function getDiff()
+    public function getDiff(): Diff\Diff
     {
         return $this->repository->getDiff($this->revisions);
     }
 
     /**
-     * @return RevisionList
+     * @return RevisionList|null
      */
-    public function getRevisions()
+    public function getRevisions(): ?RevisionList
     {
         return $this->revisions;
     }
@@ -109,8 +109,10 @@ class Log implements \Countable, \IteratorAggregate
 
     /**
      * @param int $offset
+     *
+     * @return static
      */
-    public function setOffset($offset)
+    public function setOffset($offset): self
     {
         $this->offset = $offset;
 
@@ -127,8 +129,10 @@ class Log implements \Countable, \IteratorAggregate
 
     /**
      * @param int $limit
+     *
+     * @return static
      */
-    public function setLimit($limit)
+    public function setLimit($limit): self
     {
         $this->limit = $limit;
 

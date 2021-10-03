@@ -108,6 +108,9 @@ class Backup
         $this->output                  = '';
     }
 
+    /**
+     * @return false|mysqli
+     */
     protected function initializeDatabase()
     {
         try {
@@ -132,8 +135,10 @@ class Backup
      * Use '*' for whole database or 'table1 table2 table3...'
      *
      * @param string $tables
+     *
+     * @return bool
      */
-    public function backupTables($tables = '*')
+    public function backupTables($tables = '*'): bool
     {
         try {
             /**
@@ -294,8 +299,10 @@ class Backup
      * Save SQL to file
      *
      * @param string $sql
+     *
+     * @return bool
      */
-    protected function saveFile(&$sql)
+    protected function saveFile(&$sql): bool
     {
         if (!$sql) { return false;
         }
@@ -321,6 +328,9 @@ class Backup
      *
      * @param integer $level GZIP compression level (default: 9)
      * @return string New filename (with .gz appended) if success, or false if operation fails
+     */
+    /**
+     * @return bool|string
      */
     protected function gzipBackupFile($level = 9)
     {
@@ -357,8 +367,13 @@ class Backup
 
     /**
      * Prints message forcing output buffer flush
+     *
+     * @param int $lineBreaksBefore
+     * @param int $lineBreaksAfter
+     *
+     * @return false|null
      */
-    public function obfPrint($msg = '', $lineBreaksBefore = 0, $lineBreaksAfter = 1)
+    public function obfPrint(string $msg = '', int $lineBreaksBefore = 0, int $lineBreaksAfter = 1)
     {
         if (!$msg) {
             return false;

@@ -47,11 +47,12 @@ class Git extends Plugin
     /**
      * Determine which action to run, and run it.
      *
-     * @param  $action
-     * @param  array $options
-     * @return bool
+     * @param $action
+     * @param array $options
+     *
+     * @return bool|null
      */
-    protected function runAction($action, array $options = [])
+    protected function runAction($action, array $options = []): ?bool
     {
         switch ($action) {
         case 'merge':
@@ -74,10 +75,11 @@ class Git extends Plugin
     /**
      * Handle a merge action.
      *
-     * @param  $options
-     * @return bool
+     * @param $options
+     *
+     * @return bool|null
      */
-    protected function runMergeAction($options)
+    protected function runMergeAction(array $options): ?bool
     {
         if (array_key_exists('branch', $options)) {
             $cmd = 'cd "%s" && git checkout %s && git merge "%s"';
@@ -92,7 +94,7 @@ class Git extends Plugin
      * @param  $options
      * @return bool
      */
-    protected function runTagAction($options)
+    protected function runTagAction(array $options)
     {
         $tagName = date('Ymd-His');
         $message = sprintf('Tag created by PHP Censor: %s', date('Y-m-d H:i:s'));
@@ -115,7 +117,7 @@ class Git extends Plugin
      * @param  $options
      * @return bool
      */
-    protected function runPullAction($options)
+    protected function runPullAction(array $options)
     {
         $branch = $this->build->getBranch();
         $remote = 'origin';
@@ -137,7 +139,7 @@ class Git extends Plugin
      * @param  $options
      * @return bool
      */
-    protected function runPushAction($options)
+    protected function runPushAction(array $options)
     {
         $branch = $this->build->getBranch();
         $remote = 'origin';

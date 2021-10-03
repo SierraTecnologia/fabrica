@@ -72,8 +72,10 @@ class Hooks
      *
      * @throws LogicException   Hook is already present
      * @throws RuntimeException Error on symlink creation
+     *
+     * @return void
      */
-    public function setSymlink($name, $file)
+    public function setSymlink($name, $file): void
     {
         if ($this->has($name)) {
             throw new LogicException(sprintf('A hook "%s" is already defined', $name));
@@ -92,8 +94,10 @@ class Hooks
      * @param string $content Content of the hook
      *
      * @throws LogicException The hook is already defined
+     *
+     * @return void
      */
-    public function set($name, $content)
+    public function set($name, $content): void
     {
         if ($this->has($name)) {
             throw new LogicException(sprintf('A hook "%s" is already defined', $name));
@@ -110,8 +114,10 @@ class Hooks
      * @param string $name Name of the hook
      *
      * @throws LogicException The hook is not present
+     *
+     * @return void
      */
-    public function remove($name)
+    public function remove($name): void
     {
         if (!$this->has($name)) {
             throw new LogicException(sprintf('The hook "%s" was not found', $name));
@@ -120,7 +126,7 @@ class Hooks
         unlink($this->getPath($name));
     }
 
-    protected function getPath($name)
+    protected function getPath(string $name): string
     {
         return $this->repository->getGitDir().'/hooks/'.$name;
     }

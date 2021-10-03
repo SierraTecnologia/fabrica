@@ -20,7 +20,7 @@ class Bash
         }
     }
 
-    public function hasProgram($program)
+    public function hasProgram($program): bool
     {
         $hasProgram = $this->exec($this->typeProgramString($program));
         var_dump($hasProgram);
@@ -30,12 +30,15 @@ class Bash
         return true;
     }
 
-    public function typeProgramString($program)
+    public function typeProgramString($program): string
     {
         return 'type -P '.$program;
     }
 
-    public function exec($exec, $sudo = false)
+    /**
+     * @return false|null|string
+     */
+    public function exec(string $exec, $sudo = false)
     {
         if ($sudo) {
             $exec = 'sudo '.$exec;

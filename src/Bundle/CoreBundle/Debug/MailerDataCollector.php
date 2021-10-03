@@ -17,6 +17,9 @@ class MailerDataCollector extends DataCollector
         $this->mailer = $mailer;
     }
 
+    /**
+     * @return void
+     */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $this->data = array(

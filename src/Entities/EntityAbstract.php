@@ -20,7 +20,10 @@ abstract class EntityAbstract implements Arrayable
         $this->code = $code;
     }
     
-    public static function make($code = '')
+    /**
+     * @return static
+     */
+    public static function make($code = ''): self
     {
         return new static(
             $code

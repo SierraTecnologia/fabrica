@@ -160,7 +160,7 @@ class Executor
      * @return bool
      * @throws \Exception
      */
-    protected function doExecutePlugins(&$plugins, $stage)
+    protected function doExecutePlugins(&$plugins, string $stage)
     {
         $success = true;
 
@@ -211,8 +211,10 @@ class Executor
 
     /**
      * Executes a given plugin, with options and returns the result.
+     *
+     * @return bool
      */
-    public function executePlugin($plugin, $options)
+    public function executePlugin($plugin, $options): bool
     {
         $class = $plugin;
         if (!class_exists($class)) {
@@ -245,8 +247,10 @@ class Executor
      * @param string $stage  The builder stage.
      * @param string $plugin The plugin name.
      * @param int    $status The new status.
+     *
+     * @return void
      */
-    protected function setPluginStatus($stage, $plugin, $status)
+    protected function setPluginStatus($stage, $plugin, $status): void
     {
         $summary = $this->getBuildSummary();
 
@@ -284,8 +288,10 @@ class Executor
      * Sets the summary data of the current build.
      *
      * @param array $summary
+     *
+     * @return void
      */
-    private function setBuildSummary($summary)
+    private function setBuildSummary($summary): void
     {
         /**
  * @var Build $build 

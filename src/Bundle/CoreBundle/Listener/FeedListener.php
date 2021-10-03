@@ -43,7 +43,7 @@ class FeedListener implements EventSubscriberInterface
         );
     }
 
-    public function onProjectPush(PushReferenceEvent $event)
+    public function onProjectPush(PushReferenceEvent $event): void
     {
         $em        = $this->registry->getManager();
         $feed      = $this->getFeed($event);
@@ -64,6 +64,9 @@ class FeedListener implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @return Message\CloseMessage|Message\CommitMessage|null
+     */
     protected function getMessageFromEvent(PushReferenceEvent $event, Feed $feed)
     {
         return Message::createFromEvent($event, $feed);

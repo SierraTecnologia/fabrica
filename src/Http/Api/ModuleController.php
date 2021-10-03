@@ -201,12 +201,13 @@ class ModuleController extends Controller
     /**
      * update the issues module
      *
-     * @param  array  $issues
-     * @param  string $source
-     * @param  string $dest
-     * @return \Illuminate\Http\Response
+     * @param array  $issues
+     * @param string $source
+     * @param string $dest
+     *
+     * @return void
      */
-    public function updIssueModule($project_key, $source, $dest)
+    public function updIssueModule($project_key, $source, $dest): void
     {
         $issues = DB::collection('issue_' . $project_key)
             ->where('module', $source)

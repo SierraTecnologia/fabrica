@@ -32,8 +32,10 @@ class ShellHandler
 
     /**
      * Handles the git pack.
+     *
+     * @return void
      */
-    public function handle(Project $project, $command, array $env = array())
+    public function handle(Project $project, $command, array $env = array()): void
     {
         $project->getRepository()->shell($command, $env);
     }

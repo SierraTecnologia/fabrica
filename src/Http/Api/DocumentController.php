@@ -141,12 +141,13 @@ class DocumentController extends Controller
     /**
      * add children to tree.
      *
-     * @param  array  $dt
-     * @param  string $parent_id
-     * @param  array  $sub_dirs
-     * @return void
+     * @param array  $dt
+     * @param string $parent_id
+     * @param array  $sub_dirs
+     *
+     * @return bool
      */
-    public function addChildren2Tree(&$dt, $parent_id, $sub_dirs)
+    public function addChildren2Tree(&$dt, $parent_id, $sub_dirs): bool
     {
         $new_dirs = [];
         foreach($sub_dirs as $val)
@@ -684,12 +685,13 @@ class DocumentController extends Controller
     /**
      * Download Thumbnails file.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  String                   $project_key
-     * @param  String                   $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param String                   $project_key
+     * @param String                   $id
+     *
+     * @return void
      */
-    public function downloadThumbnails(Request $request, $project_key, $id)
+    public function downloadThumbnails(Request $request, $project_key, $id): void
     {
         set_time_limit(0);
 
@@ -712,12 +714,13 @@ class DocumentController extends Controller
     /**
      * Download file or directory.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  String                   $project_key
-     * @param  String                   $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param String                   $project_key
+     * @param String                   $id
+     *
+     * @return void
      */
-    public function download(Request $request, $project_key, $id)
+    public function download(Request $request, $project_key, $id): void
     {
         set_time_limit(0);
 
@@ -740,11 +743,12 @@ class DocumentController extends Controller
     /**
      * Download file.
      *
-     * @param  String $name
-     * @param  String $directory
-     * @return \Illuminate\Http\Response
+     * @param String $name
+     * @param String $directory
+     *
+     * @return void
      */
-    public function downloadFolder($project_key, $name, $directory)
+    public function downloadFolder(string $project_key, $name, $directory): void
     {
         setlocale(LC_ALL, 'zh_CN.UTF-8'); 
 
@@ -770,7 +774,7 @@ class DocumentController extends Controller
      * @param  String $id
      * @return void
      */
-    public function contructFolder($project_key, $fullpath, $id)
+    public function contructFolder(string $project_key, $fullpath, $id)
     {
         @mkdir($fullpath);
 
@@ -797,11 +801,12 @@ class DocumentController extends Controller
     /**
      * Download file.
      *
-     * @param  String $name
-     * @param  String $index
-     * @return \Illuminate\Http\Response
+     * @param String $name
+     * @param String $index
+     *
+     * @return void
      */
-    public function downloadFile($name, $index)
+    public function downloadFile($name, $index): void
     {
         $filepath = config('filesystems.disks.local.root', '/tmp') . '/' . substr($index, 0, 2);
         $filename = $filepath . '/' . $index;

@@ -35,6 +35,9 @@ class Tree
         return $this->hash;
     }
 
+    /**
+     * @return void
+     */
     protected function initialize()
     {
         if (true === $this->isInitialized) {
@@ -71,7 +74,7 @@ class Tree
         return $this->entries;
     }
 
-    public function getEntry($name)
+    public function getEntry(string $name)
     {
         $this->initialize();
 

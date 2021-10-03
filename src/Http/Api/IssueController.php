@@ -419,7 +419,7 @@ class IssueController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($project_key, $id)
+    public function show(string $project_key, $id)
     {
         $issue = DB::collection('issue_' . $project_key)->where('_id', $id)->first();
         $schema = Provider::getSchemaByType($issue['type']);
@@ -730,11 +730,12 @@ class IssueController extends Controller
     /**
      * create the new labels for project.
      *
-     * @param  string $project_key
-     * @param  array  $labels
-     * @return void
+     * @param string $project_key
+     * @param array  $labels
+     *
+     * @return true
      */
-    public function createLabels($project_key, $labels)
+    public function createLabels($project_key, $labels): bool
     {
         $created_labels = [];
         $project_labels = Labels::where('project_key', $project_key)
@@ -785,8 +786,9 @@ class IssueController extends Controller
     /**
      * check if the unix stamp
      *
-     * @param  int $timestamp
-     * @return bool
+     * @param int $timestamp
+     *
+     * @return false|int
      */
     public function isTimestamp($timestamp) 
     {
@@ -997,10 +999,11 @@ class IssueController extends Controller
     /**
      * save the custimized filter.
      *
-     * @param  string $project_key
-     * @return \Illuminate\Http\Response
+     * @param string $project_key
+     *
+     * @return array
      */
-    public function saveIssueFilter(Request $request, $project_key)
+    public function saveIssueFilter(Request $request, $project_key): array
     {
         $name = $request->input('name');
         if (!$name) {
@@ -1046,10 +1049,11 @@ class IssueController extends Controller
     /**
      * reset the issue filters.
      *
-     * @param  string $project_key
-     * @return \Illuminate\Http\Response
+     * @param string $project_key
+     *
+     * @return array
      */
-    public function resetIssueFilters(Request $request, $project_key)
+    public function resetIssueFilters(Request $request, $project_key): array
     {
         UserIssueFilters::where('project_key', $project_key)
             ->where('user', $this->user->id)
@@ -1072,10 +1076,11 @@ class IssueController extends Controller
     /**
      * reset the issue list diplay columns.
      *
-     * @param  string $project_key
-     * @return \Illuminate\Http\Response
+     * @param string $project_key
+     *
+     * @return array
      */
-    public function resetDisplayColumns(Request $request, $project_key)
+    public function resetDisplayColumns(Request $request, $project_key): array
     {
         UserIssueListColumns::where('project_key', $project_key)
             ->where('user', $this->user->id)
@@ -1092,10 +1097,11 @@ class IssueController extends Controller
     /**
      * set the issue list display columns.
      *
-     * @param  string $project_key
-     * @return \Illuminate\Http\Response
+     * @param string $project_key
+     *
+     * @return array
      */
-    public function setDisplayColumns(Request $request, $project_key)
+    public function setDisplayColumns(Request $request, $project_key): array
     {
         $column_keys = [];
         $new_columns = [];
@@ -1146,10 +1152,11 @@ class IssueController extends Controller
     /**
      * edit the mode filters.
      *
-     * @param  string $project_key
-     * @return \Illuminate\Http\Response
+     * @param string $project_key
+     *
+     * @return array
      */
-    public function editFilters(Request $request, $project_key)
+    public function editFilters(Request $request, $project_key): array
     {
         $sequence = $request->input('sequence');
         if (isset($sequence)) {
@@ -1716,10 +1723,11 @@ class IssueController extends Controller
     /**
      * add avatar for issues
      *
-     * @param  array $issues
-     * @return array
+     * @param array $issues
+     *
+     * @return void
      */
-    public function addAvatar(&$issues)
+    public function addAvatar(&$issues): void
     {
         $cache_avatars = [];
         foreach ($issues as $key => $issue)
@@ -1740,10 +1748,12 @@ class IssueController extends Controller
     /**
      * flat issues from 2d to 1d.
      *
-     * @param  array $classifiedissues
+     * @param array $classifiedissues
+     * @param (array|mixed)[] $classified_issues
+     *
      * @return array
      */
-    public function flatIssues($classified_issues)
+    public function flatIssues(array $classified_issues)
     {
         $issues = [];
         foreach ($classified_issues as $some)

@@ -443,9 +443,12 @@ class GitRepository implements IGit
 
     /**
      * @deprecated
-     * @throws     GitException
+     *
+     * @throws GitException
+     *
+     * @return bool
      */
-    public function isChanges()
+    public function isChanges(): bool
     {
         return $this->hasChanges();
     }
@@ -577,11 +580,13 @@ class GitRepository implements IGit
 
 
     /**
-     * @param  string|string[]
-     * @return string[]  returns output
+     * @param string|string[]
+     *
+     * @return array
+     *
      * @throws GitException
      */
-    public function execute($cmd)
+    public function execute($cmd): array
     {
         if (!is_array($cmd)) {
             $cmd = array($cmd);
@@ -632,12 +637,17 @@ class GitRepository implements IGit
 
 
     /**
-     * @param  string
-     * @param  callback|NULL
-     * @return string[]|NULL
+     * @param string
+     * @param callback|NULL
+     * @param \Closure|null|string $filter
+     *
+     * @return array|null
+     *
      * @throws GitException
+     *
+     * @psalm-return array{0: mixed}|null
      */
-    protected function extractFromCommand($cmd, $filter = null)
+    protected function extractFromCommand(string $cmd, $filter = null): ?array
     {
         $output = array();
         $exitCode = null;
@@ -679,11 +689,13 @@ class GitRepository implements IGit
     /**
      * Runs command.
      *
-     * @param  string|array
-     * @return self
+     * @param string|array
+     *
+     * @return static
+     *
      * @throws GitException
      */
-    protected function run($cmd/*, $options = NULL*/)
+    protected function run(string $cmd/*, $options = NULL*/): self
     {
         $args = func_get_args();
         $cmd = self::processCommand($args);
@@ -697,7 +709,7 @@ class GitRepository implements IGit
     }
 
 
-    protected static function processCommand(array $args)
+    protected static function processCommand(array $args): string
     {
         $cmd = array();
 
@@ -729,9 +741,11 @@ class GitRepository implements IGit
     /**
      * Init repo in directory
      *
-     * @param  string
-     * @param  array|NULL
-     * @return self
+     * @param string
+     * @param array|NULL
+     *
+     * @return static
+     *
      * @throws GitException
      */
     public static function init($directory, array $params = null)
@@ -771,10 +785,12 @@ class GitRepository implements IGit
     /**
      * Clones GIT repository from $url into $directory
      *
-     * @param  string
-     * @param  string|NULL
-     * @param  array|NULL
-     * @return self
+     * @param string
+     * @param string|NULL
+     * @param array|NULL
+     *
+     * @return static
+     *
      * @throws GitException
      */
     public static function cloneRepository($url, $directory = null, array $params = null)
@@ -859,7 +875,7 @@ class GitRepository implements IGit
      * @param  array|NULL
      * @return bool
      */
-    public static function isRemoteUrlReadable($url, array $refs = null)
+    public static function isRemoteUrlReadable($url, array $refs = null): bool
     {
         $env = '';
 
@@ -932,7 +948,7 @@ class GitRepository implements IGit
      * @return string
      * @throws GitException
      */
-    public function getCommitMessage($commit, $oneline = false)
+    public function getCommitMessage($commit, bool $oneline = false)
     {
         $this->begin();
         exec('git log -1 --format=' . ($oneline ? '%s' : '%B') . ' ' . $commit . ' 2>&1', $message);

@@ -25,7 +25,8 @@ class FileChangeListener
     /**
      * Handle the event.
      *
-     * @param  FileChangeEvent $event
+     * @param Event $event
+     *
      * @return void
      */
     public function handle(Event $event)
@@ -40,14 +41,16 @@ class FileChangeListener
     /**
      * update the issue file field.
      *
-     * @param  string   $project_key
-     * @param  string   $issue_id
-     * @param  string   $field_key
-     * @param  string   $file_id
-     * @param  int flag
+     * @param string   $project_key
+     * @param string   $issue_id
+     * @param string   $field_key
+     * @param string   $file_id
+     * @param int flag
+     * @param int $flag
+     *
      * @return void
      */
-    public function updIssueField($project_key, $issue_id, $field_key, $file_id, $user, $flag)
+    public function updIssueField($project_key, $issue_id, $field_key, $file_id, $user, int $flag)
     {
         $table = 'issue_' . $project_key;
         $issue = DB::collection($table)->where('_id', $issue_id)->first();

@@ -23,7 +23,7 @@ class Branch extends Reference
 {
     private $local = null;
 
-    public function getName()
+    public function getName(): string
     {
         $fullname = $this->getFullname();
 
@@ -38,7 +38,7 @@ class Branch extends Reference
         throw new RuntimeException(sprintf('Cannot extract branch name from "%s"', $fullname));
     }
 
-    public function isRemote()
+    public function isRemote(): bool
     {
         $this->detectBranchType();
 
@@ -52,7 +52,7 @@ class Branch extends Reference
         return $this->local;
     }
 
-    private function detectBranchType()
+    private function detectBranchType(): void
     {
         if (null === $this->local) {
             $this->local = !preg_match('#^refs/remotes/(?<remote>[^/]*)/(?<name>.*)$#', $this->getFullname());

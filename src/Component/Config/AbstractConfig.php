@@ -43,14 +43,21 @@ abstract class AbstractConfig implements ConfigInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @return void
+     *
+     * @param string $key
+     * @param string $value
      */
-    public function set($key, $value)
+    public function set(string $key, string $value)
     {
         $this->setAll(array_merge($this->all(), array($key => $value)));
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @return void
      */
     public function remove($key)
     {
@@ -80,6 +87,8 @@ abstract class AbstractConfig implements ConfigInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @return void
      */
     public function setAll(array $values)
     {
@@ -89,6 +98,8 @@ abstract class AbstractConfig implements ConfigInterface
 
     /**
      * {@inheritDoc}
+     *
+     * @return void
      */
     public function merge(array $values)
     {

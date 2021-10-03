@@ -32,6 +32,9 @@ class Mailer
         $this->container = $container;
     }
 
+    /**
+     * @return void
+     */
     public function mail($to, $template, $context = array())
     {
         $config     = $this->container->get('fabrica_core.config');
@@ -69,7 +72,10 @@ class Mailer
         $swiftmailer->send($message);
     }
 
-    protected function renderTwigBlock(\Twig_Template $template, $blockName, $context = array())
+    /**
+     * @param string $blockName
+     */
+    protected function renderTwigBlock(\Twig_Template $template, string $blockName, $context = array())
     {
         foreach ($template->getEnvironment()->getGlobals() as $key => $value) {
             if (!array_key_exists($key, $context)) {

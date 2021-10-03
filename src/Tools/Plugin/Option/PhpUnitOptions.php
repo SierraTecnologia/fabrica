@@ -151,8 +151,10 @@ class PhpUnitOptions
      *
      * @param string $argumentName
      * @param string $argumentValue
+     *
+     * @return void
      */
-    public function addArgument($argumentName, $argumentValue = null)
+    public function addArgument($argumentName, $argumentValue = null): void
     {
         if (isset($this->arguments[$argumentName])) {
             if (!is_array($this->arguments[$argumentName])) {
@@ -205,10 +207,11 @@ class PhpUnitOptions
      * Get an option if defined
      *
      * @param $optionName
+     * @param string $optionName
      *
      * @return string[]|string|null
      */
-    public function getOption($optionName)
+    public function getOption(string $optionName)
     {
         if (isset($this->options[$optionName])) {
             return $this->options[$optionName];
@@ -230,7 +233,9 @@ class PhpUnitOptions
     /**
      * Ge the directory name where tests file reside
      *
-     * @return string|null
+     * @return null|string|string[]
+     *
+     * @psalm-return array<string>|null|string
      */
     public function getTestsPath()
     {
@@ -261,10 +266,11 @@ class PhpUnitOptions
      * Get options for a given argument
      *
      * @param $argumentName
+     * @param string $argumentName
      *
-     * @return string[] All the options for given argument
+     * @return array
      */
-    public function getArgument($argumentName)
+    public function getArgument(string $argumentName): array
     {
         $this->parseArguments();
 

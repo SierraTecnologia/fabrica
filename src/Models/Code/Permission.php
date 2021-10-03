@@ -39,7 +39,7 @@ class Permission
         return $this->isGlobal;
     }
 
-    public function setGlobal($isGlobal)
+    public function setGlobal($isGlobal): void
     {
         $this->isGlobal = $isGlobal;
     }

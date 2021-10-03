@@ -15,6 +15,9 @@ class TreeParser extends ParserBase
 {
     public $entries = array();
 
+    /**
+     * @return void
+     */
     protected function doParse()
     {
         while (!$this->isFinished()) {

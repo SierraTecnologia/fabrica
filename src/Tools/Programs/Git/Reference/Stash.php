@@ -18,7 +18,7 @@ use Fabrica\Tools\Programs\Git\Reference;
  */
 class Stash extends Reference
 {
-    public function getName()
+    public function getName(): string
     {
         return 'stash';
     }

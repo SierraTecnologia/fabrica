@@ -49,7 +49,7 @@ class Line
         return $this->sourceLine;
     }
 
-    public function getCommit()
+    public function getCommit(): Commit
     {
         return $this->commit;
     }

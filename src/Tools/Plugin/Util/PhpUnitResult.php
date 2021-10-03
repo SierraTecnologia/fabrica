@@ -52,7 +52,10 @@ abstract class PhpUnitResult
         return $testcase['output'];
     }
 
-    protected function parseTestcase($testcase)
+    /**
+     * @param \ArrayAccess|array $testcase
+     */
+    protected function parseTestcase($testcase): void
     {
         $severity = $this->getSeverity($testcase);
         $pass = isset(array_fill_keys([self::SEVERITY_PASS, self::SEVERITY_SKIPPED], true)[$severity]);

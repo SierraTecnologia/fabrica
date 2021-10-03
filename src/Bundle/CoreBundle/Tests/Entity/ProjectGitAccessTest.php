@@ -19,8 +19,10 @@ class ProjectGitAccessTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider provideMatches
+     *
+     * @return void
      */
-    public function testMatches($pattern, $reference, $expected)
+    public function testMatches($pattern, $reference, $expected): void
     {
         $project = new Project('foo', 'foo');
         $access = new ProjectGitAccess($project);
@@ -29,7 +31,12 @@ class ProjectGitAccessTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $access->matches($reference));
     }
 
-    public function provideMatches()
+    /**
+     * @return (bool|string)[][]
+     *
+     * @psalm-return array{0: array{0: '*', 1: 'refs/heads/master', 2: true}, 1: array{0: 'master', 1: 'refs/heads/master', 2: true}, 2: array{0: 'feat-', 1: 'refs/heads/feat-bug', 2: false}, 3: array{0: 'feat-*', 1: 'refs/heads/feat-bug', 2: true}}
+     */
+    public function provideMatches(): array
     {
         return array(
             array('*',       'refs/heads/master',   true),
@@ -41,8 +48,10 @@ class ProjectGitAccessTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider provideVerifyPermission
+     *
+     * @return void
      */
-    public function testVerifyPermission($write, $admin, $permission, $expected)
+    public function testVerifyPermission($write, $admin, $permission, $expected): void
     {
         $project = new Project('foo', 'foo');
         $access = new ProjectGitAccess($project);
@@ -52,7 +61,12 @@ class ProjectGitAccessTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $access->verifyPermission($permission));
     }
 
-    public function provideVerifyPermission()
+    /**
+     * @return (bool|int)[][]
+     *
+     * @psalm-return array{0: array{0: false, 1: false, 2: 1, 3: false}, 1: array{0: true, 1: false, 2: 1, 3: true}, 2: array{0: true, 1: false, 2: 2, 3: false}, 3: array{0: true, 1: true, 2: 2, 3: true}}
+     */
+    public function provideVerifyPermission(): array
     {
         return array(
             array(false, false, ProjectGitAccess::WRITE_PERMISSION, false),
