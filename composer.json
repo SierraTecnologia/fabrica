@@ -23,15 +23,10 @@
     ],
     "require": {
         "php": "^7.2|^8.0",
-<<<<<<< HEAD
-        "sierratecnologia/integrations":    "^0.4.0",
-        "sierratecnologia/operador":    "^0.4.0",
-=======
         "illuminate/support": "^7.0 || ^8.0",
         "illuminate/database": "^7.0 || ^8.0",
         "sierratecnologia/integrations":    "^0.4",
         "sierratecnologia/operador":    "^0.4",
->>>>>>> master
         "deployer/deployer":            "^6.8",
         "guzzlehttp/guzzle": "^6.0 || ^7.0",
         "sierratecnologia/muleta":      "^0.4.0",
