@@ -19,7 +19,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
-use Fabrica\Models\Code\User;
+use Finder\Models\Code\User;
 
 /**
  * @author Julien DIDIER <genzo.wm@gmail.com>

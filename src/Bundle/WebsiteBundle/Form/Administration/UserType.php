@@ -29,7 +29,7 @@ class UserType extends AbstractType
             ->add(
                 'globalRoles', 'entity', array(
                 'label'   => 'form.global_roles',
-                'class'   => 'Fabrica\Models\Code\Role',
+                'class'   => 'Finder\Models\Code\Role',
                 'query_builder' => function (EntityRepository $er) {
                     $query = $er
                         ->createQueryBuilder('R')
@@ -49,7 +49,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-            'data_class'         => 'Fabrica\Models\Code\User',
+            'data_class'         => 'Finder\Models\Code\User',
             'translation_domain' => 'administration_user',
             'user'               => null,
             )

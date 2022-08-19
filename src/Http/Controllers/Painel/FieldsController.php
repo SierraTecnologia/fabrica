@@ -5,7 +5,7 @@ namespace Fabrica\Http\Controllers\Painel;
 use Fabrica\Services\FabricaService;
 use Illuminate\Support\Facades\Schema;
 
-use Fabrica\Models\Code\Field;
+use Finder\Models\Code\Field;
 
 class FieldsController extends Controller
 {

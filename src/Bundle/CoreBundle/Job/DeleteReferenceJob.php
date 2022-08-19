@@ -2,13 +2,13 @@
 
 namespace Fabrica\Bundle\CoreBundle\Job;
 
-use Fabrica\Models\Code\Project;
-use Fabrica\Models\Code\User;
+use Finder\Models\Code\Project;
+use Finder\Models\Code\User;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\PushReferenceEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
 use Fabrica\Bundle\JobBundle\Job\Job;
-use Fabrica\Tools\Programs\Git\PushReference;
-use Fabrica\Tools\Programs\Git\Reference;
+use Integrations\Tools\Programs\Git\PushReference;
+use Integrations\Tools\Programs\Git\Reference;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DeleteReferenceJob extends Job

@@ -2,7 +2,7 @@
 
 namespace Fabrica\Http\Controllers\Painel;
 
-use Fabrica\Models\Code\Issue;
+use Finder\Models\Code\Issue;
 use Pedreiro\CrudController;
 
 class IssueController extends Controller

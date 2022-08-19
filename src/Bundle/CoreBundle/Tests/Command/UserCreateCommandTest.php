@@ -43,7 +43,7 @@ class UserCreateCommandTest extends CommandTestCase
             )
         );
 
-        $this->assertInstanceOf('Fabrica\Models\Code\User', $user);
+        $this->assertInstanceOf('Finder\Models\Code\User', $user);
 
         $this->assertEquals('foo@example.org', $user->getDefaultEmail()->getEmail());
         $this->assertEquals('Foo', $user->getFullname());

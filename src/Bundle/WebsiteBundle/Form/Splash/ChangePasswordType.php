@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-use Fabrica\Models\Code\User;
+use Finder\Models\Code\User;
 
 class ChangePasswordType extends AbstractType
 {
@@ -66,7 +66,7 @@ class ChangePasswordType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-            'data_class'         => 'Fabrica\Models\Code\User',
+            'data_class'         => 'Finder\Models\Code\User',
             'translation_domain' => 'forgot_password'
             )
         );

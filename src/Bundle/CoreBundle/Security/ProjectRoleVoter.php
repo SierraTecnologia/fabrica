@@ -15,8 +15,8 @@ namespace Fabrica\Bundle\CoreBundle\Security;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-use Fabrica\Models\Code\User;
-use Fabrica\Models\Code\Project;
+use Finder\Models\Code\User;
+use Finder\Models\Code\Project;
 use Fabrica\Bundle\CoreBundle\Security\ProjectRole;
 
 class ProjectRoleVoter implements VoterInterface

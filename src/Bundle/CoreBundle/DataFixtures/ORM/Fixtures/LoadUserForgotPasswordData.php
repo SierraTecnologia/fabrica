@@ -15,8 +15,8 @@ namespace Fabrica\Bundle\CoreBundle\DataFixtures\ORM\Fixtures;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Fabrica\Bundle\CoreBundle\DataFixtures\ORM\Fixture;
-use Fabrica\Models\Code\User;
-use Fabrica\Models\Code\UserForgotPassword;
+use Finder\Models\Code\User;
+use Finder\Models\Code\UserForgotPassword;
 
 /**
  * Loads the fixtures for user forgot password objects.

@@ -14,7 +14,7 @@ namespace Fabrica\Bundle\CoreBundle\DataFixtures\ORM\Load;
 
 use Doctrine\Common\Persistence\ObjectManager;
 
-use Fabrica\Models\Code\Role;
+use Finder\Models\Code\Role;
 use Fabrica\Bundle\CoreBundle\DataFixtures\ORM\Fixture;
 
 /**

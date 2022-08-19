@@ -14,7 +14,7 @@ namespace Fabrica\Bundle\CoreBundle\DataFixtures\ORM\Load;
 
 use Fabrica\Bundle\CoreBundle\DataFixtures\ORM\UserFixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Fabrica\Models\Code\User;
+use Finder\Models\Code\User;
 
 /**
  * Loads the fixtures for user object.

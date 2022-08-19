@@ -12,8 +12,8 @@
 
 namespace Fabrica\Bundle\CoreBundle\Tests\Entity;
 
-use Fabrica\Models\Code\Project;
-use Fabrica\Models\Code\ProjectGitAccess;
+use Finder\Models\Code\Project;
+use Finder\Models\Code\ProjectGitAccess;
 
 class ProjectGitAccessTest extends \PHPUnit\Framework\TestCase
 {

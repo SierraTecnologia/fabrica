@@ -35,10 +35,10 @@ class Sprint extends Base
 
     // public function stage()
     // {
-    //     return $this->belongsTo('Fabrica\Models\Code\Stage', 'stage_id', 'id');
+    //     return $this->belongsTo('Finder\Models\Code\Stage', 'stage_id', 'id');
     // }
     // public function stages()
     // {
-    //     return $this->belongsToMany('Fabrica\Models\Code\Stage', 'workflow_stages', 'workflow_id', 'stage_id');
+    //     return $this->belongsToMany('Finder\Models\Code\Stage', 'workflow_stages', 'workflow_id', 'stage_id');
     // }
 }

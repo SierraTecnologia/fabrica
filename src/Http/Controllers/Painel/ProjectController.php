@@ -2,7 +2,7 @@
 
 namespace Fabrica\Http\Controllers\Painel;
 
-use Fabrica\Models\Code\Project;
+use Finder\Models\Code\Project;
 use Fabrica\Services\FabricaService;
 use Illuminate\Support\Facades\Schema;
 use Pedreiro\CrudController;

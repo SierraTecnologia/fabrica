@@ -31,7 +31,7 @@ class ProjectType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-            'data_class'         => 'Fabrica\Models\Code\Project',
+            'data_class'         => 'Finder\Models\Code\Project',
             'translation_domain' => 'project_admin',
             'action'             => 'create',
             )

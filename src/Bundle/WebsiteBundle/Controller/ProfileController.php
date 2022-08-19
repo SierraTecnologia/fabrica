@@ -12,8 +12,8 @@
 
 namespace Fabrica\Bundle\WebsiteBundle\Controller;
 
-use Fabrica\Models\Code\Email;
-use Fabrica\Models\Code\UserSshKey;
+use Finder\Models\Code\Email;
+use Finder\Models\Code\UserSshKey;
 use Fabrica\Bundle\CoreBundle\Job\UpdateSshKeysJob;
 use Symfony\Component\HttpFoundation\Request;
 

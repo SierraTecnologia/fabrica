@@ -18,8 +18,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Fabrica\Models\Code\Project;
-use Fabrica\Models\Code\User;
+use Finder\Models\Code\Project;
+use Finder\Models\Code\User;
 use Fabrica\Bundle\CoreBundle\Security\CliToken;
 
 /**

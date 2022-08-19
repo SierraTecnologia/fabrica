@@ -47,7 +47,7 @@ class UserRoleCreateCommandTest extends CommandTestCase
             )
         );
 
-        $this->assertInstanceOf('Fabrica\Models\Code\UserRoleProject', $userRole);
+        $this->assertInstanceOf('Finder\Models\Code\UserRoleProject', $userRole);
     }
 
     public function testGlobalRole()

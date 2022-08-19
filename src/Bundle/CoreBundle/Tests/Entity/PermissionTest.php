@@ -12,7 +12,7 @@
 
 namespace Fabrica\Bundle\CoreBundle\Tests\Entity;
 
-use Fabrica\Models\Code\Permission;
+use Finder\Models\Code\Permission;
 
 class PermissionTest extends \PHPUnit\Framework\TestCase
 {

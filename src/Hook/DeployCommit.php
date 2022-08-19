@@ -8,7 +8,7 @@ namespace Fabrica\Hook;
 use Operador\Actions\Action;
 use Operador\Actions\ActionCollection;
 
-use Fabrica\Models\Code\Commit;
+use Finder\Models\Code\Commit;
 
 class DeployCommit extends ActionCollection
 {

@@ -12,7 +12,7 @@
 
 namespace Fabrica\Bundle\CoreBundle\DataFixtures\ORM;
 
-use Fabrica\Models\Code\User;
+use Finder\Models\Code\User;
 
 /**
  * @author Alexandre Salomé <alexandre.salome@gmail.com>

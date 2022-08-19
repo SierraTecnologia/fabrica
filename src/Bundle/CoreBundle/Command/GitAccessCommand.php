@@ -17,9 +17,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use Fabrica\Models\Code\Project;
-use Fabrica\Models\Code\ProjectGitAccess;
-use Fabrica\Models\Code\Role;
+use Finder\Models\Code\Project;
+use Finder\Models\Code\ProjectGitAccess;
+use Finder\Models\Code\Role;
 
 /**
  * Manage git accesses in projects.

@@ -12,7 +12,7 @@
 
 namespace Fabrica\Bundle\CoreBundle\Git;
 
-use Fabrica\Models\Code\Project;
+use Finder\Models\Code\Project;
 
 class PushTarget
 {

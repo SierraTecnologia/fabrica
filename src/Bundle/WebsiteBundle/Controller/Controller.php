@@ -12,8 +12,8 @@
 
 namespace Fabrica\Bundle\WebsiteBundle\Controller;
 
-use Fabrica\Models\Code\Project;
-use Fabrica\Models\Code\User;
+use Finder\Models\Code\Project;
+use Finder\Models\Code\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Fabrica\Contracts\EventAbstract as Event;
 use Symfony\Component\HttpFoundation\JsonResponse;

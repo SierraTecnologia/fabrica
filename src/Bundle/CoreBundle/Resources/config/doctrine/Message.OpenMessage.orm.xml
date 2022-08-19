@@ -3,7 +3,7 @@
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity table="message_open" name="Fabrica\Models\Code\Message\OpenMessage">
+    <entity table="message_open" name="Finder\Models\Code\Message\OpenMessage">
     </entity>
 
 </doctrine-mapping>

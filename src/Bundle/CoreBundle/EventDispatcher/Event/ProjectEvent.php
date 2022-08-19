@@ -14,8 +14,8 @@ namespace Fabrica\Bundle\CoreBundle\EventDispatcher\Event;
 
 use Fabrica\Contracts\EventAbstract as Event;
 
-use Fabrica\Models\Code\Project;
-use Fabrica\Models\Code\User;
+use Finder\Models\Code\Project;
+use Finder\Models\Code\User;
 
 class ProjectEvent extends Event
 {

@@ -12,7 +12,7 @@
 
 namespace Fabrica\Bundle\CoreBundle\Command;
 
-use Fabrica\Tools\Programs\Git\PushReference;
+use Integrations\Tools\Programs\Git\PushReference;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
