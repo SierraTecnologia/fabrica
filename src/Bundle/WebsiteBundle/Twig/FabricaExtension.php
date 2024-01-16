@@ -14,11 +14,11 @@ namespace Fabrica\Bundle\WebsiteBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-use Fabrica\Models\Code\Project;
-use Fabrica\Models\Code\User;
-use Fabrica\Tools\Programs\Git\Blob;
-use Fabrica\Tools\Programs\Git\Reference;
-use Fabrica\Tools\Programs\Git\Tree;
+use Finder\Models\Code\Project;
+use Finder\Models\Code\User;
+use Integrations\Tools\Programs\Git\Blob;
+use Integrations\Tools\Programs\Git\Reference;
+use Integrations\Tools\Programs\Git\Tree;
 
 class FabricaExtension extends \Twig_Extension
 {

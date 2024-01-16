@@ -18,7 +18,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\ProjectEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
-use Fabrica\Models\Code\ProjectGitAccess;
+use Finder\Models\Code\ProjectGitAccess;
 
 /**
  * Listens to project creation. If no permissions are present

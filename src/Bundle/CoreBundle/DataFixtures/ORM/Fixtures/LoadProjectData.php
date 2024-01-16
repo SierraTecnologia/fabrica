@@ -15,7 +15,7 @@ namespace Fabrica\Bundle\CoreBundle\DataFixtures\ORM\Fixtures;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Fabrica\Bundle\CoreBundle\DataFixtures\ORM\Fixture;
-use Fabrica\Models\Code\Project;
+use Finder\Models\Code\Project;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\ProjectEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
 

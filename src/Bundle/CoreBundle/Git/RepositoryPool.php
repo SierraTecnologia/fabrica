@@ -14,12 +14,12 @@ namespace Fabrica\Bundle\CoreBundle\Git;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-use Fabrica\Models\Code\Project;
+use Finder\Models\Code\Project;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\ProjectEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\PushReferenceEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
-use Fabrica\Tools\Programs\Git\Repository;
-use Fabrica\Tools\Programs\Git\Admin;
+use Integrations\Tools\Programs\Git\Repository;
+use Integrations\Tools\Programs\Git\Admin;
 
 /**
  * Repository pool, containing all Git repositories.

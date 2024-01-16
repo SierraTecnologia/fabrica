@@ -12,11 +12,11 @@
 
 namespace Fabrica\Bundle\CoreBundle\Tests\Entity;
 
-use Fabrica\Models\Code\Email;
+use Finder\Models\Code\Email;
 
 class EmailTest extends \PHPUnit\Framework\TestCase
 {
-    const USER_CLASS = 'Fabrica\Models\Code\User';
+    const USER_CLASS = 'Finder\Models\Code\User';
 
     public function testInstanciation(): void
     {

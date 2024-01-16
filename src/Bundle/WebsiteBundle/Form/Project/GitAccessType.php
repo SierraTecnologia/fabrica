@@ -22,7 +22,7 @@ class GitAccessType extends AbstractType
     {
         $builder->add(
             'role', 'entity', array(
-            'class' => 'Fabrica\Models\Code\Role',
+            'class' => 'Finder\Models\Code\Role',
             'property' => 'name'
             )
         );
@@ -35,7 +35,7 @@ class GitAccessType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-            'data_class' => 'Fabrica\Models\Code\ProjectGitAccess',
+            'data_class' => 'Finder\Models\Code\ProjectGitAccess',
             )
         );
     }

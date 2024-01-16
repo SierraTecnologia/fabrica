@@ -48,11 +48,11 @@ class Transaction extends Base
 
     public function stageFrom()
     {
-        return $this->belongsTo('Fabrica\Models\Code\Stage', 'table_id', 'id');
+        return $this->belongsTo('Finder\Models\Code\Stage', 'table_id', 'id');
     }
 
     public function stageTo()
     {
-        return $this->belongsTo('Fabrica\Models\Code\Stage', 'table_id', 'id');
+        return $this->belongsTo('Finder\Models\Code\Stage', 'table_id', 'id');
     }
 }

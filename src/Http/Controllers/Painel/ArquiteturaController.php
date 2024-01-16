@@ -2,10 +2,10 @@
 
 namespace Fabrica\Http\Controllers\Painel;
 
-use Fabrica\Models\Code\Field;
-use Fabrica\Models\Code\Project;
+use Finder\Models\Code\Field;
+use Finder\Models\Code\Project;
 
-use Fabrica\Models\Code\Wiki;
+use Finder\Models\Code\Wiki;
 use Fabrica\Models\Infra\Container;
 use Fabrica\Models\Infra\Domain;
 

@@ -2,7 +2,7 @@
 
 namespace Fabrica\Http\Controllers;
 
-use Fabrica\Models\Code\Project;
+use Finder\Models\Code\Project;
 use Facilitador\Exceptions\Exception;
 use Pedreiro\Http\Controllers\Admin\Base;
 use Illuminate\Http\Request;

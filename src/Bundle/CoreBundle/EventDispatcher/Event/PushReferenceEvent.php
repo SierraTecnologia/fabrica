@@ -12,12 +12,12 @@
 
 namespace Fabrica\Bundle\CoreBundle\EventDispatcher\Event;
 
-use Fabrica\Tools\Programs\Git\PushReference;
+use Integrations\Tools\Programs\Git\PushReference;
 
 use Fabrica\Contracts\EventAbstract as Event;
 
-use Fabrica\Models\Code\Project;
-use Fabrica\Models\Code\User;
+use Finder\Models\Code\Project;
+use Finder\Models\Code\User;
 
 /**
  * @author Julien DIDIER <genzo.wm@gmail.com>

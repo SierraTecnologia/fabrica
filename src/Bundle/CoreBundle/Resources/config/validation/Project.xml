@@ -6,7 +6,7 @@
     <namespace prefix="DoctrineAssert">Symfony\Bridge\Doctrine\Validator\Constraints\</namespace>
     <namespace prefix="Assert">Symfony\Component\Validator\Constraints\</namespace>
 
-    <class name="Fabrica\Models\Code\Project">
+    <class name="Finder\Models\Code\Project">
         <constraint name="DoctrineAssert:UniqueEntity">
             <option name="fields">
                 <value>slug</value>

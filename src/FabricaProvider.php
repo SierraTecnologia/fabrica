@@ -41,14 +41,22 @@ class FabricaProvider extends ServiceProvider
      * Rotas do Menu
      */
     public static $menuItens = [
-        // [
-        //     'text' => 'Workspace',
-        //     'icon' => 'fas fa-fw fa-search',
-        //     'icon_color' => "blue",
-        //     'label_color' => "success",
-        //     'section'     => 'painel',
-        //     'level'       => 1, // 0 (Public), 1, 2 (Admin) , 3 (Root)
-        // ],
+        [
+            'text' => 'Desenvolvimento',
+            'icon' => 'fas fa-fw fa-search',
+            'icon_color' => "blue",
+            'label_color' => "success",
+            'section'     => 'painel',
+            'level'       => 1, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        ],
+        [
+            'text' => 'Fabrica',
+            'icon' => 'fas fa-fw fa-search',
+            'icon_color' => "blue",
+            'label_color' => "success",
+            'section'     => 'admin',
+            'level'       => 2, // 0 (Public), 1, 2 (Admin) , 3 (Root)
+        ],
         // [
         //     'text' => 'Configurações',
         //     'icon' => 'fas fa-fw fa-search',

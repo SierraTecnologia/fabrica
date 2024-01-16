@@ -14,7 +14,7 @@ namespace Fabrica\Bundle\CoreBundle\Tests\Security;
 
 use Fabrica\Bundle\CoreBundle\Security\ProjectRoleVoter;
 use Fabrica\Bundle\CoreBundle\Security\ProjectRole;
-use Fabrica\Models\Code\Project;
+use Finder\Models\Code\Project;
 
 class ProjectRoleVoterTest extends \PHPUnit\Framework\TestCase
 {
@@ -71,7 +71,7 @@ class ProjectRoleVoterTest extends \PHPUnit\Framework\TestCase
             $roles[$i] = new ProjectRole($project, $role);
         }
 
-        $user = $this->getMock('Fabrica\Models\Code\User');
+        $user = $this->getMock('Finder\Models\Code\User');
         $user->expects($this->any())->method('getRoles')->will($this->returnValue($roles));
 
         $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');

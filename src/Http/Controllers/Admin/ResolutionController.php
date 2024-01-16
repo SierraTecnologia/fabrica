@@ -2,7 +2,7 @@
 
 namespace Fabrica\Http\Controllers\Admin;
 
-use Fabrica\Models\Code\Resolution;
+use Finder\Models\Code\Resolution;
 use Fabrica\Services\FabricaService;
 use Illuminate\Support\Facades\Schema;
 use Pedreiro\CrudController;

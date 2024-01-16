@@ -29,7 +29,7 @@ class RoleType extends AbstractType
 
         $builder->add(
             'user', 'entity', array(
-            'class'   => 'Fabrica\Models\Code\User',
+            'class'   => 'Finder\Models\Code\User',
             'property' => 'fullname',
             'query_builder' => function (EntityRepository $er) use ($usedUsers) {
                 $query = $er
@@ -49,7 +49,7 @@ class RoleType extends AbstractType
         $builder
             ->add(
                 'role', 'entity', array(
-                'class'   => 'Fabrica\Models\Code\Role',
+                'class'   => 'Finder\Models\Code\Role',
                 'property' => 'name',
                 'query_builder' => function (EntityRepository $er) {
                     $query = $er
@@ -67,7 +67,7 @@ class RoleType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-            'data_class'   => 'Fabrica\Models\Code\UserRoleProject',
+            'data_class'   => 'Finder\Models\Code\UserRoleProject',
             'usedUsers'    => array(),
             'from'         => null,
             )

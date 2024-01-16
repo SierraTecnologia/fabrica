@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Fabrica\Component\Config\ConfigInterface;
-use Fabrica\Models\Code\User;
+use Finder\Models\Code\User;
 
 /**
  * @author Alexandre Salomé <alexandre.salome@gmail.com>

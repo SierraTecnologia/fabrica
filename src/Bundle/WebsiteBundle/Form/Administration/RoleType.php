@@ -29,7 +29,7 @@ class RoleType extends AbstractType
             ->add('description', 'text', array('label' => 'form.description'))
             ->add(
                 'permissions', 'entity', array(
-                'class'              => 'Fabrica\Models\Code\Permission',
+                'class'              => 'Finder\Models\Code\Permission',
                 'property'           => 'name',
                 'multiple'           => true,
                 'expanded'           => true,
@@ -53,7 +53,7 @@ class RoleType extends AbstractType
     {
         $resolver->setDefaults(
             array(
-            'data_class'         => 'Fabrica\Models\Code\Role',
+            'data_class'         => 'Finder\Models\Code\Role',
             'translation_domain' => 'administration_role',
             'is_global'          => true
             )

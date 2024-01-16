@@ -34,7 +34,7 @@ class EmailType extends AbstractType
             array(
             'validation_groups'  => array('profile'),
             'translation_domain' => 'profile',
-            'data_class'         => 'Fabrica\Models\Code\Email',
+            'data_class'         => 'Finder\Models\Code\Email',
             )
         );
     }

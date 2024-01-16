@@ -15,7 +15,7 @@ namespace Fabrica\Bundle\CoreBundle\DataFixtures\ORM\Fixtures;
 use Fabrica\Bundle\CoreBundle\DataFixtures\ORM\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-use Fabrica\Models\Code\UserRoleProject;
+use Finder\Models\Code\UserRoleProject;
 
 /**
  * @author Julien DIDIER <julien@jdidier.net>

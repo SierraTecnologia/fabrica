@@ -5,8 +5,8 @@
 
     <entity
         table="message"
-        name="Fabrica\Models\Code\Message"
-        repository-class="Fabrica\Models\Code\Repository\MessageRepository"
+        name="Finder\Models\Code\Message"
+        repository-class="Finder\Models\Code\Repository\MessageRepository"
         inheritance-type="JOINED"
     >
         <id name="id" type="integer" column="id">
@@ -17,19 +17,19 @@
 
         <discriminator-column name="type" type="string" length="10" />
         <discriminator-map>
-            <discriminator-mapping value="open" class="Fabrica\Models\Code\Message\OpenMessage" />
-            <discriminator-mapping value="post" class="Fabrica\Models\Code\Message\PostMessage" />
-            <discriminator-mapping value="close" class="Fabrica\Models\Code\Message\CloseMessage" />
-            <discriminator-mapping value="commit" class="Fabrica\Models\Code\Message\CommitMessage" />
-            <discriminator-mapping value="pr" class="Fabrica\Models\Code\Message\PullRequestMessage" />
-            <discriminator-mapping value="merge" class="Fabrica\Models\Code\Message\MergeMessage" />
+            <discriminator-mapping value="open" class="Finder\Models\Code\Message\OpenMessage" />
+            <discriminator-mapping value="post" class="Finder\Models\Code\Message\PostMessage" />
+            <discriminator-mapping value="close" class="Finder\Models\Code\Message\CloseMessage" />
+            <discriminator-mapping value="commit" class="Finder\Models\Code\Message\CommitMessage" />
+            <discriminator-mapping value="pr" class="Finder\Models\Code\Message\PullRequestMessage" />
+            <discriminator-mapping value="merge" class="Finder\Models\Code\Message\MergeMessage" />
         </discriminator-map>
 
-        <many-to-one field="user" target-entity="Fabrica\Models\Code\User">
+        <many-to-one field="user" target-entity="Finder\Models\Code\User">
             <join-column name="user_id" referenced-column-name="id" nullable="true" on-delete="SET NULL" />
         </many-to-one>
 
-        <many-to-one field="feed" target-entity="Fabrica\Models\Code\Feed" inversed-by="messages">
+        <many-to-one field="feed" target-entity="Finder\Models\Code\Feed" inversed-by="messages">
             <join-column name="feed_id" referenced-column-name="id" nullable="false" />
             <cascade>
                 <cascade-persist />

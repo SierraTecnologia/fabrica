@@ -43,7 +43,7 @@ class UserSshKeyCreateCommandTest extends CommandTestCase
             )
         );
 
-        $this->assertInstanceOf('Fabrica\Models\Code\UserSshKey', $userSshKey);
+        $this->assertInstanceOf('Finder\Models\Code\UserSshKey', $userSshKey);
 
         $this->assertEquals('alice', $userSshKey->getUser()->getUsername());
         $this->assertEquals('foo', $userSshKey->getTitle());

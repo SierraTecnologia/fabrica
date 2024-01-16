@@ -18,9 +18,9 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\PushReferenceEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
 use Fabrica\Bundle\CoreBundle\Git\RepositoryPool;
-use Fabrica\Models\Code\Feed;
-use Fabrica\Models\Code\Message;
-use Fabrica\Models\Code\Message\OpenMessage;
+use Finder\Models\Code\Feed;
+use Finder\Models\Code\Message;
+use Finder\Models\Code\Message\OpenMessage;
 
 /**
  * @author Julien DIDIER <genzo.wm@gmail.com>

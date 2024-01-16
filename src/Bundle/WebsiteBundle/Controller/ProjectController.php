@@ -12,17 +12,17 @@
 
 namespace Fabrica\Bundle\WebsiteBundle\Controller;
 
-use Fabrica\Models\Code\Project;
-use Fabrica\Models\Code\ProjectGitAccess;
-use Fabrica\Models\Code\UserRoleProject;
+use Finder\Models\Code\Project;
+use Finder\Models\Code\ProjectGitAccess;
+use Finder\Models\Code\UserRoleProject;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\Event\ProjectEvent;
 use Fabrica\Bundle\CoreBundle\EventDispatcher\FabricaEvents;
 use Fabrica\Bundle\CoreBundle\Job\DeleteReferenceJob;
 use Fabrica\Component\Pagination\Adapter\GitLogAdapter;
 use Fabrica\Component\Pagination\Pager;
-use Fabrica\Tools\Programs\Git\Blob;
-use Fabrica\Tools\Programs\Git\Reference;
-use Fabrica\Tools\Programs\Git\Tree;
+use Integrations\Tools\Programs\Git\Blob;
+use Integrations\Tools\Programs\Git\Reference;
+use Integrations\Tools\Programs\Git\Tree;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProjectController extends Controller

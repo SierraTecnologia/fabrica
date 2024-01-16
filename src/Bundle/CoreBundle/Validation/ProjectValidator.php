@@ -12,7 +12,7 @@
 
 namespace Fabrica\Bundle\CoreBundle\Validation;
 
-use Fabrica\Models\Code\Project;
+use Finder\Models\Code\Project;
 use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**

@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 use Doctrine\ORM\NoResultException;
 
-use Fabrica\Models\Code\User;
+use Finder\Models\Code\User;
 
 class SplashController extends Controller
 {

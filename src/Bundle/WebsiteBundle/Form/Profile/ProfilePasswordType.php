@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
-use Fabrica\Models\Code\User;
+use Finder\Models\Code\User;
 
 /**
  * @author Julien DIDIER <genzo.wm@gmail.com>

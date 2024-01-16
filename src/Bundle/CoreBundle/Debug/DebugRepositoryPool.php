@@ -2,10 +2,10 @@
 
 namespace Fabrica\Bundle\CoreBundle\Debug;
 
-use Fabrica\Models\Code\Project;
+use Finder\Models\Code\Project;
 use Fabrica\Bundle\CoreBundle\Git\RepositoryPool;
 use Fabrica\Bundle\GitBundle\DataCollector\GitDataCollector;
-use Fabrica\Tools\Programs\Git\Repository;
+use Integrations\Tools\Programs\Git\Repository;
 
 class DebugRepositoryPool extends RepositoryPool
 {

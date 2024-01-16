@@ -5,8 +5,8 @@
 
     <entity
         table="feed"
-        name="Fabrica\Models\Code\Feed"
-        repository-class="Fabrica\Models\Code\Repository\FeedRepository"
+        name="Finder\Models\Code\Feed"
+        repository-class="Finder\Models\Code\Repository\FeedRepository"
     >
         <unique-constraints>
             <unique-constraint name="rerefence" columns="id,reference" />
@@ -18,11 +18,11 @@
 
         <field name="reference" column="reference" type="string" length="42" unique="false" />
 
-        <many-to-one field="project" target-entity="Fabrica\Models\Code\Project">
+        <many-to-one field="project" target-entity="Finder\Models\Code\Project">
             <join-column name="project_id" referenced-column-name="id" />
         </many-to-one>
 
-        <one-to-many field="messages" target-entity="Fabrica\Models\Code\Message" mapped-by="feed">
+        <one-to-many field="messages" target-entity="Finder\Models\Code\Message" mapped-by="feed">
             <order-by>
                 <order-by-field name="id" direction="DESC" />
             </order-by>
